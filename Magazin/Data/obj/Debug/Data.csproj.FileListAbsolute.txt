@@ -1,0 +1,11 @@
+D:\Sources\magazin\Magazin\Data\bin\Debug\Data.dll
+D:\Sources\magazin\Magazin\Data\bin\Debug\Data.pdb
+D:\Sources\magazin\Magazin\Data\bin\Debug\Base.DAL.dll
+D:\Sources\magazin\Magazin\Data\bin\Debug\Base.dll
+D:\Sources\magazin\Magazin\Data\bin\Debug\EntityFramework.dll
+D:\Sources\magazin\Magazin\Data\bin\Debug\Base.DAL.pdb
+D:\Sources\magazin\Magazin\Data\bin\Debug\Base.pdb
+D:\Sources\magazin\Magazin\Data\bin\Debug\EntityFramework.xml
+D:\Sources\magazin\Magazin\Data\obj\Debug\Data.csprojResolveAssemblyReference.cache
+D:\Sources\magazin\Magazin\Data\obj\Debug\Data.dll
+D:\Sources\magazin\Magazin\Data\obj\Debug\Data.pdb

@@ -9,8 +9,6 @@ namespace Base
     public class BaseEntity
     {
         public int Id { get; set; }
-        public bool Hidden { get; set; }
-
-
+        public bool Hidden { get; set; }        
     }
 }

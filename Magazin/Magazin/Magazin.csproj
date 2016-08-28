@@ -77,6 +77,18 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="SimpleInjector, Version=3.2.2.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.3.2.2\lib\net45\SimpleInjector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web, Version=3.2.2.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.Web.3.2.2\lib\net40\SimpleInjector.Integration.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web.Mvc, Version=3.2.2.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.Web.Mvc.3.2.2\lib\net40\SimpleInjector.Integration.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -205,37 +217,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
-    <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
-    <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
-    <Compile Include="Areas\HelpPage\HelpPageAreaRegistration.cs" />
-    <Compile Include="Areas\HelpPage\HelpPageConfigurationExtensions.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\CollectionModelDescription.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ComplexTypeModelDescription.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\DictionaryModelDescription.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\EnumTypeModelDescription.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\EnumValueDescription.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\IModelDocumentationProvider.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\KeyValuePairModelDescription.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelDescription.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelDescriptionGenerator.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelNameAttribute.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelNameHelper.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterAnnotation.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterDescription.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\SimpleTypeModelDescription.cs" />
-    <Compile Include="Areas\HelpPage\Models\HelpPageApiModel.cs" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleGenerator.cs" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleKey.cs" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\ImageSample.cs" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\InvalidSample.cs" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\ObjectGenerator.cs" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
-    <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Bindings\Bindings.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -248,9 +233,67 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\vendor\kendo\js\kendo.all.js" />
+    <Content Include="Content\vendor\kendo\js\kendo.all.min.js" />
+    <Content Include="Content\vendor\kendo\js\kendo.aspnetmvc.js" />
+    <Content Include="Content\vendor\kendo\js\kendo.aspnetmvc.min.js" />
+    <Content Include="Content\vendor\kendo\js\kendo.culture.ru.custom.js" />
+    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\LICENSE.txt" />
+    <Content Include="Content\vendor\kendo\styles\fonts\glyphs\KendoUIGlyphs.svg" />
+    <Content Include="Content\vendor\kendo\styles\images\back.png" />
+    <Content Include="Content\vendor\kendo\styles\images\kendoui.svg" />
+    <Content Include="Content\vendor\kendo\styles\images\wp8_icons.png" />
+    <Content Include="Content\vendor\kendo\styles\images\wp8_inverseicons.png" />
+    <Content Include="Content\vendor\kendo\styles\kendo.common-material.min.css" />
+    <Content Include="Content\vendor\kendo\styles\kendo.common.min.css" />
+    <Content Include="Content\vendor\kendo\styles\kendo.material.min.css" />
+    <Content Include="Content\vendor\kendo\styles\kendo.mobile.switch.css" />
+    <Content Include="Content\vendor\kendo\styles\Material\editor.png" />
+    <Content Include="Content\vendor\kendo\styles\Material\imagebrowser.png" />
+    <Content Include="Content\vendor\kendo\styles\Material\indeterminate.gif" />
+    <Content Include="Content\vendor\kendo\styles\Material\loading-image.gif" />
+    <Content Include="Content\vendor\kendo\styles\Material\loading.gif" />
+    <Content Include="Content\vendor\kendo\styles\Material\loading_2x.gif" />
+    <Content Include="Content\vendor\kendo\styles\Material\markers.png" />
+    <Content Include="Content\vendor\kendo\styles\Material\markers_2x.png" />
+    <Content Include="Content\vendor\kendo\styles\Material\slider-h.gif" />
+    <Content Include="Content\vendor\kendo\styles\Material\slider-v.gif" />
+    <Content Include="Content\vendor\kendo\styles\Material\sprite.png" />
+    <Content Include="Content\vendor\kendo\styles\Material\sprite_2x.png" />
+    <Content Include="Content\vendor\kendo\styles\Material\sprite_kpi.png" />
+    <Content Include="Content\vendor\kendo\styles\Material\sprite_kpi_2x.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\brushed-metal.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\dots1.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\dots10.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\dots11.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\dots12.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\dots13.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\dots2.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\dots3.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\dots4.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\dots5.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\dots6.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\dots7.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\dots8.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\dots9.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\glass-lighter.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\glass.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\highlight.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\hsv-gradient.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\hue.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\leather1.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\leather2.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\noise.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\stripe1.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\stripe2.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\stripe3.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\stripe4.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\stripe5.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\stripe6.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\transparency.png" />
+    <Content Include="Content\vendor\kendo\styles\textures\transtexture.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -258,28 +301,33 @@
     <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Areas\HelpPage\Views\Web.config" />
-    <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\Index.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\TextSample.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\SimpleTypeModelDescription.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Samples.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Parameters.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ModelDescriptionLink.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\KeyValuePairModelDescription.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\InvalidSample.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ImageSample.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\EnumTypeModelDescription.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\DictionaryModelDescription.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ComplexTypeModelDescription.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Content\vendor\kendo\js\kendo.all.min.js.map" />
+    <Content Include="Content\vendor\kendo\js\kendo.aspnetmvc.min.js.map" />
+    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSans-Bold.ttf" />
+    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
+    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSans-ExtraLight.ttf" />
+    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSans-Oblique.ttf" />
+    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSans.ttf" />
+    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSansMono-Bold.ttf" />
+    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSansMono-BoldOblique.ttf" />
+    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSansMono-Oblique.ttf" />
+    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSansMono.ttf" />
+    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSerif-Bold.ttf" />
+    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSerif-BoldItalic.ttf" />
+    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSerif-Italic.ttf" />
+    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSerif.ttf" />
+    <Content Include="Content\vendor\kendo\styles\fonts\glyphs\KendoUIGlyphs.eot" />
+    <Content Include="Content\vendor\kendo\styles\fonts\glyphs\KendoUIGlyphs.ttf" />
+    <Content Include="Content\vendor\kendo\styles\fonts\glyphs\KendoUIGlyphs.woff" />
+    <Content Include="Content\vendor\kendo\styles\images\kendoui.ttf" />
+    <Content Include="Content\vendor\kendo\styles\images\kendoui.woff" />
+    <Content Include="Content\vendor\kendo\styles\kendo.common-material.min.css.map" />
+    <Content Include="Content\vendor\kendo\styles\kendo.common.min.css.map" />
+    <Content Include="Content\vendor\kendo\styles\kendo.material.min.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -298,25 +346,39 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Base.DAL\Base.DAL.csproj">
+      <Project>{7ecd6072-d546-42ce-98a6-707998f457c5}</Project>
+      <Name>Base.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Base\Base.csproj">
+      <Project>{00bb55c5-fc02-4f31-b156-815997881bec}</Project>
+      <Name>Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{81fc6c33-df12-4242-8034-488a37778fa1}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

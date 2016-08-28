@@ -1,0 +1,5 @@
+D:\Sources\magazin\Magazin\Base\bin\Debug\Base.dll
+D:\Sources\magazin\Magazin\Base\bin\Debug\Base.pdb
+D:\Sources\magazin\Magazin\Base\obj\Debug\Base.csprojResolveAssemblyReference.cache
+D:\Sources\magazin\Magazin\Base\obj\Debug\Base.dll
+D:\Sources\magazin\Magazin\Base\obj\Debug\Base.pdb

@@ -1,0 +1,12 @@
+D:\Sources\magazin\Magazin\Base.DAL\bin\Debug\Base.DAL.dll.config
+D:\Sources\magazin\Magazin\Base.DAL\bin\Debug\Base.DAL.dll
+D:\Sources\magazin\Magazin\Base.DAL\bin\Debug\Base.DAL.pdb
+D:\Sources\magazin\Magazin\Base.DAL\bin\Debug\Base.dll
+D:\Sources\magazin\Magazin\Base.DAL\bin\Debug\EntityFramework.dll
+D:\Sources\magazin\Magazin\Base.DAL\bin\Debug\EntityFramework.SqlServer.dll
+D:\Sources\magazin\Magazin\Base.DAL\bin\Debug\Base.pdb
+D:\Sources\magazin\Magazin\Base.DAL\bin\Debug\EntityFramework.xml
+D:\Sources\magazin\Magazin\Base.DAL\bin\Debug\EntityFramework.SqlServer.xml
+D:\Sources\magazin\Magazin\Base.DAL\obj\Debug\Base.DAL.csprojResolveAssemblyReference.cache
+D:\Sources\magazin\Magazin\Base.DAL\obj\Debug\Base.DAL.dll
+D:\Sources\magazin\Magazin\Base.DAL\obj\Debug\Base.DAL.pdb
