@@ -9,7 +9,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5F89A7EE-EA67-4EEA-AE47-CBABF766B37D}</ProjectGuid>
+    <ProjectGuid>{E44D0CF5-7D63-4FD6-A7EC-AE33AB2C8337}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -92,6 +92,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -99,34 +100,24 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http">
-    </Reference>
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -161,6 +152,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -206,97 +200,33 @@
     <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
       <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http.Owin">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\Bindings.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Bindings\Bindings.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\ApplicationOAuthProvider.cs" />
-    <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\vendor\kendo\js\kendo.all.js" />
-    <Content Include="Content\vendor\kendo\js\kendo.all.min.js" />
-    <Content Include="Content\vendor\kendo\js\kendo.aspnetmvc.js" />
-    <Content Include="Content\vendor\kendo\js\kendo.aspnetmvc.min.js" />
-    <Content Include="Content\vendor\kendo\js\kendo.culture.ru.custom.js" />
-    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\LICENSE.txt" />
-    <Content Include="Content\vendor\kendo\styles\fonts\glyphs\KendoUIGlyphs.svg" />
-    <Content Include="Content\vendor\kendo\styles\images\back.png" />
-    <Content Include="Content\vendor\kendo\styles\images\kendoui.svg" />
-    <Content Include="Content\vendor\kendo\styles\images\wp8_icons.png" />
-    <Content Include="Content\vendor\kendo\styles\images\wp8_inverseicons.png" />
-    <Content Include="Content\vendor\kendo\styles\kendo.common-material.min.css" />
-    <Content Include="Content\vendor\kendo\styles\kendo.common.min.css" />
-    <Content Include="Content\vendor\kendo\styles\kendo.material.min.css" />
-    <Content Include="Content\vendor\kendo\styles\kendo.mobile.switch.css" />
-    <Content Include="Content\vendor\kendo\styles\Material\editor.png" />
-    <Content Include="Content\vendor\kendo\styles\Material\imagebrowser.png" />
-    <Content Include="Content\vendor\kendo\styles\Material\indeterminate.gif" />
-    <Content Include="Content\vendor\kendo\styles\Material\loading-image.gif" />
-    <Content Include="Content\vendor\kendo\styles\Material\loading.gif" />
-    <Content Include="Content\vendor\kendo\styles\Material\loading_2x.gif" />
-    <Content Include="Content\vendor\kendo\styles\Material\markers.png" />
-    <Content Include="Content\vendor\kendo\styles\Material\markers_2x.png" />
-    <Content Include="Content\vendor\kendo\styles\Material\slider-h.gif" />
-    <Content Include="Content\vendor\kendo\styles\Material\slider-v.gif" />
-    <Content Include="Content\vendor\kendo\styles\Material\sprite.png" />
-    <Content Include="Content\vendor\kendo\styles\Material\sprite_2x.png" />
-    <Content Include="Content\vendor\kendo\styles\Material\sprite_kpi.png" />
-    <Content Include="Content\vendor\kendo\styles\Material\sprite_kpi_2x.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\brushed-metal.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\dots1.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\dots10.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\dots11.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\dots12.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\dots13.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\dots2.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\dots3.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\dots4.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\dots5.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\dots6.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\dots7.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\dots8.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\dots9.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\glass-lighter.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\glass.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\highlight.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\hsv-gradient.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\hue.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\leather1.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\leather2.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\noise.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\stripe1.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\stripe2.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\stripe3.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\stripe4.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\stripe5.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\stripe6.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\transparency.png" />
-    <Content Include="Content\vendor\kendo\styles\textures\transtexture.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
     <Content Include="Scripts\ai.0.22.19-build00125.js" />
     <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -305,29 +235,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Content\vendor\kendo\js\kendo.all.min.js.map" />
-    <Content Include="Content\vendor\kendo\js\kendo.aspnetmvc.min.js.map" />
-    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSans-Bold.ttf" />
-    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
-    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSans-ExtraLight.ttf" />
-    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSans-Oblique.ttf" />
-    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSans.ttf" />
-    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSansMono-Bold.ttf" />
-    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSansMono-BoldOblique.ttf" />
-    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSansMono-Oblique.ttf" />
-    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSansMono.ttf" />
-    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSerif-Bold.ttf" />
-    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSerif-BoldItalic.ttf" />
-    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSerif-Italic.ttf" />
-    <Content Include="Content\vendor\kendo\styles\fonts\DejaVu\DejaVuSerif.ttf" />
-    <Content Include="Content\vendor\kendo\styles\fonts\glyphs\KendoUIGlyphs.eot" />
-    <Content Include="Content\vendor\kendo\styles\fonts\glyphs\KendoUIGlyphs.ttf" />
-    <Content Include="Content\vendor\kendo\styles\fonts\glyphs\KendoUIGlyphs.woff" />
-    <Content Include="Content\vendor\kendo\styles\images\kendoui.ttf" />
-    <Content Include="Content\vendor\kendo\styles\images\kendoui.woff" />
-    <Content Include="Content\vendor\kendo\styles\kendo.common-material.min.css.map" />
-    <Content Include="Content\vendor\kendo\styles\kendo.common.min.css.map" />
-    <Content Include="Content\vendor\kendo\styles\kendo.material.min.css.map" />
+    <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -339,6 +247,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -346,16 +255,16 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Content\Site.css" />
-    <Content Include="Scripts\_references.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
   </ItemGroup>
@@ -364,13 +273,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Base.DAL\Base.DAL.csproj">
-      <Project>{7ecd6072-d546-42ce-98a6-707998f457c5}</Project>
-      <Name>Base.DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Base\Base.csproj">
       <Project>{00bb55c5-fc02-4f31-b156-815997881bec}</Project>
       <Name>Base</Name>
@@ -396,7 +302,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>21268</DevelopmentServerPort>
+          <DevelopmentServerPort>12598</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:21268/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

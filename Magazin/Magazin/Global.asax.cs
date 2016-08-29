@@ -1,30 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
-using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Base.Services;
+using Data.DAL;
+using Magazin.App_Start;
 using SimpleInjector;
+using SimpleInjector.Integration.Web.Mvc;
 
 namespace Magazin
 {
-    public class WebApiApplication : System.Web.HttpApplication
+    public class MvcApplication : System.Web.HttpApplication
     {
-        private Container _container = Bindings.Bindings.Container;
-
         protected void Application_Start()
         {
+            var container = new Container();
 
-            var locator = _container.GetInstance<IServiceLocator>();
+            using (var context = new DataContext())
+            {
+                context.Database.Initialize(true);
+            }
+            
+            Bindings.Bind(container);
+            
+            DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));            
 
-            DependencyResolver.SetResolver(locator.GetService<IDependencyResolver>());
-
-       
             AreaRegistration.RegisterAllAreas();
-            GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

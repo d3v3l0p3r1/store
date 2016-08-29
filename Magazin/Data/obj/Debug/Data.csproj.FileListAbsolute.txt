@@ -9,3 +9,14 @@ D:\Sources\magazin\Magazin\Data\bin\Debug\EntityFramework.xml
 D:\Sources\magazin\Magazin\Data\obj\Debug\Data.csprojResolveAssemblyReference.cache
 D:\Sources\magazin\Magazin\Data\obj\Debug\Data.dll
 D:\Sources\magazin\Magazin\Data\obj\Debug\Data.pdb
+C:\Sources\magazin\Magazin\Data\bin\Debug\Data.dll
+C:\Sources\magazin\Magazin\Data\bin\Debug\Data.pdb
+C:\Sources\magazin\Magazin\Data\bin\Debug\Base.dll
+C:\Sources\magazin\Magazin\Data\bin\Debug\EntityFramework.dll
+C:\Sources\magazin\Magazin\Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Sources\magazin\Magazin\Data\bin\Debug\Base.pdb
+C:\Sources\magazin\Magazin\Data\bin\Debug\EntityFramework.xml
+C:\Sources\magazin\Magazin\Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Sources\magazin\Magazin\Data\obj\Debug\Data.csprojResolveAssemblyReference.cache
+C:\Sources\magazin\Magazin\Data\obj\Debug\Data.dll
+C:\Sources\magazin\Magazin\Data\obj\Debug\Data.pdb
