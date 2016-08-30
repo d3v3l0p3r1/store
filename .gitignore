@@ -56,6 +56,7 @@ artifacts/
 *.log
 *.lib
 *.sbr
+*.bin
 
 # ReSharper is a .NET coding add-in
 _ReSharper*/
@@ -97,9 +98,9 @@ bower_components
 node_modules
 npm-debug.log
 
-[Ww]ebUI/[Tt]emp/
-[Ww]ebUI/[Ff]iles/
-[Ww]ebUI/[Ll]og/
+[Mm]agazin/[Tt]emp/
+[Mm]agazin/[Ff]iles/
+[Mm]agazin/[Ll]og/
 sh.exe.stackdump
 .vs/config/applicationhost.config
 WebUI/Properties/PublishProfiles/Composite.pubxml
