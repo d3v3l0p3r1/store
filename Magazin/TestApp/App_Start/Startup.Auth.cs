@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Security.Claims;
-using Base.Security.Entities;
-using Base.Security.Services;
-using Data.DAL;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
+using TestApp.Models;
 
-namespace Magazin
+namespace TestApp
 {
     public partial class Startup
     {
@@ -18,7 +15,7 @@ namespace Magazin
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
-            app.CreatePerOwinContext<IUserRepository>(UserRepository.Create);
+            app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 
@@ -31,12 +28,11 @@ namespace Magazin
                 LoginPath = new PathString("/Account/Login"),
                 Provider = new CookieAuthenticationProvider
                 {
-                    OnValidateIdentity = SecurityStampValidator
-                .OnValidateIdentity<ApplicationUserManager, User, int>(
-                    validateInterval: TimeSpan.FromMinutes(30),
-                    regenerateIdentityCallback: (manager, user) =>
-                        user.GenerateUserIdentityAsync(manager),
-                    getUserIdCallback: (id) => (id.GetUserId<int>()))
+                    // Enables the application to validate the security stamp when the user logs in.
+                    // This is a security feature which is used when you change a password or add an external login to your account.  
+                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
+                        validateInterval: TimeSpan.FromMinutes(30),
+                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
             });            
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
