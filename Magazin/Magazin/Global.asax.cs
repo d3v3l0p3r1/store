@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -17,8 +18,8 @@ namespace Magazin
     {
         protected void Application_Start()
         {
-            var container = new Container();           
-            
+            var container = new Container();
+            container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
             Bindings.Bind(container);
             
             DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));            
