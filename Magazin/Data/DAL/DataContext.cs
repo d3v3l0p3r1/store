@@ -1,20 +1,24 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using Base.Entities;
+using Base.Security.Entities;
 using Data.Entities;
+using Data.Migrations;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Data.DAL
 {
 
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<User, Role, int, Login, UserRole, Claim>
     {
-
         static DataContext()
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<DataContext, EFContextConfiguration>());
             Database.SetInitializer(new DbInitializer());
         }
 
-        public DataContext() : base()
+        public DataContext() : base(nameof(DataContext))
         {
             Configuration.LazyLoadingEnabled = true;
         }
@@ -27,8 +31,8 @@ namespace Data.DAL
         }
 
         public DbSet<Product> Products { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<Bascet> Bascets { get; set; }
     }
 
     public class DbInitializer : CreateDatabaseIfNotExists<DataContext>
@@ -47,14 +51,25 @@ namespace Data.DAL
             context.Products.Add(product);
             context.SaveChanges();
 
-            var admin = new User()
+
+            var adminRole = new Role() { Name = "Admin" };
+            var userRole = new Role() { Name = "User" };
+            context.Roles.Add(adminRole);
+            context.Roles.Add(userRole);
+            context.SaveChanges();
+
+            var admin = new User() { UserName = "Admin" };
+            context.Users.Add(admin);
+            context.SaveChanges();
+
+            var t = new UserRole
             {
-                Email = "",
-                Name = "Admin",
-                IsAdmin = true
+                RoleId = adminRole.Id,
+                UserId = admin.Id
             };
 
-            context.Users.Add(admin);
+            admin.Roles.Add(t);
+            context.SaveChanges();            
         }
     }
 }

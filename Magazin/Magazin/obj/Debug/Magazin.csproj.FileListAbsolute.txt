@@ -90,3 +90,5 @@ C:\Sources\magazin\Magazin\Magazin\bin\Microsoft.Owin.Security.MicrosoftAccount.
 C:\Sources\magazin\Magazin\Magazin\obj\Debug\Magazin.csprojResolveAssemblyReference.cache
 C:\Sources\magazin\Magazin\Magazin\obj\Debug\Magazin.dll
 C:\Sources\magazin\Magazin\Magazin\obj\Debug\Magazin.pdb
+C:\Sources\magazin\Magazin\Magazin\bin\Base.Security.dll
+C:\Sources\magazin\Magazin\Magazin\bin\Base.Security.pdb

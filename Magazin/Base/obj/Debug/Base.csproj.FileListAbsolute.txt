@@ -5,6 +5,5 @@ D:\Sources\magazin\Magazin\Base\obj\Debug\Base.dll
 D:\Sources\magazin\Magazin\Base\obj\Debug\Base.pdb
 C:\Sources\magazin\Magazin\Base\bin\Debug\Base.dll
 C:\Sources\magazin\Magazin\Base\bin\Debug\Base.pdb
-C:\Sources\magazin\Magazin\Base\obj\Debug\Base.csprojResolveAssemblyReference.cache
 C:\Sources\magazin\Magazin\Base\obj\Debug\Base.dll
 C:\Sources\magazin\Magazin\Base\obj\Debug\Base.pdb

@@ -17,12 +17,7 @@ namespace Magazin
     {
         protected void Application_Start()
         {
-            var container = new Container();
-
-            using (var context = new DataContext())
-            {
-                context.Database.Initialize(true);
-            }
+            var container = new Container();           
             
             Bindings.Bind(container);
             

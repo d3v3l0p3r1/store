@@ -17,8 +17,9 @@ namespace Magazin.Controllers
         }
 
         public ActionResult Index()
-        {        
-            return View();            
+        {
+            var products = _productService.All();
+            return View(products.ToList());            
         }  
     }
 }
