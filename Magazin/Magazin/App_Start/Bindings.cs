@@ -23,7 +23,9 @@ namespace Magazin.App_Start
             container.Register<IUserStore<User, int>, UserRepository>();
             container.Register<IUserRepository, UserRepository>();
             container.Register<IRepository<Product>, Repository<Product>>();
+            container.Register<IRepository<ProductCategory>, Repository<ProductCategory>>();
             container.Register<IProductService, ProductService>();
+            container.Register<IProductCategoryService, ProductCategoryService>();
         }
     }
 }

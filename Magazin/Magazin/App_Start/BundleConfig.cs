@@ -8,6 +8,13 @@ namespace Magazin
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
+                 "~/Content/vendor/jszip/jszip.js",
+                "~/Content/vendor/kendo/js/kendo.all.js",
+                "~/Content/vendor/kendo/js/kendo.aspnetmvc.js",
+                "~/Content/vendor/kendo/js/kendo.culture.ru.custom.js"
+                ));
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -25,6 +32,11 @@ namespace Magazin
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/vendor/kendo/styles/kendo.common.min.css",
+                "~/Content/vendor/kendo/styles/kendo.common-material.min.css",
+                "~/Content/vendor/kendo/styles/kendo.material.min.css",
+                "~/Content/vendor/kendo/styles/kendo.mobile.switch.css",
+                "~/Content/less/kendo.overrides.css",
                       "~/Content/site.css"));
         }
     }
