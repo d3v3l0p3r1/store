@@ -15,6 +15,7 @@ namespace Magazin.App_Start
             Mapper.Initialize(x =>
             {
                 x.CreateMap<ProductCategory, ProductCategoryDTO>();
+                x.CreateMap<Product, ProductDTO>();
             });
         }
     }

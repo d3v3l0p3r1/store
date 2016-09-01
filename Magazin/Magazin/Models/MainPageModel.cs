@@ -5,8 +5,9 @@ using System.Web;
 
 namespace Magazin.Models
 {
-    public class LeftMenuModel
+    public class MainPageModel
     {
         public List<ProductCategoryDTO> ProductCategories = new List<ProductCategoryDTO>();
+        public int CurrentCategory { get; set; }
     }
 }

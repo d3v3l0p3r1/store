@@ -41,15 +41,32 @@ namespace Data.DAL
         {
             base.Seed(context);
 
-            ProductCategory category = new ProductCategory() { Title = "Базовая" };
-            context.ProductCategories.Add(category);
+            for (int i = 0; i < 25; i++)
+            {
+                var cat = new ProductCategory
+                {
+                    Title = $"Category {i}"
+                };
+                context.ProductCategories.Add(cat);
+            }
             context.SaveChanges();
 
+            var random = new Random();
 
-            var product = new Product { Title = " Dwadwadwa", ProductCategory = category };
+            for (int i = 0; i < 1000; i++)
+            {
+                var product = new Product
+                {
+                    ProductCategoryID = random.Next(1, 15),
+                    Title = $"product {i}"
+                };
+                context.Products.Add(product);
+            }
 
-            context.Products.Add(product);
             context.SaveChanges();
+
+            
+            
 
 
             var adminRole = new Role() { Name = "Admin" };

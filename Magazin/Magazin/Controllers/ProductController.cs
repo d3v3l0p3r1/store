@@ -8,6 +8,8 @@ using Data.DAL;
 using Data.Services;
 using Magazin.Models;
 using AutoMapper;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 
 namespace Magazin.Controllers
 {
@@ -24,16 +26,22 @@ namespace Magazin.Controllers
 
         public ActionResult Index()
         {
-            var products = _productService.All();
-            return View(products.ToList());            
+            var mdl = new MainPageModel();
+            mdl.ProductCategories = _categoryService.GetAll().ProjectTo<ProductCategoryDTO>().ToList();
+            return View(mdl);
         }
 
-        public ActionResult LeftMenu()
+        [HttpPost]
+        public JsonResult GetProducts([DataSourceRequest] DataSourceRequest request)
         {
-            var mdl = new LeftMenuModel();
-            mdl.ProductCategories = _categoryService.GetAll().ProjectTo<ProductCategoryDTO>().ToList();
+            var products = _productService.GetAll().ProjectTo<ProductDTO>();
 
-            return PartialView("ProductCategories", mdl);
+            var result = new JsonResult
+            {
+                Data = products.ToDataSourceResult(request)
+            };
+
+            return result;
         }
     }
 }
