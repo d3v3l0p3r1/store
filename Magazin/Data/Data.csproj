@@ -89,6 +89,7 @@
     <Compile Include="DAL\DataContext.cs" />
     <Compile Include="DAL\RoleRepository.cs" />
     <Compile Include="DAL\UserRepository.cs" />
+    <Compile Include="Entities\BalanceOfProduct.cs" />
     <Compile Include="Entities\Bascet.cs" />
     <Compile Include="Migrations\EFEntitiConfiguration.cs" />
     <Compile Include="Entities\Product.cs" />

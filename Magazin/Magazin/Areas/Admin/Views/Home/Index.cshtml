@@ -1,0 +1,17 @@
+﻿@model Magazin.Models.DialogViewModel
+@{
+    string wrapID = Guid.NewGuid().ToString("N");
+    
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div id="@wrapID">
+    @{
+        Html.RenderAction("Products", "Product");
+    }
+</div>
+
+
+
+
+

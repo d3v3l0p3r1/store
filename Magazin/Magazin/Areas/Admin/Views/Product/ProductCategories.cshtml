@@ -1,0 +1,10 @@
+﻿@model Magazin.Models.DialogViewModel
+@using Kendo.Mvc.UI
+@{
+    string wrapID = Guid.NewGuid().ToString("N");
+}
+
+@(Html.Kendo().TreeView()
+        .Name(wrapID)
+        .DataSource(ds => ds.Read(read => read.Action("GetCategories", "Product", new { Area = "Admin" })))
+)

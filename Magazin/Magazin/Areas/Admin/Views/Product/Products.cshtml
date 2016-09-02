@@ -1,0 +1,13 @@
+﻿@using Kendo.Mvc.UI
+@model Magazin.Models.DialogViewModel
+@{
+    string wrapID = Guid.NewGuid().ToString("N");
+}
+
+@(Html.Kendo().Splitter().Name(wrapID)
+        .Panes(p =>
+        {
+            p.Add().Content(Html.Partial("~/Areas/Admin/Views/Product/ProductCategories.cshtml", Model).ToHtmlString());
+            p.Add().Content(Html.Partial("~/Areas/Admin/Views/Product/ProductsGrid.cshtml", Model).ToHtmlString());
+        })
+        )

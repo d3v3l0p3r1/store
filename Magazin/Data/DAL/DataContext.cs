@@ -13,13 +13,22 @@ namespace Data.DAL
     public class DataContext : IdentityDbContext<User, Role, int, Login, UserRole, Claim>
     {
         static DataContext()
-        {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DataContext, EFContextConfiguration>());
-            Database.SetInitializer(new DbInitializer());
+        {                                        
+            
         }
 
         public DataContext() : base(nameof(DataContext))
         {
+            if (Database.Exists())
+            {
+                Database.SetInitializer(new MigrateDatabaseToLatestVersion<DataContext, EFContextConfiguration>());
+            }
+            else
+            {
+                Database.SetInitializer(new DbInitilializer());
+            }
+            
+
             Configuration.LazyLoadingEnabled = true;
         }
 
@@ -33,9 +42,11 @@ namespace Data.DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Bascet> Bascets { get; set; }
+        public DbSet<BascetProduct> BascetProducts { get; set; }
+        public DbSet<BalanceOfProduct> BalanceOfProducts { get; set; }
     }
 
-    public class DbInitializer : CreateDatabaseIfNotExists<DataContext>
+    internal class DbInitilializer : CreateDatabaseIfNotExists<DataContext>
     {
         protected override void Seed(DataContext context)
         {
@@ -65,10 +76,6 @@ namespace Data.DAL
 
             context.SaveChanges();
 
-            
-            
-
-
             var adminRole = new Role() { Name = "Admin" };
             var userRole = new Role() { Name = "User" };
             context.Roles.Add(adminRole);
@@ -86,7 +93,7 @@ namespace Data.DAL
             };
 
             admin.Roles.Add(t);
-            context.SaveChanges();            
+            context.SaveChanges();
         }
     }
 }

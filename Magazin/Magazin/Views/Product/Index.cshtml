@@ -4,7 +4,7 @@
 
 @using Kendo.Mvc.UI
 @using Magazin.Models
-@model Magazin.Models.MainPageModel
+@model DialogViewModel
 @{
     string wrapID = Guid.NewGuid().ToString("N");
     string menuID = Guid.NewGuid().ToString("N");
@@ -14,13 +14,6 @@
 
 <div id="@wrapID">
    
-    <ul id="@menuID" class="left-menu">
-        @foreach (var cat in Model.ProductCategories)
-        {
-            <li data-id="@cat.Id">@cat.Title</li>
-        }
-    </ul>
-
     @(Html.Kendo().Grid<ProductDTO>().Name(gridID).DataSource(ds => ds
           .Ajax()
           .Read(r => r.Action("GetProducts", "Product").Data("onAdditional").Type(HttpVerbs.Post))).AutoBind(true).Pageable(p => p.Enabled(true)).Filterable(f => f.Enabled(true).Extra(false).Mode(GridFilterMode.Row)).Selectable(s => s.Type(GridSelectionType.Row)))

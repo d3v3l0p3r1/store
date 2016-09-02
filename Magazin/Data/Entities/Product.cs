@@ -8,5 +8,7 @@ namespace Data.Entities
 
         public int ProductCategoryID { get; set; }
         public virtual ProductCategory ProductCategory { get; set; }
+
+        public int Decimal { get; set; }
     }
 }

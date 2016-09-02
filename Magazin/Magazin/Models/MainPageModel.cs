@@ -5,9 +5,15 @@ using System.Web;
 
 namespace Magazin.Models
 {
-    public class MainPageModel
+    public class DialogViewModel
     {
-        public List<ProductCategoryDTO> ProductCategories = new List<ProductCategoryDTO>();
+        public DialogViewModel()
+        {
+            DialogId = Guid.NewGuid().ToString("N");
+        }
+
+        public string DialogId { get; }
+
         public int CurrentCategory { get; set; }
     }
 }

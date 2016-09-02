@@ -32,6 +32,7 @@ namespace Magazin
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/Layout.css",
                       "~/Content/vendor/kendo/styles/kendo.common.min.css",
                 "~/Content/vendor/kendo/styles/kendo.common-material.min.css",
                 "~/Content/vendor/kendo/styles/kendo.material.min.css",

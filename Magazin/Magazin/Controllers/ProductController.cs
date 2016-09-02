@@ -26,8 +26,7 @@ namespace Magazin.Controllers
 
         public ActionResult Index()
         {
-            var mdl = new MainPageModel();
-            mdl.ProductCategories = _categoryService.GetAll().ProjectTo<ProductCategoryDTO>().ToList();
+            var mdl = new DialogViewModel();            
             return View(mdl);
         }
 
