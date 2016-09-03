@@ -7,11 +7,12 @@ using AutoMapper.QueryableExtensions;
 using Data.Services;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Magazin.Controllers;
 using Magazin.Models;
 
 namespace Magazin.Areas.Admin.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
 
         private readonly IProductCategoryService _categoryService;
@@ -27,35 +28,43 @@ namespace Magazin.Areas.Admin.Controllers
         public ActionResult Products()
         {
             var mdl = new DialogViewModel();
-            return View("Products", mdl);
+            return PartialView("Products", mdl);
         }
 
         [HttpGet]        
         public JsonResult GetCategories()
         {
-            var cats = _categoryService.GetAll();
-
-            var result = new JsonResult()
+            using (var uow = CreateUnitOfWork())
             {
-                Data = cats,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
+                var cats = _categoryService.GetAll(uow);
 
-            return result;
+                var result = new JsonResult()
+                {
+                    Data = cats,
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+
+                return result;
+            }
+
 
         }
 
         public JsonResult GetProducts([DataSourceRequest] DataSourceRequest request)
         {
-            var products = _productService.GetAll();
-
-            var result = new JsonResult
+            using (var uow = CreateUnitOfWork())
             {
-                Data = products.ToDataSourceResult(request),
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
+                var products = _productService.GetAll(uow);
 
-            return result;
+                var result = new JsonResult
+                {
+                    Data = products.ToDataSourceResult(request),
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+
+                return result;
+            }
+            
         }
     }
 }

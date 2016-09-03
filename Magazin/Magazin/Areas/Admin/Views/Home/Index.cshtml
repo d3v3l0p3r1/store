@@ -1,15 +1,12 @@
-﻿@model Magazin.Models.DialogViewModel
-@{
-    string wrapID = Guid.NewGuid().ToString("N");
-    
-    Layout = "../Shared/_Layout.cshtml";
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<div id="@wrapID">
-    @{
-        Html.RenderAction("Products", "Product");
-    }
+<script src="@Url.Content("~/Scripts/require.js")" data-main="/Scripts/app/main"></script>
+<div id="app">
+    
 </div>
+
 
 
 

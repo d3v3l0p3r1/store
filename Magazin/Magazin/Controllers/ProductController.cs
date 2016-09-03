@@ -13,7 +13,7 @@ using Kendo.Mvc.UI;
 
 namespace Magazin.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
         private readonly IProductService _productService;
         private readonly IProductCategoryService _categoryService;
@@ -26,21 +26,26 @@ namespace Magazin.Controllers
 
         public ActionResult Index()
         {
-            var mdl = new DialogViewModel();            
+            var mdl = new DialogViewModel();
             return View(mdl);
         }
 
         [HttpPost]
         public JsonResult GetProducts([DataSourceRequest] DataSourceRequest request)
         {
-            var products = _productService.GetAll().ProjectTo<ProductDTO>();
-
-            var result = new JsonResult
+            using (var uow = CreateUnitOfWork())
             {
-                Data = products.ToDataSourceResult(request)
-            };
+                var products = _productService.GetAll(uow).ProjectTo<ProductDTO>();
 
-            return result;
+                var result = new JsonResult
+                {
+                    Data = products.ToDataSourceResult(request)
+                };
+
+                return result;
+            }
+
+
         }
     }
 }

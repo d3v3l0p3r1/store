@@ -2,9 +2,33 @@
 @using Kendo.Mvc.UI
 @{
     string wrapID = Guid.NewGuid().ToString("N");
+    string toolbarName = Guid.NewGuid().ToString("N");
 }
+
+@(Html.Kendo().ToolBar()
+        .Name(toolbarName)
+        .Items(toolbar =>
+        {
+            toolbar.Add().Type(CommandType.ButtonGroup).Buttons(btns =>
+            {
+                btns.Add().Text("Добавить корневой").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-folder-plus").HtmlAttributes(new { title = "Создать", data_action = "Add" });
+                btns.Add().Text("Добавить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-plus").HtmlAttributes(new { title = "Создать", data_action = "Add" });
+                btns.Add().Text("Редактировать").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-pencil").HtmlAttributes(new { title = "Редактировать", data_action = "Edit" });
+                btns.Add().Text("Удалить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-close").HtmlAttributes(new { title = "Удалить", data_action = "Delete" });
+            });
+        }
+      )
+)
 
 @(Html.Kendo().TreeView()
         .Name(wrapID)
         .DataSource(ds => ds.Read(read => read.Action("GetCategories", "Product", new { Area = "Admin" })))
 )
+
+
+<script>
+    $(function() {
+        var $toolbar = $('#@toolbarName');
+        $toolbar.find(".k-sprite").removeClass("k-sprite");
+    })
+</script>

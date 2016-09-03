@@ -88,6 +88,7 @@
   <ItemGroup>
     <Compile Include="DAL\DataContext.cs" />
     <Compile Include="DAL\RoleRepository.cs" />
+    <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="DAL\UserRepository.cs" />
     <Compile Include="Entities\BalanceOfProduct.cs" />
     <Compile Include="Entities\Bascet.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Entities\ProductCategory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DAL\Repository.cs" />
+    <Compile Include="Services\BalanceOfProductservice.cs" />
     <Compile Include="Services\IProductCategoryService.cs" />
     <Compile Include="Services\IProductService.cs" />
     <Compile Include="Services\ProductCategoryService.cs" />

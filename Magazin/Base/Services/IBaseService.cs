@@ -9,6 +9,6 @@ namespace Base.Services
 {
     public interface IBaseService<T> where T : BaseEntity
     {
-        IQueryable<T> GetAll();
+        IQueryable<T> GetAll(IUnitOfWork uow);
     }
 }

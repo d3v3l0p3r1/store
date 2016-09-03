@@ -1,0 +1,37 @@
+﻿@using Kendo.Mvc.UI
+@{
+    string wrapId = Guid.NewGuid().ToString("N");
+    string toolbarName = Guid.NewGuid().ToString("N");
+}
+
+@(Html.Kendo().ToolBar()
+        .Name(toolbarName)
+        .Items(toolbar =>
+        {
+            toolbar.Add().Type(CommandType.ButtonGroup).Buttons(btns =>
+            {
+
+                btns.Add().Text("Добавить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-plus").HtmlAttributes(new { title = "Создать", data_action = "Add" });
+                btns.Add().Text("Редактировать").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-pencil").HtmlAttributes(new { title = "Редактировать", data_action = "Edit" });
+                btns.Add().Text("Удалить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-close").HtmlAttributes(new { title = "Удалить", data_action = "Delete" });
+            });
+        }
+      )
+)
+
+
+@(Html.Kendo().Grid<Data.Entities.BalanceOfProduct>()
+        .Name(wrapId)
+        .DataSource(ds => ds
+            .Ajax()
+            .Read(read => read.Action("", "Balance"))
+
+    ))
+
+
+<script>
+    $(function() {
+        var $toolbar = $('#@toolbarName');
+        $toolbar.find(".k-sprite").removeClass("k-sprite");
+    })
+</script>

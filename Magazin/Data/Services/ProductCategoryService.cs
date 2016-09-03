@@ -10,9 +10,6 @@ using Data.Entities;
 namespace Data.Services
 {
     public class ProductCategoryService : BaseService<ProductCategory>, IProductCategoryService
-    {
-        public ProductCategoryService(IRepository<ProductCategory> repository) : base(repository)
-        {
-        }
+    {     
     }
 }

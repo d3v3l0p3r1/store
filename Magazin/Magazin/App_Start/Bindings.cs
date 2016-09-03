@@ -6,6 +6,7 @@ using System.Web;
 using Base.DAL;
 using Base.Security.Entities;
 using Base.Security.Services;
+using Base.Services;
 using Data;
 using Data.DAL;
 using Data.Entities;
@@ -19,11 +20,9 @@ namespace Magazin.App_Start
     public class Bindings
     {
         public static void Bind(Container container)
-        {            
-            container.Register<IUserStore<User, int>, UserRepository>();
+        {                        
             container.Register<IUserRepository, UserRepository>();
-            container.Register<IRepository<Product>, Repository<Product>>();
-            container.Register<IRepository<ProductCategory>, Repository<ProductCategory>>();
+            container.Register<IBaseService<BalanceOfProduct>, BalanceOfProductService>();
             container.Register<IProductService, ProductService>();
             container.Register<IProductCategoryService, ProductCategoryService>();
         }

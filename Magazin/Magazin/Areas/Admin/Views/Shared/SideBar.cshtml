@@ -1,7 +1,7 @@
 ﻿<div>
     <ul id="adminMenu">
-        <li>@Html.ActionLink("Продукты", "Products", "Product")</li>
-        <li>Остатки</li>
+        <li><a href="#/Admin/Product/Products">Продукты</a></li>
+        <li><a href="#/Admin/Balance/Balances">Остатки</a></li>        
     </ul>
 </div>
 
@@ -10,5 +10,5 @@
 <script>
     $('#adminMenu').kendoMenu({
         orientation: "vertical"
-    });
+    });    
 </script>

@@ -43,10 +43,12 @@
   <ItemGroup>
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\IDataContext.cs" />
     <Compile Include="Services\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IBaseService.cs" />
     <Compile Include="Services\IServiceLocator.cs" />
+    <Compile Include="Services\IUnitOfWork.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

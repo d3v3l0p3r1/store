@@ -9,7 +9,8 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/kendo");   
+    @Scripts.Render("~/bundles/kendo");
+    
 
 </head>
 <body>
@@ -29,21 +30,20 @@
         </div>
     </div>
 
-<div class="body-content">
-    <div class="row">
-        <div class="col-md-2">
-            @{Html.RenderPartial("SideBar");}
-        </div>
-        <div class="col-md-10">
-            @RenderBody()
-
+    <div class="body-content">
+        <div class="row">
+            <div class="col-md-2">
+                @{Html.RenderPartial("SideBar");}
+            </div>
+            <div class="col-md-10">
+                @RenderBody()
+            </div>
         </div>
     </div>
 
-</div>
+
     
-
-
+    @RenderSection("scripts", false)
 
 </body>
 </html>
