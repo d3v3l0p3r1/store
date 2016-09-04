@@ -31,8 +31,8 @@ namespace Magazin.Areas.Admin.Controllers
             return PartialView("Products", mdl);
         }
 
-        [HttpGet]        
-        public JsonResult GetCategories()
+        
+        public JsonResult GetCategories([DataSourceRequest]DataSourceRequest request)
         {
             using (var uow = CreateUnitOfWork())
             {
@@ -40,7 +40,7 @@ namespace Magazin.Areas.Admin.Controllers
 
                 var result = new JsonResult()
                 {
-                    Data = cats,
+                    Data = cats.ToTreeDataSourceResult(request),
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
 
@@ -50,11 +50,16 @@ namespace Magazin.Areas.Admin.Controllers
 
         }
 
-        public JsonResult GetProducts([DataSourceRequest] DataSourceRequest request)
+        public JsonResult GetProducts([DataSourceRequest] DataSourceRequest request, int? categoryId)
         {
             using (var uow = CreateUnitOfWork())
             {
                 var products = _productService.GetAll(uow);
+
+                if (categoryId.HasValue)
+                {
+                    products = products.Where(x => x.ProductCategoryID == categoryId.Value);
+                }
 
                 var result = new JsonResult
                 {

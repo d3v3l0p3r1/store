@@ -8,6 +8,11 @@ namespace Magazin
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/bundles/dialogControls").Include(
+                "~/Scripts/app/dialogControl.js"
+                ));
+
+
             bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
                 "~/Content/vendor/jszip/jszip.js",
                 "~/Content/vendor/kendo/js/kendo.all.js",

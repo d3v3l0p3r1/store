@@ -10,5 +10,10 @@ namespace Data.Entities
     public class ProductCategory : BaseEntity
     {
         public string Title { get; set; }
+
+        public int? ParentId { get; set; }
+        public virtual ProductCategory Parent { get; set; }
     }
+
+
 }

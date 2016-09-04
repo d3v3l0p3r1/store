@@ -43,9 +43,7 @@ namespace Magazin.Controllers
                 };
 
                 return result;
-            }
-
-
+            }           
         }
     }
 }

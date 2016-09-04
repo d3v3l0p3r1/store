@@ -1,9 +1,12 @@
 ﻿@model Magazin.Models.DialogViewModel
+@using Data.Entities
 @using Kendo.Mvc.UI
 @{
-    string wrapID = Guid.NewGuid().ToString("N");
-    string toolbarName = Guid.NewGuid().ToString("N");
+    string wrapId = "tree_" + Guid.NewGuid().ToString("N");
+    string toolbarName = "tlbr_" + Guid.NewGuid().ToString("N");
 }
+
+
 
 @(Html.Kendo().ToolBar()
         .Name(toolbarName)
@@ -20,15 +23,57 @@
       )
 )
 
-@(Html.Kendo().TreeView()
-        .Name(wrapID)
-        .DataSource(ds => ds.Read(read => read.Action("GetCategories", "Product", new { Area = "Admin" })))
+@(Html.Kendo().TreeList<ProductCategory>()
+        .Name(wrapId)
+        .Selectable(true)
+        .Filterable()
+        .Sortable()
+        .Editable(false)        
+        .Events(e =>
+        {
+            e.Change(wrapId + ".onChange");
+        })        
+        .Columns(columns =>
+        {
+            columns.Add().Title("Наименование").Field(x => x.Title);
+        })        
+        .DataSource(ds => ds
+            .Model(x =>
+            {
+                x.Id(p => p.Id);
+                x.ParentId(p => p.ParentId);
+            })
+            .PageSize(15)
+            .Read(read => read                
+                .Action("GetCategories", "Product", new { Area = "Admin" })))
 )
 
-
 <script>
-    $(function() {
+    var dialogControl = window['@Model.DialogId'];
+    window['@wrapId'] = new SimpleControl('@wrapId', 'categories');
+
+    (function () {
+        var tree = window['@wrapId'];
+
+        dialogControl.addControl(tree);
+
+        tree.onChange = function () {            
+            var treeview = $("#@wrapId").data("kendoTreeList");
+            var $data = treeview.select();
+            var dataItem = this.dataItem($data);
+
+            var args = {
+                sender: tree,
+                event: "change",
+                data: dataItem
+            }
+
+            dialogControl.controlFire(args);
+        };
+    })();
+
+    $(function () {
         var $toolbar = $('#@toolbarName');
         $toolbar.find(".k-sprite").removeClass("k-sprite");
-    })
+    });
 </script>

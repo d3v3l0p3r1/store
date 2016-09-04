@@ -1,10 +1,14 @@
 ﻿@using Kendo.Mvc.UI
+@model Magazin.Models.DialogViewModel
 @{
-    string wrapId = Guid.NewGuid().ToString("N");
-    string toolbarName = Guid.NewGuid().ToString("N");
+    string wrapId = "wrp_" + Guid.NewGuid().ToString("N");
+    string toolbarName = "tlbr_" + Guid.NewGuid().ToString("N");
+    string gridId = "grid_" + Guid.NewGuid().ToString("N");
 }
 
-@(Html.Kendo().ToolBar()
+<div id="@wrapId">
+
+    @(Html.Kendo().ToolBar()
         .Name(toolbarName)
         .Items(toolbar =>
         {
@@ -15,23 +19,102 @@
                 btns.Add().Text("Редактировать").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-pencil").HtmlAttributes(new { title = "Редактировать", data_action = "Edit" });
                 btns.Add().Text("Удалить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-close").HtmlAttributes(new { title = "Удалить", data_action = "Delete" });
             });
-        }
-      )
-)
+        })
+        .Events(e =>
+        {
+            e.Click(wrapId + ".onToolbarClick");
+        })
+    )
 
 
-@(Html.Kendo().Grid<Data.Entities.Product>()
-        .Name(wrapId)
-        .DataSource(ds=> ds
+    @(Html.Kendo().Grid<Data.Entities.Product>()
+        .Name(gridId)
+        .Pageable()
+        .HtmlAttributes(new {height = "100%"})
+        .AutoBind(true)
+        .DataSource(ds => ds
             .Ajax()
-            .Read(read=> read.Action("GetProducts", "Product"))
-
+            .Read(read => read.Action("GetProducts", "Product"))
+            .PageSize(15)
     ))
+</div>
 
 
 <script>
-    $(function() {
+    var dialogControl = window['@Model.DialogId'];
+    window['@wrapId'] = new SimpleControl('@wrapId', "productGrid");
+
+    (function () {
+        var productsControl = window['@wrapId'];
+        dialogControl.addControl(productsControl);
+
+        productsControl.createProduct = function() {};
+
+        productsControl.deleteProduct = function() {
+
+        };
+        productsControl.editProduct = function() {
+
+        };
+
+        productsControl.resize = function() {
+            var grid = $('#@gridId').data('kendoGrid');
+
+            grid.resize(1000);
+            console.log("resize grid");
+        }
+
+        productsControl.changeCategory = function(cat) {
+            var grid = $('#@gridId').data('kendoGrid');
+            var url = grid.dataSource.transport.options.read.url;
+
+            grid.dataSource.transport.options.read.url = productsControl.replaceUrlParametr(url, 'categoryId', cat.Id);
+            grid.dataSource.read();
+        };
+
+        productsControl.onControlFire = function (e) {
+            switch (e.sender.desc) {
+                case "categories":
+                    {
+                        switch (e.event) {
+                            case "change":
+                                {
+                                    productsControl.changeCategory(e.data);
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+            }
+        };
+
+        productsControl.onToolbarClick = function (e) {
+            var action = e.target.attr('data-action');
+
+            switch (action) {
+                case "Add":
+                    {
+                        window['@wrapId'].createProduct();
+                        break;
+                    }
+                case "Delete":
+                    {
+                        window['@wrapId'].deleteProduct();
+                        break;
+                    }
+                case "Edit":
+                    {
+                        window['@wrapId'].editProduct();
+                        break;
+                    }
+                default:
+            }
+        }
+    })();
+
+    $(function () {
         var $toolbar = $('#@toolbarName');
-        $toolbar.find(".k-sprite").removeClass("k-sprite");        
-    })
+        $toolbar.find(".k-sprite").removeClass("k-sprite");
+    });
+
 </script>

@@ -3,12 +3,15 @@
 }
 
 <script src="@Url.Content("~/Scripts/require.js")" data-main="/Scripts/app/main"></script>
-<div id="app">
-    
+
+
+
+<div id="app" style="height: 100%">    
 </div>
 
 
-
-
-
-
+<script>
+    var router = new kendo.Router();
+    router.start();
+    router.navigate('/Admin/Product/Products');
+</script>

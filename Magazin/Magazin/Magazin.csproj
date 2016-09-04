@@ -228,7 +228,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\MainPageModel.cs" />
+    <Compile Include="Models\DialogViewModel.cs" />
     <Compile Include="Models\ProductCategoryDTO.cs" />
     <Compile Include="Models\ProductDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -263,6 +263,7 @@
     <Content Include="Scripts\ai.0.22.19-build00125.js" />
     <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
     <Content Include="Scripts\app\app.js" />
+    <Content Include="Scripts\app\dialogControl.js" />
     <Content Include="Scripts\app\router.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -430,8 +431,8 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Balance\Balances.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\ProductDetailView.cshtml" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

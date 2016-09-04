@@ -9,7 +9,7 @@ namespace Magazin.Models
     {
         public DialogViewModel()
         {
-            DialogId = Guid.NewGuid().ToString("N");
+            DialogId = "dialog_" + Guid.NewGuid().ToString("N");
         }
 
         public string DialogId { get; }
