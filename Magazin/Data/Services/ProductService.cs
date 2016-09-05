@@ -11,19 +11,10 @@ using Data.Entities;
 namespace Data.Services
 {
     public class ProductService : BaseService<Product>, IProductService
-    {
-        private readonly DataContext _dataContext;
+    {        
 
-        public ProductService(IRepository<Product> repository) : base(repository)
+        public ProductService()
         {
-            _dataContext = new DataContext();
-        }
-
-        public IQueryable<Product> All()
-        {
-            return _dataContext.Products;
-        }
-
-
+        }        
     }
 }

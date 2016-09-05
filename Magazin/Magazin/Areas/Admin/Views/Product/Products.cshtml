@@ -1,0 +1,49 @@
+﻿@using Kendo.Mvc.UI
+@model Magazin.Models.DialogViewModel
+@{
+    string wrapID = Guid.NewGuid().ToString("N");    
+}
+
+
+<div>
+    <h1></h1>
+</div>
+
+<script type="text/javascript">
+    window['@Model.DialogId'] = new DialogControl('@Model.DialogId');
+</script>
+
+
+@(Html.Kendo().Splitter().Name(wrapID)
+        .Panes(p =>
+        {
+            p.Add().Content(Html.Partial("~/Areas/Admin/Views/Product/ProductCategories.cshtml", Model).ToHtmlString());
+            p.Add().Content(Html.Partial("~/Areas/Admin/Views/Product/ProductsGrid.cshtml", Model).ToHtmlString());
+        })
+      )
+
+
+<script>
+    $(function () {
+
+        setTimeout(function () {
+            var splitter = $("#@wrapID").data("kendoSplitter");
+            var control = window['@Model.DialogId'];
+
+            var onResize = function () {
+                splitter.resize();
+                control.resizeChilds();
+            };
+
+            splitter.resize();
+
+            control.resizeChilds();
+
+            $(window).on("resize", onResize);
+
+        }, 500);
+
+    });
+</script>
+
+

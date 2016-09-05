@@ -1,17 +1,39 @@
-﻿
-@{
-    Layout = null;
+﻿@{
+    Layout = "../Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
+@using Kendo.Mvc.UI
+@using Magazin.Models
+@model DialogViewModel
+@{
+    string wrapID = Guid.NewGuid().ToString("N");
+    string menuID = Guid.NewGuid().ToString("N");
+    string gridID = Guid.NewGuid().ToString("N");
+}
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <div> 
-    </div>
-</body>
-</html>
+
+<div id="@wrapID">
+   
+    @(Html.Kendo().Grid<ProductDTO>().Name(gridID).DataSource(ds => ds
+          .Ajax()
+          .Read(r => r.Action("GetProducts", "Product").Data("onAdditional").Type(HttpVerbs.Post))).AutoBind(true).Pageable(p => p.Enabled(true)).Filterable(f => f.Enabled(true).Extra(false).Mode(GridFilterMode.Row)).Selectable(s => s.Type(GridSelectionType.Row)))
+
+</div>
+
+
+
+<script>
+
+    var onAdditional = function() {
+        return {}
+    };
+
+    $(function() {
+        $('#@menuID').kendoMenu({
+            orientation : "vertical"
+        });
+
+
+    })
+</script>
+

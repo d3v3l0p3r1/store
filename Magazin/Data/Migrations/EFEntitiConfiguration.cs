@@ -1,5 +1,8 @@
-﻿using System.Data.Entity.Migrations;
+﻿using System;
+using System.Data.Entity.Migrations;
+using Base.Security.Entities;
 using Data.DAL;
+using Data.Entities;
 
 namespace Data.Migrations
 {
@@ -10,5 +13,7 @@ namespace Data.Migrations
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
         }
+
+ 
     }
 }

@@ -91,6 +91,7 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ApplicationSignInManager.cs" />
     <Compile Include="Services\ApplicationUserManager.cs" />
     <Compile Include="Services\RoleRepository.cs" />
     <Compile Include="Services\IUserRepository.cs" />

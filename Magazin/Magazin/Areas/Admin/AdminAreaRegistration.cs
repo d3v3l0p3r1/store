@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace Magazin.Areas.Admin
 {
@@ -17,9 +18,12 @@ namespace Magazin.Areas.Admin
             context.MapRoute(
                 "Admin_default",
                 "Admin/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional },
+                new { controller = "Home",  action = "Index", id = UrlParameter.Optional },
                 namespaces:new []{ "Magazin.Areas.Admin.Controllers" }
             );
+
+            context.MapRoute("Products", "Admin/Products/", new {controller = "Product", action = "Products" });
+
         }
     }
 }
