@@ -1,12 +1,11 @@
 ﻿@using Kendo.Mvc.UI
 @model Magazin.Models.DialogViewModel
 @{
-    string wrapID = Guid.NewGuid().ToString("N");    
+    string wrapID = Guid.NewGuid().ToString("N");
 }
 
 
 <div>
-    <h1></h1>
 </div>
 
 <script type="text/javascript">
@@ -14,34 +13,39 @@
 </script>
 
 
-@(Html.Kendo().Splitter().Name(wrapID)
+@(Html.Kendo().Splitter()
+        .Name(wrapID)
         .Panes(p =>
         {
             p.Add().Content(Html.Partial("~/Areas/Admin/Views/Product/ProductCategories.cshtml", Model).ToHtmlString());
             p.Add().Content(Html.Partial("~/Areas/Admin/Views/Product/ProductsGrid.cshtml", Model).ToHtmlString());
         })
-      )
-
-
+)
 <script>
     $(function () {
+        var control = window['@Model.DialogId'];
+        var height = $(window).height() - $('#topmenu').height() - 65; //65 magic        
+        var $splitter = $('#@wrapID');
+        var splitter = $splitter.data('kendoSplitter');
+
+        $splitter.height(height);
+        control.resizeChilds(height);
+        splitter.resize();
 
         setTimeout(function () {
-            var splitter = $("#@wrapID").data("kendoSplitter");
-            var control = window['@Model.DialogId'];
 
             var onResize = function () {
+                var h = $(window).height() - $('#topmenu').height() - 65; //65 magic
+                $splitter.height(h);
                 splitter.resize();
-                control.resizeChilds();
+                control.resizeChilds(h);
             };
-
-            splitter.resize();
-
-            control.resizeChilds();
 
             $(window).on("resize", onResize);
 
         }, 500);
+
+        kendo.resize();
 
     });
 </script>

@@ -7,7 +7,7 @@
 }
 
 <div id="@wrapId">
-
+    <div>
     @(Html.Kendo().ToolBar()
         .Name(toolbarName)
         .Items(toolbar =>
@@ -24,19 +24,27 @@
         {
             e.Click(wrapId + ".onToolbarClick");
         })
-    )
+    )    
+    </div>
 
-
-    @(Html.Kendo().Grid<Data.Entities.Product>()
-        .Name(gridId)
-        .Pageable()
-        .HtmlAttributes(new {height = "100%"})
-        .AutoBind(true)
-        .DataSource(ds => ds
-            .Ajax()
-            .Read(read => read.Action("GetProducts", "Product"))
-            .PageSize(15)
-    ))
+    <div>
+        @(Html.Kendo().Grid<Data.Entities.Product>()
+              .Name(gridId)
+              .Pageable()
+              .AutoBind(false)
+              .Scrollable()
+              .Selectable(s=>s.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row).Enabled(true))
+              .Columns(c =>
+              {
+                  c.Bound(p => p.Title).Title("Наименование");
+                  c.Bound(p => p.Decimal).Title("Цена");
+              })
+              .DataSource(ds => ds
+                  .Ajax()
+                  .Read(read => read.Action("GetProducts", "Product"))
+                  .PageSize(15)
+              ))
+    </div>
 </div>
 
 
@@ -48,23 +56,25 @@
         var productsControl = window['@wrapId'];
         dialogControl.addControl(productsControl);
 
-        productsControl.createProduct = function() {};
+        productsControl.createProduct = function () { };
 
-        productsControl.deleteProduct = function() {
-
-        };
-        productsControl.editProduct = function() {
+        productsControl.deleteProduct = function () {
 
         };
+        productsControl.editProduct = function () {
 
-        productsControl.resize = function() {
-            var grid = $('#@gridId').data('kendoGrid');
+        };
 
-            grid.resize(1000);
-            console.log("resize grid");
+        productsControl.resize = function (h) {
+            var $grid = $('#@gridId');
+            var $dataArea = $grid.find(".k-grid-content");
+            
+            h = h - $('#@toolbarName').outerHeight() - ($grid.outerHeight() - $dataArea.outerHeight(true));
+            
+            $dataArea.height(h);
         }
 
-        productsControl.changeCategory = function(cat) {
+        productsControl.changeCategory = function (cat) {
             var grid = $('#@gridId').data('kendoGrid');
             var url = grid.dataSource.transport.options.read.url;
 

@@ -9,7 +9,7 @@
 
 
 @(Html.Kendo().ToolBar()
-        .Name(toolbarName)
+        .Name(toolbarName)        
         .Items(toolbar =>
         {
             toolbar.Add().Type(CommandType.ButtonGroup).Buttons(btns =>
@@ -32,11 +32,11 @@
         .Events(e =>
         {
             e.Change(wrapId + ".onChange");
-        })        
+        })
         .Columns(columns =>
         {
             columns.Add().Title("Наименование").Field(x => x.Title);
-        })        
+        })
         .DataSource(ds => ds
             .Model(x =>
             {
@@ -44,7 +44,7 @@
                 x.ParentId(p => p.ParentId);
             })
             .PageSize(15)
-            .Read(read => read                
+            .Read(read => read
                 .Action("GetCategories", "Product", new { Area = "Admin" })))
 )
 
@@ -57,7 +57,7 @@
 
         dialogControl.addControl(tree);
 
-        tree.onChange = function () {            
+        tree.onChange = function () {
             var treeview = $("#@wrapId").data("kendoTreeList");
             var $data = treeview.select();
             var dataItem = this.dataItem($data);
@@ -70,6 +70,11 @@
 
             dialogControl.controlFire(args);
         };
+
+        tree.resize = function(h) {
+            $('#@wrapId').height(h);
+            console.log(h);
+        }
     })();
 
     $(function () {

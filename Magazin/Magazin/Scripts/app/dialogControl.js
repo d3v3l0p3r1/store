@@ -29,7 +29,7 @@
         return uri + separator + key + '=' + value;
     },
 
-    resize: function () {}
+    resize: function (h) {}
 });
 
 var DialogControl = BaseDialogControl.extend({
@@ -55,9 +55,9 @@ var DialogControl = BaseDialogControl.extend({
         }
     },
 
-    resizeChilds: function () {
+    resizeChilds: function (h) {  //container height
         for (var id in this.controls) {
-            this.controls[id].resize();
+            this.controls[id].resize(h);
         }
     }
 
