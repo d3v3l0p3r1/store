@@ -8,7 +8,7 @@
 
 <div id="@wrapId">
     <div>
-    @(Html.Kendo().ToolBar()
+        @(Html.Kendo().ToolBar()
         .Name(toolbarName)
         .Items(toolbar =>
         {
@@ -24,7 +24,7 @@
         {
             e.Click(wrapId + ".onToolbarClick");
         })
-    )    
+        )
     </div>
 
     <div>
@@ -33,7 +33,7 @@
               .Pageable()
               .AutoBind(false)
               .Scrollable()
-              .Selectable(s=>s.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row).Enabled(true))
+              .Selectable(s => s.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row).Enabled(true))
               .Columns(c =>
               {
                   c.Bound(p => p.Title).Title("Наименование");
@@ -56,21 +56,37 @@
         var productsControl = window['@wrapId'];
         dialogControl.addControl(productsControl);
 
-        productsControl.createProduct = function () { };
+        productsControl.createProduct = function () {
+
+        };
 
         productsControl.deleteProduct = function () {
 
         };
         productsControl.editProduct = function () {
 
+            var selected = $('#@gridId').data('kendoGrid').select();
+            var entity = $('#@gridId').data('kendoGrid').dataItem(selected);
+
+            var params = {                
+                title: 'Продукт',
+                contentUrl: "@Url.Action("EditProduct","Product")" + '?Id=' + entity.Id
+            };
+
+            var callback = function (e) {
+
+            };
+
+            UiApi.openDetailView(params, callback);
+
         };
 
         productsControl.resize = function (h) {
             var $grid = $('#@gridId');
             var $dataArea = $grid.find(".k-grid-content");
-            
+
             h = h - $('#@toolbarName').outerHeight() - ($grid.outerHeight() - $dataArea.outerHeight(true));
-            
+
             $dataArea.height(h);
         }
 

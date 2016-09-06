@@ -434,6 +434,7 @@
     <Content Include="Areas\Admin\Views\Balance\Balances.cshtml" />
     <Content Include="Areas\Admin\Views\Product\ProductDetailView.cshtml" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
+    <Content Include="Scripts\app\UiApi.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
