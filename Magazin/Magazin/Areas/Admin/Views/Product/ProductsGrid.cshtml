@@ -22,7 +22,7 @@
         })
         .Events(e =>
         {
-            e.Click(wrapId + ".onToolbarClick");
+            e.Click(gridId + ".onToolbarClick");
         })
     )    
     </div>
@@ -50,36 +50,23 @@
 
 <script>
     var dialogControl = window['@Model.DialogId'];
-    window['@wrapId'] = new SimpleControl('@wrapId', "productGrid");
+    window['@gridId'] = new GridControl('@gridId', "productGrid");
 
     (function () {
-        var productsControl = window['@wrapId'];
+        var productsControl = window['@gridId'];
         dialogControl.addControl(productsControl);
 
-        productsControl.createProduct = function () { };
+        productsControl.createProduct = function () {
+
+        };
 
         productsControl.deleteProduct = function () {
 
         };
         productsControl.editProduct = function () {
+            var dataItem = productsControl.getSelectedItem();
 
-        };
 
-        productsControl.resize = function (h) {
-            var $grid = $('#@gridId');
-            var $dataArea = $grid.find(".k-grid-content");
-            
-            h = h - $('#@toolbarName').outerHeight() - ($grid.outerHeight() - $dataArea.outerHeight(true));
-            
-            $dataArea.height(h);
-        }
-
-        productsControl.changeCategory = function (cat) {
-            var grid = $('#@gridId').data('kendoGrid');
-            var url = grid.dataSource.transport.options.read.url;
-
-            grid.dataSource.transport.options.read.url = productsControl.replaceUrlParametr(url, 'categoryId', cat.Id);
-            grid.dataSource.read();
         };
 
         productsControl.onControlFire = function (e) {
@@ -104,17 +91,17 @@
             switch (action) {
                 case "Add":
                     {
-                        window['@wrapId'].createProduct();
+                        window['@gridId'].createProduct();
                         break;
                     }
                 case "Delete":
                     {
-                        window['@wrapId'].deleteProduct();
+                        window['@gridId'].deleteProduct();
                         break;
                     }
                 case "Edit":
                     {
-                        window['@wrapId'].editProduct();
+                        window['@gridId'].editProduct();
                         break;
                     }
                 default:

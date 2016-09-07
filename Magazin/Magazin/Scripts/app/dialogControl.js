@@ -29,7 +29,7 @@
         return uri + separator + key + '=' + value;
     },
 
-    resize: function (h) {}
+    resize: function (h) { }
 });
 
 var DialogControl = BaseDialogControl.extend({
@@ -67,4 +67,34 @@ var SimpleControl = BaseDialogControl.extend({
     init: function (id, desc) {
         BaseDialogControl.fn.init.call(this, id, desc);
     }
+});
+
+var GridControl = SimpleControl.extend({
+    init: function (id, desc) {
+        SimpleControl.fn.init.call(this, id, desc);
+    },
+
+    changeCategory: function (cat) {
+        var grid = $('#' + this.id).data('kendoGrid');
+        var url = grid.dataSource.transport.options.read.url;
+
+        grid.dataSource.transport.options.read.url = this.replaceUrlParametr(url, 'categoryId', cat.Id);
+        grid.dataSource.read();
+    },
+
+    resize: function (h) {
+        var $grid = $('#' + this.id);
+        var $dataArea = $grid.find(".k-grid-content");
+
+        h = h - ($grid.outerHeight() - $dataArea.outerHeight(true));
+
+        $dataArea.height(h);
+    },
+
+    getSelectedItem: function () {
+        var grid = $('#' + this.id).data('kendoGrid');
+        var selected = grid.select();
+        return grid.dataItem(selected);
+    },
+
 });
