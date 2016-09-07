@@ -8,7 +8,7 @@
 
 <div id="@wrapId">
     <div>
-    @(Html.Kendo().ToolBar()
+        @(Html.Kendo().ToolBar()
         .Name(toolbarName)
         .Items(toolbar =>
         {
@@ -24,7 +24,7 @@
         {
             e.Click(gridId + ".onToolbarClick");
         })
-    )    
+        )
     </div>
 
     <div>
@@ -33,7 +33,7 @@
               .Pageable()
               .AutoBind(false)
               .Scrollable()
-              .Selectable(s=>s.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row).Enabled(true))
+              .Selectable(s => s.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row).Enabled(true))
               .Columns(c =>
               {
                   c.Bound(p => p.Title).Title("Наименование");
@@ -65,6 +65,20 @@
         };
         productsControl.editProduct = function () {
             var dataItem = productsControl.getSelectedItem();
+
+            var selected = $('#@gridId').data('kendoGrid').select();
+            var entity = $('#@gridId').data('kendoGrid').dataItem(selected);
+
+            var params = {                
+                title: 'Продукт',
+                contentUrl: "@Url.Action("EditProduct","Product")" + '?Id=' + entity.Id
+            };
+
+            var callback = function (e) {
+
+            };
+
+            UiApi.openDetailView(params, callback);
 
 
         };

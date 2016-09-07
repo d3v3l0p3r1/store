@@ -9,7 +9,8 @@ namespace Magazin
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/dialogControls").Include(
-                "~/Scripts/app/dialogControl.js"
+                "~/Scripts/app/dialogControl.js",
+                "~/Scripts/app/UiApi.js"
                 ));
 
 

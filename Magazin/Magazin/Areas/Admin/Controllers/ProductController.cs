@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
+using Data.Entities;
 using Data.Services;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
@@ -70,6 +71,24 @@ namespace Magazin.Areas.Admin.Controllers
                 return result;
             }
             
+        }
+
+        public ActionResult EditProduct()
+        {
+            using (var uow = CreateUnitOfWork())
+            {                                                
+                return View("ProductDetailView");
+            }            
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditProduct(Product product)
+        {
+            using (var uow = CreateUnitOfWork())
+            {
+                return null;
+            }
         }
     }
 }
