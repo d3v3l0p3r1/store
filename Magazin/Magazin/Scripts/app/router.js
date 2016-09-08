@@ -1,7 +1,23 @@
 ﻿define([],
-    function () {    
+    function () {
         var router = new kendo.Router(),
             layout = new kendo.Layout("<div id='content'></div>");
+
+
+        var loadView = function (viewModel, view, delegate) {
+            console.log('loadView');
+            var kendoView = new kendo.View(view, { model: viewModel });
+            kendo.fx($("#content")).slideInRight().reverse().then(function () {
+                $('#content').empty();
+                layout.showIn("#content", kendoView);
+
+                if (delegate != undefined)
+                    delegate();
+
+                kendo.fx($("#content")).slideInRight().play();
+            });
+        };
+
 
         
         layout.render($("#app"));
@@ -18,7 +34,7 @@
                 function (view) {
                     loadView(null, view);
                 });
-        });        
+        });
 
         router.route("/Admin/Balance/Balances", function () {
             require([
@@ -28,19 +44,6 @@
                 });
         });
 
-        var loadView = function (viewModel, view, delegate) {
-            var kendoView = new kendo.View(view, { model: viewModel });
-            kendo.fx($("#content")).slideInRight().reverse().then(function () {
-                $('#content').empty();
-                layout.showIn("#content", kendoView);
-
-                if (delegate != undefined)
-                    delegate();
-
-                kendo.fx($("#content")).slideInRight().play();
-            });
-        };
-
-
+   
         return router;
     });

@@ -1,29 +1,5 @@
-﻿<div>    
-    <div class="control-group">
-        <label class="control-label" for="Title">Title</label>
-        <div class="controls">
-            <input class="text-box single-line" id="Title" name="Title" type="text" value="@Model.Title"/>
-            <span class="field-validation-valid help-inline" data-valmsg-for="Title" data-valmsg-replace="true"></span>
-        </div>
-    </div>
-
-
-    <div>
-        <label>Цена</label>
-        <input type="number" class="k-textbox" name="Title" data-bind="text: Price"/>
-    </div>
-    
-    
-    <input type="button" class="k-button k-button-success" title="Сохранить" value="Save"/>
+﻿<div id="editform">
+    <input type="text" data-bind="value: Title" />
+    <input type="number" data-bind="value: Price" />
 </div>
 
-
-<script>
-    $(function() {
-
-        $.ajax({
-        
-        });
-
-    });
-</script>

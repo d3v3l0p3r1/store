@@ -53,6 +53,7 @@
     window['@gridId'] = new GridControl('@gridId', "productGrid");
 
     (function () {
+        
         var productsControl = window['@gridId'];
         dialogControl.addControl(productsControl);
 
@@ -64,22 +65,34 @@
 
         };
         productsControl.editProduct = function () {
-            var dataItem = productsControl.getSelectedItem();
+            var entity = productsControl.getSelectedItem();
 
-            var selected = $('#@gridId').data('kendoGrid').select();
-            var entity = $('#@gridId').data('kendoGrid').dataItem(selected);
-
-            var params = {                
-                title: 'Продукт',
-                contentUrl: "@Url.Action("EditProduct","Product")" + '?Id=' + entity.Id
+            var params = {
+                title: 'Продукт',                
+                contentUrl: "@Url.Action("EditProduct", "Product")"
             };
 
-            var callback = function (e) {
 
-            };
+            var wid = "dwajdklwjio2p3p3i";
 
-            UiApi.openDetailView(params, callback);
+            $('body').append('<div id="' + wid + '"></div>');
 
+            var $w = $('#' + wid);
+
+            $w.kendoWindow({
+                width: 100,
+                height: 100,
+                content: params.contentUrl,
+                title: params.title
+            });
+
+            //var $window = UiApi.getModalWindow(params);           
+            
+            kendo.bind($w, entity);
+
+            $w.data('kendoWindow').center().open();
+
+            entity.set('Title', 'dwadhwal dhwui ahduio wa');
 
         };
 
@@ -100,8 +113,8 @@
         };
 
         productsControl.onToolbarClick = function (e) {
-            var action = e.target.attr('data-action');
-
+            e.preventDefault();
+            var action = e.target.attr('data-action');            
             switch (action) {
                 case "Add":
                     {

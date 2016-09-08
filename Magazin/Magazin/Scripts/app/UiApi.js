@@ -14,7 +14,7 @@
         return uid;
     };
 
-    UiApi.openDetailView = function (params, callback) {
+    UiApi.getModalWindow = function (params, callback) {
 
         var _params = $.extend({
             contentUrl: null,
@@ -29,16 +29,14 @@
 
         var $w = $('#' + wid);
 
-        var detailViewWindow = $w.kendoWindow({
+        $w.kendoWindow({
             width: _params.width,
             height: _params.height,
             content: _params.contentUrl,
             title: _params.title,
             close: callback
-        }).data('kendoWindow');
-
-        detailViewWindow.center().open();
-
-
+        });
+ 
+        return $w;
     }
 })()

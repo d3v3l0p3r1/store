@@ -32,7 +32,7 @@ namespace Magazin.Areas.Admin.Controllers
             return PartialView("Products", mdl);
         }
 
-        
+
         public JsonResult GetCategories([DataSourceRequest]DataSourceRequest request)
         {
             using (var uow = CreateUnitOfWork())
@@ -70,25 +70,13 @@ namespace Magazin.Areas.Admin.Controllers
 
                 return result;
             }
-            
+
         }
 
         public ActionResult EditProduct()
         {
-            using (var uow = CreateUnitOfWork())
-            {                                                
-                return View("ProductDetailView");
-            }            
+            return PartialView("ProductDetailView");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditProduct(Product product)
-        {
-            using (var uow = CreateUnitOfWork())
-            {
-                return null;
-            }
-        }
     }
 }
