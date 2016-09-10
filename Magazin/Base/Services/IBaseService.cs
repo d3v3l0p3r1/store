@@ -10,5 +10,7 @@ namespace Base.Services
     public interface IBaseService<T> where T : BaseEntity
     {
         IQueryable<T> GetAll(IUnitOfWork uow);
+        T Find(IUnitOfWork uow, int id);
+        T Update(IUnitOfWork uow, T entity);
     }
 }

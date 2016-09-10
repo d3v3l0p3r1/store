@@ -10,9 +10,9 @@ namespace Data
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly DataContext _dataContext;
-        public Repository()
+        public Repository(DataContext context)
         {
-            _dataContext = new DataContext();
+            _dataContext = context;
         }
 
         public T Create(T entity)
@@ -45,6 +45,11 @@ namespace Data
         {
             var dbSet = _dataContext.Set<T>();
             return dbSet;
+        }
+
+        public void SaveChanges()
+        {
+            _dataContext.SaveChanges();
         }
     }
 }

@@ -97,4 +97,9 @@ var GridControl = SimpleControl.extend({
         return grid.dataItem(selected);
     },
 
+    readDataSource: function() {
+        var grid = $('#' + this.id).data('kendoGrid');
+        grid.dataSource.read();
+    }
+
 });

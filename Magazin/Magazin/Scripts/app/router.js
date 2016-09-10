@@ -28,9 +28,9 @@
             });
         });
 
-        router.route("/Admin/Product/Products", function () {            
+        router.route("/Admin/Product/Index", function () {            
             require([
-                'text!/admin/product/products'],
+                'text!/admin/product/index'],
                 function (view) {
                     loadView(null, view);
                 });

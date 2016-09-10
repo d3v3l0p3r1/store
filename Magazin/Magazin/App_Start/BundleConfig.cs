@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.Runtime.InteropServices;
+using System.Web;
 using System.Web.Optimization;
 
 namespace Magazin
@@ -16,7 +17,7 @@ namespace Magazin
 
             bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
                 "~/Content/vendor/jszip/jszip.js",
-                "~/Content/vendor/kendo/js/kendo.all.js",
+                "~/Content/vendor/kendo/js/kendo.all.min.js",
                 "~/Content/vendor/kendo/js/kendo.aspnetmvc.js",
                 "~/Content/vendor/kendo/js/kendo.culture.ru.custom.js"
                 ));
@@ -52,8 +53,13 @@ namespace Magazin
                 "~/Content/vendor/kendo/styles/kendo.common-material.min.css",
                 "~/Content/vendor/kendo/styles/kendo.material.min.css",
                 "~/Content/vendor/kendo/styles/kendo.mobile.switch.css",
-                "~/Content/less/kendo.overrides.css",
+                "~/Content/kendo.overrides.css",
                 "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/admin-css").Include(
+                "~/Content/admin-site.css"
+                ));
+
         }
     }
 }

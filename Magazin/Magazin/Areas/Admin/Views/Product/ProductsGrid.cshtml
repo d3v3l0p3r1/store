@@ -37,7 +37,7 @@
               .Columns(c =>
               {
                   c.Bound(p => p.Title).Title("Наименование");
-                  c.Bound(p => p.Decimal).Title("Цена");
+                  c.Bound(p => p.Price).Title("Цена");
               })
               .DataSource(ds => ds
                   .Ajax()
@@ -57,6 +57,7 @@
         var productsControl = window['@gridId'];
         dialogControl.addControl(productsControl);
 
+
         productsControl.createProduct = function () {
 
         };
@@ -69,30 +70,15 @@
 
             var params = {
                 title: 'Продукт',                
-                contentUrl: "@Url.Action("EditProduct", "Product")"
+                contentUrl: "@Url.Action("EditProduct", "Product")?id=" + entity.Id
             };
 
+            var onClose = function(e) {
+                productsControl.readDataSource();
+            };
 
-            var wid = "dwajdklwjio2p3p3i";
+            UiApi.openModalWindow(params, onClose);
 
-            $('body').append('<div id="' + wid + '"></div>');
-
-            var $w = $('#' + wid);
-
-            $w.kendoWindow({
-                width: 100,
-                height: 100,
-                content: params.contentUrl,
-                title: params.title
-            });
-
-            //var $window = UiApi.getModalWindow(params);           
-            
-            kendo.bind($w, entity);
-
-            $w.data('kendoWindow').center().open();
-
-            entity.set('Title', 'dwadhwal dhwui ahduio wa');
 
         };
 

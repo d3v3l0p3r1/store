@@ -14,12 +14,12 @@
         return uid;
     };
 
-    UiApi.getModalWindow = function (params, callback) {
+    UiApi.openModalWindow = function (params, callback) {
 
         var _params = $.extend({
             contentUrl: null,
             width: 900,
-            height: 900,
+            height: 600,
             title: null
         }, params);
 
@@ -29,14 +29,18 @@
 
         var $w = $('#' + wid);
 
-        $w.kendoWindow({
-            width: _params.width,
-            height: _params.height,
-            content: _params.contentUrl,
-            title: _params.title,
-            close: callback
-        });
- 
-        return $w;
+        var wnd = $w.kendoWindow({
+                width: _params.width,
+                height: _params.height,
+                content: _params.contentUrl,
+                title: _params.title,
+                close: function (e) {                    
+                    callback();
+                    this.destroy();
+                }
+            })
+            .data('kendoWindow');
+
+        wnd.center().open();
     }
 })()

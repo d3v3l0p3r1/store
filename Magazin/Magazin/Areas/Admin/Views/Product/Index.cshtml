@@ -17,20 +17,29 @@
         .Name(wrapID)
         .Panes(p =>
         {
-            p.Add().Content(Html.Partial("~/Areas/Admin/Views/Product/ProductCategories.cshtml", Model).ToHtmlString());
-            p.Add().Content(Html.Partial("~/Areas/Admin/Views/Product/ProductsGrid.cshtml", Model).ToHtmlString());
+            p.Add().Content(Html.Partial("~/Areas/Admin/Views/Product/ProductCategories.cshtml", Model).ToHtmlString())
+                .Collapsible(true)
+                .Size("20%")
+                .MinSize("255px");
+
+
+            p.Add().Content(Html.Partial("~/Areas/Admin/Views/Product/ProductsGrid.cshtml", Model).ToHtmlString())
+                .MinSize("400px")
+                .HtmlAttributes(new { style = "overflow-y: hidden !important;" })
+                .Scrollable(false);
         })
 )
 <script>
     $(function () {
         var control = window['@Model.DialogId'];
-        var height = $(window).height() - $('#topmenu').height() - 65; //65 magic        
+        var height = $(window).height() - $('#topmenu').height() - 65; //65 magic
         var $splitter = $('#@wrapID');
         var splitter = $splitter.data('kendoSplitter');
-
+        debugger;
         $splitter.height(height);
         control.resizeChilds(height);
         splitter.resize();
+
 
         setTimeout(function () {
 
@@ -44,9 +53,6 @@
             $(window).on("resize", onResize);
 
         }, 500);
-
-        kendo.resize();
-
     });
 </script>
 

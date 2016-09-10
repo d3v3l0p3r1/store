@@ -1,52 +1,53 @@
 ﻿@model Magazin.Models.DialogViewModel
-@using Data.Entities
+
 @using Kendo.Mvc.UI
 @{
     string wrapId = "tree_" + Guid.NewGuid().ToString("N");
     string toolbarName = "tlbr_" + Guid.NewGuid().ToString("N");
 }
 
-
-
-@(Html.Kendo().ToolBar()
-        .Name(toolbarName)        
-        .Items(toolbar =>
-        {
-            toolbar.Add().Type(CommandType.ButtonGroup).Buttons(btns =>
-            {
-                btns.Add().Text("Добавить корневой").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-folder-plus").HtmlAttributes(new { title = "Создать", data_action = "Add" });
-                btns.Add().Text("Добавить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-plus").HtmlAttributes(new { title = "Создать", data_action = "Add" });
-                btns.Add().Text("Редактировать").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-pencil").HtmlAttributes(new { title = "Редактировать", data_action = "Edit" });
-                btns.Add().Text("Удалить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-close").HtmlAttributes(new { title = "Удалить", data_action = "Delete" });
-            });
-        }
-      )
-)
-
-@(Html.Kendo().TreeList<ProductCategory>()
+<div>
+    <div>
+        @(Html.Kendo().ToolBar()
+              .Name(toolbarName)
+              .Items(toolbar =>
+              {
+                  toolbar.Add().Type(CommandType.ButtonGroup).Buttons(btns =>
+                  {
+                      btns.Add().Text("Добавить корневой").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-folder-plus").HtmlAttributes(new { title = "Создать", data_action = "Add" });
+                      btns.Add().Text("Добавить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-plus").HtmlAttributes(new { title = "Создать", data_action = "Add" });
+                      btns.Add().Text("Редактировать").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-pencil").HtmlAttributes(new { title = "Редактировать", data_action = "Edit" });
+                      btns.Add().Text("Удалить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-close").HtmlAttributes(new { title = "Удалить", data_action = "Delete" });
+                  });
+              }
+              )
+        )
+    </div>
+    <div>
+        @*@(Html.Kendo().TreeList<Data.Entities.ProductCategory>()
         .Name(wrapId)
+        .Columns(columns =>
+        {
+            columns.Add().Title("Наименование").Field(x => x.Title);
+            columns.Add().Title("Id").Field(x => x.Id);
+        })
         .Selectable(true)
-        .Filterable()
-        .Sortable()
-        .Editable(false)        
         .Events(e =>
         {
             e.Change(wrapId + ".onChange");
         })
-        .Columns(columns =>
-        {
-            columns.Add().Title("Наименование").Field(x => x.Title);
-        })
         .DataSource(ds => ds
+            .ServerOperation(false)
             .Model(x =>
             {
                 x.Id(p => p.Id);
                 x.ParentId(p => p.ParentId);
+                x.Expanded(true);
             })
-            .PageSize(15)
-            .Read(read => read
-                .Action("GetCategories", "Product", new { Area = "Admin" })))
-)
+            .Read(read => read.Action("GetCategories", "Product", new { Area = "Admin" })))
+        )*@
+    </div>
+</div>
 
 <script>
     var dialogControl = window['@Model.DialogId'];
@@ -71,9 +72,17 @@
             dialogControl.controlFire(args);
         };
 
-        tree.resize = function(h) {
-            $('#@wrapId').height(h);
-            console.log(h);
+        tree.resize = function (h) {
+            var $grid = $('#@wrapId');
+            var $dataArea = $grid.find(".k-grid-content");
+
+            h = h - ($grid.outerHeight() - $dataArea.outerHeight(true));
+
+            $dataArea.height(h);
+
+            var $treegrid = $dataArea.children('[data-role=treegrid]');
+
+            $treegrid.height(0);
         }
     })();
 

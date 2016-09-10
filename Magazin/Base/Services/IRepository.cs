@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 using Base.Entities;
 
 namespace Base.DAL
-{
+{  
+
     public interface IRepository<T> where T: BaseEntity
     {
         T Create(T entity);

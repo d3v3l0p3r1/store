@@ -8,8 +8,7 @@ using Data.Migrations;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Data.DAL
-{
-
+{    
     public class DataContext : IdentityDbContext<User, Role, int, Login, UserRole, Claim>
     {
         static DataContext()
@@ -51,6 +50,8 @@ namespace Data.DAL
         protected override void Seed(DataContext context)
         {
             base.Seed(context);
+
+#if DEBUG
 
             for (int i = 0; i < 25; i++)
             {
@@ -94,6 +95,7 @@ namespace Data.DAL
 
             admin.Roles.Add(t);
             context.SaveChanges();
+#endif
         }
     }
 }

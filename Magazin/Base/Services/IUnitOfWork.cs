@@ -11,5 +11,6 @@ namespace Base.Services
     public interface IUnitOfWork : IDisposable
     {
         IRepository<T> GetRepository<T>() where T: BaseEntity;
+        void SaveChanges();
     }
 }

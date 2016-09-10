@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
@@ -19,36 +20,28 @@ namespace Magazin.Areas.Admin.Controllers
         private readonly IProductCategoryService _categoryService;
         private readonly IProductService _productService;
 
-
         public ProductController(IProductCategoryService categoryService, IProductService productService)
         {
             _categoryService = categoryService;
             _productService = productService;
         }
 
-        public ActionResult Products()
+        public ActionResult Index()
         {
             var mdl = new DialogViewModel();
-            return PartialView("Products", mdl);
+            return PartialView("Index", mdl);
         }
 
 
-        public JsonResult GetCategories([DataSourceRequest]DataSourceRequest request)
+        public JsonResult GetCategories([DataSourceRequest] DataSourceRequest request)
         {
             using (var uow = CreateUnitOfWork())
             {
-                var cats = _categoryService.GetAll(uow);
+                var cats = _categoryService.GetAll(uow)
+                    .ToTreeDataSourceResult(request, e => e.Id, e => e.ParentId);
 
-                var result = new JsonResult()
-                {
-                    Data = cats.ToTreeDataSourceResult(request),
-                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                };
-
-                return result;
-            }
-
-
+                return Json(cats, JsonRequestBehavior.AllowGet);
+            }            
         }
 
         public JsonResult GetProducts([DataSourceRequest] DataSourceRequest request, int? categoryId)
@@ -73,10 +66,39 @@ namespace Magazin.Areas.Admin.Controllers
 
         }
 
-        public ActionResult EditProduct()
+        public ActionResult EditProduct(int id)
         {
-            return PartialView("ProductDetailView");
+            using (var uow = CreateUnitOfWork())
+            {
+                var product = _productService.Find(uow, id);
+                return PartialView("ProductDetailView", product);
+            }
         }
 
+        [HttpPost]
+        public JsonResult UpdateProduct(Product product)
+        {
+            try
+            {
+                using (var uow = CreateUnitOfWork())
+                {
+
+                    _productService.Update(uow, product);
+                    var result = new JsonResult
+                    {
+                        Data = new { result = "ok" },
+                    };
+                    return result;
+                }
+            }
+            catch (Exception error)
+            {
+                var result = new JsonResult
+                {
+                    Data = new { error = error.Message }
+                };
+                return result;
+            }
+        }
     }
 }
