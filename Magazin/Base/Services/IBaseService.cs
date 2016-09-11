@@ -12,5 +12,6 @@ namespace Base.Services
         IQueryable<T> GetAll(IUnitOfWork uow);
         T Find(IUnitOfWork uow, int id);
         T Update(IUnitOfWork uow, T entity);
+        void Delete(IUnitOfWork uow, int id);
     }
 }

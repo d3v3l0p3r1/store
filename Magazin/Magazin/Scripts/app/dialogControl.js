@@ -70,6 +70,8 @@ var SimpleControl = BaseDialogControl.extend({
 });
 
 var GridControl = SimpleControl.extend({
+    currentCategory : undefined,
+
     init: function (id, desc) {
         SimpleControl.fn.init.call(this, id, desc);
     },
@@ -77,6 +79,8 @@ var GridControl = SimpleControl.extend({
     changeCategory: function (cat) {
         var grid = $('#' + this.id).data('kendoGrid');
         var url = grid.dataSource.transport.options.read.url;
+
+        this.currentCategory = cat.Id;
 
         grid.dataSource.transport.options.read.url = this.replaceUrlParametr(url, 'categoryId', cat.Id);
         grid.dataSource.read();

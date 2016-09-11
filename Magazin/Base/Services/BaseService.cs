@@ -47,5 +47,21 @@ namespace Base.Services
 
             return result;
         }
+
+        public virtual void Delete(IUnitOfWork uow, int id)
+        {
+            if (id == 0)
+            {
+                throw new ArgumentException();
+            }
+
+            var entity = uow.GetRepository<T>().Find(id);
+
+            entity.Hidden = true;
+
+            uow.GetRepository<T>().Update(entity);
+
+            uow.SaveChanges();
+        }
     }
 }

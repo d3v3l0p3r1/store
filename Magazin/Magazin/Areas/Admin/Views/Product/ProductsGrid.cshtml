@@ -53,33 +53,58 @@
     window['@gridId'] = new GridControl('@gridId', "productGrid");
 
     (function () {
-        
+
         var productsControl = window['@gridId'];
         dialogControl.addControl(productsControl);
 
 
         productsControl.createProduct = function () {
-
-        };
-
-        productsControl.deleteProduct = function () {
-
-        };
-        productsControl.editProduct = function () {
-            var entity = productsControl.getSelectedItem();
+            var url = "@Url.Action("EditProduct", "Product")?id=&categoryId=" + productsControl.currentCategory;
 
             var params = {
-                title: 'Продукт',                
-                contentUrl: "@Url.Action("EditProduct", "Product")?id=" + entity.Id
+                title: 'Продукт',
+                contentUrl: url
             };
 
-            var onClose = function(e) {
+            var onClose = function (e) {
                 productsControl.readDataSource();
             };
 
             UiApi.openModalWindow(params, onClose);
+        };
+
+        productsControl.deleteProduct = function () {
+            var entity = productsControl.getSelectedItem();
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("DeleteProduct", "Product")",
+                data: JSON.stringify({ id: entity.Id }),
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if (result.error) {
+
+                    } else {
+                        productsControl.readDataSource();
+                    }
+                }
+            });
 
 
+        };
+        productsControl.editProduct = function () {
+            var entity = productsControl.getSelectedItem();
+            var url = "@Url.Action("EditProduct", "Product")?id=" + entity.Id + "&categoryId=" + productsControl.currentCategory;
+
+            var params = {
+                title: 'Продукт',
+                contentUrl: url
+            };
+
+            var onClose = function (e) {
+                productsControl.readDataSource();
+            };
+
+            UiApi.openModalWindow(params, onClose);
         };
 
         productsControl.onControlFire = function (e) {
@@ -100,7 +125,7 @@
 
         productsControl.onToolbarClick = function (e) {
             e.preventDefault();
-            var action = e.target.attr('data-action');            
+            var action = e.target.attr('data-action');
             switch (action) {
                 case "Add":
                     {

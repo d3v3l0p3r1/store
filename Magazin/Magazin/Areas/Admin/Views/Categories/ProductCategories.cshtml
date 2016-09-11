@@ -1,0 +1,153 @@
+﻿@model Magazin.Models.DialogViewModel
+
+@using Data.Entities
+@using Kendo.Mvc.UI
+@{
+    string wrapId = "tree_" + Guid.NewGuid().ToString("N");
+    string toolbarName = "tlbr_" + Guid.NewGuid().ToString("N");
+    string treeId = "tree_" + Guid.NewGuid().ToString("N");
+    string test = "tst_" + Guid.NewGuid().ToString("N");
+}
+
+<div id="@wrapId">
+    <div>
+        @(Html.Kendo().ToolBar()
+              .Name(toolbarName)
+              .Items(toolbar =>
+              {
+                  toolbar.Add().Type(CommandType.ButtonGroup).Buttons(btns =>
+                  {
+                      btns.Add().Text("Добавить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-plus").HtmlAttributes(new { title = "Создать", data_action = "Add" });
+                      btns.Add().Text("Редактировать").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-pencil").HtmlAttributes(new { title = "Редактировать", data_action = "Edit" });
+                      btns.Add().Text("Удалить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-close").HtmlAttributes(new { title = "Удалить", data_action = "Delete" });
+                  });
+              }
+              )
+               .Events(e =>
+               {
+                   e.Click(treeId + ".onToolbarClick");
+               })
+        )
+    </div>
+    <div id="@test">
+        @(Html.Kendo().Grid<ProductCategory>()
+            .Name(treeId)
+            .Selectable()
+            .DataSource(ds =>
+            {
+                ds.Ajax().Read(read => read.Action("GetCategories", "Categories", new { Area = "Admin" }));
+            })
+            .Columns(columns =>
+            {
+                columns.Bound(f => f.Title).Title("Наименование");
+            })
+            .Events(e =>
+            {
+                e.Change(treeId + ".onChange");
+            })
+
+        )
+    </div>
+</div>
+
+<script>
+    var dialogControl = window['@Model.DialogId'];
+    window['@treeId'] = new GridControl('@treeId', 'categories');
+
+    (function () {
+        var tree = window['@treeId'];
+
+        dialogControl.addControl(tree);
+
+        tree.onChange = function () {
+            var dataItem = tree.getSelectedItem();
+
+            var args = {
+                sender: tree,
+                event: "change",
+                data: dataItem
+            }
+
+            dialogControl.controlFire(args);
+        };
+
+        tree.onToolbarClick = function (e) {
+            e.preventDefault();
+            var action = e.target.attr('data-action');
+            switch (action) {
+                case "Add":
+                    {
+                        window['@treeId'].create();
+                        break;
+                    }
+                case "Delete":
+                    {
+                        window['@treeId'].delete();
+                        break;
+                    }
+                case "Edit":
+                    {
+                        window['@treeId'].edit();
+                        break;
+                    }
+                default:
+            }
+        }
+
+        tree.create = function () {
+
+
+            var url = "@Url.Action("Edit", "Categories")?id=";
+
+            var params = {
+                title: 'Категория',
+                contentUrl: url
+            };
+
+            var onClose = function (e) {
+                tree.readDataSource();
+            };
+
+            UiApi.openModalWindow(params, onClose);
+        };
+
+        tree.delete = function () {
+            var entity = tree.getSelectedItem();
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Delete", "Categories")",
+                data: JSON.stringify({ id: entity.Id }),
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if (result.error) {
+
+                    } else {
+                        tree.readDataSource();
+                    }
+                }
+            });
+
+
+        };
+        tree.edit = function () {
+            var entity = tree.getSelectedItem();
+            var url = "@Url.Action("Edit", "Categories")?id=" + entity.Id;
+
+            var params = {
+                title: 'Категория',
+                contentUrl: url
+            };
+
+            var onClose = function (e) {
+                tree.readDataSource();
+            };
+
+            UiApi.openModalWindow(params, onClose);
+        };
+    })();
+
+    $(function () {
+        var $toolbar = $('#@toolbarName');
+        $toolbar.find(".k-sprite").removeClass("k-sprite");
+    });
+</script>

@@ -220,6 +220,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BalanceController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -236,6 +237,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\admin-layout.css" />
     <Content Include="Content\admin-site.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -272,7 +274,7 @@
     </Content>
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Product\ProductCategories.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\ProductCategories.cshtml" />
     <Content Include="Areas\Admin\Views\Product\ProductsGrid.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
@@ -436,6 +438,7 @@
     <Content Include="Areas\Admin\Views\Balance\Balances.cshtml" />
     <Content Include="Areas\Admin\Views\Product\ProductDetailView.cshtml" />
     <Content Include="Content\kendo.overrides.css" />
+    <Content Include="Areas\Admin\Views\Categories\CategoryDetailView.cshtml" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\app\UiApi.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -569,7 +572,6 @@
     <Content Include="Content\vendor\kendo\styles\kendo.common-material.min.css.map" />
     <Content Include="Content\vendor\kendo\styles\kendo.common.min.css.map" />
     <Content Include="Content\vendor\kendo\styles\kendo.material.min.css.map" />
-    <Content Include="Views\Product\ProductCategories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

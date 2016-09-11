@@ -16,13 +16,10 @@ namespace Magazin.Areas.Admin.Controllers
 {
     public class ProductController : BaseController
     {
-
-        private readonly IProductCategoryService _categoryService;
         private readonly IProductService _productService;
 
-        public ProductController(IProductCategoryService categoryService, IProductService productService)
+        public ProductController(IProductService productService)
         {
-            _categoryService = categoryService;
             _productService = productService;
         }
 
@@ -31,19 +28,7 @@ namespace Magazin.Areas.Admin.Controllers
             var mdl = new DialogViewModel();
             return PartialView("Index", mdl);
         }
-
-
-        public JsonResult GetCategories([DataSourceRequest] DataSourceRequest request)
-        {
-            using (var uow = CreateUnitOfWork())
-            {
-                var cats = _categoryService.GetAll(uow)
-                    .ToTreeDataSourceResult(request, e => e.Id, e => e.ParentId);
-
-                return Json(cats, JsonRequestBehavior.AllowGet);
-            }            
-        }
-
+        
         public JsonResult GetProducts([DataSourceRequest] DataSourceRequest request, int? categoryId)
         {
             using (var uow = CreateUnitOfWork())
@@ -66,11 +51,14 @@ namespace Magazin.Areas.Admin.Controllers
 
         }
 
-        public ActionResult EditProduct(int id)
+        public ActionResult EditProduct(int? id, int categoryId)
         {
             using (var uow = CreateUnitOfWork())
             {
-                var product = _productService.Find(uow, id);
+                Product product;
+
+                product = id.HasValue ? _productService.Find(uow, id.Value) : new Product { ProductCategoryID = categoryId };
+
                 return PartialView("ProductDetailView", product);
             }
         }
@@ -98,6 +86,23 @@ namespace Magazin.Areas.Admin.Controllers
                     Data = new { error = error.Message }
                 };
                 return result;
+            }
+        }
+
+        [HttpPost]
+        public JsonResult DeleteProduct(int id)
+        {
+            using (var uow = CreateUnitOfWork())
+            {
+                try
+                {
+                    _productService.Delete(uow, id);
+                    return Json(new { result = "ok" });
+                }
+                catch (ArgumentException)
+                {
+                    return Json(new { error = "Id is 0" });
+                }
             }
         }
     }

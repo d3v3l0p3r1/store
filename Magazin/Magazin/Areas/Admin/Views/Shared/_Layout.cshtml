@@ -9,10 +9,10 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/kendo");
-    @Scripts.Render("~/bundles/dialogControls");
-    @Styles.Render("~/Content/admin-css");
-    
+    @Scripts.Render("~/bundles/kendo")
+    @Scripts.Render("~/bundles/dialogControls")
+    @Styles.Render("~/Content/admin-css")
+
 
 </head>
 <body>
@@ -32,20 +32,20 @@
         </div>
     </div>
 
-    <div class="body-content">
-        <div class="row">
-            <div class="col-md-2">
-                @{Html.RenderPartial("SideBar");}
+    <div>
+        <aside>
+            <div>
+                <a href="/">                 
+                </a>
             </div>
-            <div class="col-md-10">
-                @RenderBody()
-            </div>
+            @{Html.RenderPartial("SideBar");}
+        </aside>
+        <div>
+            @RenderBody()            
         </div>
     </div>
 
 
-    
     @RenderSection("scripts", false)
-
 </body>
 </html>
