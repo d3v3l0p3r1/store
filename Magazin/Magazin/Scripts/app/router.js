@@ -5,21 +5,21 @@
 
 
         var loadView = function (viewModel, view, delegate) {
-            console.log('loadView');
+            
             var kendoView = new kendo.View(view, { model: viewModel });
-            kendo.fx($("#content")).slideInRight().reverse().then(function () {
-                $('#content').empty();
-                layout.showIn("#content", kendoView);
 
-                if (delegate != undefined)
-                    delegate();
+            $('#content').empty();
+            layout.showIn("#content", kendoView);
 
-                kendo.fx($("#content")).slideInRight().play();
-            });
+            if (delegate != undefined)
+                delegate();
+
+            //kendo.fx($("#content")).flipHorizontal($('#content'), $('#content')).duration(1000).play(); todo если время будет перерисовать
+
         };
 
 
-        
+
         layout.render($("#app"));
 
         router.route("/Admin/Home/Index", function () {
@@ -28,7 +28,7 @@
             });
         });
 
-        router.route("/Admin/Product/Index", function () {            
+        router.route("/Admin/Product/Index", function () {
             require([
                 'text!/admin/product/index'],
                 function (view) {
@@ -44,6 +44,6 @@
                 });
         });
 
-   
+
         return router;
     });

@@ -33,11 +33,10 @@ namespace Magazin
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                "~/Content/site.css",
                 "~/Content/fonts/fira/fira.css",
                 "~/Content/fonts/roboto/roboto.css",
                 "~/Content/fonts/glyphicons/glyphicons-regular.css",
@@ -46,18 +45,15 @@ namespace Magazin
                 "~/Content/fonts/glyphicons/glyphicons-social-regular.css",
                 "~/Content/fonts/fontello/fontello.css",
                 "~/Content/fonts/mdi/materialdesignicons.css",
-                "~/Content/fonts/font-awesome/font-awesome.css", 
-                "~/Content/bootstrap.css",
-                "~/Content/Layout.css",
+                "~/Content/fonts/font-awesome/font-awesome.css",                 
                 "~/Content/vendor/kendo/styles/kendo.common.min.css",
                 "~/Content/vendor/kendo/styles/kendo.common-material.min.css",
                 "~/Content/vendor/kendo/styles/kendo.material.min.css",
-                "~/Content/vendor/kendo/styles/kendo.mobile.switch.css",
-                "~/Content/kendo.overrides.css",
-                "~/Content/site.css"));
+                "~/Content/vendor/kendo/styles/kendo.mobile.switch.css"));
 
             bundles.Add(new StyleBundle("~/Content/admin-css").Include(
-                "~/Content/admin-site.css"
+                "~/Content/admin-site.css",
+                "~/Content/admin-layout.css"
                 ));
 
         }

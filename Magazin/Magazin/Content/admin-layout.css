@@ -1,1 +1,64 @@
-﻿
+﻿#side-bar {
+    width: 10%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 2%;
+    background-color: #262b33;
+}
+
+    #side-bar ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    #side-bar li {
+        list-style: none;
+        position: relative;
+        margin-bottom: 0;
+        background-color: transparent;
+        border: none;
+        border-radius: 0;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    #side-bar a {
+        display: flex;
+        align-items: center;
+        position: relative;
+        height: 50px;
+        background-color: transparent;
+        color: #aaa;
+        transition: background-color .1s linear,color .1s linear;
+    }
+
+        #side-bar a:after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 3px;
+            background-color: #03a9f4;
+            opacity: 0;
+            transform: translate3d(-3px,0,0);
+            transition: transform .3s linear,opacity .4s;
+            transform-style: preserve-3d;
+            content: "";
+        }
+
+    #side-bar span {
+        margin-right: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+
+.side-bar-item-icon {
+    margin: 0 1.25rem;
+}
+
+#main-content {
+    margin-left: 10%;
+}

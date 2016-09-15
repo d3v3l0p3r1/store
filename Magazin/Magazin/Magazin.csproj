@@ -239,10 +239,6 @@
   <ItemGroup>
     <Content Include="Content\admin-layout.css" />
     <Content Include="Content\admin-site.css" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fonts\fira\fira.css" />
     <Content Include="Content\fonts\font-awesome\font-awesome.css" />
     <Content Include="Content\fonts\font-awesome\fontawesome-webfont.svg" />
@@ -259,11 +255,12 @@
     <Content Include="Content\fonts\mdi\materialdesignicons-webfont.svg" />
     <Content Include="Content\fonts\mdi\materialdesignicons.css" />
     <Content Include="Content\fonts\roboto\roboto.css" />
+    <Content Include="Content\images\admin-logo.png" />
+    <Content Include="Content\site-css.css" />
     <Content Include="Content\vendor\jszip\jszip.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Scripts\ai.0.22.19-build00125.js" />
     <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
     <Content Include="Scripts\app\app.js" />
@@ -431,13 +428,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Areas\Admin\Views\Balance\Balances.cshtml" />
     <Content Include="Areas\Admin\Views\Product\ProductDetailView.cshtml" />
-    <Content Include="Content\kendo.overrides.css" />
     <Content Include="Areas\Admin\Views\Categories\CategoryDetailView.cshtml" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\app\UiApi.js" />

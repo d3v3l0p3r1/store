@@ -8,7 +8,6 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/kendo")
     @Scripts.Render("~/bundles/dialogControls")
     @Styles.Render("~/Content/admin-css")
@@ -16,36 +15,23 @@
 
 </head>
 <body>
-    <div id="topmenu" class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Главная", "Index", "Product", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
-    </div>
-
-    <div>
-        <aside>
-            <div>
-                <a href="/">                 
-                </a>
-            </div>
-            @{Html.RenderPartial("SideBar");}
-        </aside>
+    <aside id="side-bar">
         <div>
-            @RenderBody()            
+            <a href="/">
+                <img src="~/Content/images/admin-logo.png"/>
+            </a>
         </div>
-    </div>
+        
+        
 
+        @{Html.RenderPartial("SideBar");}
+    </aside>
 
-    @RenderSection("scripts", false)
+<div id="main-content">
+    @RenderBody()
+</div>
+    
+
+@RenderSection("scripts", false)
 </body>
 </html>
