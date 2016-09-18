@@ -24,6 +24,7 @@ namespace Magazin.App_Start
             container.Register<IUserRepository, UserRepository>();
             container.Register<IBaseService<BalanceOfProduct>, BalanceOfProductService>();
             container.Register<IProductService, ProductService>();
+            container.Register<IInComeService, InComeService>();
             container.Register<IProductCategoryService, ProductCategoryService>();
         }
     }

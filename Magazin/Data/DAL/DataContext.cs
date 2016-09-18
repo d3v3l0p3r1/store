@@ -43,6 +43,10 @@ namespace Data.DAL
         public DbSet<Bascet> Bascets { get; set; }
         public DbSet<BascetProduct> BascetProducts { get; set; }
         public DbSet<BalanceOfProduct> BalanceOfProducts { get; set; }
+
+        public System.Data.Entity.DbSet<Data.Entities.InComeEntity> InComeEntities { get; set; }
+
+        public System.Data.Entity.DbSet<Data.Entities.InCome> InComes { get; set; }
     }
 
     internal class DbInitilializer : CreateDatabaseIfNotExists<DataContext>
@@ -69,7 +73,7 @@ namespace Data.DAL
             {
                 var product = new Product
                 {
-                    ProductCategoryID = random.Next(1, 15),
+                    ProductCategoryId = random.Next(1, 15),
                     Title = $"product {i}"
                 };
                 context.Products.Add(product);

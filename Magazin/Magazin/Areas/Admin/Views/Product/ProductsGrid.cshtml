@@ -6,48 +6,6 @@
     string gridId = "grid_" + Guid.NewGuid().ToString("N");
 }
 
-<div id="@wrapId">
-    <div>
-        @(Html.Kendo().ToolBar()
-        .Name(toolbarName)
-        .Items(toolbar =>
-        {
-            toolbar.Add().Type(CommandType.ButtonGroup).Buttons(btns =>
-            {
-
-                btns.Add().Text("Добавить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-plus").HtmlAttributes(new { title = "Создать", data_action = "Add" });
-                btns.Add().Text("Редактировать").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-pencil").HtmlAttributes(new { title = "Редактировать", data_action = "Edit" });
-                btns.Add().Text("Удалить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-close").HtmlAttributes(new { title = "Удалить", data_action = "Delete" });
-            });
-        })
-        .Events(e =>
-        {
-            e.Click(gridId + ".onToolbarClick");
-        })
-        )
-    </div>
-
-    <div>
-        @(Html.Kendo().Grid<Data.Entities.Product>()
-              .Name(gridId)
-              .Pageable()
-              .AutoBind(false)
-              .Scrollable()
-              .Selectable(s => s.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row).Enabled(true))
-              .Columns(c =>
-              {
-                  c.Bound(p => p.Title).Title("Наименование");
-                  c.Bound(p => p.Price).Title("Цена");
-              })
-              .DataSource(ds => ds
-                  .Ajax()
-                  .Read(read => read.Action("GetProducts", "Product"))
-                  .PageSize(15)
-              ))
-    </div>
-</div>
-
-
 <script>
     var dialogControl = window['@Model.DialogId'];
     window['@gridId'] = new GridControl('@gridId', "productGrid");
@@ -108,6 +66,7 @@
         };
 
         productsControl.onControlFire = function (e) {
+            console.log(e);
             switch (e.sender.desc) {
                 case "categories":
                     {
@@ -146,6 +105,53 @@
             }
         }
     })();
+</script>
+
+
+<div id="@wrapId">
+    <div>
+        @(Html.Kendo().ToolBar()
+        .Name(toolbarName)
+        .Items(toolbar =>
+        {
+            toolbar.Add().Type(CommandType.ButtonGroup).Buttons(btns =>
+            {
+
+                btns.Add().Text("Добавить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-plus").HtmlAttributes(new { title = "Создать", data_action = "Add" });
+                btns.Add().Text("Редактировать").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-pencil").HtmlAttributes(new { title = "Редактировать", data_action = "Edit" });
+                btns.Add().Text("Удалить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-close").HtmlAttributes(new { title = "Удалить", data_action = "Delete" });
+            });
+        })
+        .Events(e =>
+        {
+            e.Click(gridId + ".onToolbarClick");
+        })
+        )
+    </div>
+
+    <div>
+        @(Html.Kendo().Grid<Data.Entities.Product>()
+              .Name(gridId)
+              .Pageable()
+              .AutoBind(false)
+              .Scrollable()
+              .Selectable(s => s.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row).Enabled(true))
+              .Columns(c =>
+              {
+                  c.Bound(p => p.Title).Title("Наименование");
+                  c.Bound(p => p.Price).Title("Цена");
+              })
+              .DataSource(ds => ds
+                  .Ajax()
+                  .Read(read => read.Action("GetProducts", "Product"))
+                  .PageSize(15)
+              ))
+    </div>
+</div>
+
+
+<script>
+
 
     $(function () {
         var $toolbar = $('#@toolbarName');

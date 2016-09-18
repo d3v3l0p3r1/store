@@ -7,7 +7,7 @@ namespace Data.Entities
     {
         public string Title { get; set; }
 
-        public int ProductCategoryID { get; set; }
+        public int ProductCategoryId { get; set; }
         public virtual ProductCategory ProductCategory { get; set; }
 
         public int Price { get; set; }

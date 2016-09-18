@@ -28,8 +28,8 @@ namespace Magazin.Areas.Admin.Controllers
             var mdl = new DialogViewModel();
             return PartialView("Index", mdl);
         }
-        
-        public JsonResult GetProducts([DataSourceRequest] DataSourceRequest request, int? categoryId)
+
+        public JsonResult GetProducts([DataSourceRequest] DataSourceRequest request, int? categoryId, string filter)
         {
             using (var uow = CreateUnitOfWork())
             {
@@ -37,7 +37,12 @@ namespace Magazin.Areas.Admin.Controllers
 
                 if (categoryId.HasValue)
                 {
-                    products = products.Where(x => x.ProductCategoryID == categoryId.Value);
+                    products = products.Where(x => x.ProductCategoryId == categoryId.Value);
+                }
+
+                if (!string.IsNullOrEmpty(filter))
+                {
+                    products = products.Where(x => x.Title.ToUpper().StartsWith(filter.ToUpper()));
                 }
 
                 var result = new JsonResult
@@ -57,7 +62,7 @@ namespace Magazin.Areas.Admin.Controllers
             {
                 Product product;
 
-                product = id.HasValue ? _productService.Find(uow, id.Value) : new Product { ProductCategoryID = categoryId };
+                product = id.HasValue ? _productService.Find(uow, id.Value) : new Product { ProductCategoryId = categoryId };
 
                 return PartialView("ProductDetailView", product);
             }
@@ -103,6 +108,24 @@ namespace Magazin.Areas.Admin.Controllers
                 {
                     return Json(new { error = "Id is 0" });
                 }
+            }
+        }
+
+        public JsonResult FindProduct(string startWith)
+        {
+            using (var uow = CreateUnitOfWork())
+            {
+                var products = _productService.GetAll(uow);
+                if (!string.IsNullOrEmpty(startWith))
+                {
+                    products = products.Where(x => x.Title.ToUpper().StartsWith(startWith.ToUpper()));
+                }
+
+                return new JsonResult
+                {
+                    Data = products.Select(x => new { x.Id, x.Title }),
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
             }
         }
     }

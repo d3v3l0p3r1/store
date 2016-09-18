@@ -1,0 +1,123 @@
+﻿@using Data.Entities
+@using Kendo.Mvc.UI
+@{
+    string toolbarName = "tlbr_" + Guid.NewGuid().ToString("N");
+    string gridId = "grid_" + Guid.NewGuid().ToString("N");
+}
+
+
+
+<script>
+    window['@toolbarName'] = {
+        add : function() {
+            var params = {
+                contentUrl: "@Url.Action("GetIncomeEntity","InCome")",
+                title: 'Позиция'
+            }
+
+            UiApi.openModalWindow(params);
+        },
+        edit: function() {
+
+        },
+        remove: function() {
+
+        }
+    }
+
+
+</script>
+
+
+<div id="editform">
+    <div id="formtoolbar" style="background-color: #444">
+    </div>
+    <h3>Добавте позиции</h3>
+
+    <div>
+        @(Html.Kendo().ToolBar()
+              .Name(toolbarName)
+              .Items(toolbar =>
+              {
+                  toolbar.Add().Type(CommandType.ButtonGroup).Buttons(btns =>
+                  {
+                      btns.Add().Text("Добавить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-plus").HtmlAttributes(new { title = "Создать" }).Click(toolbarName + ".add");
+                      btns.Add().Text("Редактировать").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-pencil").HtmlAttributes(new { title = "Редактировать" }).Click(toolbarName + ".edit");
+                      btns.Add().Text("Удалить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-close").HtmlAttributes(new { title = "Удалить" }).Click(toolbarName + ".remove");
+                  });
+              })
+        )
+    </div>
+
+    <div>
+        @(Html.Kendo().Grid<InComeEntity>()
+              .Name(gridId)
+              .Columns(c =>
+              {
+                  c.Bound(b => b.Product.Title).Title("Продукт");
+                  c.Bound(b => b.Count).Title("Количество");
+              })
+        )
+    </div>
+
+
+    <div>
+
+    </div>
+</div>
+
+
+
+<script>
+    $(function () {
+        var $form = $('#editform');
+        var parent = $form.parent('[data-role=window]').data('kendoWindow');
+
+        var model = @Html.Raw(Json.Encode(Model));
+
+        var viewModel = new kendo.data.ObservableObject(model);
+        kendo.bind($form, viewModel);
+
+        $('#tabstrip').kendoTabStrip();
+
+        $('#formtoolbar').kendoToolBar({
+            items:[
+            {
+                attributes : {"style" : "float : right;"},
+                type: "buttonGroup",
+                buttons: [
+                    { type: "button", text: "Сохранить", id: "save", attributes: {"class" : "primary" , "title" : "Сохранить" , "data_popup" : "bottom"}} ]
+            }]
+        });
+
+
+        $('#save').on('click', function() {
+            var data = JSON.stringify({product: viewModel});
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("AddInCome","InCome")",
+                data: data,
+                dataType: "json",
+                contentType: "application/json",
+                success: function(result) {
+                    if (result.error) {
+
+                    } else {
+                        kendo.unbind($form, viewModel);
+                        parent.close();
+                    }
+                }
+            });
+        });
+
+
+        $('#cancel').on('click', function() {
+            parent.close();
+        });
+
+        var $toolbar = $('#@toolbarName');
+        $toolbar.find(".k-sprite").removeClass("k-sprite");
+
+    });
+</script>

@@ -15,18 +15,15 @@ namespace Magazin
                 ));
 
 
-            bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
-                "~/Content/vendor/jszip/jszip.js",
-                "~/Content/vendor/kendo/js/kendo.all.min.js",
-                "~/Content/vendor/kendo/js/kendo.aspnetmvc.js",
-                "~/Content/vendor/kendo/js/kendo.culture.ru.custom.js"
+            bundles.Add(new ScriptBundle("~/kendo").Include(
+                "~/Scripts/vendor/jszip.min.js",
+                "~/Scripts/vendor/kendo.all.min.js",
+                "~/Scripts/vendor/kendo.aspnetmvc.min.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+                "~/Scripts/vendor/jquery.min.js"));
+            
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
@@ -45,15 +42,16 @@ namespace Magazin
                 "~/Content/fonts/glyphicons/glyphicons-social-regular.css",
                 "~/Content/fonts/fontello/fontello.css",
                 "~/Content/fonts/mdi/materialdesignicons.css",
-                "~/Content/fonts/font-awesome/font-awesome.css",                 
-                "~/Content/vendor/kendo/styles/kendo.common.min.css",
-                "~/Content/vendor/kendo/styles/kendo.common-material.min.css",
-                "~/Content/vendor/kendo/styles/kendo.material.min.css",
-                "~/Content/vendor/kendo/styles/kendo.mobile.switch.css"));
+                "~/Content/fonts/font-awesome/font-awesome.css",
+                "~/Content/vendor/kendo/kendo.common.min.css",
+                "~/Content/vendor/kendo/kendo.black.min.css"               
+
+                ));
 
             bundles.Add(new StyleBundle("~/Content/admin-css").Include(
                 "~/Content/admin-site.css",
-                "~/Content/admin-layout.css"
+                "~/Content/admin-layout.css",
+                "~/Content/site-css.css"
                 ));
 
         }

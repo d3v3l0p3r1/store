@@ -9,8 +9,10 @@
 <div>
 </div>
 
-<script type="text/javascript">
-    window['@Model.DialogId'] = new DialogControl('@Model.DialogId');
+<script>
+    (function() {
+        window['@Model.DialogId'] = new DialogControl('@Model.DialogId');
+    })()
 </script>
 
 
@@ -33,8 +35,8 @@
 )
 <script>
     $(function () {
-        var control = window['@Model.DialogId'];
-        var height = $(window).height() - $('#topmenu').height() - 65; //65 magic
+        var control = window['@Model.DialogId'];        
+        var height = $(window).height() - 5; //65 magic
         var $splitter = $('#@wrapID');
         var splitter = $splitter.data('kendoSplitter');
         
@@ -46,7 +48,7 @@
         setTimeout(function () {
 
             var onResize = function () {
-                var h = $(window).height() - $('#topmenu').height() - 65; //65 magic
+                var h = $(window).height() - 5; //65 magic
                 $splitter.height(h);
                 splitter.resize();
                 control.resizeChilds(h);

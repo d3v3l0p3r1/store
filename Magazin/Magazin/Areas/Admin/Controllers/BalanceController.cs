@@ -8,6 +8,7 @@ using Data.Entities;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Magazin.Controllers;
+using Magazin.Models;
 
 namespace Magazin.Areas.Admin.Controllers
 {
@@ -19,9 +20,9 @@ namespace Magazin.Areas.Admin.Controllers
             _balanceService = balanceService;
         }
 
-        public ActionResult Balances()
+        public ActionResult Index()
         {
-            return View();
+            return View("Index", new DialogViewModel());
         }
 
         public JsonResult GetBalances([DataSourceRequest] DataSourceRequest request)

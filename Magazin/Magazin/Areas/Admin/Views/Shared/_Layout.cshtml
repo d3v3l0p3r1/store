@@ -8,30 +8,29 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/kendo")
+    @Scripts.Render("~/kendo")
     @Scripts.Render("~/bundles/dialogControls")
     @Styles.Render("~/Content/admin-css")
 
 
 </head>
-<body>
+<body class="k-content">
+
     <aside id="side-bar">
         <div>
             <a href="/">
-                <img src="~/Content/images/admin-logo.png"/>
+                <img src="~/Content/images/admin-logo.png" /> Главная
             </a>
         </div>
-        
-        
 
         @{Html.RenderPartial("SideBar");}
     </aside>
 
-<div id="main-content">
-    @RenderBody()
-</div>
-    
+    <div id="main-content">
+        @RenderBody()
+    </div>
 
-@RenderSection("scripts", false)
+     
 </body>
 </html>
+

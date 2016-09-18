@@ -36,9 +36,17 @@
                 });
         });
 
-        router.route("/Admin/Balance/Balances", function () {
+        router.route("/Admin/InCome/Index", function () {
             require([
-                'text!/Admin/Balance/Balances'],
+                'text!/admin/income/index'],
+                function (view) {
+                    loadView(null, view);
+                });
+        });
+
+        router.route("/Admin/Balance/Index", function () {
+            require([
+                'text!/admin/balance/index'],
                 function (view) {
                     loadView(null, view);
                 });

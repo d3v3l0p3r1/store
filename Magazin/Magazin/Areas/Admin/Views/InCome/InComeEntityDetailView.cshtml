@@ -1,0 +1,92 @@
+﻿@using Kendo.Mvc.UI
+@model Data.Entities.InComeEntity
+
+
+@{
+    string drop = "drp_" + Guid.NewGuid().ToString("N");
+    string wrapId = "wrp_" + Guid.NewGuid().ToString("N");
+}
+
+
+
+<script>
+
+    window['@wrapId'] = {
+        onChange : function(e) {
+
+        },
+
+        onDataBound : function(e) {
+
+        },
+
+        onSelect : function(e) {
+
+        },
+        onAdditionalData : function() {
+            var val = $('#@drop').data('kendoAutoComplete').value();
+            console.log(val);
+            return {
+                startWith:val
+            };
+        }
+
+    };
+
+</script>
+
+
+<div id="@wrapId">
+    <h4>Позиция</h4>
+    <hr />
+
+    <div class="editor-row">
+        <label class="editor-label">Продукт</label>
+        <div class="editor-container">
+            @(Html.Kendo().AutoComplete()
+                    .Name(drop)
+                  .DataTextField("Title")
+                  .Placeholder("Введите наименование продукта")
+                  .Filter("startswith")
+                  .MinLength(1)
+                  .Height(370)
+                  .Events(e => e.Change(wrapId + ".onChange").DataBound(wrapId + ".onDataBound").Select(wrapId + ".onSelect"))
+                  .DataSource(source =>
+                  {
+                      source.Read(read =>
+                      {
+                          read.Action("FindProduct", "Product").Data(wrapId + ".onAdditionalData");
+                      }).ServerFiltering(true);
+                  })
+            )
+        </div>
+    </div>
+
+
+    <div class="editor-row">
+        <label class="editor-label">Количетсво</label>
+        <div class="editor-container">
+            <input type="number" data-bind="value: Count" />
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script>
+    $(function() {
+
+        var $form = $('#editform');
+        var parent = $form.parent('[data-role=window]').data('kendoWindow');
+
+        var model = @Html.Raw(Json.Encode(Model));
+
+        var viewModel = new kendo.data.ObservableObject(model);
+        kendo.bind($form, viewModel);
+
+    });
+
+</script>

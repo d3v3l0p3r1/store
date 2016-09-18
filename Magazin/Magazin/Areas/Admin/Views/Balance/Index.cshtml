@@ -1,0 +1,77 @@
+﻿@using Kendo.Mvc.UI
+@{
+    string wrapId = Guid.NewGuid().ToString("N");
+    string gridId = Guid.NewGuid().ToString("N");
+    string toolbarName = Guid.NewGuid().ToString("N");
+}
+
+
+<script id="rowTemplate" type="text/x-kendo-tmpl">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+
+</script>
+
+
+<div id="wrapId">
+
+    @(Html.Kendo().ToolBar()
+        .Name(toolbarName)
+        .Items(toolbar =>
+        {
+            toolbar.Add().Type(CommandType.ButtonGroup).Buttons(btns =>
+            {
+
+                btns.Add().Text("Добавить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-plus").HtmlAttributes(new { title = "Создать", data_action = "Add" });
+                btns.Add().Text("Редактировать").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-pencil").HtmlAttributes(new { title = "Редактировать", data_action = "Edit" });
+                btns.Add().Text("Удалить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-close").HtmlAttributes(new { title = "Удалить", data_action = "Delete" });
+            });
+        }
+      )
+    )
+
+
+    @(Html.Kendo().Grid<Data.Entities.BalanceOfProduct>()
+        .Name(gridId)
+        .DataSource(ds => ds
+            .Ajax()
+            .Read(read => read.Action("GetBalances", "Balance"))
+
+    ))
+
+</div>
+<script>
+    $(function () {
+        var $toolbar = $('#@toolbarName');
+        $toolbar.find(".k-sprite").removeClass("k-sprite");
+        
+        var height = $(window).height() - 65; //65 magic
+        var $splitter = $('#@gridId');        
+
+        $splitter.height(height);
+
+        setTimeout(function () {
+
+            var onResize = function () {
+                var h = $(window).height() - 65; //65 magic
+                $splitter.height(h);        
+            };
+
+            $(window).on("resize", onResize);
+
+        }, 500);
+
+    })
+</script>
+
+
+<script>    
+    window['@gridId'] = new GridControl('@gridId', "balanceGrid");
+
+    (function () {
+        var productsControl = window['@gridId'];        
+    })();
+</script>

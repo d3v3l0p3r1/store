@@ -88,10 +88,10 @@ var GridControl = SimpleControl.extend({
 
     resize: function (h) {
         var $grid = $('#' + this.id);
+        
         var $dataArea = $grid.find(".k-grid-content");
-
-        h = h - ($grid.outerHeight() - $dataArea.outerHeight(true));
-
+        h = h - ($grid.outerHeight(true) - $dataArea.outerHeight(true));
+        $grid.height(h + 25);
         $dataArea.height(h);
     },
 

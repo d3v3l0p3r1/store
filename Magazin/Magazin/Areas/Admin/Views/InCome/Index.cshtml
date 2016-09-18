@@ -1,0 +1,170 @@
+﻿@using Kendo.Mvc.UI
+@model Magazin.Models.DialogViewModel
+@{
+    string wrapId = "wrp_" + Guid.NewGuid().ToString("N");
+    string toolbarName = "tlbr_" + Guid.NewGuid().ToString("N");
+    string gridId = "grid_" + Guid.NewGuid().ToString("N");
+}
+
+<div></div>
+
+
+<script>
+    window['@Model.DialogId'] = new DialogControl('@Model.DialogId');
+    window['@gridId'] = new GridControl('@gridId', "productGrid");
+
+    (function () {
+        var dialogControl = window['@Model.DialogId'];
+
+        var productsControl = window['@gridId'];
+        dialogControl.addControl(productsControl);
+
+
+        productsControl.create = function () {
+            var url = "@Url.Action("GetInCome", "InCome")";
+
+            var params = {
+                title: 'Приход',
+                contentUrl: url
+            };
+
+            var onClose = function (e) {
+                productsControl.readDataSource();
+            };
+
+            UiApi.openModalWindow(params, onClose);
+        };
+
+        productsControl.delete = function () {
+            var entity = productsControl.getSelectedItem();
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Delete", "InCome")",
+                data: JSON.stringify({ id: entity.Id }),
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                if (result.error) {
+
+                } else {
+                    productsControl.readDataSource();
+                }
+            }
+        });
+
+
+    };
+    productsControl.edit = function () {
+        var entity = productsControl.getSelectedItem();
+        var url = "@Url.Action("GetInCome", "InCome")?id=" + entity.Id;
+
+        var params = {
+            title: 'Приход',
+            contentUrl: url
+        };
+
+        var onClose = function (e) {
+            productsControl.readDataSource();
+        };
+
+        UiApi.openModalWindow(params, onClose);
+    };
+
+    productsControl.onControlFire = function (e) {
+        switch (e.sender.desc) {
+
+        }
+    };
+
+    productsControl.onToolbarClick = function (e) {
+        e.preventDefault();
+        var action = e.target.attr('data-action');
+        switch (action) {
+            case "Add":
+                {
+                    window['@gridId'].create();
+                    break;
+                }
+            case "Delete":
+                {
+                    window['@gridId'].delete();
+                    break;
+                }
+            case "Edit":
+                {
+                    window['@gridId'].edit();
+                    break;
+                }
+            default:
+        }
+    }
+    })();
+
+</script>
+
+<div id="@wrapId">
+    <div>
+        @(Html.Kendo().ToolBar()
+              .Name(toolbarName)
+              .Items(toolbar =>
+              {
+                  toolbar.Add().Type(CommandType.ButtonGroup).Buttons(btns =>
+                  {
+
+                      btns.Add().Text("Добавить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-plus").HtmlAttributes(new { title = "Создать", data_action = "Add" });
+                      btns.Add().Text("Редактировать").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-pencil").HtmlAttributes(new { title = "Редактировать", data_action = "Edit" });
+                      btns.Add().Text("Удалить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-close").HtmlAttributes(new { title = "Удалить", data_action = "Delete" });
+                  });
+              })
+              .Events(e =>
+              {
+                  e.Click(gridId + ".onToolbarClick");
+              })
+              )
+    </div>
+
+    <div>
+        @(Html.Kendo().Grid<Data.Entities.InCome>()
+              .Name(gridId)
+              .Pageable()
+              .AutoBind(false)
+              .Scrollable()
+              .Selectable(s => s.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row).Enabled(true))
+              .Columns(c =>
+              {
+                  c.Bound(p => p.Date).Title("Дата");
+                  
+              })
+              .DataSource(ds => ds
+                  .Ajax()
+                  .Read(read => read.Action("GetProducts", "Income"))
+                  .PageSize(15)
+              ))
+    </div>
+</div>
+
+<script>
+    $(function() {
+        var $toolbar = $('#@toolbarName');
+        $toolbar.find(".k-sprite").removeClass("k-sprite");
+
+        var control = window['@Model.DialogId'];
+        var height = $(window).height() - 65; //65 magic
+        var $splitter = $('#@wrapId');        
+
+        $splitter.height(height);
+        control.resizeChilds(height);        
+
+
+        setTimeout(function () {
+            var onResize = function () {
+                var h = $(window).height();
+                $splitter.height(h);                
+                control.resizeChilds(h);
+            };
+
+            $(window).on("resize", onResize);
+
+        }, 500);
+
+    })
+</script>
