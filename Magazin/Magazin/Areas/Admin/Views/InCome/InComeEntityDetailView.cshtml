@@ -5,6 +5,7 @@
 @{
     string drop = "drp_" + Guid.NewGuid().ToString("N");
     string wrapId = "wrp_" + Guid.NewGuid().ToString("N");
+    string toolbarId = "tlbr_" + Guid.NewGuid().ToString("N");
 }
 
 
@@ -25,12 +26,11 @@
         },
         onAdditionalData : function() {
             var val = $('#@drop').data('kendoAutoComplete').value();
-            console.log(val);
+
             return {
                 startWith:val
             };
         }
-
     };
 
 </script>
@@ -39,32 +39,26 @@
 <div id="@wrapId">
     <h4>Позиция</h4>
     <hr />
+    <div id="@toolbarId"></div>
 
     <div class="editor-row">
         <label class="editor-label">Продукт</label>
+
         <div class="editor-container">
-            @(Html.Kendo().AutoComplete()
-                    .Name(drop)
-                  .DataTextField("Title")
-                  .Placeholder("Введите наименование продукта")
-                  .Filter("startswith")
-                  .MinLength(1)
-                  .Height(370)
-                  .Events(e => e.Change(wrapId + ".onChange").DataBound(wrapId + ".onDataBound").Select(wrapId + ".onSelect"))
-                  .DataSource(source =>
+
+            @(Html.Kendo().AutoComplete().Name(drop).DataTextField("Title").Placeholder("Введите наименование продукта").Filter("startswith").MinLength(1).Height(370).Events(e => e.Change(wrapId + ".onChange").DataBound(wrapId + ".onDataBound").Select(wrapId + ".onSelect")).DataSource(source =>
+              {
+                  source.Read(read =>
                   {
-                      source.Read(read =>
-                      {
-                          read.Action("FindProduct", "Product").Data(wrapId + ".onAdditionalData");
-                      }).ServerFiltering(true);
-                  })
-            )
+                      read.Action("FindProduct", "Product").Data(wrapId + ".onAdditionalData");
+                  }).ServerFiltering(true);
+              }))
         </div>
     </div>
 
 
     <div class="editor-row">
-        <label class="editor-label">Количетсво</label>
+        <label class="editor-label">Количество</label>
         <div class="editor-container">
             <input type="number" data-bind="value: Count" />
         </div>
@@ -85,7 +79,26 @@
         var model = @Html.Raw(Json.Encode(Model));
 
         var viewModel = new kendo.data.ObservableObject(model);
-        kendo.bind($form, viewModel);
+
+        kendo.bind($form, viewModel);        
+
+
+        $('#@toolbarId').kendoToolBar({
+            items:[
+            {
+                attributes : {"style" : "float : right;"},
+                type: "buttonGroup",
+                buttons: [
+                    { type: "button", text: "Сохранить", id: "save", attributes: {"class" : "primary" , "title" : "Сохранить" , "data_popup" : "bottom"}} ]
+            }]
+        });
+
+        var $toolbar = $('#@toolbarId');
+        $toolbar.find(".k-sprite").removeClass("k-sprite");
+
+        $('#save').on('click' , function() {
+            debugger;
+        });
 
     });
 
