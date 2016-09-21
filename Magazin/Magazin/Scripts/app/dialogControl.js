@@ -107,3 +107,27 @@ var GridControl = SimpleControl.extend({
     }
 
 });
+
+var DetailViewForm = BaseDialogControl.extend({
+    model :  kendo.ObservableObject,
+    init: function (id) {
+        this.id = id;
+        this.desc = "DetailViewForm";
+        BaseDialogControl.fn.init.call(this, id, this.desc);
+    },
+
+    setModel: function (mdl) {
+        kendo.bind($(this.id), mdl);
+
+        this.model = mdl;
+    },
+    getModel: function() {
+        return this.model;
+    },
+
+    getWindow: function() {
+        return $(this.id).closest('[data-role=window]').data('kendoWindow');
+    }
+
+
+});

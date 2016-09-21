@@ -123,7 +123,7 @@ namespace Magazin.Areas.Admin.Controllers
 
                 return new JsonResult
                 {
-                    Data = products.Select(x => new { x.Id, x.Title }),
+                    Data = products,
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
             }
