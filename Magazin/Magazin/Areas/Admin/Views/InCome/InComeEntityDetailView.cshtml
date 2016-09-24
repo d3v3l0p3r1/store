@@ -9,33 +9,6 @@
 }
 
 
-
-<script>
-
-    window['@wrapId'] = {
-        onChange : function(e) {
-
-        },
-
-        onDataBound : function(e) {
-
-        },
-
-        onSelect : function(e) {
-
-        },
-        onAdditionalData : function() {
-            var val = $('#@drop').data('kendoAutoComplete').value();
-
-            return {
-                startWith:val
-            };
-        }
-    };
-
-</script>
-
-
 <div id="@wrapId">
     <h4>Позиция</h4>
     <hr />
@@ -45,25 +18,15 @@
         <label class="editor-label">Продукт</label>
 
         <div class="editor-container">
-
-            @(Html.Kendo().AutoComplete().Name(drop)
-                .DataTextField("Title")
-                .Placeholder("Введите наименование продукта")
-                .Filter("startswith")
-                
-                .MinLength(1)
-                .Height(370)
-                .Events(e => e
-                    .Change(wrapId + ".onChange")
-                    .DataBound(wrapId + ".onDataBound")
-                    .Select(wrapId + ".onSelect"))
-                .DataSource(source =>
-                {
-                  source.Read(read =>
-                  {
-                      read.Action("FindProduct", "Product").Data(wrapId + ".onAdditionalData");
-                  }).ServerFiltering(true);
-                }))
+            <input id="@drop" data-role="autocomplete"
+                   data-placeholder="Выберите продукт ..."
+                   data-value-primitive="false"
+                   data-text-field="Title"
+                   data-value-field="Id"
+                   data-bind="value: Model.Product,
+                              source: products,
+                              events :{select : onChange}"
+            />
         </div>
     </div>
 
@@ -71,28 +34,47 @@
     <div class="editor-row">
         <label class="editor-label">Количество</label>
         <div class="editor-container">
-            <input type="number" data-bind="value: Count" />
+            <input type="number" data-bind="value: Model.Count" />
         </div>
     </div>
 </div>
 
-
-
-
-
-
 <script>
     $(function() {
-
-        var $form = $('#editform');
-        var parent = $form.parent('[data-role=window]').data('kendoWindow');
+        var $form = $('#@wrapId');
 
         var model = @Html.Raw(Json.Encode(Model));
 
-        var viewModel = new kendo.data.ObservableObject(model);
+        var viewModel = new kendo.data.ObservableObject();
+
+        viewModel.Model = new kendo.data.ObservableObject(model);
+
+        viewModel.products = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url : "@Url.Action("FindProduct", "Product")",
+                    data: function() {
+                        var val = $('#@drop').data('kendoAutoComplete').value();
+
+                        return {
+                            startWith: val
+                        };
+                    }
+                }
+            }
+        });
+
+        viewModel.onChange = function(e) {
+            viewModel.Model.ProductId = e.dataItem.Id;
+        };
 
         kendo.bind($form, viewModel);
 
+        var save = function() {            
+            var wnd = $form.closest('[data-role="window"]').data('kendoWindow');
+            wnd.Model = viewModel.Model;
+            wnd.close(viewModel);
+        }
 
         $('#@toolbarId').kendoToolBar({
             items:[
@@ -100,18 +82,18 @@
                 attributes : {"style" : "float : right;"},
                 type: "buttonGroup",
                 buttons: [
-                    { type: "button", text: "Сохранить", id: "save", attributes: {"class" : "primary" , "title" : "Сохранить" , "data_popup" : "bottom"}} ]
+                    { type: "button", text: "Сохранить", click: save, attributes: {"class" : "primary" , "title" : "Сохранить" , "data_popup" : "bottom"}} ]
             }]
         });
+    });
+</script>
 
+
+
+<script>
+    $(function() {
         var $toolbar = $('#@toolbarId');
         $toolbar.find(".k-sprite").removeClass("k-sprite");
-
-        $('#save').on('click' , function() {
-
-            debugger;
-        });
-
     });
 
 </script>

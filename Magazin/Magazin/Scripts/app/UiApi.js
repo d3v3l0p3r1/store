@@ -27,6 +27,7 @@
 
         $('body').append('<div id="' + wid + '"></div>');
 
+        
         var $w = $('#' + wid);
 
         var wnd = $w.kendoWindow({
@@ -35,7 +36,7 @@
                 content: _params.contentUrl,
                 title: _params.title,
                 close: function (e) {                    
-                    callback();
+                    callback(e);
                     this.destroy();
                 }
             })
