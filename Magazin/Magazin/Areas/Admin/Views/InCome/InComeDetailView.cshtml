@@ -55,20 +55,38 @@
                 title: 'Позиция'
             }
 
-            var callback = function (e) {
+            var callback = function(e) {
                 if (e.sender.Model) {
                     if (!viewModel.Incoms) {
                         viewModel.set('Incoms', []);
                     }
 
                     viewModel.Incoms.push(e.sender.Model);
-                }                
+                }
             }
 
             UiApi.openModalWindow(params, callback);
         };
 
-        form.edit = function () {
+        form.precessInCome = function () {
+            var ajaxParams = {
+                id: '@Model.EntityId'
+            }
+
+            $.ajax({
+                url: '@Url.Action("ProcessIncome")',
+                type: "GET",
+                data: ajaxParams,
+                success: function (result) {
+                    console.log(result);
+                    if(result === "ok"){}
+                },
+                dataType: "json",
+                contentType: 'application/json'
+            });
+        };
+
+        form.edit = function() {
             var viewModel = form.getModel();
 
             if (viewModel.Processed) {
@@ -160,6 +178,11 @@
         $('#formtoolbar').kendoToolBar({
             items: [
             {
+                type: "buttonGroup",
+                buttons: [
+                { type: "button", text: "Провести", click: form.precessInCome, attributes: { "class": "primary", "title": "Провести", "data_popup": "bottom" } }]
+            },
+            {
                 attributes: { "style": "float : right;" },
                 type: "buttonGroup",
                 buttons: [
@@ -189,11 +212,4 @@
     });
 </script>
 
-
-<script>
-
-
-
-
-</script>
 

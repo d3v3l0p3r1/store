@@ -21,7 +21,7 @@ namespace Magazin
             var container = new Container();
             container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
             Bindings.Bind(container);
-            
+
             DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));            
 
             AreaRegistration.RegisterAllAreas();
@@ -29,7 +29,8 @@ namespace Magazin
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             MapperConfig.Init();
-            UpdateConfiguration.Init(container.GetInstance<IUpdateConfigurationManager>());
+            UpdateConfiguration.Init(container.GetInstance<IUpdateConfigurationManager>());            
+            ValueProviderFactories.Factories.Add(new JsonValueProviderFactory());
         }
     }
 }

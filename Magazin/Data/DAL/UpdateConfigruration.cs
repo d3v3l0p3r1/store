@@ -15,10 +15,8 @@ namespace Data.DAL
         {
             _manager = manager;
 
-            manager.AddConfiguration<InCome>(x =>                 
-                x.OwnedCollection(z => z.Incoms, with => with.AssociatedEntity(e => e.Product)));
-
-
+            manager.AddConfiguration<InCome>(x => x.OwnedCollection(z => z.Incoms, with => with.AssociatedEntity(e => e.Product)));
+            manager.AddConfiguration<Product>(x => x.OwnedCollection(z => z.ProductFiles, with => with.AssociatedEntity(e => e.File)));            
         }
 
         public static IUpdateConfigurationManager GetConfigurationManager()

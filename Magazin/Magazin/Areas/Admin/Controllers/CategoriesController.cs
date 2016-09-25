@@ -8,6 +8,7 @@ using Data.Services;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Magazin.Controllers;
+using Magazin.Helpers;
 
 namespace Magazin.Areas.Admin.Controllers
 {
@@ -21,13 +22,13 @@ namespace Magazin.Areas.Admin.Controllers
         }
 
 
-        public JsonResult GetCategories([DataSourceRequest] DataSourceRequest request, int? id)
+        public JsonNetResult GetCategories([DataSourceRequest] DataSourceRequest request, int? id)
         {
             using (var uow = CreateUnitOfWork())
             {
                 var cats = _categoryService.GetAll(uow).ToDataSourceResult(request);
 
-                return Json(cats, JsonRequestBehavior.AllowGet);
+                return new JsonNetResult(cats);
             }
         }
 

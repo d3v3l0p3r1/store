@@ -38,14 +38,16 @@ namespace Data
         {
             var updateConfig = _manager.GetConfiguration<T>();
 
-            if (updateConfig != null)
+            if (updateConfig != null)                
             {
+                _dataContext.Entry<T>(entity).State = System.Data.Entity.EntityState.Detached;
                 _dataContext.UpdateGraph(entity, updateConfig);
             }
             else
             {
-                var dbSet = _dataContext.Set<T>();
-                dbSet.AddOrUpdate(entity);
+                var dbSet = _dataContext.Set<T>();                
+                dbSet.Attach(entity);
+                _dataContext.Entry<T>(entity).State = System.Data.Entity.EntityState.Modified;
             }
             
             return entity;

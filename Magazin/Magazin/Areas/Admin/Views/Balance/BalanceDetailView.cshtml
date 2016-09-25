@@ -1,0 +1,110 @@
+﻿@using Kendo.Mvc.UI
+@model Magazin.Models.DetailViewModel
+
+
+@{
+    string drop = "drp_" + Guid.NewGuid().ToString("N");
+    string toolbarId = "tlbr_" + Guid.NewGuid().ToString("N");
+}
+
+
+<script>
+    window['@Model.Id'] = new DetailViewForm('@Model.Id');
+
+    (function () {
+        var form = window['@Model.Id'];
+
+        form.save = function() {     
+
+            $.ajax({
+                url: '@Url.Action("Update")',
+                type: "POST",
+                data: JSON.stringify(form.getModel().toJSON()),
+                success: function (result) {
+                    var wnd = form.getWindow();
+                    wnd.Model = form.getModel();
+                    wnd.close();
+                },
+                dataType: "json",
+                contentType: 'application/json'
+            });
+            
+
+            
+        };
+
+        form.cancel = function () {
+            var wnd = form.getWindow();
+            wnd.close();
+        };
+
+
+    })();
+
+</script>
+
+<div id="@Model.Id">
+    <h4>Позиция</h4>
+    <hr />
+    <div id="@toolbarId"></div>
+
+    <div class="editor-row">
+        <label class="editor-label">Продукт</label>
+        <label class="k-textbox" data-bind="text: Product.Title"></label> 
+    </div>
+
+
+    <div class="editor-row">
+        <label class="editor-label">Количество</label>
+        <div class="editor-container">
+            <input type="number" class="k-textbox" data-bind="value: Count" />
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        var form = window['@Model.Id'];
+
+        var ajaxParams = {
+            id: '@Model.EntityId'
+        }
+
+        $.ajax({
+            url: '@Url.Action("Get")',
+            type: "GET",
+            data: ajaxParams,
+            success: function (result) {
+                var viewModel = new kendo.data.ObservableObject(result);
+                form.setModel(viewModel);
+            },
+            dataType: "json",
+            contentType: 'application/json'
+        });
+
+
+    });
+</script>
+
+
+
+<script>
+    $(function () {
+        var form = window['@Model.Id'];
+
+        $('#@toolbarId').kendoToolBar({
+            items: [
+            {
+                attributes: { "style": "float : right;" },
+                type: "buttonGroup",
+                buttons: [
+                { type: "button", text: "Сохранить", click: form.save, attributes: { "class": "primary", "title": "Сохранить", "data_popup": "bottom" } }]
+            }]
+        });
+
+        var $toolbar = $('#@toolbarId');
+        $toolbar.find(".k-sprite").removeClass("k-sprite");
+    });
+
+</script>

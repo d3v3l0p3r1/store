@@ -3,25 +3,23 @@
 @using Data.Entities
 @using Kendo.Mvc.UI
 @{
-    string wrapId = "tree_" + Guid.NewGuid().ToString("N");
     string toolbarName = "tlbr_" + Guid.NewGuid().ToString("N");
     string treeId = "tree_" + Guid.NewGuid().ToString("N");
-    string test = "tst_" + Guid.NewGuid().ToString("N");
+    string wrapId = "wrp_" + Guid.NewGuid().ToString("N");
 }
 
 <script>
-    window['@Model.DialogId'] = new DialogControl('@Model.DialogId');
+    var dialogControl = window['@Model.DialogId'];
     window['@treeId'] = new GridControl('@treeId', 'categories');
-    
 
     (function () {
-        var dialogControl = window['@Model.DialogId'];
+
         var tree = window['@treeId'];
 
         dialogControl.addControl(tree);
 
         tree.onChange = function () {
-            
+
             var dataItem = tree.getSelectedItem();
 
             var args = {
@@ -79,33 +77,33 @@
                 type: "POST",
                 url: "@Url.Action("Delete", "Categories")",
                 data: JSON.stringify({ id: entity.Id }),
-            contentType: "application/json; charset=utf-8",
-            success: function (result) {
-                if (result.error) {
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if (result.error) {
 
-                } else {
-                    tree.readDataSource();
+                    } else {
+                        tree.readDataSource();
+                    }
                 }
-            }
-        });
+            });
 
 
-    };
-    tree.edit = function () {
-        var entity = tree.getSelectedItem();
-        var url = "@Url.Action("Edit", "Categories")?id=" + entity.Id;
-
-        var params = {
-            title: 'Категория',
-            contentUrl: url
         };
+        tree.edit = function () {
+            var entity = tree.getSelectedItem();
+            var url = "@Url.Action("Edit", "Categories")?id=" + entity.Id;
 
-        var onClose = function (e) {
-            tree.readDataSource();
+            var params = {
+                title: 'Категория',
+                contentUrl: url
+            };
+
+            var onClose = function (e) {
+                tree.readDataSource();
+            };
+
+            UiApi.openModalWindow(params, onClose);
         };
-
-        UiApi.openModalWindow(params, onClose);
-    };
     })();
 </script>
 
@@ -129,31 +127,33 @@
                })
         )
     </div>
-    <div id="@test">
+    <div>
         @(Html.Kendo().Grid<ProductCategory>()
-            .Name(treeId)
-            .Selectable()
-            .Pageable()
-            .DataSource(ds =>
-            {
-                ds.Ajax().Read(read => read.Action("GetCategories", "Categories", new { Area = "Admin" }));
-            })
-            .Columns(columns =>
-            {
-                columns.Bound(f => f.Title).Title("Наименование");
-            })
-            .Events(e =>
-            {
-                e.Change(treeId + ".onChange");
-            })
-
-        )
+          .Name(treeId)
+          .Selectable(s => s.Mode(GridSelectionMode.Single).Type(GridSelectionType.Row).Enabled(true))
+          .Scrollable()
+          .Pageable()
+          .DataSource(ds =>
+          {
+              ds.Ajax().Read(read => read.Action("GetCategories", "Categories", new { Area = "Admin" })).PageSize(45);
+          })
+          .Columns(columns =>
+          {
+              columns.Bound(f => f.Title).Title("Наименование");
+          })
+          .Events(e =>
+          {
+              e.Change(treeId + ".onChange");
+          }))
     </div>
 </div>
 
-<script>   
+<script>
     $(function () {
         var $toolbar = $('#@toolbarName');
         $toolbar.find(".k-sprite").removeClass("k-sprite");
+
+
+        
     });
 </script>

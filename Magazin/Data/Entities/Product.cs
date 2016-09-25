@@ -21,5 +21,6 @@ namespace Data.Entities
         public virtual Product Product { get; set; }
 
         public int FileId { get; set; }
+        public virtual FileData File { get; set; }
     }
 }

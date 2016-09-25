@@ -143,6 +143,7 @@
               })
               .DataSource(ds => ds
                   .Ajax()
+                  .Sort(x=>x.Add(p=>p.Id).Descending())
                   .Read(read => read.Action("GetProducts", "Product"))
                   .PageSize(15)
               ))

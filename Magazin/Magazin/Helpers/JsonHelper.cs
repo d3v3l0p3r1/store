@@ -8,13 +8,7 @@ namespace Magazin.Helpers
 {
     public class JsonNetResult : ActionResult
     {
-        public const string DATE_TIME_FORMATE = "dd.MM.yyyy HH:mm:ss";
-        public const string DATE_FORMATE = "dd.MM.yyyy";
-        public const string MONTH_FORMATE = "MMMM yyyy";
-        public const string YEAR_FORMATE = "yyyy";
-
-        public const string BASE_COLLECTION_SUFFIX = "_bo_collection_";
-        public const string EASY_COLLECTION_SUFFIX = "_easy_collection_";
+        public const string DATE_TIME_FORMATE = "dd.MM.yyyy HH:mm:ss";        
 
         private readonly object _jObject;
         private readonly IContractResolver _contractResolver;

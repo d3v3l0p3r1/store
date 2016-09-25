@@ -8,8 +8,11 @@ using Data.Entities;
 
 namespace Data.Services
 {
-    public class BalanceOfProductService : BaseService<BalanceOfProduct>
+    public interface IBalanceOfProductService : IBaseService<BalanceOfProduct>
     {
-        
+    }
+
+    public class BalanceOfProductService : BaseService<BalanceOfProduct>, IBalanceOfProductService
+    {
     }
 }

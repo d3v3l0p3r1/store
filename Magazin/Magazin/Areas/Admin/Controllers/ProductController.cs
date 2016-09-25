@@ -10,6 +10,7 @@ using Data.Services;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Magazin.Controllers;
+using Magazin.Helpers;
 using Magazin.Models;
 
 namespace Magazin.Areas.Admin.Controllers
@@ -58,13 +59,15 @@ namespace Magazin.Areas.Admin.Controllers
 
         public ActionResult EditProduct(int? id, int categoryId)
         {
+            return PartialView("ProductDetailView", new DetailViewModel() { EntityId = id, CategoryId = categoryId });
+        }
+
+        public JsonNetResult Get(int? id, int categoryId)
+        {
             using (var uow = CreateUnitOfWork())
             {
-                Product product;
-
-                product = id.HasValue ? _productService.Find(uow, id.Value) : new Product { ProductCategoryId = categoryId };
-
-                return PartialView("ProductDetailView", product);
+                var product = id.HasValue ? _productService.Find(uow, id.Value) : new Product { ProductCategoryId = categoryId };
+                return new JsonNetResult(product);
             }
         }
 

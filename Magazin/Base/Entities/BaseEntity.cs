@@ -7,5 +7,8 @@ namespace Base.Entities
         [Key]
         public int Id { get; set; }
         public bool Hidden { get; set; }
+
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 }

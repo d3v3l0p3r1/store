@@ -1,55 +1,89 @@
-﻿@using Kendo.Mvc.UI
+﻿@using Data.Entities
+@using Kendo.Mvc.UI
+@model Magazin.Models.DialogViewModel
 @{
-    string wrapId = Guid.NewGuid().ToString("N");
-    string gridId = Guid.NewGuid().ToString("N");
-    string toolbarName = Guid.NewGuid().ToString("N");
+    string gridId = "grd_" + Guid.NewGuid().ToString("N");
+    string toolbarName = "tlbr_" + Guid.NewGuid().ToString("N");
 }
 
+<div></div>
 
-<script id="rowTemplate" type="text/x-kendo-tmpl">
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+<script>
+    window['@Model.DialogId'] = new DialogControl('@Model.DialogId');
+    window['@gridId'] = new GridControl('@gridId', "balanceGrid");
+
+    (function () {
+
+        var dialogControl = window['@Model.DialogId'];
+
+        var productsControl = window['@gridId'];
+        dialogControl.addControl(productsControl);
+
+        productsControl.edit = function () {
+            var entity = productsControl.getSelectedItem();
+            var url = "@Url.Action("GetBalanceDetailView", "Balance")?id=" + entity.Id;
+
+            var params = {
+                title: 'Остаток',
+                contentUrl: url
+            };
+
+            var onClose = function (e) {
+                productsControl.readDataSource();
+            };
+
+            UiApi.openModalWindow(params, onClose);
+        };
+
+        productsControl.onToolbarClick = function (e) {
+            e.preventDefault();
+            var action = e.target.attr('data-action');
+            switch (action) {
+                case "Edit":
+                    {
+                        productsControl.edit();
+                        break;
+                    }
+                default:
+            }
+        }
+
+    })();
 
 </script>
 
 
-<div id="wrapId">
+<div id="@Model.DialogId">
 
     @(Html.Kendo().ToolBar()
-        .Name(toolbarName)
-        .Items(toolbar =>
-        {
-            toolbar.Add().Type(CommandType.ButtonGroup).Buttons(btns =>
-            {
+          .Name(toolbarName)
+          .Items(toolbar =>
+          {
+              toolbar.Add().Type(CommandType.ButtonGroup).Buttons(btns =>
+              {
 
-                btns.Add().Text("Добавить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-plus").HtmlAttributes(new { title = "Создать", data_action = "Add" });
-                btns.Add().Text("Редактировать").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-pencil").HtmlAttributes(new { title = "Редактировать", data_action = "Edit" });
-                btns.Add().Text("Удалить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-close").HtmlAttributes(new { title = "Удалить", data_action = "Delete" });
-            });
-        }
-      )
+                  btns.Add().Text("Редактировать").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-pencil").HtmlAttributes(new { title = "Редактировать", data_action = "Edit" });
+              });
+          }
+          )
+              .Events(e =>
+              {
+                  e.Click(gridId + ".onToolbarClick");
+              })
     )
 
 
-    @(Html.Kendo().Grid<Data.Entities.BalanceOfProduct>()
-        .Name(gridId)
-        .DataSource(ds => ds
-            .Ajax()
-            .Read(read => read.Action("GetBalances", "Balance"))
-
-    ))
+    <div id="@gridId"></div>
 
 </div>
+
 <script>
     $(function () {
         var $toolbar = $('#@toolbarName');
         $toolbar.find(".k-sprite").removeClass("k-sprite");
-        
+
         var height = $(window).height() - 65; //65 magic
-        var $splitter = $('#@gridId');        
+        var $splitter = $('#@gridId');
 
         $splitter.height(height);
 
@@ -57,7 +91,7 @@
 
             var onResize = function () {
                 var h = $(window).height() - 65; //65 magic
-                $splitter.height(h);        
+                $splitter.height(h);
             };
 
             $(window).on("resize", onResize);
@@ -68,10 +102,45 @@
 </script>
 
 
-<script>    
+<script>
     window['@gridId'] = new GridControl('@gridId', "balanceGrid");
 
     (function () {
-        var productsControl = window['@gridId'];        
+        $("#@gridId").kendoGrid({
+            dataSource: {
+                type: "aspnetmvc-ajax",
+                transport: {
+                    read: "@Url.Action("GetBalances")"
+                },
+                schema: {
+                    data: "Data",
+                    total: "Total",
+                    model: {
+                        id: "id"
+                    }
+                },
+                pageSize: 20,
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            },
+            rowTemplate: kendo.template($("#balanceRowTemplate").html()),
+            selectable: "single row",
+            filterable: true,
+            sortable: true,
+            pageable: true,
+            columns: [
+                { filterable: false, title: 'Продукт' },
+                { filterable: false, title: 'Количество' }
+            ]
+        });
     })();
+</script>
+
+
+<script id="balanceRowTemplate" type="text/x-kendo-template">
+    <tr data-uid="#: uid #">
+        <td> <span>#: Product.Title #</span></td>
+        <td> <span>#: Count #</span></td>
+    </tr>
 </script>

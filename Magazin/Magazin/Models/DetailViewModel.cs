@@ -9,6 +9,7 @@ namespace Magazin.Models
     {
         public string Id { get; }
         public int? EntityId { get; set; }
+        public int? CategoryId { get; set; }
         public bool ReadOnly { get; set; }
 
         public DetailViewModel()

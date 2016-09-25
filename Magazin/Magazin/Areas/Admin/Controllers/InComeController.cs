@@ -110,5 +110,22 @@ namespace Magazin.Areas.Admin.Controllers
             }
         }
 
+        public JsonNetResult ProcessIncome(int id)
+        {
+            using (var uow = CreateUnitOfWork())
+            {
+                try
+                {
+                    _inComeService.ProcessIncome(uow, id);
+
+                    return new JsonNetResult(new { result = "ok" });
+                }
+                catch (Exception error)
+                {
+                    return new JsonNetResult(error);
+                }
+            }
+        }
+
     }
 }

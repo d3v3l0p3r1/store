@@ -13,7 +13,6 @@ namespace Base.Entities
             CreationDate = DateTime.Now;
             ChangeDate = DateTime.Now;
         }
-
         
         public Guid FileID { get; set; }        
         public string FileName { get; set; }        

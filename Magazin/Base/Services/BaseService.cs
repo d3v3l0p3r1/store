@@ -40,7 +40,9 @@ namespace Base.Services
                 throw new ArgumentNullException();
             }
 
-            var result = uow.GetRepository<T>().Update(entity);
+            var result = entity.Id != 0 
+                ? uow.GetRepository<T>().Update(entity) 
+                : uow.GetRepository<T>().Create(entity);
 
             uow.SaveChanges();
 

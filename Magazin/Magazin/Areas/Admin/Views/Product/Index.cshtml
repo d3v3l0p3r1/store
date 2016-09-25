@@ -35,8 +35,9 @@
 )
 <script>
     $(function () {
-        var control = window['@Model.DialogId'];        
-        var height = $(window).height() - 5; //65 magic
+        var control = window['@Model.DialogId'];
+        
+        var height = $(window).height() - 2;
         var $splitter = $('#@wrapID');
         var splitter = $splitter.data('kendoSplitter');
         
@@ -48,7 +49,7 @@
         setTimeout(function () {
 
             var onResize = function () {
-                var h = $(window).height() - 5; //65 magic
+                var h = $(window).height();
                 $splitter.height(h);
                 splitter.resize();
                 control.resizeChilds(h);

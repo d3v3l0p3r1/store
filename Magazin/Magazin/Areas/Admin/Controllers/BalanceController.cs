@@ -8,6 +8,7 @@ using Data.Entities;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Magazin.Controllers;
+using Magazin.Helpers;
 using Magazin.Models;
 
 namespace Magazin.Areas.Admin.Controllers
@@ -25,19 +26,40 @@ namespace Magazin.Areas.Admin.Controllers
             return View("Index", new DialogViewModel());
         }
 
-        public JsonResult GetBalances([DataSourceRequest] DataSourceRequest request)
+        public JsonNetResult GetBalances([DataSourceRequest] DataSourceRequest request)
         {
             using (var uow = CreateUnitOfWork())
             {
                 var balances = _balanceService.GetAll(uow);
 
-                var result = new JsonResult()
-                {
-                    Data = balances.ToDataSourceResult(request),
-                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                };
+                var result = new JsonNetResult(balances.ToDataSourceResult(request));
 
                 return result;
+            }
+        }
+
+        public ActionResult GetBalanceDetailView(int? id)
+        {
+            return PartialView("BalanceDetailView", new DetailViewModel() {EntityId = id});
+        }
+
+        public JsonNetResult Get(int id)
+        {
+            using (var uow = CreateUnitOfWork())
+            {
+                var balance = _balanceService.Find(uow, id);
+                return new JsonNetResult(balance);
+            }            
+        }
+
+        [HttpPost]
+        public JsonNetResult Update(BalanceOfProduct balance)
+        {
+            using (var uow = CreateUnitOfWork())
+            {
+                _balanceService.Update(uow, balance);
+
+                return new JsonNetResult(balance);
             }
         }
     }
