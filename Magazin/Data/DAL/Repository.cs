@@ -1,18 +1,24 @@
-﻿using System.Data.Entity.Migrations;
+﻿using System;
+using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Linq.Expressions;
 using Base;
 using Base.DAL;
 using Base.Entities;
 using Data.DAL;
+using RefactorThis.GraphDiff;
 
 namespace Data
 {
-    public class Repository<T> : IRepository<T> where T : BaseEntity
+    public class Repository<T> : IRepository<T> where T : BaseEntity, new()
     {
         private readonly DataContext _dataContext;
+        private readonly IUpdateConfigurationManager _manager;
+
         public Repository(DataContext context)
         {
             _dataContext = context;
+            _manager = UpdateConfiguration.GetConfigurationManager();
         }
 
         public T Create(T entity)
@@ -30,8 +36,18 @@ namespace Data
 
         public T Update(T entity)
         {
-            var dbSet = _dataContext.Set<T>();
-            dbSet.AddOrUpdate(entity);
+            var updateConfig = _manager.GetConfiguration<T>();
+
+            if (updateConfig != null)
+            {
+                _dataContext.UpdateGraph(entity, updateConfig);
+            }
+            else
+            {
+                var dbSet = _dataContext.Set<T>();
+                dbSet.AddOrUpdate(entity);
+            }
+            
             return entity;
         }
 
@@ -49,7 +65,14 @@ namespace Data
 
         public void SaveChanges()
         {
-            _dataContext.SaveChanges();
+            _dataContext.SaveChanges();            
         }
+
+        public T UpdateGraph(T entity, Expression<Func<IUpdateConfiguration<T>, object>> expr)
+        {
+            return _dataContext.UpdateGraph(entity, expr);
+        }
+
+
     }
 }

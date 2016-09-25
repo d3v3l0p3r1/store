@@ -116,17 +116,16 @@ var DetailViewForm = BaseDialogControl.extend({
         BaseDialogControl.fn.init.call(this, id, this.desc);
     },
 
-    setModel: function (mdl) {
-        kendo.bind($(this.id), mdl);
-
+    setModel: function (mdl) {        
+        kendo.bind($('#' + this.id), mdl);
         this.model = mdl;
     },
     getModel: function() {
         return this.model;
     },
 
-    getWindow: function() {
-        return $(this.id).closest('[data-role=window]').data('kendoWindow');
+    getWindow: function () {       
+        return $('#' + this.id).closest('[data-role=window]').data('kendoWindow');
     }
 
 

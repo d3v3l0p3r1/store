@@ -13,7 +13,5 @@ namespace Magazin.Models
         }
 
         public string DialogId { get; }
-
-        public int CurrentCategory { get; set; }
     }
 }

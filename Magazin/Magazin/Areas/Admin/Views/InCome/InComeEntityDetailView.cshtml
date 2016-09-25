@@ -1,15 +1,38 @@
 ﻿@using Kendo.Mvc.UI
-@model Data.Entities.InComeEntity
+@model Magazin.Models.DetailViewModel
 
 
 @{
     string drop = "drp_" + Guid.NewGuid().ToString("N");
-    string wrapId = "wrp_" + Guid.NewGuid().ToString("N");
     string toolbarId = "tlbr_" + Guid.NewGuid().ToString("N");
 }
 
 
-<div id="@wrapId">
+<script>
+    window['@Model.Id'] = new DetailViewForm('@Model.Id');
+
+
+
+    (function () {
+        var form = window['@Model.Id'];
+
+        form.save = function () {
+            var wnd = form.getWindow();
+            wnd.Model = form.getModel();
+            wnd.close();
+        };
+
+        form.cancel = function () {
+            var wnd = form.getWindow();
+            wnd.close();
+        };
+
+
+    })();
+
+</script>
+
+<div id="@Model.Id">
     <h4>Позиция</h4>
     <hr />
     <div id="@toolbarId"></div>
@@ -18,15 +41,15 @@
         <label class="editor-label">Продукт</label>
 
         <div class="editor-container">
-            <input id="@drop" data-role="autocomplete"
+            <input id="@drop"
+                   data-autobind="true"
+                   data-role="combobox"
                    data-placeholder="Выберите продукт ..."
                    data-value-primitive="false"
                    data-text-field="Title"
                    data-value-field="Id"
-                   data-bind="value: Model.Product,
-                              source: products,
-                              events :{select : onChange}"
-            />
+                   data-bind="source: products,
+                              value: Product" />
         </div>
     </div>
 
@@ -34,64 +57,65 @@
     <div class="editor-row">
         <label class="editor-label">Количество</label>
         <div class="editor-container">
-            <input type="number" data-bind="value: Model.Count" />
+            <input type="number" class="k-textbox" data-bind="value: Count" />
         </div>
     </div>
 </div>
 
 <script>
-    $(function() {
-        var $form = $('#@wrapId');
+    $(function () {
 
-        var model = @Html.Raw(Json.Encode(Model));
+        var form = window['@Model.Id'];
 
-        var viewModel = new kendo.data.ObservableObject();
-
-        viewModel.Model = new kendo.data.ObservableObject(model);
-
-        viewModel.products = new kendo.data.DataSource({
-            transport: {
-                read: {
-                    url : "@Url.Action("FindProduct", "Product")",
-                    data: function() {
-                        var val = $('#@drop').data('kendoAutoComplete').value();
-
-                        return {
-                            startWith: val
-                        };
-                    }
-                }
-            }
-        });
-
-        viewModel.onChange = function(e) {
-            viewModel.Model.ProductId = e.dataItem.Id;
-        };
-
-        kendo.bind($form, viewModel);
-
-        var save = function() {            
-            var wnd = $form.closest('[data-role="window"]').data('kendoWindow');
-            wnd.Model = viewModel.Model;
-            wnd.close(viewModel);
+        var ajaxParams = {
+            id: '@Model.EntityId'
         }
 
-        $('#@toolbarId').kendoToolBar({
-            items:[
-            {
-                attributes : {"style" : "float : right;"},
-                type: "buttonGroup",
-                buttons: [
-                    { type: "button", text: "Сохранить", click: save, attributes: {"class" : "primary" , "title" : "Сохранить" , "data_popup" : "bottom"}} ]
-            }]
+        $.ajax({
+            url: '@Url.Action("GetIncomeEntity")',
+            type: "GET",
+            data: ajaxParams,
+            success: function (result) {
+                var viewModel = new kendo.data.ObservableObject(result);
+                form.setModel(viewModel);
+
+                var products = new kendo.data.DataSource({
+                    transport: {
+                        read: {
+                            url: "@Url.Action("FindProduct", "Product")"
+                        }
+                    },
+                    pageSize: 20
+                });
+
+                var combo = $('#@drop').data('kendoComboBox');
+                combo.setDataSource(products);
+
+            },
+            dataType: "json",
+            contentType: 'application/json'
         });
+
+
     });
 </script>
 
 
 
 <script>
-    $(function() {
+    $(function () {
+        var form = window['@Model.Id'];
+
+        $('#@toolbarId').kendoToolBar({
+            items: [
+            {
+                attributes: { "style": "float : right;" },
+                type: "buttonGroup",
+                buttons: [
+                { type: "button", text: "Сохранить", click: form.save, attributes: { "class": "primary", "title": "Сохранить", "data_popup": "bottom" } }]
+            }]
+        });
+
         var $toolbar = $('#@toolbarId');
         $toolbar.find(".k-sprite").removeClass("k-sprite");
     });

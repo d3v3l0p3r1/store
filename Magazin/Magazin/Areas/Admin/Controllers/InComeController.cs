@@ -8,6 +8,7 @@ using Data.Services;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Magazin.Controllers;
+using Magazin.Helpers;
 using Magazin.Models;
 
 namespace Magazin.Areas.Admin.Controllers
@@ -27,45 +28,41 @@ namespace Magazin.Areas.Admin.Controllers
             return View("Index", new DialogViewModel());
         }
 
-        public JsonResult GetInComs([DataSourceRequest] DataSourceRequest request)
+        public JsonNetResult GetInComs([DataSourceRequest] DataSourceRequest request)
         {
             using (var uow = CreateUnitOfWork())
             {
                 var incoms = _inComeService.GetAll(uow);
 
-                var result = new JsonResult()
-                {
-                    Data = incoms.ToDataSourceResult(request),
-                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                };
+                var result = new JsonNetResult(incoms.ToDataSourceResult(request));
 
                 return result;
             }
         }
 
-        public ActionResult GetInCome(int? id)
+        public ActionResult GetInComeDetailView(int? id)
+        {
+            return PartialView("InComeDetailView", new DetailViewModel() { EntityId = id });
+        }
+
+        public JsonNetResult GetIncome(int? id)
         {
             using (var uow = CreateUnitOfWork())
             {
-                InCome income = id.HasValue 
-                    ?_inComeService.Find(uow, id.Value)
-                    : new InCome();
+                var income = id.HasValue ? _inComeService.Find(uow, id.Value) : new InCome();
 
-                return PartialView("InComeDetailView", income);
+                return new JsonNetResult(income);
             }
         }
 
         [HttpPost]
-        public JsonResult AddInCome(InCome inCome)
+        public JsonNetResult AddInCome(InCome inCome)
         {
             using (var uow = CreateUnitOfWork())
             {
                 var income = _inComeService.Update(uow, inCome);
 
-                var result = new JsonResult()
-                {
-                    Data = income
-                };
+                var result = new JsonNetResult(income);
 
                 return result;
             }
@@ -87,7 +84,13 @@ namespace Magazin.Areas.Admin.Controllers
             }
         }
 
-        public ActionResult GetIncomeEntity(int? id)
+
+        public ActionResult GetIncomeEntityDetailView(int? id)
+        {
+            return PartialView("InComeEntityDetailView", new DetailViewModel() { EntityId = id });
+        }
+
+        public JsonNetResult GetIncomeEntity(int? id)
         {
             using (var uow = CreateUnitOfWork())
             {
@@ -103,7 +106,7 @@ namespace Magazin.Areas.Admin.Controllers
                     entity = new InComeEntity();
                 }
 
-                return PartialView("InComeEntityDetailView", entity);                
+                return new JsonNetResult(entity);
             }
         }
 

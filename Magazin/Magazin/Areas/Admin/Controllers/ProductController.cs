@@ -121,9 +121,11 @@ namespace Magazin.Areas.Admin.Controllers
                     products = products.Where(x => x.Title.ToUpper().StartsWith(startWith.ToUpper()));
                 }
 
+
+
                 return new JsonResult
                 {
-                    Data = products,
+                    Data = products.Take(20),
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
             }

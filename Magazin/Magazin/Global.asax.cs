@@ -29,6 +29,7 @@ namespace Magazin
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             MapperConfig.Init();
+            UpdateConfiguration.Init(container.GetInstance<IUpdateConfigurationManager>());
         }
     }
 }

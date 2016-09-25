@@ -10,7 +10,7 @@ namespace Base.Services
 {
     public interface IUnitOfWork : IDisposable
     {
-        IRepository<T> GetRepository<T>() where T: BaseEntity;
+        IRepository<T> GetRepository<T>() where T : BaseEntity, new();
         void SaveChanges();
     }
 }

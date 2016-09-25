@@ -26,6 +26,8 @@ namespace Magazin.App_Start
             container.Register<IProductService, ProductService>();
             container.Register<IInComeService, InComeService>();
             container.Register<IProductCategoryService, ProductCategoryService>();
+
+            container.Register<IUpdateConfigurationManager, UpdateConfigurationManager>(Lifestyle.Singleton);
         }
     }
 }

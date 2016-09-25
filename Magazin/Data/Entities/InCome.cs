@@ -9,11 +9,12 @@ namespace Data.Entities
 {
     /// <summary>
     /// Приход
-    /// </summary>
+    /// </summary>    
     public class InCome : BaseEntity
     {
-        public DateTime Date { get; set; }
-        public virtual ICollection<InComeEntity> Incoms { get; set; }
+        public bool Processed { get; set; } = false;
+        public DateTime CreateDate { get; set; } = DateTime.Now;
+        public virtual ICollection<InComeEntity> Incoms { get; set; } = new List<InComeEntity>();        
     }
 
     public class InComeEntity : BaseEntity

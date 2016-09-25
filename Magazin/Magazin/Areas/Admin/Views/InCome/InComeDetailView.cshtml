@@ -1,35 +1,35 @@
 ﻿@using Data.Entities
 @using Kendo.Mvc.UI
+@model Magazin.Models.DetailViewModel
 @{
-    string wrapId = "wrp_" + Guid.NewGuid().ToString("N");
     string toolbarName = "tlbr_" + Guid.NewGuid().ToString("N");
-    string gridId = "grid_" + Guid.NewGuid().ToString("N");
+    string gridId = "grd_" + Guid.NewGuid().ToString("N");
 }
 
 
-
 <script>
-    window['@wrapId'] = new DetailViewForm('@wrapId');
+    window['@Model.Id'] = new DetailViewForm('@Model.Id');
+    window['@gridId'] = new GridControl('@gridId');
+    (function () {
+        var form = window['@Model.Id'];
 
-    (function() {
-        var form = window['@wrapId'];
+        form.save = function () {
 
-        var model = @Html.Raw(Json.Encode(Model));
+            var viewModel = form.getModel();
 
-        var viewModel = new kendo.data.ObservableObject(model);
+            if (viewModel.Processed) {
+                return;
+            }
 
-        form.setModel(viewModel);
-
-        form.save = function() {
-            var data = JSON.stringify({product: viewModel});
+            var data = JSON.stringify({ inCome: viewModel });
 
             $.ajax({
                 type: "POST",
-                url: "@Url.Action("AddInCome","InCome")",
+                url: "@Url.Action("AddInCome", "InCome")",
                 data: data,
                 dataType: "json",
                 contentType: "application/json",
-                success: function(result) {
+                success: function (result) {
                     if (result.error) {
 
                     } else {
@@ -39,58 +39,96 @@
             });
         };
 
-        form.add = function() {
+        form.cancel = function () {
+            form.getWindow().close();
+        }
+
+        form.add = function () {
+            var viewModel = form.getModel();
+
+            if (viewModel.Processed) {
+                return;
+            }
+
             var params = {
-                contentUrl: "@Url.Action("GetIncomeEntity","InCome")",
+                contentUrl: "@Url.Action("GetIncomeEntityDetailView", "InCome")",
                 title: 'Позиция'
             }
 
-            var callback = function(e) {
-                debugger;
-                if (!viewModel.Incoms) {
-                    viewModel.Incoms = [];
-                }
-                viewModel.Incoms.push(e.sender.Model);
+            var callback = function (e) {
+                if (e.sender.Model) {
+                    if (!viewModel.Incoms) {
+                        viewModel.set('Incoms', []);
+                    }
+
+                    viewModel.Incoms.push(e.sender.Model);
+                }                
             }
 
             UiApi.openModalWindow(params, callback);
         };
 
-        form.cancel = function() {
-            form.getWindow().close();
-        }
+        form.edit = function () {
+            var viewModel = form.getModel();
+
+            if (viewModel.Processed) {
+                return;
+            }
+
+            var grid = window['@gridId'];
+
+            var dataItem = grid.getSelectedItem();
+
+            var params = {
+                contentUrl: "@Url.Action("GetIncomeEntityDetailView", "InCome")" + "?id=" + dataItem.Id,
+                title: 'Позиция'
+            }
+
+            var callback = function (e) {
+                if (e.sender.Model) {
+                    if (!viewModel.Incoms) {
+                        viewModel.set('Incoms', []);
+                    }
+
+                    viewModel.Incoms.push(e.sender.Model);
+                }
+            }
+
+            UiApi.openModalWindow(params, callback);
+        };
+
 
     })();
 
 </script>
 
 
-<div id="@wrapId">
-    <div id="formtoolbar" style="background-color: #444">
+<div id="@Model.Id">
+    <div id="formtoolbar">
     </div>
-    <h3>Добавте позиции</h3>
-
-    <div>
-        @(Html.Kendo().ToolBar()
+    <h3>Позиции</h3>
+    @(Html.Kendo().ToolBar()
               .Name(toolbarName)
               .Items(toolbar =>
               {
                   toolbar.Add().Type(CommandType.ButtonGroup).Buttons(btns =>
                   {
-                      btns.Add().Text("Добавить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-plus").HtmlAttributes(new { title = "Создать" }).Click(wrapId + ".add");
-                      btns.Add().Text("Редактировать").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-pencil").HtmlAttributes(new { title = "Редактировать" }).Click(wrapId + ".edit");
-                      btns.Add().Text("Удалить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-close").HtmlAttributes(new { title = "Удалить" }).Click(wrapId + ".remove");
+                      btns.Add().Text("Добавить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-plus").HtmlAttributes(new { title = "Создать" }).Click(Model.Id + ".add");
+                      btns.Add().Text("Редактировать").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-pencil").HtmlAttributes(new { title = "Редактировать" }).Click(Model.Id + ".edit");
+                      btns.Add().Text("Удалить").ShowText(ShowIn.Overflow).SpriteCssClass("mdi mdi-close").HtmlAttributes(new { title = "Удалить" }).Click(Model.Id + ".remove");
                   });
               })
-        )
-    </div>
+    )
 
-    <div id="@gridId"
-         data-role="grid"         
+    <div id="@gridId" style="height: 100%;"
+         data-role="grid"
+         data-selectable="true"
          data-columns="[
-                { 'field': 'Title', 'width': 270 },
-                { 'field': 'Count' }]"
-         data-bind="source: products"></div>
+                { 'field': 'Product.Title', 'title' : 'Продукт'},
+                { 'field': 'Count', 'title' : 'Колчество' }]"
+         data-bind="source: Incoms">
+
+    </div>
 
 
     <div>
@@ -98,25 +136,64 @@
     </div>
 </div>
 
-
-
 <script>
     $(function () {
 
-        $('#tabstrip').kendoTabStrip();
+        var form = window['@Model.Id'];
+
+        var ajaxParams = {
+            id: '@Model.EntityId'
+        }
+
+        $.ajax({
+            url: '@Url.Action("GetIncome")',
+            type: "GET",
+            data: ajaxParams,
+            success: function (result) {
+                var viewModel = new kendo.data.ObservableObject(result);
+                form.setModel(viewModel);
+            },
+            dataType: "json",
+            contentType: 'application/json'
+        });
 
         $('#formtoolbar').kendoToolBar({
-            items:[
+            items: [
             {
-                attributes : {"style" : "float : right;"},
+                attributes: { "style": "float : right;" },
                 type: "buttonGroup",
                 buttons: [
-                    { type: "button", text: "Сохранить", attributes: {"class" : "primary" , "title" : "Сохранить" , "data_popup" : "bottom"}} ]
+                { type: "button", text: "Сохранить", click: form.save, attributes: { "class": "primary", "title": "Сохранить", "data_popup": "bottom" } }]
             }]
         });
+
 
         var $toolbar = $('#@toolbarName');
         $toolbar.find(".k-sprite").removeClass("k-sprite");
 
+
+        var resize = function () {
+            var wh = $(form.getWindow().element).height() - 190;
+
+            var grid = window['@gridId'];
+            grid.resize(wh);
+        }
+
+        resize();
+
+
+        form.getWindow().resize = function () {
+            resize();
+        };
+
     });
 </script>
+
+
+<script>
+
+
+
+
+</script>
+

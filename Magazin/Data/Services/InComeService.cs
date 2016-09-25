@@ -17,6 +17,6 @@ namespace Data.Services
 
     public class InComeService : BaseService<InCome>, IInComeService
     {
-
+       
     }
 }

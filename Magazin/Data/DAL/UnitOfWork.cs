@@ -17,7 +17,7 @@ namespace Data.DAL
             _dataContext = new DataContext();
         }
 
-        public IRepository<T> GetRepository<T>() where T : BaseEntity
+        public IRepository<T> GetRepository<T>() where T : BaseEntity, new()
         {
             if (!_repositories.ContainsKey(typeof(T)))
             {

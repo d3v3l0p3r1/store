@@ -5,9 +5,8 @@ using Base.Entities;
 
 namespace Base.Services
 {
-    public class BaseService<T> : IBaseService<T> where T : BaseEntity
+    public class BaseService<T> : IBaseService<T> where T : BaseEntity, new()
     {
-
         public virtual IQueryable<T> GetAll(IUnitOfWork uow)
         {
             return uow.GetRepository<T>().GetAll()
