@@ -1,4 +1,7 @@
 ﻿@model Magazin.Models.DetailViewModel
+@{
+    string fileUpload = "upl_" + Guid.NewGuid().ToString("N");
+}
 
 
 <script>
@@ -56,7 +59,7 @@
         </div>
 
         <div>
-
+            <input id="@fileUpload" name="files" type="file"/>               
         </div>
 
     </div>
@@ -67,7 +70,7 @@
 <script>
     $(function () {
         var form = window['@Model.Id'];
-    
+
         var ajaxParams = {
             id: '@Model.EntityId',
             categoryId: '@Model.CategoryId'
@@ -88,13 +91,21 @@
         $('#tabstrip').kendoTabStrip();
 
         $('#formtoolbar').kendoToolBar({
-            items:[
+            items: [
             {
-                attributes : {"style" : "float : right;"},
+                attributes: { "style": "float : right;" },
                 type: "buttonGroup",
                 buttons: [
-                { type: "button", text: "Сохранить", click: form.save, attributes: {"class" : "primary" , "title" : "Сохранить" , "data_popup" : "bottom"}} ]
+                { type: "button", text: "Сохранить", click: form.save, attributes: { "class": "primary", "title": "Сохранить", "data_popup": "bottom" } }]
             }]
+        });
+
+
+        $('#@fileUpload').kendoUpload({
+            async: {
+                saveUrl: "@Url.Action("Upload","File", new {Area = ""})",
+                autoUpload: true
+            }
         });
 
     });

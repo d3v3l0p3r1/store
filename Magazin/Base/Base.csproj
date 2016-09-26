@@ -44,6 +44,7 @@
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\FileData.cs" />
     <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\FileSystemService.cs" />
     <Compile Include="Services\IDataContext.cs" />
     <Compile Include="Services\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
