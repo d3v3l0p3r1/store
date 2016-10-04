@@ -155,7 +155,11 @@
             <span>#=File.FileName#</span>
         </td>
         <td>
+            #if(IsMain) { # 
+            <input type="checkbox" id="ch_#:uid#" class="k-checkbox" checked>
+             # } else  { # 
             <input type="checkbox" id="ch_#:uid#" class="k-checkbox">
+            # } #
             <label class="k-checkbox-label" for="ch_#:uid#"></label>            
         </td>
         <td>

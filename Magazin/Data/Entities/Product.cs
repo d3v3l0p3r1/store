@@ -22,5 +22,7 @@ namespace Data.Entities
 
         public int FileId { get; set; }
         public virtual FileData File { get; set; }
+
+        public bool IsMain { get; set; }
     }
 }
