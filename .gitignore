@@ -98,14 +98,9 @@ bower_components
 node_modules
 npm-debug.log
 
-[Mm]agazin/[Tt]emp/
-[Mm]agazin/[Ff]iles/
-[Mm]agazin/[Ll]og/
+[Mm]agazin/[Mm]agazin/[Tt]emp/
+[Mm]agazin/[Mm]agazin/[Ff]iles/
+[Mm]agazin/[Mm]agazin/[Ll]og/
 sh.exe.stackdump
 .vs/config/applicationhost.config
-WebUI/Properties/PublishProfiles/Composite.pubxml
-WebUI/favicon.ico
-WebUI/Content/Images/favicon.ico
-WebUI/Content/Images/favicon.png
-WebUI/Content/Images/bg.png
-Data/Migrations/*
+
