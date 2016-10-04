@@ -30,7 +30,7 @@ namespace Magazin.Areas.Admin.Controllers
             return PartialView("Index", mdl);
         }
 
-        public JsonResult GetProducts([DataSourceRequest] DataSourceRequest request, int? categoryId, string filter)
+        public JsonNetResult GetProducts([DataSourceRequest] DataSourceRequest request, int? categoryId, string filter)
         {
             using (var uow = CreateUnitOfWork())
             {
@@ -46,12 +46,8 @@ namespace Magazin.Areas.Admin.Controllers
                     products = products.Where(x => x.Title.ToUpper().StartsWith(filter.ToUpper()));
                 }
 
-                var result = new JsonResult
-                {
-                    Data = products.ToDataSourceResult(request),
-                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                };
-
+                var result = new JsonNetResult(products.ToDataSourceResult(request));                    
+                
                 return result;
             }
 

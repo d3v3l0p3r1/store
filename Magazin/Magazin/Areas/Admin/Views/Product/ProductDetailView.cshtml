@@ -1,17 +1,18 @@
 ﻿@model Magazin.Models.DetailViewModel
 @{
     string fileUpload = "upl_" + Guid.NewGuid().ToString("N");
+    string files = "fls_" + Guid.NewGuid().ToString("N");
 }
 
 
 <script>
     window['@Model.Id'] = new DetailViewForm('@Model.Id');
-    (function() {
+    (function () {
         var form = window['@Model.Id'];
 
         form.save = function () {
 
-            var viewModel = form.getModel();            
+            var viewModel = form.getModel();
 
             var data = JSON.stringify(viewModel.toJSON());
 
@@ -21,7 +22,7 @@
                 data: data,
                 dataType: "json",
                 contentType: "application/json",
-                success: function(result) {
+                success: function (result) {
                     if (result.error) {
 
                     } else {
@@ -59,7 +60,10 @@
         </div>
 
         <div>
-            <input id="@fileUpload" name="files" type="file"/>               
+            <input id="@fileUpload" name="files" type="file" />
+            <div id="@files">
+
+            </div>
         </div>
 
     </div>
@@ -88,27 +92,76 @@
             contentType: 'application/json'
         });
 
+
         $('#tabstrip').kendoTabStrip();
 
         $('#formtoolbar').kendoToolBar({
             items: [
-            {
-                attributes: { "style": "float : right;" },
-                type: "buttonGroup",
-                buttons: [
-                { type: "button", text: "Сохранить", click: form.save, attributes: { "class": "primary", "title": "Сохранить", "data_popup": "bottom" } }]
-            }]
+                {
+                    attributes: { "style": "float : right;" },
+                    type: "buttonGroup",
+                    buttons: [
+                        { type: "button", text: "Сохранить", click: form.save, attributes: { "class": "primary", "title": "Сохранить", "data_popup": "bottom" } }
+                    ]
+                }
+            ]
         });
 
+        form.bind('afterBind', function (e) {
 
-        $('#@fileUpload').kendoUpload({
-            async: {
-                saveUrl: "@Url.Action("Upload","File", new {Area = ""})",
-                autoUpload: true
-            }
+            var model = form.getModel();
+
+            console.log(model);
+
+            $('#@fileUpload').kendoUpload({
+                showFileList: false,
+                async: {
+                    saveUrl: "@Url.Action("Upload", "File", new {Area = ""})",
+                    autoUpload: true
+                },
+
+                success: function (e) {
+                    var fd = e.response[0];
+                    var mdl = form.getModel();
+                    var productFile = {
+                        File: fd
+                    }
+                    mdl.ProductFiles.push(productFile);
+                }
+            });
+
+            $('#@files').kendoGrid({
+                dataSource: {
+                    data: model.ProductFiles
+                },
+                rowTemplate: kendo.template($("#rowTemplate").html()),
+                columns: [
+                    { title: "Превью", width: 80 },
+                    { title: "Имя" },
+                    { title: "Основная" },
+                    { title: "Действия" }
+                ]
+            });
         });
-
     });
+</script>
+
+<script id="rowTemplate" type="text/x-kendo-template">
+    <tr data-uid="#: uid #">
+        <td>
+            <img src="/Files/#=File.FileName#" width="64" height="64" />
+        </td>
+        <td>
+            <span>#=File.FileName#</span>
+        </td>
+        <td>
+            <input type="checkbox" id="ch_#:uid#" class="k-checkbox">
+            <label class="k-checkbox-label" for="ch_#:uid#"></label>            
+        </td>
+        <td>
+            <button class="k-button"><span class="mdi mdi-close"></span></button>
+        </td>
+    </tr>
 </script>
 
 <style>
@@ -116,23 +169,23 @@
         height: 100%;
     }
 
-        #tabstrip h2 {
-            font-weight: lighter;
-            font-size: 5em;
-            line-height: 1;
-            padding: 0 0 0 30px;
-            margin: 0;
-        }
+    #tabstrip h2 {
+        font-weight: lighter;
+        font-size: 5em;
+        line-height: 1;
+        padding: 0 0 0 30px;
+        margin: 0;
+    }
 
-            #tabstrip h2 span {
-                background: none;
-                padding-left: 5px;
-                font-size: .3em;
-                vertical-align: top;
-            }
+    #tabstrip h2 span {
+        background: none;
+        padding-left: 5px;
+        font-size: .3em;
+        vertical-align: top;
+    }
 
-        #tabstrip p {
-            margin: 0;
-            padding: 0;
-        }
+    #tabstrip p {
+        margin: 0;
+        padding: 0;
+    }
 </style>

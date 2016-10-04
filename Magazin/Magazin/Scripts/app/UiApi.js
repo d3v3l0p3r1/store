@@ -14,6 +14,10 @@
         return uid;
     };
 
+    UiApi.getFileUrl = function() {
+        
+    };
+
     UiApi.openModalWindow = function (params, callback) {
 
         var _params = $.extend({

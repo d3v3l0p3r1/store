@@ -108,17 +108,18 @@ var GridControl = SimpleControl.extend({
 
 });
 
-var DetailViewForm = BaseDialogControl.extend({
+var DetailViewForm = kendo.Observable.extend({
     model :  kendo.ObservableObject,
     init: function (id) {
         this.id = id;
         this.desc = "DetailViewForm";
-        BaseDialogControl.fn.init.call(this, id, this.desc);
+        kendo.Observable.fn.init.call(this, id, this.desc);
     },
 
     setModel: function (mdl) {        
-        kendo.bind($('#' + this.id), mdl);
+        kendo.bind($('#' + this.id), mdl);        
         this.model = mdl;
+        this.trigger('afterBind', this);
     },
     getModel: function() {
         return this.model;

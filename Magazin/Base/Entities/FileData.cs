@@ -10,8 +10,6 @@ namespace Base.Entities
     {
         public FileData()
         {
-            CreationDate = DateTime.Now;
-            ChangeDate = DateTime.Now;
         }
         
         public Guid FileID { get; set; }        
