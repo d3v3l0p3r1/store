@@ -80,6 +80,28 @@
             categoryId: '@Model.CategoryId'
         }
 
+        var deleteFile = function (e) {
+            var grid = $('#@files').data('kendoGrid');
+            var tr = $(e.target).closest('tr');
+            var dataItem = grid.dataItem(tr);
+
+            var mdl = form.getModel();
+            mdl.ProductFiles.remove(dataItem);
+        };
+
+        var setDefaultImage = function (e) {
+            var grid = $('#@files').data('kendoGrid');
+            var tr = $(e.target).closest('tr');
+
+            for (var i = 0; i < grid._data.length; i++) {
+                grid._data[i].IsMain = false;
+            }
+
+            var dataItem = grid.dataItem(tr);
+            dataItem.IsMain = true;
+            grid.refresh();            
+        };
+
         $.ajax({
             url: '@Url.Action("Get")',
             type: "GET",
@@ -91,7 +113,6 @@
             dataType: "json",
             contentType: 'application/json'
         });
-
 
         $('#tabstrip').kendoTabStrip();
 
@@ -107,65 +128,60 @@
             ]
         });
 
-        form.bind('afterBind', function (e) {
 
+
+        $('#@fileUpload').kendoUpload({
+            showFileList: false,
+            async: {
+                saveUrl: "@Url.Action("Upload", "File", new {Area = ""})",
+                autoUpload: true
+            },
+
+            success: function (e) {
+                var fd = e.response[0];
+                var mdl = form.getModel();
+                var productFile = {
+                    File: fd,
+                    IsMain: false
+                }
+                mdl.ProductFiles.push(productFile);
+            }
+        });
+
+
+
+        form.bind('afterBind', function (e) {
             var model = form.getModel();
 
-            console.log(model);
-
-            $('#@fileUpload').kendoUpload({
-                showFileList: false,
-                async: {
-                    saveUrl: "@Url.Action("Upload", "File", new {Area = ""})",
-                    autoUpload: true
-                },
-
-                success: function (e) {
-                    var fd = e.response[0];
-                    var mdl = form.getModel();
-                    var productFile = {
-                        File: fd
-                    }
-                    mdl.ProductFiles.push(productFile);
-                }
-            });
-
             $('#@files').kendoGrid({
-                dataSource: {
-                    data: model.ProductFiles
+                selectable: true,
+                dataSource: model.ProductFiles,
+                dataBound: function () {
+                    $('#@files').find('.deleteFile').click(function (e) {
+                        deleteFile(e);
+                    });
+
+                    $('#@files').find('.setDefaultImage').click(function (e) {
+                        setDefaultImage(e);
+                    });
+
                 },
-                rowTemplate: kendo.template($("#rowTemplate").html()),
+                editable: true ,
+                //rowTemplate: kendo.template($("#rowTemplate").html()),
                 columns: [
-                    { title: "Превью", width: 80 },
-                    { title: "Имя" },
-                    { title: "Основная" },
-                    { title: "Действия" }
+                    { title: "Превью", width: 80, template: '<img src="/Files/#=File.FileName#" width="64" height="64" />' },
+                    { title: "Имя", template: '<span>#=File.FileName#</span>' },
+                    { title: "Основная", field: 'IsMain', template: '<input type="checkbox" class="setDefaultImage" #= IsMain ? "checked=checked" : "" #></input>' },
+                    { title: "Действия", template: '<button class="k-button deleteFile"><span class="mdi mdi-close"></span></button>' }
                 ]
             });
-        });
-    });
-</script>
 
-<script id="rowTemplate" type="text/x-kendo-template">
-    <tr data-uid="#: uid #">
-        <td>
-            <img src="/Files/#=File.FileName#" width="64" height="64" />
-        </td>
-        <td>
-            <span>#=File.FileName#</span>
-        </td>
-        <td>
-            #if(IsMain) { # 
-            <input type="checkbox" id="ch_#:uid#" class="k-checkbox" checked>
-             # } else  { # 
-            <input type="checkbox" id="ch_#:uid#" class="k-checkbox">
-            # } #
-            <label class="k-checkbox-label" for="ch_#:uid#"></label>            
-        </td>
-        <td>
-            <button class="k-button"><span class="mdi mdi-close"></span></button>
-        </td>
-    </tr>
+
+        });
+
+
+
+    });
 </script>
 
 <style>
