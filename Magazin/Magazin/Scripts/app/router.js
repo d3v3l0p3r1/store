@@ -5,7 +5,7 @@
 
 
         var loadView = function (viewModel, view, delegate) {
-            
+
             var kendoView = new kendo.View(view, { model: viewModel });
 
             $('#content').empty();
@@ -13,9 +13,6 @@
 
             if (delegate != undefined)
                 delegate();
-
-            //kendo.fx($("#content")).flipHorizontal($('#content'), $('#content')).duration(1000).play(); todo если время будет перерисовать
-
         };
 
 
@@ -50,6 +47,11 @@
                 function (view) {
                     loadView(null, view);
                 });
+        });
+
+        router.route("/", function () {            
+            var index = new kendo.View('Product');
+            loadView(null, index);
         });
 
 

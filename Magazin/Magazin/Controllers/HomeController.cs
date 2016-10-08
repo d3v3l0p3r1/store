@@ -4,12 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Magazin.Areas.Admin.Controllers
+namespace Magazin.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        // GET: Admin/Admin
+        // GET: Home
         public ActionResult Index()
         {
             return View();

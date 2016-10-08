@@ -5,15 +5,16 @@ using Base.Entities;
 using Base.Security.Entities;
 using Data.Entities;
 using Data.Migrations;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Data.DAL
-{    
+{
     public class DataContext : IdentityDbContext<User, Role, int, Login, UserRole, Claim>
     {
         static DataContext()
-        {                                        
-            
+        {
+
         }
 
         public DataContext() : base(nameof(DataContext))
@@ -26,7 +27,7 @@ namespace Data.DAL
             {
                 Database.SetInitializer(new DbInitilializer());
             }
-            
+
 
             Configuration.LazyLoadingEnabled = true;
         }
@@ -81,25 +82,51 @@ namespace Data.DAL
 
             context.SaveChanges();
 
-            var adminRole = new Role() { Name = "Admin" };
-            var userRole = new Role() { Name = "User" };
-            context.Roles.Add(adminRole);
-            context.Roles.Add(userRole);
-            context.SaveChanges();
+            CreateUser(context);
 
-            var admin = new User() { UserName = "Admin" };
-            context.Users.Add(admin);
-            context.SaveChanges();
+#endif
+        }
 
-            var t = new UserRole
+        private void CreateUser(DataContext context)
+        {
+            var um = new UserManager<User, int>(new UserRepository(context));
+            var rm = new RoleManager<Role, int>(new RoleRepository(context));
+
+
+            var adminRole = new Role()
             {
-                RoleId = adminRole.Id,
-                UserId = admin.Id
+                Name = "Admin"
+            };
+            var userRole = new Role()
+            {
+                Name = "User"
             };
 
-            admin.Roles.Add(t);
-            context.SaveChanges();
-#endif
+            rm.Create(adminRole);
+            rm.Create(userRole);
+
+            var admin = new User
+            {
+                UserName = "zhan_chip@mail.ru",
+                Email = "zhan_chip@mail.ru",
+                EmailConfirmed = true
+            };            
+
+
+            var res = um.Create(admin, "AB43c518");
+
+            if (res.Succeeded)
+            {
+                um.AddToRole(admin.Id, "admin");
+            }
+
+            else
+            {
+                throw new InvalidOperationException();
+            }
+
+
+            
         }
     }
 }

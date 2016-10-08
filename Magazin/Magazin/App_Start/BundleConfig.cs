@@ -48,6 +48,10 @@ namespace Magazin
 
                 ));
 
+            bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
+                "~/Content/bootstrap.css"
+                ));
+
             bundles.Add(new StyleBundle("~/Content/admin-css").Include(
                 "~/Content/admin-site.css",
                 "~/Content/admin-layout.css",
