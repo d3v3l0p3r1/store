@@ -1,0 +1,63 @@
+﻿@{
+    string catId = "cat_" + Guid.NewGuid().ToString("N");
+    string prodId = "prd_" + Guid.NewGuid().ToString("N");
+}
+
+<div>
+</div>
+
+<script>
+    window['@Model.DialogId'] = new DialogControl('@Model.DialogId');
+
+
+    (function () {
+
+
+
+    })()
+
+
+</script>
+
+
+<div id="@Model.DialogId" class="content">
+
+    <div id="@catId" class="product-categories">
+
+    </div>
+
+    <div id="@prodId" class="products">
+
+    </div>
+
+
+</div>
+
+
+<script>
+    $(function () {
+
+        $('#@catId').kendoGrid();
+
+        $('#@prodId').kendoGrid();
+
+    });
+</script>
+
+<style>
+    .content {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+    .product-categories {
+        width: 30%;
+        height: 100%;
+    }
+
+    .products {
+        width: 70%;
+        height: 100%;
+    }
+</style>

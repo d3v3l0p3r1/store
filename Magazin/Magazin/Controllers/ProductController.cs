@@ -10,6 +10,7 @@ using Magazin.Models;
 using AutoMapper;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Magazin.Helpers;
 
 namespace Magazin.Controllers
 {
@@ -31,19 +32,24 @@ namespace Magazin.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetProducts([DataSourceRequest] DataSourceRequest request)
+        public JsonNetResult GetProducts([DataSourceRequest] DataSourceRequest request)
         {
             using (var uow = CreateUnitOfWork())
             {
                 var products = _productService.GetAll(uow).ProjectTo<ProductDTO>();
 
-                var result = new JsonResult
-                {
-                    Data = products.ToDataSourceResult(request)
-                };
+                var result = new JsonNetResult(products.ToDataSourceResult(request));                
 
                 return result;
             }           
+        }
+
+        public JsonNetResult GetProductCategories([DataSourceRequest]DataSourceRequest request)
+        {
+            using (var uow = CreateUnitOfWork())
+            {
+
+            }
         }
     }
 }

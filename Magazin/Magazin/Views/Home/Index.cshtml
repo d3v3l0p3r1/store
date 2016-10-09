@@ -1,7 +1,6 @@
 ﻿@{
     Layout = "../Shared/_Layout.cshtml";
-    string catId = "cat_" + Guid.NewGuid().ToString("N");
-    string prodId = "prd_" + Guid.NewGuid().ToString("N");
+
 }
 
 <script src="@Url.Content("~/Scripts/require.js")" data-main="/Scripts/app/main"></script>
@@ -11,34 +10,6 @@
 <div id="app">
 </div>
 
-
-<script id="Product" type="text/x-kendo-template">
-    <h1>dADWADWADWADwa</h1>
-    <div>
-        <div id="@catId">
-
-        </div>
-
-        <div id="@prodId">
-
-        </div>
-    </div>
-
-</script>
-
-
-
-
-
-<script>
-    $(function () {
-
-        $('#@catId').kendoGrid();
-
-        $('#@prodId').kendoGrid();
-
-    });
-</script>
 
 <script>
     var router = new kendo.Router();
