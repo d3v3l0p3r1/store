@@ -12,6 +12,9 @@ namespace Data.Entities
     public class ProductCategory : BaseEntity
     {       
         public string Title { get; set; }        
+
+        public int? FileId { get; set; }
+        public virtual FileData File { get; set; }
     }
 
 

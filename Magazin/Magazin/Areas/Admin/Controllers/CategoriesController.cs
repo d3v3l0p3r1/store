@@ -9,6 +9,7 @@ using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Magazin.Controllers;
 using Magazin.Helpers;
+using Magazin.Models;
 
 namespace Magazin.Areas.Admin.Controllers
 {
@@ -22,7 +23,7 @@ namespace Magazin.Areas.Admin.Controllers
         }
 
 
-        public JsonNetResult GetCategories([DataSourceRequest] DataSourceRequest request, int? id)
+        public JsonNetResult GetCategories([DataSourceRequest] DataSourceRequest request)
         {
             using (var uow = CreateUnitOfWork())
             {
@@ -32,19 +33,26 @@ namespace Magazin.Areas.Admin.Controllers
             }
         }
 
+
+
         public ActionResult Edit(int? id)
+        {
+            return PartialView("CategoryDetailView", new DetailViewModel() { EntityId = id });
+        }
+
+        public JsonNetResult Get(int? id)
         {
             using (var uow = CreateUnitOfWork())
             {
                 var cat = id.HasValue ? _categoryService.Find(uow, id.Value) : new ProductCategory();
 
-                return PartialView("CategoryDetailView", cat);
+                return new JsonNetResult(cat);
             }
         }
 
-        
+
         public JsonResult Update(ProductCategory category)
-        {        
+        {
             try
             {
                 if (category == null)
@@ -55,13 +63,13 @@ namespace Magazin.Areas.Admin.Controllers
                 using (var uow = CreateUnitOfWork())
                 {
                     _categoryService.Update(uow, category);
-                    return Json(new {result = "ok"});
+                    return Json(new { result = "ok" });
                 }
-                
+
             }
             catch (Exception error)
             {
-                return Json(new {error = error.Message});
+                return Json(new { error = error.Message });
             }
         }
 

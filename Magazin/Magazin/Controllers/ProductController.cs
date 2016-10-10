@@ -48,7 +48,10 @@ namespace Magazin.Controllers
         {
             using (var uow = CreateUnitOfWork())
             {
+                var cats = _categoryService.GetAll(uow);
 
+                var result = new JsonNetResult(cats.ToDataSourceResult(request));
+                return result;
             }
         }
     }
