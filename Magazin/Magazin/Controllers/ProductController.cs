@@ -48,7 +48,7 @@ namespace Magazin.Controllers
         {
             using (var uow = CreateUnitOfWork())
             {
-                var cats = _categoryService.GetAll(uow);
+                var cats = _categoryService.GetAll(uow).ProjectTo<ProductCategoryDTO>();
 
                 var result = new JsonNetResult(cats.ToDataSourceResult(request));
                 return result;

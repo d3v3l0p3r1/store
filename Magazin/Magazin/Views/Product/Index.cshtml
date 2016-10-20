@@ -9,12 +9,9 @@
 <script>
     window['@Model.DialogId'] = new DialogControl('@Model.DialogId');
 
-
     (function () {
 
-
-
-    })()
+    })();
 
 
 </script>
@@ -37,9 +34,55 @@
 <script>
     $(function () {
 
-        $('#@catId').kendoGrid();
+        $('#@catId').kendoListView({                                   
+            template: kendo.template($('#category-template').html()),
+            dataSource: {
+                type: "aspnetmvc-ajax",                
+                transport: {
+                    prefix: "",
+                    read: {
+                        url: "@Url.Action("GetProductCategories")"
+                    }
+                },
+                schema: {
+                    data: "Data",
+                    total: "Total",
+                    errors: "Errors",
+                    model: {
+                        id : 'Id',
+                        fields: {
+                            Id: { type: "number" },
+                            Title: { type: "string" },
+                            File: { type: "string" ,defaultValue: null }
+                        }
+                    }
+                }
+            }
+        });
 
-        $('#@prodId').kendoGrid();
+        $('#@prodId').kendoGrid({
+            height: 550,
+            filterable: true,
+            sortable: true,
+            pageable: true,
+            columns: [{ field: 'Title' }],
+            dataSource: {
+                type: 'aspnetmvc-ajax',
+                transport: {
+                    read: {
+                        url: "@Url.Action("GetProducts")",
+                    }
+                },
+                schema: {
+                    model: {
+                        fields: {
+                            Id: { type: "number" },
+                            Title: { type: "string" }
+                        }
+                    }
+                }
+            }
+        });
 
     });
 </script>
@@ -47,7 +90,7 @@
 <style>
     .content {
         display: flex;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         flex-direction: column;
     }
 
@@ -61,3 +104,10 @@
         height: 100%;
     }
 </style>
+
+<script type="text/x-kendo-template" id="category-template">
+    <div class="category">
+        <img src="/Files/#=File#" width="64" height="64"/>
+        <a href="">#:Title#</a>        
+    </div>
+</script>

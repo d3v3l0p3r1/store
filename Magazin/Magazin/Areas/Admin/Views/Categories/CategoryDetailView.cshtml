@@ -100,13 +100,16 @@
 
         form.bind('afterBind', function (e) {
             var model = form.getModel();
-            var files = [
-                {
+            var files = [];
+
+            if (model.File) {
+                files.push({
                     name: model.File.FileName,
                     size: model.File.Size,
                     extension: model.File.Extension
-                }
-            ];
+                });
+            }
+
 
             $('#@fileUpload').kendoUpload({
                 showFileList: true,

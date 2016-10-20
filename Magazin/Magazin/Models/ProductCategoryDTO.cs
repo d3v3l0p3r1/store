@@ -10,5 +10,7 @@ namespace Magazin.Models
 
         public string Title { get; set; }
         public int Id { get; set; }
+
+        public string File { get; set; }
     }
 }
