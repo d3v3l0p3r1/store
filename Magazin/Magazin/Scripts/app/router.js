@@ -51,18 +51,9 @@
 
         router.route("/", function () {
             require(['text!/Product/index'], function (view) {
-                loadView(null, view)
+                loadView(null, view);
             });
-        });
-
-        router.route("/Product/index", function () {
-            require(['text!/Product/index'], function(view){
-                loadView(null, view)
-            });
-        });
-
-        router.route
-
+        });      
 
         return router;
     });

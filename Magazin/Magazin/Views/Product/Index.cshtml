@@ -1,43 +1,62 @@
-﻿@{
-    string catId = "cat_" + Guid.NewGuid().ToString("N");
-    string prodId = "prd_" + Guid.NewGuid().ToString("N");
-}
+﻿<div id="index" class="content">
 
-<div>
-</div>
-
-<script>
-    window['@Model.DialogId'] = new DialogControl('@Model.DialogId');
-
-    (function () {
-
-    })();
-
-
-</script>
-
-
-<div id="@Model.DialogId" class="content">
-
-    <div id="@catId" class="product-categories">
+    <div id="categories" class="product-categories">
 
     </div>
 
-    <div id="@prodId" class="products">
+    <div id="products" class="products">
 
     </div>
-
-
 </div>
 
-
 <script>
+
+
     $(function () {
 
-        $('#@catId').kendoListView({                                   
-            template: kendo.template($('#category-template').html()),
+        var productsDataSource = new kendo.data.DataSource({
+            type: 'aspnetmvc-ajax',
+            transport: {
+                prefix: "",
+                read: {
+                    url: "@Url.Action("GetProducts")"
+                }
+            },
+            schema: {
+                data: "Data",
+                total: "Total",
+                errors: "Errors",
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: { type: "number" },
+                        Title: { type: "string" }
+                    }
+                }
+            }
+        });
+
+        var viewModel = new kendo.data.ObservableObject({
+            currentCategory: 1,
+
+            onCategoryChange: function (e) {
+                var category = e.sender.dataItem(e.sender.select());
+                if (category) {
+                    productsDataSource.read({ categoryId: category.Id });
+                }
+            }
+        });
+
+        var height = $(window).height() - $('#top-menu').height() - 2;  //поправка на ветер
+
+        $('#categories').kendoGrid({
+            selectable: "single, row",
+            rowTemplate: kendo.template($('#category-template').html()),
+            columns: [{}],
+            change: viewModel.onCategoryChange,
             dataSource: {
-                type: "aspnetmvc-ajax",                
+                pageSize: 25,
+                type: "aspnetmvc-ajax",
                 transport: {
                     prefix: "",
                     read: {
@@ -49,39 +68,29 @@
                     total: "Total",
                     errors: "Errors",
                     model: {
-                        id : 'Id',
+                        id: 'Id',
                         fields: {
                             Id: { type: "number" },
                             Title: { type: "string" },
-                            File: { type: "string" ,defaultValue: null }
+                            File: { type: "string", defaultValue: null }
                         }
                     }
                 }
             }
         });
 
-        $('#@prodId').kendoGrid({
-            height: 550,
+        $('#categories').height(height);
+
+        $('#products').kendoGrid({
+            rowTemplate: kendo.template($('#product-template').html()),
+            selectable: "single, row",
+            autobind: false,
+            height: height,
             filterable: true,
             sortable: true,
             pageable: true,
-            columns: [{ field: 'Title' }],
-            dataSource: {
-                type: 'aspnetmvc-ajax',
-                transport: {
-                    read: {
-                        url: "@Url.Action("GetProducts")",
-                    }
-                },
-                schema: {
-                    model: {
-                        fields: {
-                            Id: { type: "number" },
-                            Title: { type: "string" }
-                        }
-                    }
-                }
-            }
+            columns: [{}],
+            dataSource: productsDataSource
         });
 
     });
@@ -92,20 +101,50 @@
         display: inline-flex;
         flex-direction: row;
         flex-wrap: nowrap;
+        justify-content: flex-start;
+        padding-top: 50px;
+        align-items: stretch;
     }
 
     .product-categories {
-        
+        min-width: 90px;
+        width: 15%;
+        height: 100%;
+        flex-grow: 1;
     }
 
     .products {
-        
+        width: 85%;
+        height: 100%;
+        flex-grow: 1;
+    }
+
+    .price {
+        color: #f60;
+        font-weight: 700;
+        font-size: 16px;
     }
 </style>
 
 <script type="text/x-kendo-template" id="category-template">
-    <div class="category">
-        <img src="/Files/#=File#" width="64" height="64"/>
-        <a href="">#:Title#</a>        
-    </div>
+    <tr data-uid="#: uid #">
+        <td>
+            <div class="category">
+                <img src="/Files/#=File#" width="64" height="64" />
+                <span>#:Title#</span>
+            </div>
+        </td>
+    </tr>
+</script>
+
+<script type="text/x-kendo-template" id="product-template">
+    <tr data-uid="#:uid#">
+        <td>
+            <div class="product">
+                <img src="/Files/#=File#" width="64" height="64" />
+                <h3>#:Title#</h3>
+                <span class="price">&nbsp;#:Price#&nbsp;₩</span>
+            </div>
+        </td>
+    </tr>
 </script>

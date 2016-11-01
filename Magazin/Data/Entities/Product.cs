@@ -10,7 +10,7 @@ namespace Data.Entities
         public int ProductCategoryId { get; set; }
         public virtual ProductCategory ProductCategory { get; set; }
 
-        public int Price { get; set; }
+        public decimal Price { get; set; }
 
         public virtual ICollection<ProductFile> ProductFiles { get; set; }
     }

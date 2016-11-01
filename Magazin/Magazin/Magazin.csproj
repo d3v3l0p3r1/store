@@ -603,6 +603,7 @@
     <Content Include="Content\vendor\kendo\Uniform\sprite_kpi.png" />
     <Content Include="Content\vendor\kendo\Uniform\sprite_kpi_2x.png" />
     <Content Include="favicon.ico" />
+    <Content Include="Files\no-image.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\app\app.js" />

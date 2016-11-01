@@ -1,6 +1,8 @@
 ﻿require.config({
     paths: {
-        // Пакеты                
+        // Пакеты       
+        'jquery': '/scripts/vendor/jquery',
+        'kendo': '/scripts/vendor/kendo.all',
         'text': '/scripts/text',
         'router': '/scripts/app/router'
     },    

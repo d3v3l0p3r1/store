@@ -27,21 +27,20 @@ namespace Magazin.Controllers
 
         public ActionResult Index()
         {
-            var mdl = new DialogViewModel();
-            return View(mdl);
+            return View();
         }
 
         [HttpPost]
-        public JsonNetResult GetProducts([DataSourceRequest] DataSourceRequest request)
+        public JsonNetResult GetProducts([DataSourceRequest] DataSourceRequest request, int categoryId)
         {
             using (var uow = CreateUnitOfWork())
             {
-                var products = _productService.GetAll(uow).ProjectTo<ProductDTO>();
+                var products = _productService.GetAll(uow).Where(x => x.ProductCategoryId == categoryId).ProjectTo<ProductDTO>();
 
-                var result = new JsonNetResult(products.ToDataSourceResult(request));                
+                var result = new JsonNetResult(products.ToDataSourceResult(request));
 
                 return result;
-            }           
+            }
         }
 
         public JsonNetResult GetProductCategories([DataSourceRequest]DataSourceRequest request)

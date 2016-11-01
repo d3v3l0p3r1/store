@@ -23,7 +23,7 @@ namespace Magazin
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                 "~/Scripts/vendor/jquery.min.js"));
-            
+
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
@@ -43,9 +43,15 @@ namespace Magazin
                 "~/Content/fonts/fontello/fontello.css",
                 "~/Content/fonts/mdi/materialdesignicons.css",
                 "~/Content/fonts/font-awesome/font-awesome.css",
-                "~/Content/vendor/kendo/kendo.common.min.css",
-                "~/Content/vendor/kendo/kendo.black.min.css"               
+                "~/Content/vendor/kendo/kendo.common.min.css"
+                ));
 
+            bundles.Add(new StyleBundle("~/Content/black-theme").Include(
+                "~/Content/vendor/kendo/kendo.black.min.css"
+                ));
+
+            bundles.Add(new StyleBundle("~/Content/main-theme").Include(
+                "~/Content/vendor/kendo/kendo.metro.min.css"
                 ));
 
             bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
