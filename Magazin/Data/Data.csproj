@@ -125,6 +125,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DAL\Repository.cs" />
     <Compile Include="Services\BalanceOfProductservice.cs" />
+    <Compile Include="Services\BascetService.cs" />
     <Compile Include="Services\InComeService.cs" />
     <Compile Include="Services\IProductCategoryService.cs" />
     <Compile Include="Services\IProductService.cs" />

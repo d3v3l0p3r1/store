@@ -10,12 +10,14 @@ using Linq.PropertyTranslator.Core;
 namespace Data.Entities
 {
     public class ProductCategory : BaseEntity
-    {       
-        public string Title { get; set; }        
+    {
+        public string Title { get; set; }
 
         public int? FileId { get; set; }
         public virtual FileData File { get; set; }
+
+        public int? ParentId { get; set; }
+        public virtual ProductCategory Parent { get; set; }
+
     }
-
-
 }

@@ -227,6 +227,7 @@
     <Compile Include="Areas\Admin\Controllers\InComeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BascetController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1802,6 +1803,7 @@
     <Folder Include="Content\vendor\kendo\styles\images\" />
     <Folder Include="Content\vendor\kendo\styles\Material\" />
     <Folder Include="Content\vendor\kendo\styles\textures\" />
+    <Folder Include="Views\Bascet\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

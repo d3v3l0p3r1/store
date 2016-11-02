@@ -33,7 +33,7 @@ namespace Magazin
 
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                "~/Content/site.css",
+                "~/Content/site-css.css",
                 "~/Content/fonts/fira/fira.css",
                 "~/Content/fonts/roboto/roboto.css",
                 "~/Content/fonts/glyphicons/glyphicons-regular.css",

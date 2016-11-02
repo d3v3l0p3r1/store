@@ -6,6 +6,7 @@ namespace Data.Entities
     public class Product : BaseEntity
     {
         public string Title { get; set; }
+        public string Description { get; set; }
 
         public int ProductCategoryId { get; set; }
         public virtual ProductCategory ProductCategory { get; set; }

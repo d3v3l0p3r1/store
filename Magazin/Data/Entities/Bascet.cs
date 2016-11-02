@@ -4,15 +4,15 @@ using Base.Security.Entities;
 
 namespace Data.Entities
 {
-    public class Bascet : BaseEntity
+    public class Bascet 
     {
         public int? UserID { get; set; }
         public virtual User User { get; set; }
 
-        public virtual ICollection<BascetProduct> Products { get; set; } 
+        public virtual ICollection<BascetProduct> Products { get; set; } = new List<BascetProduct>();
     }
 
-    public class BascetProduct : BaseEntity
+    public class BascetProduct
     {
         public int ProductId { get; set; }
         public virtual Product Product { get; set; }
