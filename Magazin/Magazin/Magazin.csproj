@@ -235,6 +235,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\BascetModelBinder.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DetailViewModel.cs" />
@@ -605,6 +606,7 @@
     <Content Include="Content\vendor\kendo\Uniform\sprite_kpi_2x.png" />
     <Content Include="favicon.ico" />
     <Content Include="Files\no-image.png" />
+    <Content Include="Files\ru_logo.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\app\app.js" />
@@ -1793,6 +1795,7 @@
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Bascet\BascetMenuitem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1803,7 +1806,6 @@
     <Folder Include="Content\vendor\kendo\styles\images\" />
     <Folder Include="Content\vendor\kendo\styles\Material\" />
     <Folder Include="Content\vendor\kendo\styles\textures\" />
-    <Folder Include="Views\Bascet\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

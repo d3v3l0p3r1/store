@@ -40,13 +40,9 @@ namespace Data.DAL
         }
 
         public DbSet<Product> Products { get; set; }
-        public DbSet<ProductCategory> ProductCategories { get; set; }
-        public DbSet<Bascet> Bascets { get; set; }
-        public DbSet<BascetProduct> BascetProducts { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }        
         public DbSet<BalanceOfProduct> BalanceOfProducts { get; set; }
-
         public System.Data.Entity.DbSet<Data.Entities.InComeEntity> InComeEntities { get; set; }
-
         public System.Data.Entity.DbSet<Data.Entities.InCome> InComes { get; set; }
     }
 
@@ -69,12 +65,14 @@ namespace Data.DAL
             context.SaveChanges();
 
             var random = new Random();
+            var priceRandom = new Random();
 
             for (int i = 0; i < 1000; i++)
             {
                 var product = new Product
                 {
                     ProductCategoryId = random.Next(1, 15),
+                    Price = priceRandom.Next(100, 1000000),
                     Title = $"product {i}"
                 };
                 context.Products.Add(product);

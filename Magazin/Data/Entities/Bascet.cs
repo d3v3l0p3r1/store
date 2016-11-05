@@ -9,7 +9,7 @@ namespace Data.Entities
         public int? UserID { get; set; }
         public virtual User User { get; set; }
 
-        public virtual ICollection<BascetProduct> Products { get; set; } = new List<BascetProduct>();
+        public ICollection<BascetProduct> Products { get; set; } = new List<BascetProduct>();
     }
 
     public class BascetProduct

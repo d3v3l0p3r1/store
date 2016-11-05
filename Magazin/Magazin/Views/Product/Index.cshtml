@@ -11,10 +11,27 @@
 
 <script>
 
+    (function () {
+        var dialogControl = window['index'];
 
-    $(function () {
+        dialogControl.addToCard = function (e) {
+            var grid = $('#categories').data('kendoGrid');
 
-        var productsDataSource = new kendo.data.DataSource({
+            var dataItem = grid.dataItem(e.closest('tr'));
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("AddToBascet", "Bascet")",
+                data: JSON.stringify({ productId: dataItem.Id }),
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                }
+            });
+
+        };
+
+
+        dialogControl.productsDataSource = new kendo.data.DataSource({
             type: 'aspnetmvc-ajax',
             transport: {
                 prefix: "",
@@ -36,16 +53,22 @@
             }
         });
 
-        var viewModel = new kendo.data.ObservableObject({
-            currentCategory: 1,
-
-            onCategoryChange: function (e) {
-                var category = e.sender.dataItem(e.sender.select());
-                if (category) {
-                    productsDataSource.read({ categoryId: category.Id });
-                }
+        dialogControl.onCategoryChange = function (e) {
+            var category = e.sender.dataItem(e.sender.select());
+            if (category) {
+                dialogControl.productsDataSource.read({ categoryId: category.Id });
             }
-        });
+        }
+
+    })();
+</script>
+
+<script>
+
+
+    $(function () {
+
+        var viewModel = window['index'];
 
         var height = $(window).height() - $('#top-menu').height() - 2;  //поправка на ветер
 
@@ -90,15 +113,11 @@
             sortable: true,
             pageable: true,
             columns: [{}],
-            dataSource: productsDataSource
+            dataSource: viewModel.productsDataSource
         });
 
     });
 </script>
-
-<style>
-   
-</style>
 
 <script type="text/x-kendo-template" id="category-template">
     <tr data-uid="#: uid #">
@@ -120,13 +139,15 @@
                 </div>
                 <div class="list-view-product--description">
                     <h3>#:Title#</h3>
+                    # if(Description) {#
                     <span>#:Description#</span>
+                    #}#
                 </div>
                 <div>
                     <span class="price">&nbsp;#:Price#&nbsp;₩</span>
                 </div>
                 <div>
-                    <button class="btn btn-success">
+                    <button class="btn btn-success" onclick='index.addToCard(this)'>
                         <span class="fa fa-plus">&nbsp;Добавить в корзину&nbsp;</span>
                     </button>
                 </div>

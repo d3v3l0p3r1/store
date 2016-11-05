@@ -28,6 +28,10 @@ namespace Data.Services
                 var bascetItem = bascet.Products.First(x => x.Product == product);
                 bascetItem.Count += count;
             }
+            else
+            {
+                bascet.Products.Add(new BascetProduct() { Count = count, Product = product });
+            }
         }
 
         public void RemoveItem(Bascet bascet, int productId)

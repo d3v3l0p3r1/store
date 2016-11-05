@@ -1,0 +1,30 @@
+﻿
+<button class="navbar__cart">
+    <i class="fa fa-shopping-cart"></i>
+    <span>Корзина</span>
+    <div class="nav-bar-count">
+        <span id="bascet-count">0</span>
+    </div>
+</button>
+
+<script>
+    
+    var getBascetCount = function() {
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("AddToBascet", "Bascet")",
+            data: JSON.stringify({ productId: dataItem.Id }),
+        contentType: "application/json; charset=utf-8",
+        success: function (result) {
+        }
+    });
+
+    }
+
+
+    var timerId = setTimeout(getBascetCount);
+
+
+</script>
+
+

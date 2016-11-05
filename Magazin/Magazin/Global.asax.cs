@@ -8,7 +8,9 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Data.DAL;
+using Data.Entities;
 using Magazin.App_Start;
+using Magazin.Helpers;
 using SimpleInjector;
 using SimpleInjector.Integration.Web.Mvc;
 
@@ -31,6 +33,8 @@ namespace Magazin
             MapperConfig.Init();
             UpdateConfiguration.Init(container.GetInstance<IUpdateConfigurationManager>());            
             ValueProviderFactories.Factories.Add(new JsonValueProviderFactory());
+
+            ModelBinders.Binders.Add(typeof(Bascet), new BascetModelBinder());
         }
     }
 }

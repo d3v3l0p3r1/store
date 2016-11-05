@@ -20,7 +20,9 @@ namespace Magazin.Controllers
             _bascetService = bascetService;
         }
 
-        public JsonNetResult AddToBascet(int productId, int count)
+
+        [HttpPost]
+        public JsonNetResult AddToBascet(int productId, int count = 1)
         {
             using (var uow = CreateUnitOfWork())
             {
@@ -37,6 +39,7 @@ namespace Magazin.Controllers
             }
         }
 
+        [HttpPost]
         public JsonNetResult RemoveFromBascet(int productId)
         {
             _bascetService.RemoveItem(GetBascet(), productId);
