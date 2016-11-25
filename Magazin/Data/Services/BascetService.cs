@@ -23,9 +23,9 @@ namespace Data.Services
 
         public void AddItem(Bascet bascet, Product product, int count)
         {
-            if (bascet.Products.Any(x => x.Product == product))
+            if (bascet.Products.Any(x => x.Product.Id == product.Id))
             {
-                var bascetItem = bascet.Products.First(x => x.Product == product);
+                var bascetItem = bascet.Products.First(x => x.Product.Id == product.Id);
                 bascetItem.Count += count;
             }
             else

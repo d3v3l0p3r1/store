@@ -1796,6 +1796,7 @@
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Bascet\BascetMenuitem.cshtml" />
+    <Content Include="Views\Bascet\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

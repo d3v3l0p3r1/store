@@ -13,11 +13,13 @@ namespace Magazin.Controllers
     {
         private readonly IProductService _productService;
         private readonly IBascetService _bascetService;
+        private readonly IOrderService _orderService;
 
-        public BascetController(IProductService productService, IBascetService bascetService)
+        public BascetController(IProductService productService, IBascetService bascetService, IOrderService orderService)
         {
             _productService = productService;
             _bascetService = bascetService;
+            _orderService = orderService;
         }
 
 
@@ -46,6 +48,14 @@ namespace Magazin.Controllers
             return new JsonNetResult(new { ok = "ok" });
         }
 
+        public JsonNetResult GetBascetCount()
+        {
+            var bascet = GetBascet();
+
+            return new JsonNetResult(bascet.Products.Count());
+        }
+
+
 
         private Bascet GetBascet()
         {
@@ -58,6 +68,29 @@ namespace Magazin.Controllers
             }
 
             return bascet;
+        }
+
+        public ActionResult Index()
+        {
+            return View(GetBascet());
+        }
+
+        [HttpPost]
+        public JsonNetResult CheckOut(Bascet bascet, string phone, string address)
+        {
+            using (var uow = CreateUnitOfWork())
+            {
+                try
+                {
+                    var order = _orderService.CreateOrder(uow, bascet, phone, address);
+                    return new JsonNetResult(order);
+                }
+                catch (Exception error)
+                {
+                    return new JsonNetResult(new { error = error.Message });
+                }
+
+            }
         }
     }
 }

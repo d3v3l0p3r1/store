@@ -53,7 +53,13 @@
             require(['text!/Product/index'], function (view) {
                 loadView(null, view);
             });
-        });      
+        });
+
+        router.route("/Bascet", function () {
+            require(['text!/Bascet/Index'], function (view) {
+                loadView(null, view);
+            });
+        });
 
         return router;
     });

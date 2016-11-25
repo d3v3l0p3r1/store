@@ -120,3 +120,8 @@
     background-color: #9acd32 !important;
     margin-bottom: 0px !important;
 }
+
+.bascet-product-list {
+    list-style: none;
+    padding-top: 25px;
+}

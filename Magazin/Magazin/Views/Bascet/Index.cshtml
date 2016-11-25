@@ -1,0 +1,65 @@
+﻿@model Data.Entities.Bascet
+
+<div>
+    <div>
+        <ul class="bascet-product-list">
+            @foreach (var item in Model.Products)
+            {
+                <li>
+                    @if (item.Product.ProductFiles.Any(x => x.IsMain))
+                {
+                        <img src="~/Files/@item.Product.ProductFiles.First(x => x.IsMain).File?.FileName" />
+                    }
+
+                    <label>@item.Product.Title</label>
+                    <label>&nbsp;@item.Product.Price&nbsp;₩</label>
+                    <input type="number" class="k-textbox" value="@item.Count" />
+                </li>
+            }
+        </ul>
+    </div>
+
+
+    <div>
+        <label>Телефон для связи</label>
+        <input type="text" class="k-textbox" value="" />
+    </div>
+
+    <div>
+        <label>Адрес доставки</label>
+        <textarea rows="4" type="text" value=""></textarea>
+    </div>
+
+    <div class="footer">
+        <button class="btn btn-success" id="checkout">Оформить заказ</button>
+        <button class="btn">Продолжить покупки</button>
+    </div>
+
+</div>
+
+
+<script>
+    $(function () {
+         //TODO : create VM & bind
+        $('#checkout')
+            .on('click',
+                function () {
+                    var data = {
+                        bascet: JSON.stringify(@Html.Raw(Model)),
+                        phone : 
+                    };
+
+
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("CheckOut", "Bascet")",
+                        data: JSON.stringify({ productId: productId }),
+                        contentType: "application/json; charset=utf-8",
+                        success: function (result) {
+                        }
+                    });
+
+                });
+
+    });
+</script>

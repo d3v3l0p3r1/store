@@ -14,15 +14,12 @@
     (function () {
         var dialogControl = window['index'];
 
-        dialogControl.addToCard = function (e) {
-            var grid = $('#categories').data('kendoGrid');
-
-            var dataItem = grid.dataItem(e.closest('tr'));
-
+        dialogControl.addToCard = function (e) {                        
+            var productId = $(e).attr('data-id');            
             $.ajax({
                 type: "POST",
                 url: "@Url.Action("AddToBascet", "Bascet")",
-                data: JSON.stringify({ productId: dataItem.Id }),
+                data: JSON.stringify({ productId: productId }),
                 contentType: "application/json; charset=utf-8",
                 success: function (result) {
                 }
@@ -135,7 +132,7 @@
         <td>
             <div class="list-view-product">
                 <div>
-                    <img src="/Files/#=File#" height="128" />
+                    <img src="/Files/#=File#" height="64" />
                 </div>
                 <div class="list-view-product--description">
                     <h3>#:Title#</h3>
@@ -147,7 +144,7 @@
                     <span class="price">&nbsp;#:Price#&nbsp;₩</span>
                 </div>
                 <div>
-                    <button class="btn btn-success" onclick='index.addToCard(this)'>
+                    <button class="btn btn-success" data-id="#:Id#" onclick='index.addToCard(this)'>
                         <span class="fa fa-plus">&nbsp;Добавить в корзину&nbsp;</span>
                     </button>
                 </div>

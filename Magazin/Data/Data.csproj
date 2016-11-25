@@ -119,6 +119,7 @@
     <Compile Include="Entities\BalanceOfProduct.cs" />
     <Compile Include="Entities\Bascet.cs" />
     <Compile Include="Entities\InCome.cs" />
+    <Compile Include="Entities\Order.cs" />
     <Compile Include="Migrations\EFEntitiConfiguration.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ProductCategory.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Services\InComeService.cs" />
     <Compile Include="Services\IProductCategoryService.cs" />
     <Compile Include="Services\IProductService.cs" />
+    <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\ProductCategoryService.cs" />
     <Compile Include="Services\ProductService.cs" />
   </ItemGroup>
