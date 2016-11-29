@@ -787,6 +787,10 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\app\ViewModel\bascetModel.js" />
+    <Content Include="Scripts\app\ViewModel\bascetProductModel.js" />
+    <Content Include="Scripts\app\ViewModel\bascetViewModel.js" />
+    <Content Include="Scripts\app\ViewModel\productModel.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />

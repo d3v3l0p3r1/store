@@ -55,9 +55,11 @@
             });
         });
 
-        router.route("/Bascet", function () {
-            require(['text!/Bascet/Index'], function (view) {
-                loadView(null, view);
+        router.route("/bascet", function () {
+            debugger;
+            require(['bascetViewModel', 'text!/Bascet/Index'], function (bascetViewModel, view) {
+                debugger;
+                loadView(bascetViewModel, view);
             });
         });
 

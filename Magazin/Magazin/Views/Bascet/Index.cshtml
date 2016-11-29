@@ -40,13 +40,16 @@
 
 <script>
     $(function () {
+
+        
+
          //TODO : create VM & bind
         $('#checkout')
             .on('click',
                 function () {
                     var data = {
                         bascet: JSON.stringify(@Html.Raw(Model)),
-                        phone : 
+                        phone : ''
                     };
 
 
