@@ -1,24 +1,25 @@
 ﻿require.config({
     paths: {
         // Пакеты       
-        'jquery': '/scripts/vendor/jquery',
-        'kendo': '/scripts/vendor/kendo.all',
-        'text': '/scripts/text',
-        'router': '/scripts/app/router',
+        'jquery': "http://code.jquery.com/jquery-1.9.1.min",
+        'jszip' : '/Scripts/vendor/jszip.min',
+        'kendo': '/Scripts/vendor/kendo.all.min',
+        'text': '/Scripts/text',
+        'router': '/Scripts/app/router',
         
         //VM
-        'bascetModel': '/scripts/app/viewmodel/bascetModel',
-        'bascetProductModel': '/scripts/app/viewmodel/bascetProductModel',
-        'bascetViewModel': '/scripts/app/viewmodel/bascetViewModel',
-        'productModel': '/scripts/app/viewmodel/productModel'
-
-
-    },    
-    priority: ['text' ,'router', 'app'],
-    jquery: '3.1.0'    
+        'productModel': '/Scripts/app/viewmodel/productModel',
+        'bascetModel': '/Scripts/app/viewmodel/bascetModel',
+        'bascetProductModel': '/Scripts/app/viewmodel/bascetProductModel',
+        'bascetViewModel': '/Scripts/app/viewmodel/bascetViewModel'
+    },
+    shim: {
+       'kendo' : { deps: ['jquery'] }
+    },
+    priority: ['text', 'router', 'app'],    
+    waitSeconds: 30
 });
-require([
-    'app'    
-], function (app) {
+
+require(['app', 'kendo'], function (app) {
     app.initialize();
 });

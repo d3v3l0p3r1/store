@@ -15,16 +15,6 @@ namespace Magazin
                 ));
 
 
-            bundles.Add(new ScriptBundle("~/kendo").Include(
-                "~/Scripts/vendor/jszip.min.js",
-                "~/Scripts/vendor/kendo.all.min.js",
-                "~/Scripts/vendor/kendo.aspnetmvc.min.js"
-                ));
-
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                "~/Scripts/vendor/jquery.min.js"));
-
-
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(

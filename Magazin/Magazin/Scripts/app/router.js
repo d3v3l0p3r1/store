@@ -1,5 +1,5 @@
-﻿define([],
-    function () {
+﻿define(['kendo'],
+    function (kendo) {
         var router = new kendo.Router(),
             layout = new kendo.Layout("<div id='content'></div>");
 
@@ -55,10 +55,8 @@
             });
         });
 
-        router.route("/bascet", function () {
-            debugger;
-            require(['bascetViewModel', 'text!/Bascet/Index'], function (bascetViewModel, view) {
-                debugger;
+        router.route("/bascet", function () {            
+            require(['bascetViewModel', 'text!/Bascet/Index'], function (bascetViewModel, view) {                
                 loadView(bascetViewModel, view);
             });
         });
