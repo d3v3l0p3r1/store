@@ -21,10 +21,7 @@ namespace Magazin.Areas.Admin.Controllers
             _balanceService = balanceService;
         }
 
-        public ActionResult Index()
-        {
-            return View("Index", new DialogViewModel());
-        }
+
 
         public JsonNetResult GetBalances([DataSourceRequest] DataSourceRequest request)
         {
@@ -38,10 +35,7 @@ namespace Magazin.Areas.Admin.Controllers
             }
         }
 
-        public ActionResult GetBalanceDetailView(int? id)
-        {
-            return PartialView("BalanceDetailView", new DetailViewModel() {EntityId = id});
-        }
+  
 
         public JsonNetResult Get(int id)
         {

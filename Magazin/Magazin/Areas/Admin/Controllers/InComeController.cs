@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using Data.Entities;
 using Data.Services;
@@ -22,13 +23,7 @@ namespace Magazin.Areas.Admin.Controllers
             _inComeService = inComeService;
         }
 
-
-        public ActionResult Index()
-        {
-            return View("Index", new DialogViewModel());
-        }
-
-        public JsonNetResult GetInComs([DataSourceRequest] DataSourceRequest request)
+        public IHttpActionResult GetInComs([DataSourceRequest] DataSourceRequest request)
         {
             using (var uow = CreateUnitOfWork())
             {
@@ -36,27 +31,23 @@ namespace Magazin.Areas.Admin.Controllers
 
                 var result = new JsonNetResult(incoms.ToDataSourceResult(request));
 
-                return result;
+                return Ok(result);
             }
         }
 
-        public ActionResult GetInComeDetailView(int? id)
-        {
-            return PartialView("InComeDetailView", new DetailViewModel() { EntityId = id });
-        }
 
-        public JsonNetResult GetIncome(int? id)
+        public IHttpActionResult GetIncome(int? id)
         {
             using (var uow = CreateUnitOfWork())
             {
                 var income = id.HasValue ? _inComeService.Find(uow, id.Value) : new InCome();
 
-                return new JsonNetResult(income);
+                return Ok(income);
             }
         }
 
-        [HttpPost]
-        public JsonNetResult AddInCome(InCome inCome)
+        [System.Web.Mvc.HttpPost]
+        public IHttpActionResult AddInCome(InCome inCome)
         {
             using (var uow = CreateUnitOfWork())
             {
@@ -64,33 +55,27 @@ namespace Magazin.Areas.Admin.Controllers
 
                 var result = new JsonNetResult(income);
 
-                return result;
+                return Ok(result);
             }
         }
 
-        public JsonResult Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
             using (var uow = CreateUnitOfWork())
             {
                 try
                 {
                     _inComeService.Delete(uow, id);
-                    return new JsonResult() { Data = new { result = "ok" } };
+                    return Ok(new { result = "ok" });
                 }
                 catch (Exception error)
                 {
-                    return new JsonResult() { Data = new { error = error.Message } };
+                    return BadRequest(error.Message);
                 }
             }
-        }
+        }   
 
-
-        public ActionResult GetIncomeEntityDetailView(int? id)
-        {
-            return PartialView("InComeEntityDetailView", new DetailViewModel() { EntityId = id });
-        }
-
-        public JsonNetResult GetIncomeEntity(int? id)
+        public IHttpActionResult GetIncomeEntity(int? id)
         {
             using (var uow = CreateUnitOfWork())
             {
@@ -106,11 +91,11 @@ namespace Magazin.Areas.Admin.Controllers
                     entity = new InComeEntity();
                 }
 
-                return new JsonNetResult(entity);
+                return Ok(entity);
             }
         }
 
-        public JsonNetResult ProcessIncome(int id)
+        public IHttpActionResult ProcessIncome(int id)
         {
             using (var uow = CreateUnitOfWork())
             {
@@ -118,11 +103,11 @@ namespace Magazin.Areas.Admin.Controllers
                 {
                     _inComeService.ProcessIncome(uow, id);
 
-                    return new JsonNetResult(new { result = "ok" });
+                    return Ok(new { result = "ok" });
                 }
                 catch (Exception error)
                 {
-                    return new JsonNetResult(error);
+                    return BadRequest(error.Message);
                 }
             }
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
 using Data.Entities;
@@ -24,13 +25,7 @@ namespace Magazin.Areas.Admin.Controllers
             _productService = productService;
         }
 
-        public ActionResult Index()
-        {
-            var mdl = new DialogViewModel();
-            return PartialView("Index", mdl);
-        }
-
-        public JsonNetResult GetProducts([DataSourceRequest] DataSourceRequest request, int? categoryId, string filter)
+        public IHttpActionResult GetProducts([DataSourceRequest] DataSourceRequest request, int? categoryId, string filter)
         {
             using (var uow = CreateUnitOfWork())
             {
@@ -48,27 +43,22 @@ namespace Magazin.Areas.Admin.Controllers
 
                 var result = new JsonNetResult(products.ToDataSourceResult(request));                    
                 
-                return result;
+                return Ok(result);
             }
 
-        }
+        }       
 
-        public ActionResult EditProduct(int? id, int categoryId)
-        {
-            return PartialView("ProductDetailView", new DetailViewModel() { EntityId = id, CategoryId = categoryId });
-        }
-
-        public JsonNetResult Get(int? id, int categoryId)
+        public IHttpActionResult Get(int? id, int categoryId)
         {
             using (var uow = CreateUnitOfWork())
             {
                 var product = id.HasValue ? _productService.Find(uow, id.Value) : new Product { ProductCategoryId = categoryId };
-                return new JsonNetResult(product);
+                return Ok(product);
             }
         }
 
-        [HttpPost]
-        public JsonResult UpdateProduct(Product product)
+        [System.Web.Mvc.HttpPost]
+        public IHttpActionResult UpdateProduct(Product product)
         {
             try
             {
@@ -80,37 +70,33 @@ namespace Magazin.Areas.Admin.Controllers
                     {
                         Data = new { result = "ok" },
                     };
-                    return result;
+                    return Ok(result);
                 }
             }
             catch (Exception error)
-            {
-                var result = new JsonResult
-                {
-                    Data = new { error = error.Message }
-                };
-                return result;
+            {                
+                return  BadRequest(error.Message);
             }
         }
 
-        [HttpPost]
-        public JsonResult DeleteProduct(int id)
+        [System.Web.Mvc.HttpPost]
+        public IHttpActionResult DeleteProduct(int id)
         {
             using (var uow = CreateUnitOfWork())
             {
                 try
                 {
                     _productService.Delete(uow, id);
-                    return Json(new { result = "ok" });
+                    return Ok(new { result = "ok" });
                 }
                 catch (ArgumentException)
                 {
-                    return Json(new { error = "Id is 0" });
+                    return BadRequest("Id is 0");
                 }
             }
         }
 
-        public JsonResult FindProduct(string startWith)
+        public IHttpActionResult FindProduct(string startWith)
         {
             using (var uow = CreateUnitOfWork())
             {
@@ -120,13 +106,12 @@ namespace Magazin.Areas.Admin.Controllers
                     products = products.Where(x => x.Title.ToUpper().StartsWith(startWith.ToUpper()));
                 }
 
-
-
-                return new JsonResult
+                
+                return Ok( new
                 {
                     Data = products.Take(20),
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                };
+                });
             }
         }
     }

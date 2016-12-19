@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using Data.Entities;
 using Data.Services;
@@ -23,35 +24,28 @@ namespace Magazin.Areas.Admin.Controllers
         }
 
 
-        public JsonNetResult GetCategories([DataSourceRequest] DataSourceRequest request)
+        public IHttpActionResult GetCategories([DataSourceRequest] DataSourceRequest request)
         {
             using (var uow = CreateUnitOfWork())
             {
                 var cats = _categoryService.GetAll(uow).ToDataSourceResult(request);
 
-                return new JsonNetResult(cats);
+                return Ok(cats);
             }
-        }
+        }    
 
-
-
-        public ActionResult Edit(int? id)
-        {
-            return PartialView("CategoryDetailView", new DetailViewModel() { EntityId = id });
-        }
-
-        public JsonNetResult Get(int? id)
+        public IHttpActionResult Get(int? id)
         {
             using (var uow = CreateUnitOfWork())
             {
                 var cat = id.HasValue ? _categoryService.Find(uow, id.Value) : new ProductCategory();
 
-                return new JsonNetResult(cat);
+                return Ok(cat);
             }
         }
 
 
-        public JsonResult Update(ProductCategory category)
+        public IHttpActionResult Update(ProductCategory category)
         {
             try
             {
@@ -63,29 +57,29 @@ namespace Magazin.Areas.Admin.Controllers
                 using (var uow = CreateUnitOfWork())
                 {
                     _categoryService.Update(uow, category);
-                    return Json(new { result = "ok" });
+                    return Ok(new { result = "ok" });
                 }
 
             }
             catch (Exception error)
             {
-                return Json(new { error = error.Message });
+                return BadRequest(error.Message);
             }
         }
 
-        [HttpPost]
-        public JsonResult Delete(int id)
+        [System.Web.Http.HttpPost]
+        public IHttpActionResult Delete(int id)
         {
             using (var uow = CreateUnitOfWork())
             {
                 try
                 {
                     _categoryService.Delete(uow, id);
-                    return Json(new { result = "ok" });
+                    return Ok(new { result = "ok" });
                 }
                 catch (ArgumentException)
                 {
-                    return Json(new { error = "Id is 0" });
+                    return BadRequest("Id is 0");
                 }
             }
         }

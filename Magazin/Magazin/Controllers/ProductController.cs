@@ -25,11 +25,6 @@ namespace Magazin.Controllers
             _categoryService = categoryService;
         }
 
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         [HttpPost]
         public JsonNetResult GetProducts([DataSourceRequest] DataSourceRequest request, int categoryId)
         {

@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Data.DAL;
 using Data.Entities;
 using Data.Services;
 using Magazin.Helpers;
+using Microsoft.Ajax.Utilities;
 
 namespace Magazin.Controllers
 {
-    public class BascetController : BaseController
+    public class BascetController : Controller
     {
         private readonly IProductService _productService;
         private readonly IBascetService _bascetService;
@@ -26,7 +28,7 @@ namespace Magazin.Controllers
         [HttpPost]
         public JsonNetResult AddToBascet(int productId, int count = 1)
         {
-            using (var uow = CreateUnitOfWork())
+            using (var uow = new UnitOfWork())
             {
                 var product = _productService.GetAll(uow).FirstOrDefault(x => x.Id == productId);
                 if (product != null)
@@ -59,6 +61,7 @@ namespace Magazin.Controllers
 
         private Bascet GetBascet()
         {
+            
             var bascet = (Bascet)Session["Bascet"];
 
             if (bascet == null)
@@ -78,7 +81,7 @@ namespace Magazin.Controllers
         [HttpPost]
         public JsonNetResult CheckOut(Bascet bascet, string phone, string address)
         {
-            using (var uow = CreateUnitOfWork())
+            using (var uow = new UnitOfWork())
             {
                 try
                 {
