@@ -106,4 +106,4 @@ npm-debug.log
 sh.exe.stackdump
 .vs/config/applicationhost.config
 
-wwwroot/*
+wwwroot/
