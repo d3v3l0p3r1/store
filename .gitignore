@@ -107,4 +107,4 @@ sh.exe.stackdump
 .vs/config/applicationhost.config
 
 wwwroot/
-!wwwroot/kendo/
+!wwwroot/kendo/*
