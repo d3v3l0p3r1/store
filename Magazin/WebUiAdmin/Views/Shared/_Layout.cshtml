@@ -4,32 +4,36 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - WebUiAdmin</title>
-    
-    <link rel="stylesheet" href="css/site.min.css"/>
-    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css"/>    
-    
-    
-    <script src="lib/jQuery/dist/jquery.js"></script>    
-    <script src="lib/kendo/js/kendo.js"></script>
+
+    <link rel="stylesheet" href="~/css/site.min.css" />    
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/kendo/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="~/lib/kendo/styles/kendo.common-material.min.css"/>
+    <link rel="stylesheet" href="~/lib/kendo/styles/kendo.material.min.css"/>    
+
+    <script src="~/lib/jQuery/dist/jquery.js"></script>
+    <script src="~/lib/jszip/dist/jszip.min.js"></script>
+    <script src="~/lib/kendo/js/kendo.all.min.js"></script>
 
 
 </head>
 <body>
-<aside id="side-bar">
     <div>
-        <a href="/">
-            <img src="~/Content/images/admin-logo.png" /> Главная
-        </a>
+        <aside id="side-bar">
+            <div>
+                <a href="/">
+                    <img src="~/Content/images/admin-logo.png" /> Главная
+                </a>
+            </div>
+
+            @{Html.RenderPartial("SideBar");}
+        </aside>
+
+        <div id="main-content">
+            @RenderBody()
+        </div>
     </div>
-
-    @{Html.RenderPartial("SideBar");}
-</aside>
-
-<div id="main-content">
-    @RenderBody()
-</div>
-
-@RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

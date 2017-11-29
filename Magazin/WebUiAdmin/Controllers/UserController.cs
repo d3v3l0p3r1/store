@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BaseCore.Security.Entities;
 using BaseCore.Security.Services.Abstract;
 using DataCore.DAL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebUiAdmin.Models;
 
 namespace WebUiAdmin.Controllers
 {    
@@ -25,14 +27,54 @@ namespace WebUiAdmin.Controllers
             using (var uow = CreateUnitOfWork())
             {
                 var users = await _userService.GetAllAsync(uow);
-                return new JsonResult(users);
+
+
+                var result = users.Select(x => new
+                {
+                    x.Id,
+                    x.UserName,
+                    x.Email,
+                    x.PhoneNumber
+                });
+
+                var total = users.Count();
+
+
+                return new JsonResult(new
+                {
+                    Data = result,
+                    Total = total
+                });
             }
         }
+
+
 
 
         public IActionResult Index()
         {
             return View();
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            using (var uow = CreateUnitOfWork())
+            {
+                var user = await _userService.FindAsync(uow, id);
+
+                if (user != null)
+                {
+                    return PartialView(user);
+                }
+
+                return View("Error", new ErrorViewModel(){ });
+            }            
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(User user)
+        {
+            throw new NotImplementedException();
         }
     }
 }

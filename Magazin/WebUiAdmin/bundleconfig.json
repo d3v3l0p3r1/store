@@ -4,16 +4,5 @@
     "inputFiles": [
       "Content/site.css"
     ]
-  },
-  {
-    "outputFileName": "wwwroot/lib/kendo/js/kendo.js",
-    "inputFiles": [
-      "Content/vendor/jszip/jszip.js",
-      "Content/vendor/kendo/js/kendo.all.js",
-      "Content/vendor/kendo/js/kendo.aspnetmvc.js"
-    ],
-    "minify": {
-      "enabled": false
-    }
-  }
+  }  
 ]

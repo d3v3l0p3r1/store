@@ -6,16 +6,69 @@
 
 
 <div id="@wrapID">
-    
+
 </div>
 
 
 <script>
     var $wrap = $('#@wrapID');
-
+    
     $(function () {
 
-        $wrap.kendoGrid();
+        $wrap.kendoGrid({
+            dataSource: {
+                type: "webapi",
+                transport: {
+                    read: "@Url.Action("GetUsers","User")"
+                },
+                schema: {
+                    id: "ID",
+                    data: "Data",
+                    total: "Total"
+                },
+                pageSize: 20,
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            },
+            selectable: "single,row",
+            height: 550,
+            filterable: true,
+            sortable: true,
+            pageable: true,
+            columns: [
+                {
+                    field: "UserName",
+                    title: "UserName",
+                }, {
+                    field: "Email",
+                    title: "Email"
+                }, {
+                    field: "PhoneNumber",
+                    title: "PhoneNumber"
+                }
+            ]
+        });
 
-    });    
+        var edit = function() {
+            var grid = $wrap.data('kendoGrid');
+            var select = grid.select();
+
+            if (select.length > 0) {
+                var item = grid.dataItem(select);
+                var url = '@(Url.Action("Edit"))';
+                
+                location.href = url + '?id=' + item.Id;
+            }
+        };
+
+        $('#@wrapID').on('dblclick', 'tr' ,function() {
+            edit();
+        });
+
+    });
+
+
+
+
 </script>

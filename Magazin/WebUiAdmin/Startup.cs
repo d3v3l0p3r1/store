@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Serialization;
 
 namespace WebUiAdmin
 {
@@ -36,8 +37,11 @@ namespace WebUiAdmin
                 opts.Password.RequireLowercase = false; // требуются ли символы в нижнем регистре
                 opts.Password.RequireUppercase = false; // требуются ли символы в верхнем регистре                
             }).AddEntityFrameworkStores<DataContext>();
-            
-            services.AddMvc();            
+
+            services.AddMvc().AddJsonOptions(opts =>
+            {
+                opts.SerializerSettings.ContractResolver = new DefaultContractResolver();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +55,7 @@ namespace WebUiAdmin
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-            }                        
+            }
 
             app.UseStaticFiles();
 
@@ -61,7 +65,7 @@ namespace WebUiAdmin
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");              
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
 
@@ -70,7 +74,7 @@ namespace WebUiAdmin
             var connectionString = Configuration.GetConnectionString(nameof(DataContext));
 
             services.AddEntityFrameworkNpgsql()
-                .AddDbContext<DataContext>(options => options.UseNpgsql(connectionString, a=> a.MigrationsAssembly("DataCore")));
+                .AddDbContext<DataContext>(options => options.UseNpgsql(connectionString, a => a.MigrationsAssembly("DataCore")));
         }
     }
 }
