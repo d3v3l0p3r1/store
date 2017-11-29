@@ -4,6 +4,7 @@
   "dependencies": {
     "bootstrap": "v3.3.7",
     "jQuery": "3.2.1",
-    "font-awesome": "font-awsome#v4.7.0"
+    "font-awesome": "font-awsome#v4.7.0",
+    "kendo-ui": "2017.3.1116"
   }
 }

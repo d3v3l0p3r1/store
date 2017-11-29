@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BaseCore.Security.Entities;
 using BaseCore.Security.Services.Abstract;
 using BaseCore.Services;
+using BaseCore.Services.Abstract;
 
 namespace BaseCore.Security.Services.Concrete
 {

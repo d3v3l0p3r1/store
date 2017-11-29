@@ -1,8 +1,21 @@
 ﻿@{
-    ViewBag.Title = "Users";
+    ViewBag.Title = "Пользователи";
     Layout = "_Layout";
+    string wrapID = "wpr_" + Guid.NewGuid().ToString("N");
 }
 
-<h2>title</h2>
 
-<h1>Users table here</h1>
+<div id="@wrapID">
+    
+</div>
+
+
+<script>
+    var $wrap = $('#@wrapID');
+
+    $(function () {
+
+        $wrap.kendoGrid();
+
+    });    
+</script>

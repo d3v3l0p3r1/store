@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseCore.Entities;
 using BaseCore.Services;
+using BaseCore.Services.Abstract;
 
 namespace DataCore.DAL
 {
@@ -11,10 +12,10 @@ namespace DataCore.DAL
         private readonly DataContext _dataContext;
         private readonly Dictionary<Type, object> _repositories;
 
-        public UnitOfWork()
+        public UnitOfWork(DataContext context)
         {
             _repositories = new Dictionary<Type, object>();
-          //  _dataContext = new DataContext();
+            _dataContext = context;
         }
 
         public IRepository<T> GetRepository<T>() where T : BaseEntity, new()

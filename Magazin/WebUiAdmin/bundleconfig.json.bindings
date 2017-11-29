@@ -1,1 +1,1 @@
-﻿///<binding BeforeBuild='Update all files, Content/site.min.css' />
+﻿///<binding BeforeBuild='Update all files, wwwroot/lib/kendo/js/kendo.js, wwwroot/css/site.min.css' />

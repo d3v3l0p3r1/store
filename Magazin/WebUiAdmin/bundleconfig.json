@@ -1,5 +1,19 @@
-﻿// Configure bundling and minification for the project.
-// More info at https://go.microsoft.com/fwlink/?LinkId=808241
 [
-  
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    "inputFiles": [
+      "Content/site.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/lib/kendo/js/kendo.js",
+    "inputFiles": [
+      "Content/vendor/jszip/jszip.js",
+      "Content/vendor/kendo/js/kendo.all.js",
+      "Content/vendor/kendo/js/kendo.aspnetmvc.js"
+    ],
+    "minify": {
+      "enabled": false
+    }
+  }
 ]
