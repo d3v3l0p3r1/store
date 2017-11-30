@@ -21,11 +21,10 @@
     var $catGrid = $("#@catGrid");
     var $splitter = $('#@wrapID');
 
+
+
     $(function () {
 
-        $splitter.kendoSplitter({            
-            panes: [{size: "400"}, {}]
-        });
 
         $productGrid.kendoGrid({
             dataSource: {
@@ -43,8 +42,7 @@
                 serverFiltering: true,
                 serverSorting: true
             },
-            selectable: "single,row",
-            height: 550,
+            selectable: "single,row",            
             filterable: true,
             sortable: true,
             pageable: true,
@@ -73,10 +71,9 @@
                     id: "ID",
                     data: "Data",
                     total: "Total"
-                }                
+                }
             },
-            selectable: "single,row",
-            height: 550,            
+            selectable: "single,row",            
             columns: [
                 {
                     field: "Title",
@@ -85,8 +82,16 @@
             ]
         });
 
+        $splitter.kendoSplitter({
+            panes: [{ size: "400" }, {}]
+        });
 
 
+        var heigth = $(window).height() - 20;        
+        var splitter = $splitter.data('kendoSplitter');
+
+        $splitter.height(heigth);        
+        splitter.resize();        
     });
 
 
