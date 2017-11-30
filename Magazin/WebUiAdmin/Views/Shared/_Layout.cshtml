@@ -29,9 +29,10 @@
 
             @{Html.RenderPartial("SideBar");}
         </aside>
-
-        <div id="main-content">
-            @RenderBody()
+        <div class="content-wrap">
+            <div id="main-content">                
+                @RenderBody()
+            </div>
         </div>
     </div>
     @RenderSection("Scripts", required: false)

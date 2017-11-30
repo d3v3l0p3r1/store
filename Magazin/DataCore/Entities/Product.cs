@@ -12,5 +12,10 @@ namespace DataCore.Entities
 
         public int? FileID { get; set; }
         public virtual FileData File { get; set; }
+
+        public decimal Price { get; set; }
+
+        public int CategoryID { get; set; }
+        public virtual ProductCategory Category { get; set; }
     }
 }

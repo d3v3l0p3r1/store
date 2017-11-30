@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DataCore.Migrations
 {
-    public partial class a : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,7 +52,7 @@ namespace DataCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FileData",
+                name: "Files",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -67,7 +67,7 @@ namespace DataCore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FileData", x => x.Id);
+                    table.PrimaryKey("PK_Files", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -177,23 +177,53 @@ namespace DataCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "ProductCategories",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Description = table.Column<string>(nullable: true),
+                    Hidden = table.Column<bool>(nullable: false),
+                    ImageID = table.Column<int>(nullable: true),
+                    Title = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductCategories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductCategories_Files_ImageID",
+                        column: x => x.ImageID,
+                        principalTable: "Files",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    CategoryID = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
                     FileID = table.Column<int>(nullable: true),
                     Hidden = table.Column<bool>(nullable: false),
+                    Price = table.Column<decimal>(nullable: false),
                     Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_FileData_FileID",
+                        name: "FK_Products_ProductCategories_CategoryID",
+                        column: x => x.CategoryID,
+                        principalTable: "ProductCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Products_Files_FileID",
                         column: x => x.FileID,
-                        principalTable: "FileData",
+                        principalTable: "Files",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -236,6 +266,16 @@ namespace DataCore.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductCategories_ImageID",
+                table: "ProductCategories",
+                column: "ImageID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_CategoryID",
+                table: "Products",
+                column: "CategoryID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_FileID",
                 table: "Products",
                 column: "FileID");
@@ -268,7 +308,10 @@ namespace DataCore.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "FileData");
+                name: "ProductCategories");
+
+            migrationBuilder.DropTable(
+                name: "Files");
         }
     }
 }

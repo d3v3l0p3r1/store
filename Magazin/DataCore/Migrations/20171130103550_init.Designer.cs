@@ -11,7 +11,7 @@ using System;
 namespace DataCore.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20171128073953_init")]
+    [Migration("20171130103550_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,30 @@ namespace DataCore.Migrations
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
+
+            modelBuilder.Entity("BaseCore.Entities.FileData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("ChangeDate");
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<string>("Extension");
+
+                    b.Property<Guid>("FileID");
+
+                    b.Property<string>("FileName");
+
+                    b.Property<bool>("Hidden");
+
+                    b.Property<long>("Size");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Files");
+                });
 
             modelBuilder.Entity("BaseCore.Security.Entities.Role", b =>
                 {
@@ -94,6 +118,52 @@ namespace DataCore.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("DataCore.Entities.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CategoryID");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int?>("FileID");
+
+                    b.Property<bool>("Hidden");
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryID");
+
+                    b.HasIndex("FileID");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("DataCore.Entities.ProductCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<bool>("Hidden");
+
+                    b.Property<int?>("ImageID");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImageID");
+
+                    b.ToTable("ProductCategories");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -175,6 +245,25 @@ namespace DataCore.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("DataCore.Entities.Product", b =>
+                {
+                    b.HasOne("DataCore.Entities.ProductCategory", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BaseCore.Entities.FileData", "File")
+                        .WithMany()
+                        .HasForeignKey("FileID");
+                });
+
+            modelBuilder.Entity("DataCore.Entities.ProductCategory", b =>
+                {
+                    b.HasOne("BaseCore.Entities.FileData", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

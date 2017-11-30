@@ -2,6 +2,8 @@
 using BaseCore.Security.Services.Abstract;
 using BaseCore.Security.Services.Concrete;
 using DataCore.DAL;
+using DataCore.Services.Abstract;
+using DataCore.Services.Concrete;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +30,8 @@ namespace WebUiAdmin
             services.AddTransient<RoleManager>();
             services.AddTransient<UserManager>();
             services.AddTransient<IUserService, UserService>();
-
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<ICategoryService, CategoryService>();
 
             services.AddIdentity<User, Role>(opts =>
             {

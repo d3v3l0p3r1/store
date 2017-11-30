@@ -1,13 +1,16 @@
 ﻿body {
+    padding : 0px;
+    margin : 0px;
+    height : 100%;
 }
 
 #side-bar {
     width: 10%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0%;
+    height: 100%;
+    z-index: 1000;
+    position: fixed;    
     background-color: #262b33;
+    top: 0;
 }
 
     #side-bar ul {
@@ -62,10 +65,15 @@
 }
 
 #main-content {
+    position: relative;
+    z-index: 1;
+    height: 100%;
     margin-left: 10%;
-    margin-top: 0;
-    margin-right: 0%;
-    margin-bottom: 0;
+}
+
+.content-wrap {
+    width: 100%;
+
 }
 
 

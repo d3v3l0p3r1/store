@@ -19,9 +19,9 @@ namespace BaseCore.Security.Services.Concrete
             _userManager = userManager;
         }
 
-        public async Task<IQueryable<User>> GetAllAsync(IUnitOfWork uow)
+        public IQueryable<User> GetAll(IUnitOfWork uow)
         {
-            return await Task.FromResult(_userManager.Users.Where(x=> x.Hidden == false));
+            return _userManager.Users.Where(x=> x.Hidden == false);
         }
 
         public async Task<User> FindAsync(IUnitOfWork uow, int id)

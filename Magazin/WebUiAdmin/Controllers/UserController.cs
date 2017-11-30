@@ -26,7 +26,7 @@ namespace WebUiAdmin.Controllers
         {
             using (var uow = CreateUnitOfWork())
             {
-                var users = await _userService.GetAllAsync(uow);
+                var users = _userService.GetAll(uow);
 
 
                 var result = users.Select(x => new

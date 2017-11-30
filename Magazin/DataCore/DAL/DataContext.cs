@@ -1,4 +1,5 @@
 ﻿
+using BaseCore.Entities;
 using BaseCore.Security.Entities;
 using DataCore.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -9,6 +10,8 @@ namespace DataCore.DAL
     public class DataContext : IdentityDbContext<User, Role, int>
     {
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<FileData> Files { get; set; }
 
         public DataContext()
         {

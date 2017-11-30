@@ -1,6 +1,93 @@
 ﻿@{
     ViewBag.Title = "Продукты";
     Layout = "_Layout";
+    string wrapID = "wrp_" + Guid.NewGuid().ToString("N");
+    string productGrid = "grd_" + Guid.NewGuid().ToString("N");
+    string catGrid = "grd_" + Guid.NewGuid().ToString("N");
 }
 
 
+<div id="@wrapID">
+    <div id="@catGrid"></div>
+
+    <div id="@productGrid"></div>
+
+</div>
+
+
+<script>
+
+    var $productGrid = $('#@productGrid');
+    var $catGrid = $("#@catGrid");
+    var $splitter = $('#@wrapID');
+
+    $(function () {
+
+        $splitter.kendoSplitter({            
+            panes: [{size: "400"}, {}]
+        });
+
+        $productGrid.kendoGrid({
+            dataSource: {
+                type: "webapi",
+                transport: {
+                    read: "@Url.Action("GetAll","Product")"
+                },
+                schema: {
+                    id: "ID",
+                    data: "Data",
+                    total: "Total"
+                },
+                pageSize: 20,
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            },
+            selectable: "single,row",
+            height: 550,
+            filterable: true,
+            sortable: true,
+            pageable: true,
+            columns: [
+                {
+                    field: "Title",
+                    title: "Title",
+                }, {
+                    field: "Description",
+                    title: "Description"
+                }, {
+                    field: "Price",
+                    title: "Price"
+                }
+            ]
+        });
+
+
+        $catGrid.kendoGrid({
+            dataSource: {
+                type: "webapi",
+                transport: {
+                    read: "@Url.Action("GetAll","Category")"
+                },
+                schema: {
+                    id: "ID",
+                    data: "Data",
+                    total: "Total"
+                }                
+            },
+            selectable: "single,row",
+            height: 550,            
+            columns: [
+                {
+                    field: "Title",
+                    title: "Title"
+                }
+            ]
+        });
+
+
+
+    });
+
+
+</script>

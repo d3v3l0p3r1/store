@@ -10,7 +10,7 @@ namespace BaseCore.Security.Services.Abstract
     {
         Task DeleteAsync(IUnitOfWork uow, int id);
         Task<User> FindAsync(IUnitOfWork uow, int id);
-        Task<IQueryable<User>> GetAllAsync(IUnitOfWork uow);
+        IQueryable<User> GetAll(IUnitOfWork uow);
         Task<User> UpdateAsync(IUnitOfWork uow, User entity);
     }
 }

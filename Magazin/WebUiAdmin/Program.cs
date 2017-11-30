@@ -34,10 +34,13 @@ namespace WebUiAdmin
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
+                var dataContext = services.GetService<DataContext>();
                 var userManager = services.GetRequiredService<UserManager>();
                 var roleManager = services.GetRequiredService<RoleManager>();
 
                 await DbMigrationsConfiguration.InitializeAsync(userManager, roleManager);
+
+                DbMigrationsConfiguration.Seed(dataContext);
             }
             
         }

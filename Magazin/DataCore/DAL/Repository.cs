@@ -65,11 +65,7 @@ namespace DataCore.DAL
         {
             throw new System.NotImplementedException();
         }
-
-        public Task<IQueryable<T>> GetAllAsync()
-        {
-            throw new System.NotImplementedException();
-        }
+        
 
         public void SaveChanges()
         {

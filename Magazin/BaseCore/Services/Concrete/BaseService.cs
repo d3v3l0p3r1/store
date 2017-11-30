@@ -9,10 +9,10 @@ namespace BaseCore.Services.Concrete
     public class BaseService<T> : IBaseService<T> where T : BaseEntity, new()
     {
 
-        public virtual async Task<IQueryable<T>> GetAllAsync(IUnitOfWork uow)
+        public virtual IQueryable<T> GetAll(IUnitOfWork uow)
         {
             var rep = uow.GetRepository<T>();
-            var all = await rep.GetAllAsync();
+            var all = rep.GetAll();
             return all.Where(x => !x.Hidden);
         }
 
