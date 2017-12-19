@@ -22,7 +22,7 @@ namespace WebUiAdmin.Controllers
 
         [Route("GetUsers")]
         [Produces("application/json")]
-        public async Task<IActionResult> GetUsers()
+        public IActionResult GetUsers()
         {
             using (var uow = CreateUnitOfWork())
             {

@@ -9,9 +9,7 @@
 
 <div id="@wrapID">
     <div id="@catGrid"></div>
-
     <div id="@productGrid"></div>
-
 </div>
 
 
@@ -20,17 +18,50 @@
     var $productGrid = $('#@productGrid');
     var $catGrid = $("#@catGrid");
     var $splitter = $('#@wrapID');
+    var catID = null;
+
+    var onCatChange = function(e) {
+
+        var selectedRows = this.select();
+        var cat = this.dataItem(selectedRows[0]);
+        catID = cat.Id;
+
+        $productGrid.data('kendoGrid').dataSource.fetch();
+    };
+    
+
+    var getTransportData = function () {        
+        return {
+            catID : catID
+        };
+    }
+
+    var editRow = function (id) {        
+        $.get('@Url.Action("Edit", "Product")', { id: id }, function(response) {
+            $('#main-content').html(response);
+        });
+    }
+
+    $productGrid.on("dblclick", "tr.k-state-selected", function(e) {
+
+        var grid = $productGrid.data('kendoGrid');
+        var selectedRows = grid.select();
+        var product = grid.dataItem(selectedRows[0]);
+
+        editRow(product.Id);
+    });
 
 
 
-    $(function () {
-
-
+    $(function() {
         $productGrid.kendoGrid({
             dataSource: {
                 type: "webapi",
                 transport: {
-                    read: "@Url.Action("GetAll","Product")"
+                    read: {
+                        url: "@Url.Action("GetAll", "Product")",
+                        data: getTransportData
+                    }
                 },
                 schema: {
                     id: "ID",
@@ -42,7 +73,7 @@
                 serverFiltering: true,
                 serverSorting: true
             },
-            selectable: "single,row",            
+            selectable: "single,row",
             filterable: true,
             sortable: true,
             pageable: true,
@@ -65,7 +96,7 @@
             dataSource: {
                 type: "webapi",
                 transport: {
-                    read: "@Url.Action("GetAll","Category")"
+                    read: "@Url.Action("GetAll", "Category")"
                 },
                 schema: {
                     id: "ID",
@@ -73,7 +104,8 @@
                     total: "Total"
                 }
             },
-            selectable: "single,row",            
+            change: onCatChange,
+            selectable: "single,row",
             columns: [
                 {
                     field: "Title",
@@ -87,11 +119,12 @@
         });
 
 
-        var heigth = $(window).height() - 20;        
+        var heigth = $(window).height() - 20;
         var splitter = $splitter.data('kendoSplitter');
 
-        $splitter.height(heigth);        
-        splitter.resize();        
+        $splitter.height(heigth);
+        splitter.resize();
+        
     });
 
 

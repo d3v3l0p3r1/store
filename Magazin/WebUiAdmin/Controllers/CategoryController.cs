@@ -47,6 +47,16 @@ namespace WebUiAdmin.Controllers
             }
         }
 
+        public IActionResult Edit(int id)
+        {
+            using (var uow = CreateUnitOfWork())
+            {
+                var cat =  _categoryService.FindAsync(uow, id);
+                return View(cat);
+            }
+
+        }
+
 
     }
 }

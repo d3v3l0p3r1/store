@@ -41,7 +41,7 @@ namespace DataCore.DAL
         }
 
         public IQueryable<T> GetAll()
-        {
+        {            
             var dbSet = _dataContext.Set<T>();
             return dbSet;
         }
@@ -61,9 +61,11 @@ namespace DataCore.DAL
             throw new System.NotImplementedException();
         }
 
-        public Task<T> FindAsync(int id)
+        public async Task<T> FindAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var ret = await _dataContext.Set<T>().FindAsync(id);
+
+            return ret;
         }
         
 
