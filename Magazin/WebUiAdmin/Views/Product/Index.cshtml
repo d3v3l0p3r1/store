@@ -28,18 +28,23 @@
 
         $productGrid.data('kendoGrid').dataSource.fetch();
     };
-    
 
-    var getTransportData = function () {        
+
+    var getTransportData = function () {
         return {
             catID : catID
         };
     }
 
-    var editRow = function (id) {        
-        $.get('@Url.Action("Edit", "Product")', { id: id }, function(response) {
+    var editRow = function (id) {
+
+        var url = '@Url.Action("Edit", "Product")?id=' + id;
+
+        window.location.href= url;
+
+        @*$.get('@Url.Action("Edit", "Product")', { id: id }, function(response) {
             $('#main-content').html(response);
-        });
+        });*@
     }
 
     $productGrid.on("dblclick", "tr.k-state-selected", function(e) {
@@ -80,13 +85,18 @@
             columns: [
                 {
                     field: "Title",
-                    title: "Title",
+                    title: "Имя",
                 }, {
                     field: "Description",
-                    title: "Description"
+                    title: "Описание"
                 }, {
                     field: "Price",
-                    title: "Price"
+                    title: "Цена"
+                },
+                {
+                    title: '',
+                    field: null,
+                    template: '<a href="/Product/Edit?id=#:Id#">Edit</a>'
                 }
             ]
         });
@@ -124,7 +134,7 @@
 
         $splitter.height(heigth);
         splitter.resize();
-        
+
     });
 
 

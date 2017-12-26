@@ -15,16 +15,18 @@ namespace DataCore.DAL
 
         public DataContext()
         {
-            
+
         }
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
-        {            
+        {
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);            
-        }        
+            base.OnModelCreating(builder);
+
+            builder.Entity<Product>().HasOne(x => x.Category);
+        }
     }
 }

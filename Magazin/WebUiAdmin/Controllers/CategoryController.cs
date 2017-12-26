@@ -10,11 +10,11 @@ namespace WebUiAdmin.Controllers
 {
     public class CategoryController : BaseController
     {
-        private readonly ICategoryService _categoryService;
+        private readonly IProductCategoryService _productCategoryService;
 
-        public CategoryController(DataContext dataContext, ICategoryService categoryService) : base(dataContext)
+        public CategoryController(IProductCategoryService productCategoryService)
         {
-            _categoryService = categoryService;
+            _productCategoryService = productCategoryService;
         }
 
         public IActionResult Index()
@@ -26,37 +26,29 @@ namespace WebUiAdmin.Controllers
         [Produces("application/json")]
         public IActionResult GetAll()
         {
-            using (var uow = CreateUnitOfWork())
+            var all = _productCategoryService.GetAll();
+
+            var total = all.Count();
+            var cats = all.Select(x => new
             {
-                var all = _categoryService.GetAll(uow);
+                x.Id,
+                x.Title,
+                x.Description
+            });
 
-                var total = all.Count();
-                var cats = all.Select(x => new
-                {
-                    x.Id,
-                    x.Title,
-                    x.Description
-                });
+            return new JsonResult(new
+            {
+                Data = cats,
+                Total = total
+            });
 
-                return new JsonResult(new
-                {
-                    Data = cats,
-                    Total = total
-                });
 
-            }
         }
 
         public IActionResult Edit(int id)
         {
-            using (var uow = CreateUnitOfWork())
-            {
-                var cat =  _categoryService.FindAsync(uow, id);
-                return View(cat);
-            }
-
-        }
-
-
+            var cat = _productCategoryService.Find(id);
+            return View(cat);
+        }        
     }
 }

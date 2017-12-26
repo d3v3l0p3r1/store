@@ -8,6 +8,8 @@ namespace DataCore.Entities
 {
     public class Product : BaseEntity
     {
+        [Required]
+        [StringLength(50, MinimumLength = 1)]
         [Display(Name = "Наименование")]
         public string Title { get; set; }
 
@@ -15,10 +17,10 @@ namespace DataCore.Entities
         public string Description { get; set; }
 
         public int? FileID { get; set; }
-
         [Display(Name = "Файл")]
-        public virtual FileData File { get; set; }
+        public FileData File { get; set; }
 
+        [Required]
         [Display(Name = "Цена")]
         public decimal Price { get; set; }
 

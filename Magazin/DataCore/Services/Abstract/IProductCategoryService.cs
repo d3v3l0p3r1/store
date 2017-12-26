@@ -6,7 +6,7 @@ using DataCore.Entities;
 
 namespace DataCore.Services.Abstract
 {
-    public interface ICategoryService : IBaseService<ProductCategory>
+    public interface IProductCategoryService : IBaseService<ProductCategory>
     {
     }
 }

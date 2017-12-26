@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BaseCore.Entities;
 using BaseCore.Services;
 using BaseCore.Services.Abstract;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataCore.DAL
 {
@@ -18,6 +19,7 @@ namespace DataCore.DAL
         {
             var dbSet = _dataContext.Set<T>();
             dbSet.Add(entity);
+            _dataContext.SaveChanges();
             return entity;
         }
 
@@ -31,47 +33,25 @@ namespace DataCore.DAL
         {
             var dbSet = _dataContext.Set<T>();
             dbSet.Update(entity);
+            _dataContext.SaveChanges();
             return entity;
         }
 
         public T Find(int id)
         {
             var dbSet = _dataContext.Set<T>();
-            return dbSet.Find(id);
+            return dbSet.Single(x=> x.Id == id);
         }
 
         public IQueryable<T> GetAll()
         {            
-            var dbSet = _dataContext.Set<T>();
+            var dbSet = _dataContext.Set<T>().AsNoTracking();
             return dbSet;
         }
 
-        public Task<T> CreateAsync(T entity)
+        public DbSet<T> GetDbSet()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public Task DeleteAsync(T entity)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<T> UpdateAsync(T entity)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public async Task<T> FindAsync(int id)
-        {
-            var ret = await _dataContext.Set<T>().FindAsync(id);
-
-            return ret;
-        }
-        
-
-        public void SaveChanges()
-        {
-            _dataContext.SaveChanges();
+            return _dataContext.Set<T>();
         }
     }
 }

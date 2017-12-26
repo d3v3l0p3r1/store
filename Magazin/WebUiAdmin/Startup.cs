@@ -1,6 +1,7 @@
 ﻿using BaseCore.Security.Entities;
 using BaseCore.Security.Services.Abstract;
 using BaseCore.Security.Services.Concrete;
+using BaseCore.Services.Abstract;
 using DataCore.DAL;
 using DataCore.Services.Abstract;
 using DataCore.Services.Concrete;
@@ -27,12 +28,8 @@ namespace WebUiAdmin
         {
             InitDbContext(services);
 
-            services.AddTransient<RoleManager>();
-            services.AddTransient<UserManager>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IProductService, ProductService>();
-            services.AddTransient<ICategoryService, CategoryService>();
-
+            Bindings.Bind(services);
+            
             services.AddIdentity<User, Role>(opts =>
             {
                 opts.Password.RequiredLength = 5;

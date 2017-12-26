@@ -8,66 +8,55 @@ namespace BaseCore.Services.Concrete
 {
     public class BaseService<T> : IBaseService<T> where T : BaseEntity, new()
     {
+        protected readonly IRepository<T> _repository;
 
-        public virtual IQueryable<T> GetAll(IUnitOfWork uow)
+        public BaseService(IRepository<T> repository)
         {
-            var rep = uow.GetRepository<T>();
-            var all = rep.GetAll();
+            _repository = repository;
+        }
+
+
+        public virtual IQueryable<T> GetAll()
+        {            
+            var all = _repository.GetAll();
             return all.Where(x => !x.Hidden);
         }
 
-        public virtual async Task<T> FindAsync(IUnitOfWork uow, int id)
+        public virtual T Find(int id)
         {
-            if (uow == null)
-            {
-                throw new ArgumentNullException();
-            }
-
             if (id == 0)
             {
                 throw new ArgumentException();
-            }
+            }            
 
-            var rep = uow.GetRepository<T>();
-
-            return await rep.FindAsync(id);
+            return _repository.Find(id);
         }
 
-        public virtual async Task<T> UpdateAsync(IUnitOfWork uow, T entity)
+        public virtual T Update(T entity)
         {
-            if (uow == null)
-            {
-                throw new ArgumentNullException();
-            }
-
             if (entity == null)
             {
                 throw new ArgumentNullException();
-            }
+            }            
 
-            var rep = uow.GetRepository<T>();
-
-            var result = await rep.UpdateAsync(entity);
-
-            uow.SaveChanges();
+            var result = _repository.Update(entity);
+            
 
             return result;
         }
 
-        public virtual async Task DeleteAsync(IUnitOfWork uow, int id)
+        public virtual  void Delete(int id)
         {
             if (id == 0)
             {
                 throw new ArgumentException();
             }
 
-            var entity = await uow.GetRepository<T>().FindAsync(id);
+            var entity = _repository.Find(id);
 
             entity.Hidden = true;
 
-            await uow.GetRepository<T>().UpdateAsync(entity);
-
-            await uow.SaveChangesAsync();
+            _repository.Update(entity);            
         }
     }
 }

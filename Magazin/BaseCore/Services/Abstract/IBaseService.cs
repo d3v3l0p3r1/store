@@ -6,9 +6,9 @@ namespace BaseCore.Services.Abstract
 {
     public interface IBaseService<T> where T : IBaseEntity
     {
-        IQueryable<T> GetAll(IUnitOfWork uow);
-        Task<T> FindAsync(IUnitOfWork uow, int id);
-        Task<T> UpdateAsync(IUnitOfWork uow, T entity);
-        Task DeleteAsync(IUnitOfWork uow, int id);
+        IQueryable<T> GetAll();
+        T Find(int id);
+        T Update(T entity);
+        void Delete(int id);
     }
 }

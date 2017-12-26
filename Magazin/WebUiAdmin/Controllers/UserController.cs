@@ -10,12 +10,12 @@ using Microsoft.AspNetCore.Mvc;
 using WebUiAdmin.Models;
 
 namespace WebUiAdmin.Controllers
-{    
+{
     public class UserController : BaseController
     {
         private readonly IUserService _userService;
 
-        public UserController(IUserService userService, DataContext dataContext) : base(dataContext)
+        public UserController(IUserService userService)
         {
             _userService = userService;
         }
@@ -24,28 +24,27 @@ namespace WebUiAdmin.Controllers
         [Produces("application/json")]
         public IActionResult GetUsers()
         {
-            using (var uow = CreateUnitOfWork())
+
+            var users = _userService.GetAll();
+
+
+            var result = users.Select(x => new
             {
-                var users = _userService.GetAll(uow);
+                x.Id,
+                x.UserName,
+                x.Email,
+                x.PhoneNumber
+            });
+
+            var total = users.Count();
 
 
-                var result = users.Select(x => new
-                {
-                    x.Id,
-                    x.UserName,
-                    x.Email,
-                    x.PhoneNumber
-                });
+            return new JsonResult(new
+            {
+                Data = result,
+                Total = total
+            });
 
-                var total = users.Count();
-
-
-                return new JsonResult(new
-                {
-                    Data = result,
-                    Total = total
-                });
-            }
         }
 
 
@@ -56,19 +55,17 @@ namespace WebUiAdmin.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Edit(int id)
+        public IActionResult Edit(int id)
         {
-            using (var uow = CreateUnitOfWork())
+            var user = _userService.Find(id);
+
+            if (user != null)
             {
-                var user = await _userService.FindAsync(uow, id);
+                return PartialView(user);
+            }
 
-                if (user != null)
-                {
-                    return PartialView(user);
-                }
+            return View("Error", new ErrorViewModel() { });
 
-                return View("Error", new ErrorViewModel(){ });
-            }            
         }
 
         [HttpPost]

@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using BaseCore.Security.Services.Abstract;
+using BaseCore.Security.Services.Concrete;
+using BaseCore.Services.Abstract;
+using DataCore.DAL;
+using DataCore.Entities;
+using DataCore.Services.Abstract;
+using DataCore.Services.Concrete;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace WebUiAdmin
+{
+    public static class Bindings
+    {
+        public static void Bind(IServiceCollection services)
+        {
+            services.AddTransient<RoleManager>();
+            services.AddTransient<UserManager>();
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IProductCategoryService, ProductCategoryService>();
+
+            services.AddScoped<IRepository<Product>, Repository<Product>>();
+            services.AddScoped<IRepository<ProductCategory>, Repository<ProductCategory>>();
+        }
+    }
+}

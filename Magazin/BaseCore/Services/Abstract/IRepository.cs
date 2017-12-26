@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using BaseCore.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace BaseCore.Services.Abstract
 {  
@@ -12,10 +13,6 @@ namespace BaseCore.Services.Abstract
         T Update(T entity);
         T Find(int id);
         IQueryable<T> GetAll();
-
-        Task<T> CreateAsync(T entity);
-        Task DeleteAsync(T entity);
-        Task<T> UpdateAsync(T entity);
-        Task<T> FindAsync(int id);        
+        DbSet<T> GetDbSet();
     }
 }

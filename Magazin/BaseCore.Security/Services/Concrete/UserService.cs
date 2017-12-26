@@ -10,7 +10,7 @@ using BaseCore.Services.Abstract;
 
 namespace BaseCore.Security.Services.Concrete
 {
-    public class UserService : IBaseService<User>, IUserService
+    public class UserService : IUserService
     {
         private readonly UserManager _userManager;
 
@@ -19,24 +19,24 @@ namespace BaseCore.Security.Services.Concrete
             _userManager = userManager;
         }
 
-        public IQueryable<User> GetAll(IUnitOfWork uow)
+        public IQueryable<User> GetAll()
         {
             return _userManager.Users.Where(x=> x.Hidden == false);
         }
 
-        public async Task<User> FindAsync(IUnitOfWork uow, int id)
+        public User Find(int id)
         {
-            return await Task.FromResult(_userManager.Users.FirstOrDefault(x => x.Id == id));
+            return _userManager.Users.FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task<User> UpdateAsync(IUnitOfWork uow, User entity)
+        public User Update(User entity)
         {
-             await _userManager.UpdateAsync(entity);
+            _userManager.UpdateAsync(entity);
 
             return entity;
         }
 
-        public async Task DeleteAsync(IUnitOfWork uow, int id)
+        public void Delete(int id)
         {
             var user = _userManager.Users.FirstOrDefault(x=>x.Id == id);
 
@@ -46,7 +46,7 @@ namespace BaseCore.Security.Services.Concrete
             }
 
             user.Hidden = true;
-            await _userManager.UpdateAsync(user);
+            _userManager.UpdateAsync(user);
         }
     }
 }
