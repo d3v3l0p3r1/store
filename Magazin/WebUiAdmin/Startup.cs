@@ -1,4 +1,5 @@
-﻿using BaseCore.Security.Entities;
+﻿using System.IO;
+using BaseCore.Security.Entities;
 using BaseCore.Security.Services.Abstract;
 using BaseCore.Security.Services.Concrete;
 using BaseCore.Services.Abstract;
@@ -7,9 +8,11 @@ using DataCore.Services.Abstract;
 using DataCore.Services.Concrete;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.StaticFiles.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Newtonsoft.Json.Serialization;
 
 namespace WebUiAdmin
@@ -29,7 +32,7 @@ namespace WebUiAdmin
             InitDbContext(services);
 
             Bindings.Bind(services);
-            
+
             services.AddIdentity<User, Role>(opts =>
             {
                 opts.Password.RequiredLength = 5;
@@ -42,6 +45,9 @@ namespace WebUiAdmin
             {
                 opts.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
+
+            services.AddSingleton<IFileProvider>(
+                new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,7 +63,12 @@ namespace WebUiAdmin
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {                 
+                ServeUnknownFileTypes = true,
+                DefaultContentType = "image/png",
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),               
+            });
 
             app.UseAuthentication();
 

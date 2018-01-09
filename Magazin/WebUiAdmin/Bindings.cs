@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BaseCore.Entities;
 using BaseCore.Security.Services.Abstract;
 using BaseCore.Security.Services.Concrete;
 using BaseCore.Services.Abstract;
@@ -10,6 +11,7 @@ using DataCore.Entities;
 using DataCore.Services.Abstract;
 using DataCore.Services.Concrete;
 using Microsoft.Extensions.DependencyInjection;
+using WebUiAdmin.Concrete;
 
 namespace WebUiAdmin
 {
@@ -26,6 +28,9 @@ namespace WebUiAdmin
 
             services.AddScoped<IRepository<Product>, Repository<Product>>();
             services.AddScoped<IRepository<ProductCategory>, Repository<ProductCategory>>();
+            services.AddScoped<IRepository<FileData>, Repository<FileData>>();
+
+            services.AddScoped<IFileService, FileService>();
         }
     }
 }

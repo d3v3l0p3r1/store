@@ -33,7 +33,7 @@ namespace WebUiAdmin.Controllers
                 all = all.Where(x => x.CategoryID == catID.Value);
             }
 
-            var products = all.Skip(skip).Take(take);
+            var products = all.OrderBy(x => x.Id).Skip(skip).Take(take);
             var total = all.Count();
 
             return new JsonResult(new
@@ -49,7 +49,7 @@ namespace WebUiAdmin.Controllers
             var product = _productService.Find(id);
 
             ViewBag.CategoryID = _productCategoryService.GetAll()
-                .Select(x => new SelectListItem() {Value = x.Id.ToString(), Text = x.Title});
+                .Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Title });
             ViewData["Product"] = product;
 
             return View(product);

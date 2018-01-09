@@ -21,12 +21,13 @@ namespace WebUiAdmin
 
             InitUsers(host);
 
-            host.Run();            
+            host.Run();
         }
 
         private static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseStartup<Startup>()                
                 .Build();
 
         private static async void InitUsers(IWebHost host)
@@ -42,7 +43,7 @@ namespace WebUiAdmin
 
                 DbMigrationsConfiguration.Seed(dataContext);
             }
-            
+
         }
     }
 }
