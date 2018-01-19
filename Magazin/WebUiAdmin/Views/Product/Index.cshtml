@@ -41,10 +41,6 @@
         var url = '@Url.Action("Edit", "Product")?id=' + id;
 
         window.location.href= url;
-
-        @*$.get('@Url.Action("Edit", "Product")', { id: id }, function(response) {
-            $('#main-content').html(response);
-        });*@
     }
 
     $productGrid.on("dblclick", "tr.k-state-selected", function(e) {

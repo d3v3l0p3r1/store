@@ -1,0 +1,56 @@
+﻿
+@{
+    Layout = "_Layout";
+    string wrp = "wrp_" + Guid.NewGuid().ToString("N");
+}
+
+<div id="@wrp"> 
+    
+</div>
+
+<script>
+    $(function() {
+        var $grid = $('#@wrp');
+
+        $grid.kendoGrid({
+            dataSource: {
+                type: "webapi",
+                transport: {
+                    read: {
+                        url: "@Url.Action("GetAll", "Order")"                        
+                    }
+                },
+                schema: {
+                    id: "ID",
+                    data: "Data",
+                    total: "Total"
+                },
+                pageSize: 20,
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            },
+            selectable: "single,row",
+            filterable: true,
+            sortable: true,
+            pageable: true,
+            columns: [
+                {
+                    field: "Title",
+                    title: "Имя",
+                }, {
+                    field: "Description",
+                    title: "Описание"
+                }, {
+                    field: "Price",
+                    title: "Цена"
+                },
+                {
+                    title: '',
+                    field: null,
+                    template: '<a href="/Product/Edit?id=#:Id#">Edit</a>'
+                }
+            ]
+        });
+    })
+</script>

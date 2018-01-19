@@ -26,7 +26,7 @@ namespace BaseCore.Services.Concrete
         {
             if (id == 0)
             {
-                throw new ArgumentException();
+                return null;
             }            
 
             return _repository.Find(id);

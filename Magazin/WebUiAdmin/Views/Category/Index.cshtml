@@ -1,8 +1,56 @@
 ﻿
-@{
-    ViewData["Title"] = "Index";
+@{    
+    ViewBag.Title = "Категории";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string wrp = "wrp_" + Guid.NewGuid().ToString("N");
 }
 
-<h2>Index</h2>
+<div id="@wrp"></div>
+
+<script>
+    $(function() {
+
+        var $catGrid = $('#@wrp');
+
+        $catGrid.kendoGrid({
+            dataSource: {
+                type: "webapi",
+                transport: {
+                    read: "@Url.Action("GetAll", "Category")"
+                },
+                schema: {
+                    id: "ID",
+                    data: "Data",
+                    total: "Total"
+                }
+            },
+            selectable: "single,row",
+            columns: [
+                {
+                    field: "Title",
+                    title: "Title"
+                }
+            ]
+        });
+
+        
+        var editRow = function(id) {
+            var url = '@Url.Action("Edit","Category")?id=' + id;
+
+            window.location.href = url;
+        }
+
+        $('#@wrp').on('dblclick', 'tr.k-state-selected', function(e) {
+            var grid = $catGrid.data('kendoGrid');
+            var selectedRows = grid.select();
+            var product = grid.dataItem(selectedRows[0]);
+
+            editRow(product.Id);
+        });
+
+    });
+
+
+
+</script>
 

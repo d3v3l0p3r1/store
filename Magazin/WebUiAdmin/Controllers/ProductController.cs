@@ -33,7 +33,7 @@ namespace WebUiAdmin.Controllers
                 all = all.Where(x => x.CategoryID == catID.Value);
             }
 
-            var products = all.OrderBy(x => x.Id).Skip(skip).Take(take);
+            var products = all.OrderByDescending(x => x.Id).Skip(skip).Take(take);
             var total = all.Count();
 
             return new JsonResult(new

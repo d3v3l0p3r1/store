@@ -58,7 +58,17 @@ namespace WebUiAdmin.Controllers
 
         public IActionResult GetFile(int id)
         {
+            if (id == 0)
+            {
+                return NoContent();
+            }
+
             var path = _fileService.GetVirtualPath(id);
+
+            if (path == null)
+            {
+                return NotFound();
+            }
 
             return File(path, "image/png");
         }

@@ -25,11 +25,13 @@ namespace WebUiAdmin
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IProductCategoryService, ProductCategoryService>();
+            services.AddScoped<IOrderService, OrderService>();
 
             services.AddScoped<IRepository<Product>, Repository<Product>>();
             services.AddScoped<IRepository<ProductCategory>, Repository<ProductCategory>>();
             services.AddScoped<IRepository<FileData>, Repository<FileData>>();
-
+            services.AddScoped<IRepository<Order>, Repository<Order>>();
+            
             services.AddScoped<IFileService, FileService>();
         }
     }

@@ -46,12 +46,17 @@ namespace WebUiAdmin.Concrete
         {
             var fileData = Find(id);
 
-            return Path.Combine(dir, fileData.FileID.ToString());            
+            return Path.Combine(dir, fileData.FileID.ToString());
         }
 
         public string GetVirtualPath(int id)
         {
             var fileData = Find(id);
+
+            if (fileData == null)
+            {
+                return null;
+            }
 
             return $@"\{fileDir}{fileData.FileID.ToString()}";
         }

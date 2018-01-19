@@ -69,7 +69,7 @@ namespace WebUiAdmin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(User user)
+        public IActionResult Edit(User user)
         {
             throw new NotImplementedException();
         }
