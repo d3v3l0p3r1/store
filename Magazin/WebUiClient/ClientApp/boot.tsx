@@ -14,7 +14,7 @@ function renderApp() {
 
     ReactDOM.render(
         <Provider store={configuredStore}>
-            <ConnectedRouter>
+            <ConnectedRouter history={history}>
                 <App/>
             </ConnectedRouter>
         </Provider>,
@@ -29,7 +29,7 @@ if (module.hot) {
         () => {
             ReactDOM.render(
                 <Provider store={configuredStore}>
-                    <ConnectedRouter>
+                    <ConnectedRouter history={history}>
                         <App />
                     </ConnectedRouter>
                 </Provider>,

@@ -8,14 +8,6 @@ export interface INetworkSettings {
 
 export class ProductGrid extends React.Component {
 
-    constructor() {
-        super();
-
-        this.state = {
-            products: []
-        };
-    }
-
     public render() {
 
         return <div>
