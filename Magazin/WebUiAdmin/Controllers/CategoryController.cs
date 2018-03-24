@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataCore.DAL;
+using DataCore.Entities;
 using DataCore.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,6 +50,20 @@ namespace WebUiAdmin.Controllers
         {
             var cat = _productCategoryService.Find(id);
             return View(cat);
-        }        
+        }
+
+        [HttpPost]
+        public IActionResult Edit(ProductCategory category)
+        {
+            try
+            {
+                _productCategoryService.Update(category);
+                return View("Index");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }            
+        }
     }
 }

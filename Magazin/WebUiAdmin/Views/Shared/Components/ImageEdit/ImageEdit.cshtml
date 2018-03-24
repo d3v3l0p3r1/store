@@ -1,0 +1,37 @@
+﻿
+@{
+    Layout = null;
+    string fileWrapper = "wrp_" + Guid.NewGuid().ToString("N");
+}
+
+
+<img src="@Url.Action("GetFile", "File", new { id = Model.FileID})" id="FileImage" />
+<input id="@fileWrapper" type="file" />
+
+
+<script>
+    $(function () {
+
+        var updateImage = function () {
+            var fileId = $('#FileID').val();
+            $('#FileImage').attr('src', '@Url.Action("GetFile", "File")?id=' + fileId);
+        }
+
+        $('#@fileWrapper').kendoUpload({
+            multiple: false,
+            success: function (e) {
+                $('#FileID').val(e.response.Id);
+                updateImage();
+            },
+            async: {
+                saveUrl: '@Url.Action("SaveFile", "File")',
+                autoUpload: true
+            }
+        });
+
+
+
+
+    })
+</script>
+

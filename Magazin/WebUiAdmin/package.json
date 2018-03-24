@@ -6,6 +6,7 @@
     "gulp": "3.9.1",
     "grunt": "1.0.1",
     "grunt-contrib-clean": "1.1.0",
-    "grunt-contrib-copy": "1.0.0"
+    "grunt-contrib-copy": "1.0.0"    
   }
+    
 }

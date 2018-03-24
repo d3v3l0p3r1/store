@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DataCore.Migrations
 {
-    public partial class init : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace DataCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true)
@@ -29,7 +29,7 @@ namespace DataCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -56,7 +56,7 @@ namespace DataCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ChangeDate = table.Column<DateTime>(nullable: false),
                     CreationDate = table.Column<DateTime>(nullable: false),
                     Extension = table.Column<string>(nullable: true),
@@ -75,7 +75,7 @@ namespace DataCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Date = table.Column<DateTime>(nullable: false),
                     Hidden = table.Column<bool>(nullable: false)
                 },
@@ -89,7 +89,7 @@ namespace DataCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
                     RoleId = table.Column<int>(nullable: false)
@@ -110,7 +110,7 @@ namespace DataCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: false)
@@ -195,7 +195,7 @@ namespace DataCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(nullable: true),
                     Hidden = table.Column<bool>(nullable: false),
                     ImageID = table.Column<int>(nullable: true),
@@ -217,7 +217,7 @@ namespace DataCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CategoryID = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     FileID = table.Column<int>(nullable: true),
@@ -247,7 +247,7 @@ namespace DataCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Hidden = table.Column<bool>(nullable: false),
                     OrderId = table.Column<int>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
@@ -279,7 +279,8 @@ namespace DataCore.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true);
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -305,7 +306,8 @@ namespace DataCore.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true);
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderProducts_OrderId",

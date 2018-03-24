@@ -1,36 +1,36 @@
-﻿@model DataCore.Entities.ProductCategory
+﻿@using WebUiAdmin.Components
+@model DataCore.Entities.ProductCategory
 
+
+@{
+    string imageInputID = "img_" + Guid.NewGuid().ToString("N");
+    string imageWrapper = "img_" + Guid.NewGuid().ToString("N");
+}
 <div class="edit-container">
-    <h4>ProductCategory</h4>   
+    <h4>ProductCategory</h4>
     <div class="row">
         <div class="col-md-4">
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Title" class="control-label"></label>
-                    <input asp-for="Title" class="form-control"/>
+                    <input asp-for="Title" class="form-control" />
                     <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Description" class="control-label"></label>
-                    <input asp-for="Description" class="form-control"/>
+                    <input asp-for="Description" class="form-control" />
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="ImageID" class="control-label"></label>
-                    <select asp-for="ImageID" class="form-control" asp-items="ViewBag.ImageID"></select>
-                    <span asp-validation-for="ImageID" class="text-danger"></span>
+                    @await Component.InvokeAsync(typeof(ImageEdit), new { Model.ImageID, imageInputID })
                 </div>
-                <input type="hidden" asp-for="Id"/>
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="Hidden" />
+                <input type="hidden" asp-for="ImageID" id="@imageInputID" />
                 <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="Hidden"/> @Html.DisplayNameFor(model => model.Hidden)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-default"/>
+                    <input type="submit" value="Save" class="btn btn-default" />
                 </div>
             </form>
         </div>

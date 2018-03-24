@@ -84,8 +84,8 @@ namespace WebUiAdmin
         {
             var connectionString = Configuration.GetConnectionString(nameof(DataContext));
 
-            services.AddEntityFrameworkNpgsql()
-                .AddDbContext<DataContext>(options => options.UseNpgsql(connectionString, a => a.MigrationsAssembly("DataCore")));
+            services.AddEntityFrameworkSqlServer()
+                .AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
         }
     }
 }
