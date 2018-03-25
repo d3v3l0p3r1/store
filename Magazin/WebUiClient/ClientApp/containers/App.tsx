@@ -19,8 +19,8 @@ class App extends React.Component<IAppProps> {
     public render() {
         return <div>
             <Layout />
-            <div className="container-fluid">
-                <Routes />
+            <div className="container-fluid">                
+                <Routes />                
             </div>
         </div>;
     }
