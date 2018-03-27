@@ -12,7 +12,7 @@ export class NavMenu extends React.Component<{}, {}> {
         return <nav className="navbar navbar-expand-lg main-nav navbar-dark">
             <div className="d-lg-none">
                 <Link className="navbar-brand " to={"/"}>
-                    <span className="navbar-brand">AAAAAAAAAAA</span>
+                    <img src="../images/logo.png" />
                 </Link>
             </div>
             <button id="toggler" type="button" className="navbar-toggler navbar-toggler-right" data-toggle="collapse" data-target="#main-navbar" aria-expanded="false" aria-controls="navbar">

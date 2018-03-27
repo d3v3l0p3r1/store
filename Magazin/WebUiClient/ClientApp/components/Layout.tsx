@@ -29,7 +29,7 @@ export class Layout extends React.Component<LayoutProps, ILayoutState> {
 
     public render() {
 
-        return <div className='container'>
+        return <div className='container-fluid'>
 
 
             <div className="header d-none d-lg-block">
