@@ -1,11 +1,21 @@
 ﻿import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
+
 export class NavMenu extends React.Component<{}, {}> {
+    constructor() {
+        super({});
+    }
+
+
     public render() {
         return <nav className="navbar navbar-expand-lg main-nav navbar-dark">
-            <Link className="navbar-brand" to={"/"}><span className="navbar-brand">AAAAAAAAAAA</span></Link>
-            <button type="button" className="navbar-toggler navbar-toggler-right" data-toggle="collapse" data-target="#main-navbar" aria-expanded="false" aria-controls="navbar">
+            <div className="d-lg-none">
+                <Link className="navbar-brand " to={"/"}>
+                    <span className="navbar-brand">AAAAAAAAAAA</span>
+                </Link>
+            </div>
+            <button id="toggler" type="button" className="navbar-toggler navbar-toggler-right" data-toggle="collapse" data-target="#main-navbar" aria-expanded="false" aria-controls="navbar">
                 <span className="navbar-toggler-icon"></span>
             </button>
 
