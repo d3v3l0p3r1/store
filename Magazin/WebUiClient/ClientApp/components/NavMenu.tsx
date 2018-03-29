@@ -2,11 +2,7 @@
 import { Link, NavLink } from 'react-router-dom';
 
 
-export class NavMenu extends React.Component<{}, {}> {
-    constructor() {
-        super({});
-    }
-
+export class NavMenu extends React.Component<{}, {}> {    
 
     public render() {
         return <nav className="navbar navbar-expand-lg main-nav navbar-dark">
@@ -25,6 +21,11 @@ export class NavMenu extends React.Component<{}, {}> {
                     <li>
                         <Link to={'/About'}>
                             <span className="nav-link">О нас</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to={'/Product'}>
+                            <span className="nav-link">Products</span>
                         </Link>
                     </li>
                     <li>

@@ -26,7 +26,7 @@ class App extends React.Component<IAppProps> {
     }
 }
 
-function mapStateToProps(state: IApplicationState, ownProps: IAppProps) {
+function mapStateToProps(state: IApplicationState, ownProps: IAppProps) {    
     return {
         isAuthentificated: state.isAuthenticated,       
     };
@@ -38,6 +38,4 @@ function mapDispatchToProps(dispatch: Dispatch<IApplicationState>) {
 }
 
 
-export default withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(App)
-) as React.ComponentClass<{}>;
+export default withRouter( connect(mapStateToProps, mapDispatchToProps)(App)) as React.ComponentClass<{}>;

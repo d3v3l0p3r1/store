@@ -8,10 +8,9 @@ import {history} from "./configureStore"
 
 export default function configureStore() {
     const routeMiddleware = routerMiddleware(history);
-
+    
     return createStore<IApplicationState>(
-
         rootReducer,
-        applyMiddleware(thunkMiddleware, routeMiddleware)
+        applyMiddleware(thunkMiddleware, routeMiddleware)        
     );
 }

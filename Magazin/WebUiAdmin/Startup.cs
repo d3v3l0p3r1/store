@@ -63,6 +63,8 @@ namespace WebUiAdmin
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().Build());
+
             app.UseStaticFiles(new StaticFileOptions()
             {                 
                 ServeUnknownFileTypes = true,

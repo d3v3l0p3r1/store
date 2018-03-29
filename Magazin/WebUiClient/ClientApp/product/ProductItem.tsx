@@ -4,6 +4,7 @@ export interface IProductItemProps {
     title: string,
     price: number,
     img: string,
+    id: number
 }
 
 

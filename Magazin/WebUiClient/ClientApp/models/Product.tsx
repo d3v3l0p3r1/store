@@ -1,4 +1,4 @@
-﻿import { IProductItemProps } from "../components/Products/ProductItem";
+﻿import { IProductItemProps } from "../product/ProductItem";
 
 
 export class Product implements IProductItemProps{

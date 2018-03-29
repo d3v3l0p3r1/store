@@ -25,6 +25,10 @@ namespace WebUiAdmin.Controllers
         [Produces("application/json")]
         public IActionResult GetAll(int take, int skip, int? catID = null)
         {
+            if (take == 0)
+            {
+                take = 100;
+            }
 
             var all = _productService.GetAll();
 

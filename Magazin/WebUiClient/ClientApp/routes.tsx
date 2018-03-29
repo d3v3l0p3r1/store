@@ -8,6 +8,7 @@ import { FeedbackComponent } from "./components/Feedback/Feedback"
 import { ContactsComponent } from "./components/Contacts/Contacts"
 import { NewsComponent } from "./components/News"
 import { LoginComponent } from "./components/Login/Login"
+import ProductGrid from "./product/ProductGrid"
 
 export default function routes() {
     return (
@@ -20,7 +21,8 @@ export default function routes() {
             <Route path={"/Feedback"} component={FeedbackComponent} />
             <Route path={"/Contacts"} component={ContactsComponent} />
             <Route path={"/News"} component={NewsComponent} />
-            <Route path={"/Login"} component={LoginComponent} />
+            <Route path={"/Login"} component={LoginComponent}/>
+            <Route path={"/Product"} component={ProductGrid} />
         </Switch>
     );
 }

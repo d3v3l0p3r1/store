@@ -1,7 +1,7 @@
 ﻿import { combineReducers, Dispatch, Reducer } from 'redux';
 import { routerReducer, RouterState } from "react-router-redux";
-import { IProductGridState } from "./ProductGrid/types"
-import { productGridReducer } from "./ProductGrid/reducer"
+import { IProductGridState } from "../product/types"
+import { productGridReducer } from "../product/reducer"
 
 export interface IApplicationState {
     readonly productGridState: IProductGridState;
