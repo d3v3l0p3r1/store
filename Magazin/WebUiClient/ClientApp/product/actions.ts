@@ -1,6 +1,6 @@
 ﻿import { ActionCreator, Dispatch, Action } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { ProductGridActionKeys, IProductGridState, } from "./types";
+import { ProductGridActionKeys, IProductGridState, IFetchingAction } from "./types";
 import { readProducts } from "../api"
 
 export const readData : ActionCreator<ThunkAction<Action, IProductGridState, void>> = (category: number) => {    
@@ -28,11 +28,18 @@ export const readData : ActionCreator<ThunkAction<Action, IProductGridState, voi
     };
 
 
+export function setLoadingState(b : boolean) {
+    return {
+        type: ProductGridActionKeys.Fetching,
+        payload: b
+    };
+}
 
 
 
 export const gridActions = {
-    readData: readData
+    readData: readData,
+    setLoadingState: setLoadingState
 }
 
 

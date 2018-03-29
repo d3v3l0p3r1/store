@@ -16,6 +16,7 @@ export interface IProductGridProps extends RouteComponentProps<any> {
     products: ReadonlyArray<Product>,
     dispatch: (action: any) => void;
     readData: ActionCreator<ThunkAction<Action, IProductGridState, void>>;    
+    setLoadingState: Function;
 }
 
 class ProductGrid extends React.Component<IProductGridProps, {}> {
@@ -25,6 +26,8 @@ class ProductGrid extends React.Component<IProductGridProps, {}> {
     }
 
     componentWillMount() {
+        
+        this.props.setLoadingState(true);
         this.props.readData(1);
     }
 
@@ -38,7 +41,7 @@ class ProductGrid extends React.Component<IProductGridProps, {}> {
             {listItems}
         </div>;
     }
-
+    
 }
 
 function mapStateToProps(state: IApplicationState, ownProps: any) {
@@ -47,11 +50,10 @@ function mapStateToProps(state: IApplicationState, ownProps: any) {
     };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<IApplicationState>) {
-    debugger;
-
+function mapDispatchToProps(dispatch: Dispatch<IApplicationState>) {    
     return {
-        readData: bindActionCreators(gridActions.readData, dispatch)
+        readData: bindActionCreators(gridActions.readData, dispatch),
+        setLoadingState: gridActions.setLoadingState
     };
 }
 

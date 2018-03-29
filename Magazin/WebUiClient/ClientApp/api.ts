@@ -14,14 +14,21 @@ export function readProducts(category: number): Promise<ReadonlyArray<Product>> 
 
     var ret = new Promise<ReadonlyArray<Product>>((resolve, reject) => {
         call(Settings.ProductURL)
-            .then((response) => {
-                debugger;
-
+            .then((response) => {                
                 return  response.json();                                
-            }).then((json) => {
-                debugger;
+            }).then((json) => {                
+                const arr = json.Data.map((x : any) => {
+                    let product = new Product();
 
-                resolve([]);
+                    product.id = x.Id;
+                    product.description = x.Description;
+                    product.img = x.File;
+                    product.price = x.Price;
+                    product.title = x.Title;
+
+                    return product;
+                });
+                resolve(arr);
             })
             .catch((error) => {
                 reject(error);
