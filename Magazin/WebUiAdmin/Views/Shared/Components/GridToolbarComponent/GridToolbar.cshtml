@@ -1,0 +1,61 @@
+﻿@model WebUiAdmin.Components.GridToolbarModel
+
+    
+@{
+    string wrap = "wrp_" + Guid.NewGuid().ToString("N");
+}
+
+
+<div id="@wrap">
+
+</div>
+
+<script>
+
+    $(function() {
+        var $toolbar = $('#@wrap');
+
+        var addRow = function () {            
+            var parent = window['@Model.ParentGrid'];
+            parent.addRow();
+        };
+
+        var editRow = function() {
+            var parent = window['@Model.ParentGrid'];
+            parent.editRow();
+        };
+
+        var deleteRow = function() {
+            var parent = window['@Model.ParentGrid'];
+            parent.deleteRow();
+        };
+
+        $toolbar.kendoToolBar({
+            items: [
+                {
+                    type: "button",
+                    text: "Добавить",
+                    icon: "fa fa-plus",
+                    click: addRow
+                },
+                {
+                    type: "button",
+                    text: "Изменить",
+                    icon: "fa fa-pencil",
+                    click: editRow
+                },
+                {
+                    type: "button",
+                    text: "Удалить",
+                    icon: "fa fa-pencil",
+                    click: deleteRow
+                }           
+            ]
+        });
+
+        
+    });
+
+    
+
+</script>

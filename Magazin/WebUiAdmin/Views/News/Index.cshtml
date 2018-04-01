@@ -1,0 +1,78 @@
+﻿@using WebUiAdmin.Components
+@{
+    ViewBag.Title = "Новости";
+    Layout = "_Layout";
+    string wrapID = "wrp_" + Guid.NewGuid().ToString("N");
+    string newsGridID = "grd_" + Guid.NewGuid().ToString("N");
+    
+}
+
+
+<div id="@wrapID">
+    <div>
+        @await Component.InvokeAsync(typeof(GridToolbarComponent), wrapID)
+    </div>
+    <div id="@newsGridID"></div>
+</div>
+
+<script>   
+    $(function () { 
+        var component = {
+            addRow: function() {
+                document.location.href = "@Url.Action("Create")";
+            },
+            editRow: function() {
+                debugger;
+            },
+            deleteRow: function() {
+                debugger;
+            }
+        }
+
+        window['@wrapID'] = component;
+
+        var $newsGrid = $('#@newsGridID');
+
+        $newsGrid.kendoGrid({
+            dataSource: {
+                type: "webapi",
+                transport: {
+                    read: {
+                        url: "@Url.Action("GetAll", "News")"                        
+                    }
+                },
+                schema: {
+                    id: "ID",
+                    data: "Data",
+                    total: "Total"
+                },
+                pageSize: 20,
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            },
+            selectable: "single,row",
+            filterable: true,
+            sortable: true,
+            pageable: true,
+            columns: [
+                {
+                    field: "Title",
+                    title: "Имя",
+                }, {
+                    field: "Description",
+                    title: "Описание"
+                }, {
+                    field: "Date",
+                    title: "Дата"
+                },
+                {
+                    title: '',
+                    field: null,
+                    template: '<a href="/News/Edit?id=#:Id#">Edit</a>'
+                }
+            ]
+        });
+    })
+</script>
+

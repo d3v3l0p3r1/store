@@ -87,7 +87,7 @@ namespace WebUiAdmin
             var connectionString = Configuration.GetConnectionString(nameof(DataContext));
 
             services.AddEntityFrameworkSqlServer()
-                .AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
+                .AddDbContext<DataContext>(options => options.UseSqlServer(connectionString, builder => builder.MigrationsAssembly("WebUiAdmin")));
         }
     }
 }

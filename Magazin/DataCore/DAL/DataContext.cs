@@ -4,6 +4,7 @@ using BaseCore.Security.Entities;
 using DataCore.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using News = DataCore.Entities.News;
 
 namespace DataCore.DAL
 {
@@ -14,6 +15,7 @@ namespace DataCore.DAL
         public DbSet<FileData> Files { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
+        public DbSet<News> News { get; set; }
 
         public DataContext()
         {

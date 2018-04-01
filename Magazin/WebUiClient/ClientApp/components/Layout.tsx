@@ -29,9 +29,7 @@ export class Layout extends React.Component<LayoutProps, ILayoutState> {
 
     public render() {
 
-        return <div className='container-fluid'>
-
-
+        return <div className='container-fluid'>            
             <div className="header d-none d-lg-block">
                 <div className="row">
                     <div className="col-md-4" >
@@ -53,13 +51,8 @@ export class Layout extends React.Component<LayoutProps, ILayoutState> {
                     </div>
                 </div>
             </div>
-
             <div className="clearfix"></div>
-
             <NavMenu />
-
-            <div className="clearfix"></div>
-
         </div>;
     }
 }

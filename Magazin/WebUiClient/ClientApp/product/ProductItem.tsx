@@ -10,10 +10,14 @@ export interface IProductItemProps {
 
 export class ProductItem extends React.Component<IProductItemProps, {}> {
     public render() {
-        return <div>
-            <img src={this.props.img} width="64" height="64" />
-            <span>{this.props.title}</span>
-            <span>{this.props.price}</span>
+        return <div className="product-item col-md-4">
+            <div className="card mb-4 box-shadow">
+                <img src={this.props.img} className="card-img-top" />
+                <div className="card-body">
+                    <span className="card-text">{this.props.title}</span>
+                    <span className="card-text">{this.props.price}</span>
+                </div>
+            </div>
         </div>;
-    }    
+    }
 }

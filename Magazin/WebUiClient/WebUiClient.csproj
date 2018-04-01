@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
     <PackageReference Include="Webpack" Version="4.0.0" />
   </ItemGroup>
 
@@ -29,10 +29,15 @@
     <None Remove="ClientApp\components\Feedback\Feedback.tsx" />
     <None Remove="ClientApp\components\Login\Login.tsx" />
     <None Remove="ClientApp\components\News.tsx" />
+    <None Remove="ClientApp\models\News.ts" />
+    <None Remove="ClientApp\newsSlider\actions.ts" />
+    <None Remove="ClientApp\newsSlider\NewsSlider.tsx" />
     <None Remove="ClientApp\components\Promo\Promo.tsx" />
     <None Remove="ClientApp\components\Slider.tsx" />
     <None Remove="ClientApp\containers\App.tsx" />
     <None Remove="ClientApp\models\Product.tsx" />
+    <None Remove="ClientApp\newsSlider\reducer.ts" />
+    <None Remove="ClientApp\newsSlider\types.ts" />
     <None Remove="ClientApp\Settings.ts" />
     <None Remove="ClientApp\stores\configureStore.dev.tsx" />
     <None Remove="ClientApp\stores\configureStore.prod.tsx" />
@@ -48,6 +53,11 @@
     <TypeScriptCompile Include="ClientApp\components\Feedback\Feedback.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Login\Login.tsx" />
     <TypeScriptCompile Include="ClientApp\components\News.tsx" />
+    <TypeScriptCompile Include="ClientApp\models\News.ts" />
+    <TypeScriptCompile Include="ClientApp\newsSlider\actions.ts" />
+    <TypeScriptCompile Include="ClientApp\newsSlider\NewsSlider.tsx" />
+    <TypeScriptCompile Include="ClientApp\newsSlider\reducer.ts" />
+    <TypeScriptCompile Include="ClientApp\newsSlider\types.ts" />
     <TypeScriptCompile Include="ClientApp\product\ProductGrid.tsx" />
     <TypeScriptCompile Include="ClientApp\product\ProductItem.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Promo\Promo.tsx" />

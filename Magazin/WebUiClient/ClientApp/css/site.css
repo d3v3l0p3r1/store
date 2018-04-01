@@ -3,18 +3,13 @@ body {
     color: #ffffff !important;
 }
 
-h1 {
-    color: #FFFFFF;
-}
 
-span {
-    color: #ffffff;
-}
 
 .header {
     padding: 2%;
     overflow-x: hidden;
     background: #2a2a2a;
+    color: white;
 }
 
 
@@ -29,4 +24,10 @@ span {
 .logo {
     background: url("../images/logo.png");    
     background-repeat: no-repeat;
+}
+
+
+.product-item {
+    background: white;
+    color: #242424;
 }

@@ -3,12 +3,13 @@ import { ThunkAction } from "redux-thunk";
 import { ProductGridActionKeys, IProductGridState, IFetchingAction } from "./types";
 import { readProducts } from "../api"
 
-export const readData : ActionCreator<ThunkAction<Action, IProductGridState, void>> = (category: number) => {    
+export const readData: ActionCreator<ThunkAction<Action, IProductGridState, void>> = (category: number) => {    
+
         return (dispatch: Dispatch<IProductGridState>) => {            
             const result = readProducts(category);
 
             result.then((response) => {
-                debugger;
+                
                 return dispatch({
                     type: ProductGridActionKeys.ReadProducts,
                     payload: response
@@ -16,7 +17,7 @@ export const readData : ActionCreator<ThunkAction<Action, IProductGridState, voi
             });
 
             result.catch((error) => {
-                debugger;
+                
                 return dispatch({
                     type: ProductGridActionKeys.ReadProducts,
                     payload: error
@@ -27,19 +28,9 @@ export const readData : ActionCreator<ThunkAction<Action, IProductGridState, voi
         };
     };
 
-
-export function setLoadingState(b : boolean) {
-    return {
-        type: ProductGridActionKeys.Fetching,
-        payload: b
-    };
-}
-
-
-
 export const gridActions = {
     readData: readData,
-    setLoadingState: setLoadingState
+    
 }
 
 

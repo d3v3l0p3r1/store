@@ -15,8 +15,7 @@ import { IProductGridState, IReadProductAction, IErrorAction, IFetchingAction } 
 export interface IProductGridProps extends RouteComponentProps<any> {
     products: ReadonlyArray<Product>,
     dispatch: (action: any) => void;
-    readData: ActionCreator<ThunkAction<Action, IProductGridState, void>>;    
-    setLoadingState: Function;
+    readData: ActionCreator<ThunkAction<Action, IProductGridState, void>>;        
 }
 
 class ProductGrid extends React.Component<IProductGridProps, {}> {
@@ -25,9 +24,7 @@ class ProductGrid extends React.Component<IProductGridProps, {}> {
         super(props);
     }
 
-    componentWillMount() {
-        
-        this.props.setLoadingState(true);
+    componentWillMount() {               
         this.props.readData(1);
     }
 
@@ -36,8 +33,7 @@ class ProductGrid extends React.Component<IProductGridProps, {}> {
             return <ProductItem price={p.price} img={p.img} title={p.title} id={p.id} key={p.id.toString()} />;
         });
 
-        return <div>
-            <h1>Products</h1>
+        return <div className="row">            
             {listItems}
         </div>;
     }
@@ -52,8 +48,7 @@ function mapStateToProps(state: IApplicationState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Dispatch<IApplicationState>) {    
     return {
-        readData: bindActionCreators(gridActions.readData, dispatch),
-        setLoadingState: gridActions.setLoadingState
+        readData: bindActionCreators(gridActions.readData, dispatch)        
     };
 }
 

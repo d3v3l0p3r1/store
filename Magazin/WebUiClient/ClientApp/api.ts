@@ -1,5 +1,6 @@
 ﻿import { Promise } from 'es6-promise';
 import { Settings } from "./Settings"
+import { News } from "./models/News"
 import { Product } from "./models/Product"
 
 const apiRoot = "http://localhost:51145";
@@ -14,10 +15,10 @@ export function readProducts(category: number): Promise<ReadonlyArray<Product>> 
 
     var ret = new Promise<ReadonlyArray<Product>>((resolve, reject) => {
         call(Settings.ProductURL)
-            .then((response) => {                
-                return  response.json();                                
-            }).then((json) => {                
-                const arr = json.Data.map((x : any) => {
+            .then((response) => {
+                return response.json();
+            }).then((json) => {
+                const arr = json.map((x: any) => {
                     let product = new Product();
 
                     product.id = x.Id;
@@ -37,4 +38,33 @@ export function readProducts(category: number): Promise<ReadonlyArray<Product>> 
     });
 
     return ret;
+}
+
+export function readNews(): Promise<ReadonlyArray<News>> {
+
+    var ret = new Promise<ReadonlyArray<News>>((resolve, reject) => {
+        call(Settings.NewsUrl)
+            .then((response) => {
+                return response.json();
+            })
+            .then((json) => {
+                const arr = json.map((x: any) => {
+                    let news = new News();
+
+                    news.id = x.Id;
+                    news.image = x.Image;
+                    news.title = x.Title;                    
+
+                    return news;
+                });
+
+                resolve(arr);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+
+    return ret;
+
 }

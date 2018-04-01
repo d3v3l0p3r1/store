@@ -8,17 +8,17 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace DataCore.Migrations
+namespace WebUiAdmin.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180221190125_first")]
-    partial class first
+    [Migration("20180331162701_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
+                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("BaseCore.Entities.FileData", b =>
@@ -120,6 +120,28 @@ namespace DataCore.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("DataCore.Entities.News", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("Description");
+
+                    b.Property<bool>("Hidden");
+
+                    b.Property<int?>("ImageID");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImageID");
+
+                    b.ToTable("News");
                 });
 
             modelBuilder.Entity("DataCore.Entities.Order", b =>
@@ -285,6 +307,13 @@ namespace DataCore.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("DataCore.Entities.News", b =>
+                {
+                    b.HasOne("BaseCore.Entities.FileData", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageID");
                 });
 
             modelBuilder.Entity("DataCore.Entities.OrderProduct", b =>

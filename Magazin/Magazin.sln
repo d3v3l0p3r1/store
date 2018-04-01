@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCore", "DataCore\DataCo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUiAdmin", "WebUiAdmin\WebUiAdmin.csproj", "{0183829E-35F5-40BD-9B44-0401BD49C780}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUiClient", "WebUiClient\WebUiClient.csproj", "{298EAA8C-134A-48D6-8489-B73A74C77A90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUiClient", "WebUiClient\WebUiClient.csproj", "{298EAA8C-134A-48D6-8489-B73A74C77A90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

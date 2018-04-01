@@ -15,7 +15,7 @@ namespace WebUiAdmin.Components
 
         public async Task<IViewComponentResult> InvokeAsync(int? fileID, string fileInputID)
         {
-            return View("ImageEdit", new ImageEditModel { FileID = fileID });
+            return View("ImageEdit", new ImageEditModel { FileID = fileID, FileInputID = fileInputID});
         }
 
     }

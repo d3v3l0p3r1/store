@@ -1,4 +1,4 @@
-﻿
+﻿@model WebUiAdmin.Components.ImageEditModel
 @{
     Layout = null;
     string fileWrapper = "wrp_" + Guid.NewGuid().ToString("N");
@@ -13,14 +13,14 @@
     $(function () {
 
         var updateImage = function () {
-            var fileId = $('#FileID').val();
+            var fileId = $('#@Model.FileInputID').val();
             $('#FileImage').attr('src', '@Url.Action("GetFile", "File")?id=' + fileId);
         }
 
         $('#@fileWrapper').kendoUpload({
             multiple: false,
             success: function (e) {
-                $('#FileID').val(e.response.Id);
+                $('#@Model.FileInputID').val(e.response.Id);
                 updateImage();
             },
             async: {
