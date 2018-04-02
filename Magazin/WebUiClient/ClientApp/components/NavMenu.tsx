@@ -5,7 +5,7 @@ import { Link, NavLink } from 'react-router-dom';
 export class NavMenu extends React.Component<{}, {}> {    
 
     public render() {
-        return <nav className="navbar navbar-expand-lg main-nav navbar-dark">
+        return <nav className="navbar navbar-expand-lg main-nav navbar-dark justify-content-center">
             <div className="d-lg-none">
                 <Link className="navbar-brand " to={"/"}>
                     <img src="../images/logo.png" />
@@ -15,51 +15,51 @@ export class NavMenu extends React.Component<{}, {}> {
                 <span className="navbar-toggler-icon"></span>
             </button>
 
-            <div id="main-navbar" className="navbar-collapse collapse">
+            <div id="main-navbar" className="navbar-collapse collapse w-100">
 
-                <ul className='nav navbar-nav'>
-                    <li>
-                        <Link to={'/About'}>
-                            <span className="nav-link">О нас</span>
+                <ul className='navbar-nav w-100 justify-content-center'>
+                    <li className="nav-item">
+                        <Link to={'/About'} className={"nav-link"}>
+                            <span className="">О нас</span>
                         </Link>
                     </li>
-                    <li>
-                        <Link to={'/Product'}>
-                            <span className="nav-link">Products</span>
+                    <li className="nav-item">
+                        <Link to={'/Product'} className={"nav-link"}>
+                            <span >Products</span>
                         </Link>
                     </li>
-                    <li>
-                        <Link to={'/Delivery'}>
-                            <span className="nav-link">Доставка и оплата</span>
+                    <li className="nav-item">
+                        <Link to={'/Delivery'} className={"nav-link"}>
+                            <span>Доставка и оплата</span>
                         </Link>
                     </li>
-                    <li>
-                        <Link to={'/Promo'}>
-                            <span className="nav-link">Акции</span>
-                        </Link>
-                    </li>
-
-                    <li>
-                        <Link to={'/Feedback'}>
-                            <span className="nav-link">Отзывы</span>
+                    <li className="nav-item">
+                        <Link to={'/Promo'} className={"nav-link"}>
+                            <span>Акции</span>
                         </Link>
                     </li>
 
-                    <li>
-                        <Link to={'/Contacts'}>
-                            <span className="nav-link">Контакты</span>
+                    <li className="nav-item">
+                        <Link to={'/Feedback'} className={"nav-link"}>
+                            <span>Отзывы</span>
                         </Link>
                     </li>
 
-                    <li>
-                        <Link to={'/News'}>
-                            <span className="nav-link">Статьи|Новости</span>
+                    <li className="nav-item">
+                        <Link to={'/Contacts'} className={"nav-link"}>
+                            <span>Контакты</span>
                         </Link>
                     </li>
 
-                    <li>
-                        <Link to={'/Login'}>
-                            <span className="nav-link">Вход|Регистрация</span>
+                    <li className="nav-item">
+                        <Link to={'/News'} className={"nav-link"}>
+                            <span>Статьи | Новости</span>
+                        </Link>
+                    </li>
+
+                    <li className="nav-item">
+                        <Link to={'/Login'} className={"nav-link"}>
+                            <span>Вход | Регистрация</span>
                         </Link>
                     </li>
 

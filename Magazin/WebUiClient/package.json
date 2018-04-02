@@ -61,6 +61,8 @@
     "webpack-cli": "2.0.13",
     "webpack-hot-middleware": "2.21.2",
     "image-webpack-loader": "4.2.0",
-    "react-slick": "0.22.3"
+    "react-slick": "0.22.3",
+    "react-slick-carousel": "0.14.9",
+    "roboto-fontface": "0.9.0"
   }
 }

@@ -9,6 +9,9 @@ import { ISliderState } from "./reducer"
 import { readData } from "./actions"
 import { ThunkAction } from "redux-thunk"
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 
 export interface ISliderProps {
     news: ReadonlyArray<News>;
@@ -17,11 +20,11 @@ export interface ISliderProps {
 
 
 class NewsSlider extends React.Component<ISliderProps> {
-    constructor(props: ISliderProps) {        
+    constructor(props: ISliderProps) {
         super(props);
     }
 
-    public componentWillMount() {        
+    public componentWillMount() {
         this.props.readData();
     }
 
@@ -32,19 +35,16 @@ class NewsSlider extends React.Component<ISliderProps> {
             infinite: true,
             speed: 500,
             slidesToShow: 1,
-            slidesToScroll: 1
-        };
-
-        console.log(this.props.news);
+            slidesToScroll: 1        
+        };        
 
         const list = this.props.news.map(p => {
             return <div key={p.id.toString()}>
-                <img src={p.image} width="64" height="64" />
-                <span>{p.title}</span>
+                <img src={p.image} className="w-100"  height="340px;"/>                
             </div>;
         });
 
-        return <div>
+        return <div className="slider-wrapper">
             <Slider { ...settings}>
                 {list}
             </Slider>
@@ -54,13 +54,13 @@ class NewsSlider extends React.Component<ISliderProps> {
 }
 
 
-function mapStateToProps(storeState: IApplicationState) {    
+function mapStateToProps(storeState: IApplicationState) {
     return {
         news: storeState.sliderState.newsArray
     }
 }
 
-function mapDispatchToProps(dispatch: Dispatch<ISliderState>) {    
+function mapDispatchToProps(dispatch: Dispatch<ISliderState>) {
     return {
         readData: bindActionCreators(readData, dispatch)
     };

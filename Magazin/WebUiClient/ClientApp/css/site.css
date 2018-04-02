@@ -3,7 +3,11 @@ body {
     color: #ffffff !important;
 }
 
-
+span {
+    color: white !important;
+    font-family: "Roboto";
+    font-size: 18px;
+}
 
 .header {
     padding: 2%;
@@ -22,7 +26,7 @@ body {
 }
 
 .logo {
-    background: url("../images/logo.png");    
+    background: url("/images/logo.png");    
     background-repeat: no-repeat;
 }
 
@@ -30,4 +34,18 @@ body {
 .product-item {
     background: white;
     color: #242424;
+}
+
+.slider-container {
+    height: 555px;
+    background-image: url("/images/slider_back.png");
+    background-repeat: no-repeat;
+}
+
+.slider-wrapper {
+    padding-top: 65px;
+}
+
+.contact-container {
+    padding: 2%;
 }
