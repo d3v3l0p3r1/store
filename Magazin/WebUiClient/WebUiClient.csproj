@@ -26,9 +26,11 @@
     <None Remove="ClientApp\components\AboutComponent.tsx" />
     <None Remove="ClientApp\components\Contacts\Contacts.tsx" />
     <None Remove="ClientApp\components\Delivery.tsx" />
+    <None Remove="ClientApp\components\FastOrder.tsx" />
     <None Remove="ClientApp\components\Feedback\Feedback.tsx" />
     <None Remove="ClientApp\components\Login\Login.tsx" />
     <None Remove="ClientApp\components\News.tsx" />
+    <None Remove="ClientApp\components\SearchBox.tsx" />
     <None Remove="ClientApp\models\News.ts" />
     <None Remove="ClientApp\newsSlider\actions.ts" />
     <None Remove="ClientApp\newsSlider\NewsSlider.tsx" />
@@ -50,9 +52,11 @@
     <TypeScriptCompile Include="ClientApp\components\AboutComponent.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Contacts\Contacts.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Delivery.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\FastOrder.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Feedback\Feedback.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Login\Login.tsx" />
     <TypeScriptCompile Include="ClientApp\components\News.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\SearchBox.tsx" />
     <TypeScriptCompile Include="ClientApp\models\News.ts" />
     <TypeScriptCompile Include="ClientApp\newsSlider\actions.ts" />
     <TypeScriptCompile Include="ClientApp\newsSlider\NewsSlider.tsx" />
