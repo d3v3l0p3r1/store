@@ -33,8 +33,7 @@ namespace WebUiAdmin.Controllers
             var cats = all.Select(x => new
             {
                 x.Id,
-                x.Title,
-                x.Description
+                x.Title,               
             });
 
             return new JsonResult(new

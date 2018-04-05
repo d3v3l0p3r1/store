@@ -7,9 +7,7 @@ namespace DataCore.Entities
 {
     public class ProductCategory : BaseEntity
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public int? ImageID { get; set; }
-        public virtual FileData Image { get; set; }
+        public string Title { get; set; }        
+        public decimal SortOrder { get; set; }
     }
 }

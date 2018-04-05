@@ -1,10 +1,10 @@
 ﻿import { ActionCreator, Dispatch, Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { ISliderState } from "./reducer"
-import { readNews } from "../api"
-import { SliderActionKeys } from "./types"
+import { readNews } from "../../api"
+import {ApiActionKeys} from "../../stores/ApiActionKeys"
 
-export const readData: ActionCreator<ThunkAction<Action, ISliderState, void>> = () => {
+export const readNewsAction: ActionCreator<ThunkAction<Action, ISliderState, void>> = () => {
 
     return (dispatch: Dispatch<ISliderState>) => {
         const result = readNews();
@@ -12,7 +12,7 @@ export const readData: ActionCreator<ThunkAction<Action, ISliderState, void>> = 
         result.then((response) => {
 
             return dispatch({
-                type: SliderActionKeys.Read,
+                type: ApiActionKeys.News_Read,
                 payload: response
             });
 
@@ -20,11 +20,11 @@ export const readData: ActionCreator<ThunkAction<Action, ISliderState, void>> = 
 
         result.catch((error) => {
             return dispatch({
-                type: SliderActionKeys.Error,
+                type: ApiActionKeys.News_Error,
                 payload: error
             });
         });
 
-        return dispatch({ type: SliderActionKeys.Fetching, payload: true });
+        return dispatch({ type: ApiActionKeys.News_Fetching, payload: true });
     };
 };

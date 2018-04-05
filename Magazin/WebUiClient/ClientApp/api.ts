@@ -2,6 +2,7 @@
 import { Settings } from "./Settings"
 import { News } from "./models/News"
 import { Product } from "./models/Product"
+import { Category } from "./models/Category"
 
 const apiRoot = "http://localhost:51145";
 
@@ -53,7 +54,7 @@ export function readNews(): Promise<ReadonlyArray<News>> {
 
                     news.id = x.Id;
                     news.image = x.Image;
-                    news.title = x.Title;                    
+                    news.title = x.Title;
 
                     return news;
                 });
@@ -67,4 +68,32 @@ export function readNews(): Promise<ReadonlyArray<News>> {
 
     return ret;
 
+}
+
+
+export function readCategories(): Promise<ReadonlyArray<Category>> {
+
+    var ret = new Promise<ReadonlyArray<Category>>((resolve, reject) => {
+        call(Settings.CatsUrl)
+            .then((response) => {
+                return response.json();
+            })
+            .then((json) => {
+                const arr = json.map((x: any) => {
+                    let cat = new Category();
+
+                    cat.id = x.Id;
+                    cat.title = x.Title;
+
+                    return cat;
+                });
+
+                resolve(arr);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+
+    return ret;
 }

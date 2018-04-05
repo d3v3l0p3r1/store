@@ -1,5 +1,6 @@
-﻿import { Product } from "../models/Product"
+﻿import { Product } from "../../models/Product"
 import { Action } from "redux"
+import {ApiActionKeys} from "../../stores/ApiActionKeys"
 
 export interface IProductGridState {
     readonly products: ReadonlyArray<Product>;
@@ -7,27 +8,18 @@ export interface IProductGridState {
     readonly errorMessage: string;
 }
 
-
-
-
-export enum ProductGridActionKeys {
-    ReadProducts = "READ_PRODUCTS",
-    Fetching = "FETCHING",
-    Error = "ERROR"
-}
-
 export interface IFetchingAction extends Action {
-    readonly type: ProductGridActionKeys.Fetching,
+    readonly type: ApiActionKeys.Product_Fetching,
     readonly payload: true,
 }
 
 export interface IErrorAction extends Action {
-    readonly type: ProductGridActionKeys.Error,
+    readonly type: ApiActionKeys.Product_Error,
     readonly payload: string,
 }
 
 export interface IReadProductAction extends Action {
-    readonly type: ProductGridActionKeys.ReadProducts;
+    readonly type: ApiActionKeys.Product_Read;
     readonly payload: ReadonlyArray<Product>;
 }
 

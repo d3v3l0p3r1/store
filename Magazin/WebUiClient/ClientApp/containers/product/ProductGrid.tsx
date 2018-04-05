@@ -6,8 +6,8 @@ import { ThunkAction } from "redux-thunk"
 import { ProductItem, IProductItemProps } from "./ProductItem";
 import { RouteComponentProps, withRouter } from 'react-router';
 import { gridActions } from "./actions";
-import { IApplicationState } from "../stores/index";
-import { Product } from "../models/Product";
+import { IApplicationState } from "../../stores/IApplicationState";
+import { Product } from "../../models/Product";
 import { IProductGridState, IReadProductAction, IErrorAction, IFetchingAction } from "./types";
 
 

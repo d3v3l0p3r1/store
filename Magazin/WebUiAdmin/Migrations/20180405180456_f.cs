@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace WebUiAdmin.Migrations
 {
-    public partial class initial : Migration
+    public partial class f : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -82,6 +82,21 @@ namespace WebUiAdmin.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Hidden = table.Column<bool>(nullable: false),
+                    SortOrder = table.Column<decimal>(nullable: false),
+                    Title = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -200,6 +215,7 @@ namespace WebUiAdmin.Migrations
                     Description = table.Column<string>(nullable: true),
                     Hidden = table.Column<bool>(nullable: false),
                     ImageID = table.Column<int>(nullable: true),
+                    ShowOnSlider = table.Column<bool>(nullable: false),
                     Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -207,28 +223,6 @@ namespace WebUiAdmin.Migrations
                     table.PrimaryKey("PK_News", x => x.Id);
                     table.ForeignKey(
                         name: "FK_News_Files_ImageID",
-                        column: x => x.ImageID,
-                        principalTable: "Files",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProductCategories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Description = table.Column<string>(nullable: true),
-                    Hidden = table.Column<bool>(nullable: false),
-                    ImageID = table.Column<int>(nullable: true),
-                    Title = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductCategories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProductCategories_Files_ImageID",
                         column: x => x.ImageID,
                         principalTable: "Files",
                         principalColumn: "Id",
@@ -346,11 +340,6 @@ namespace WebUiAdmin.Migrations
                 name: "IX_OrderProducts_ProductID",
                 table: "OrderProducts",
                 column: "ProductID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductCategories_ImageID",
-                table: "ProductCategories",
-                column: "ImageID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryID",

@@ -8,7 +8,7 @@ import { FeedbackComponent } from "./components/Feedback/Feedback"
 import { ContactsComponent } from "./components/Contacts/Contacts"
 import { NewsComponent } from "./components/News"
 import { LoginComponent } from "./components/Login/Login"
-import ProductGrid from "./product/ProductGrid"
+import ProductGrid from "./containers/product/ProductGrid"
 
 export default function routes() {
     return (

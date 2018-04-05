@@ -18,28 +18,27 @@ namespace DataCore.DAL
         {
             if (!dataContext.ProductCategories.Any())
             {
-                for (int i = 0; i < 15; i++)
-                {
-                    var cat = new ProductCategory
-                    {
-                        Title = Faker.Company.Name(),
-                        Description = Faker.Company.BS()
-                    };
-                    
-                    dataContext.ProductCategories.Add(cat);
-                    dataContext.SaveChanges();
-                }
+                
+                WriteCategory("Роллы", 1, dataContext);
+                WriteCategory("Суши", 2, dataContext);
+                WriteCategory("Сеты", 2, dataContext);
+                WriteCategory("Горячие блюда", 4, dataContext);
+                WriteCategory("Салаты", 5, dataContext);
+                WriteCategory("Десерты", 6, dataContext);
+                WriteCategory("Напитки", 7, dataContext);
+                WriteCategory("Соусы", 8,dataContext);
+                WriteCategory("Блюда за бонусы", 9, dataContext);                
             }
 
             if (!dataContext.Products.Any())
             {
                 var random = new Random();
 
-                for (int i = 0; i < 1000; i++)
+                for (int i = 0; i < 100; i++)
                 {
                     var product = new Product
                     {
-                        CategoryID = random.Next(1, 15),
+                        CategoryID = random.Next(1, 9),
                         Title = Faker.Name.First(),
                         Description = Faker.Name.FullName(),
                         Price = random.Next(100, 1000)
@@ -50,6 +49,18 @@ namespace DataCore.DAL
                 }
             }
 
+        }
+
+        private static void WriteCategory(string name, decimal sortOrder, DataContext context)
+        {
+            var category = new ProductCategory
+            {
+                Title = name,
+                SortOrder = sortOrder
+            };
+
+            context.ProductCategories.Add(category);
+            context.SaveChanges();
         }
 
         public static async Task InitializeAsync(UserManager<User> userManager, RoleManager roleManager)

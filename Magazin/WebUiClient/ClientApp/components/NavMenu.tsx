@@ -22,12 +22,7 @@ export class NavMenu extends React.Component<{}, {}> {
                         <Link to={'/About'} className={"nav-link"}>
                             <span className="">О нас</span>
                         </Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link to={'/Product'} className={"nav-link"}>
-                            <span >Products</span>
-                        </Link>
-                    </li>
+                    </li>                    
                     <li className="nav-item">
                         <Link to={'/Delivery'} className={"nav-link"}>
                             <span>Доставка и оплата</span>

@@ -134,6 +134,8 @@ namespace WebUiAdmin.Migrations
 
                     b.Property<int?>("ImageID");
 
+                    b.Property<bool>("ShowOnSlider");
+
                     b.Property<string>("Title");
 
                     b.HasKey("Id");
@@ -212,17 +214,13 @@ namespace WebUiAdmin.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Description");
-
                     b.Property<bool>("Hidden");
 
-                    b.Property<int?>("ImageID");
+                    b.Property<decimal>("SortOrder");
 
                     b.Property<string>("Title");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ImageID");
 
                     b.ToTable("ProductCategories");
                 });
@@ -337,13 +335,6 @@ namespace WebUiAdmin.Migrations
                     b.HasOne("BaseCore.Entities.FileData", "File")
                         .WithMany()
                         .HasForeignKey("FileID");
-                });
-
-            modelBuilder.Entity("DataCore.Entities.ProductCategory", b =>
-                {
-                    b.HasOne("BaseCore.Entities.FileData", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
