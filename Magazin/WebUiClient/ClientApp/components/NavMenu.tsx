@@ -5,7 +5,7 @@ import { Link, NavLink } from 'react-router-dom';
 export class NavMenu extends React.Component<{}, {}> {    
 
     public render() {
-        return <nav className="navbar navbar-expand-lg main-nav navbar-dark justify-content-center">
+        return <nav className="navbar navbar-expand-lg navbar-dark main-nav justify-content-center">
             <div className="d-lg-none">
                 <Link className="navbar-brand " to={"/"}>
                     <img src="../images/logo.png" />

@@ -14,9 +14,18 @@ export interface IMainPageProps extends RouteComponentProps<any> {
 export class MainPage extends React.Component<IMainPageProps, {}> {
 
     public render() {
-        return <div>
-            <ProductGird />
-        </div>;
+        return <div className="row">
+                   <div className="col-md-4">
+                       <div className="main-basket-container">
+                           <div className="container-fluid">
+
+                           </div>
+                       </div>
+                   </div>
+                   <div className="col-md-8 main-grid-container">
+                       <ProductGird/>
+                   </div>
+               </div>;
     }
 }
 

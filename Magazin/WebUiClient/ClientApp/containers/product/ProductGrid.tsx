@@ -44,12 +44,14 @@ export class ProductGrid extends React.Component<IProductGridProps, {}> {
             </div>;
         } else {
             const listItems = this.props.products.map(p => {
-                return <ProductItem price={p.price} img={p.img} title={p.title} id={p.id} key={p.id.toString()} />;
+                return <div className="col-md-4" key={p.id.toString()}>
+                           <ProductItem product={p} itemInBucketCount={0} />
+                       </div>;
             });
 
             return <div className="row">
-                {listItems}
-            </div>;
+                       {listItems}
+                   </div>;
         }
 
     }
@@ -65,7 +67,7 @@ function mapStateToProps(state: IApplicationState, ownProps: any) {
     };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<IApplicationState>) {    
+function mapDispatchToProps(dispatch: Dispatch<IApplicationState>) {
     return {
         readData: bindActionCreators(gridActions.readData, dispatch)
     };

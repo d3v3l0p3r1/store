@@ -40,7 +40,7 @@ class App extends React.Component<IAppProps, IApplicationState> {
                     </div>
                 </div>
             </div>
-            <div className="container">
+            <div className="container-fluid">
                 <Categories />
             </div>
             <div className="container">

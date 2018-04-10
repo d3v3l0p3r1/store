@@ -1,12 +1,19 @@
 body {
-    background: #242424 !important;
-    color: #ffffff !important;
+    background: #1C1C1C !important;    
 }
 
 span {
     color: white !important;
     font-family: "Roboto";
     font-size: 18px;
+}
+
+h5 {
+    color: #000000;
+}
+
+p {
+    color: #000000;
 }
 
 .header {
@@ -16,9 +23,8 @@ span {
     color: white;
 }
 
-
 .main-nav {
-    background: #292929;
+    background: #252324 !important;
 }
 
 .container-fluid {
@@ -28,12 +34,6 @@ span {
 .logo {
     background: url("/images/logo.png");    
     background-repeat: no-repeat;
-}
-
-
-.product-item {
-    background: white;
-    color: #242424;
 }
 
 .slider-container {
@@ -72,4 +72,25 @@ span {
     height: 100%;
     font-size: 135px !important;
     color: black;
+}
+
+.main-basket-container {
+    height: 100%;
+    padding-right: 1em;
+    background-color: #302E2F;
+    
+}
+
+.main-grid-container {
+    background-color: #252324 !important;
+}
+
+.product-card-description {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.product-card-count-input {
+    text-align: center;
 }

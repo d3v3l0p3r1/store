@@ -25,7 +25,7 @@ namespace WebUiAdmin.Controllers.Api
         {
             var all = _productService.GetAll().Where(x => x.CategoryID == cat);
 
-            var url = $"{Request.Scheme}://{Request.Host}/File/GetFile/1";
+            var url = $"{Request.Scheme}://{Request.Host}/File/GetFile/";
 
             var res = all.Select(x => new
             {
@@ -33,7 +33,7 @@ namespace WebUiAdmin.Controllers.Api
                 x.Price,
                 x.Description,
                 x.Title,
-                File= url
+                File = x.FileID != null ? url + x.FileID : url + 1
             });
 
             return Ok(res);

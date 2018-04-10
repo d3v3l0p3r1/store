@@ -13,9 +13,11 @@ function call(endpoint: string) {
 }
 
 export function readProducts(category: number): Promise<ReadonlyArray<Product>> {
+    var url = Settings.ProductURL + "?cat=" + category;
+
 
     var ret = new Promise<ReadonlyArray<Product>>((resolve, reject) => {
-        call(Settings.ProductURL)
+        call(url)
             .then((response) => {
                 return response.json();
             }).then((json) => {
