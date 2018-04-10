@@ -1,5 +1,6 @@
 ﻿import * as React from 'react';
 import { NavMenu } from './NavMenu';
+import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 
 export interface LayoutProps {
@@ -34,7 +35,9 @@ export class Layout extends React.Component<LayoutProps, ILayoutState> {
                 <div className="contact-container d-none d-lg-block">
                     <div className="row">
                         <div className="col-md-4">
-                            <img src="../images/logo.png" />
+                            <Link to={'/'}>
+                                <img src="../images/logo.png" />
+                            </Link>
                         </div>
                         <div className="col-md-3">
                             <span>

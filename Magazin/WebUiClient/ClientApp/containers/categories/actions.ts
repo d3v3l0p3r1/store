@@ -28,4 +28,3 @@ export const readData: ActionCreator<ThunkAction<Action, ICategoriesState, void>
         return dispatch({ type: ApiActionKeys.Category_Fetching, payload: true });
     };
 };
-

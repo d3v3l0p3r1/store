@@ -66,3 +66,10 @@ span {
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+
+.load-spinner {
+    width: 100%;
+    height: 100%;
+    font-size: 135px !important;
+    color: black;
+}

@@ -8,7 +8,7 @@ import { IApplicationState } from "./IApplicationState"
 
 
 export const rootReducer: Reducer<IApplicationState> = combineReducers<IApplicationState>({
-    router: routerReducer,
+    routerState: routerReducer,
     productGridState: productGridReducer,
     sliderState: sliderReducer,
     categoryState: categoriesReducer

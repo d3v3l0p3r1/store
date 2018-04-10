@@ -13,25 +13,26 @@ export const readData: ActionCreator<ThunkAction<Action, IProductGridState, void
 
             return dispatch({
                 type: ApiActionKeys.Product_Read,
-                payload: response
+                payload: response,
             });
         });
 
         result.catch((error) => {
-
             return dispatch({
                 type: ApiActionKeys.Product_Error,
                 payload: error
             });
         });
 
-        return dispatch({ type: ApiActionKeys.Product_Fetching, payload: true });
+        return dispatch({
+            type: ApiActionKeys.Product_Fetching,
+            payload: true
+        });
     };
 };
 
 export const gridActions = {
     readData: readData,
-
 }
 
 

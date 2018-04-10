@@ -8,47 +8,66 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { gridActions } from "./actions";
 import { IApplicationState } from "../../stores/IApplicationState";
 import { Product } from "../../models/Product";
-import { IProductGridState, IReadProductAction, IErrorAction, IFetchingAction } from "./types";
+import { IProductGridState } from "./types";
 
 
 
 export interface IProductGridProps extends RouteComponentProps<any> {
+    isFetching: boolean,
+    currentCategory: number,
     products: ReadonlyArray<Product>,
-    dispatch: (action: any) => void;
-    readData: ActionCreator<ThunkAction<Action, IProductGridState, void>>;        
+    readData: ActionCreator<ThunkAction<Action, IProductGridState, void>>;
 }
 
-class ProductGrid extends React.Component<IProductGridProps, {}> {
+export class ProductGrid extends React.Component<IProductGridProps, {}> {
 
     constructor(props: IProductGridProps) {
         super(props);
     }
 
-    componentWillMount() {               
-        this.props.readData(1);
+
+    componentDidMount() {
+        this.props.readData(this.props.currentCategory);
+    }
+
+    componentDidUpdate(previuos: any) {
+        if (this.props.currentCategory !== previuos.currentCategory) {
+            this.props.readData(this.props.currentCategory);
+        }
     }
 
     public render() {
-        const listItems = this.props.products.map(p => {
-            return <ProductItem price={p.price} img={p.img} title={p.title} id={p.id} key={p.id.toString()} />;
-        });
 
-        return <div className="row">            
-            {listItems}
-        </div>;
+        if (this.props.isFetching) {
+            return <div className="container-fluid">
+                <span className="fa fa-spinner load-spinner"></span>
+            </div>;
+        } else {
+            const listItems = this.props.products.map(p => {
+                return <ProductItem price={p.price} img={p.img} title={p.title} id={p.id} key={p.id.toString()} />;
+            });
+
+            return <div className="row">
+                {listItems}
+            </div>;
+        }
+
     }
-    
+
+
 }
 
 function mapStateToProps(state: IApplicationState, ownProps: any) {
     return {
-        products: state.productGridState.products
+        isFetching: state.productGridState.isBusy,
+        products: state.productGridState.products,
+        currentCategory: ownProps.match.params.category,
     };
 }
 
 function mapDispatchToProps(dispatch: Dispatch<IApplicationState>) {    
     return {
-        readData: bindActionCreators(gridActions.readData, dispatch)        
+        readData: bindActionCreators(gridActions.readData, dispatch)
     };
 }
 

@@ -16,5 +16,10 @@ export interface IErrorAction extends Action {
     readonly payload: string,
 }
 
+export interface IChangeCategoryAction extends Action {
+    readonly type: ApiActionKeys.ChangeProductCategory,
+    readonly payload: number,    
+}
 
-export type CategoriesActions = IFetchingAction | IErrorAction | IReadCategoryAction;
+
+export type CategoriesActions = IFetchingAction | IErrorAction | IReadCategoryAction | IChangeCategoryAction;

@@ -3,6 +3,7 @@ import { Action } from "redux"
 import {ApiActionKeys} from "../../stores/ApiActionKeys"
 
 export interface IProductGridState {
+    readonly currentCategory: number;
     readonly products: ReadonlyArray<Product>;
     readonly isBusy: boolean;
     readonly errorMessage: string;
@@ -21,6 +22,7 @@ export interface IErrorAction extends Action {
 export interface IReadProductAction extends Action {
     readonly type: ApiActionKeys.Product_Read;
     readonly payload: ReadonlyArray<Product>;
+    readonly category: number;
 }
 
 export type GridActions = IReadProductAction | IFetchingAction | IErrorAction;

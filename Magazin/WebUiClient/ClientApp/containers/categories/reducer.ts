@@ -1,6 +1,6 @@
 ﻿import { Reducer } from "redux"
 import { ApiActionKeys } from "../../stores/ApiActionKeys"
-import { CategoriesActions, IReadCategoryAction } from "./types"
+import { CategoriesActions, IReadCategoryAction , IChangeCategoryAction} from "./types"
 import {ICategoriesState} from "./ICategoriesState"
 
 export const initialState: ICategoriesState = {
@@ -32,7 +32,7 @@ export const categoriesReducer: Reducer<ICategoriesState> = (state: ICategoriesS
                 var payload = (action as IReadCategoryAction).payload;
                 retState = { ...state, categories: payload, errorMessage: "" }
                 break;
-            }
+            }        
     }
 
     return retState;

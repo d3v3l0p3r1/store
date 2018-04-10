@@ -19,7 +19,7 @@ export class Categories extends React.Component<ICategoriesProps> {
         this.props.readData();
     }
 
-    public render() {        
+    public render() {
         const list = this.props.categories.map(c => {
             return <li key={c.id} className="nav-item">
                 <Link to={'/Product/' + c.id} className="nav-link">
@@ -28,9 +28,23 @@ export class Categories extends React.Component<ICategoriesProps> {
             </li>;
         });
 
-        return <ul className="navbar-nav w-100 justify-content-center">
-            {list}
-        </ul>;
+        return <nav className="navbar navbar-expand-lg main-nav navbar-dark justify-content-center">
+                   <div className="d-lg-none">
+                       <Link className="navbar-brand " to={"/"}>                           
+                       </Link>
+                   </div>
+                   <button id="toggler" type="button" className="navbar-toggler navbar-toggler-right" data-toggle="collapse" data-target="#category-navbar" aria-expanded="false" aria-controls="navbar">
+                       <span className="navbar-toggler-icon"></span>
+                   </button>
+                   <div id="category-navbar" className="navbar-collapse collapse w-100">
+
+                       <ul className='navbar-nav w-100 justify-content-center'>
+                           {list}
+
+                       </ul>
+
+                   </div>
+               </nav>;
     }
 }
 
