@@ -4,12 +4,12 @@ import { productGridReducer } from "../containers/product/reducer"
 import { sliderReducer } from "../containers/newsSlider/reducer"
 import { categoriesReducer } from "../containers/categories/reducer"
 import { IApplicationState } from "./IApplicationState"
-
-
+import { bascetReducer } from "../containers/bascet/reducer"
 
 export const rootReducer: Reducer<IApplicationState> = combineReducers<IApplicationState>({
     routerState: routerReducer,
     productGridState: productGridReducer,
     sliderState: sliderReducer,
-    categoryState: categoriesReducer
+    categoryState: categoriesReducer,
+    bascetState: bascetReducer,
 });

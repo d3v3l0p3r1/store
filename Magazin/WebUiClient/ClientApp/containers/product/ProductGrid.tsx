@@ -9,6 +9,9 @@ import { gridActions } from "./actions";
 import { IApplicationState } from "../../stores/IApplicationState";
 import { Product } from "../../models/Product";
 import { IProductGridState } from "./types";
+import { IAddToCardAction, IRemoveFromCardAction, IBascetState } from "../bascet/Bascet"
+import { addToCard, removeFromCard } from "../bascet/actions"
+
 
 
 
@@ -17,6 +20,9 @@ export interface IProductGridProps extends RouteComponentProps<any> {
     currentCategory: number,
     products: ReadonlyArray<Product>,
     readData: ActionCreator<ThunkAction<Action, IProductGridState, void>>;
+    addToCard: ActionCreator<IAddToCardAction>;
+    removeFromCard: ActionCreator<IRemoveFromCardAction>;
+    bascetState: IBascetState;
 }
 
 export class ProductGrid extends React.Component<IProductGridProps, {}> {
@@ -36,6 +42,16 @@ export class ProductGrid extends React.Component<IProductGridProps, {}> {
         }
     }
 
+    getCountFromBascet = (id: number) => {
+        var items = this.props.bascetState.products.filter(x => x.product.id === id);
+
+        if (items.length > 0) {
+            return items[0].count;
+        }
+
+        return 0;
+    }
+
     public render() {
 
         if (this.props.isFetching) {
@@ -45,13 +61,13 @@ export class ProductGrid extends React.Component<IProductGridProps, {}> {
         } else {
             const listItems = this.props.products.map(p => {
                 return <div className="col-md-4" key={p.id.toString()}>
-                           <ProductItem product={p} itemInBucketCount={0} />
-                       </div>;
+                    <ProductItem product={p} itemInBucketCount={this.getCountFromBascet(p.id)} addToCard={this.props.addToCard} removeFromCard={this.props.removeFromCard} />
+                </div>;
             });
 
             return <div className="row">
-                       {listItems}
-                   </div>;
+                {listItems}
+            </div>;
         }
 
     }
@@ -64,12 +80,15 @@ function mapStateToProps(state: IApplicationState, ownProps: any) {
         isFetching: state.productGridState.isBusy,
         products: state.productGridState.products,
         currentCategory: ownProps.match.params.category,
+        bascetState: state.bascetState,
     };
 }
 
 function mapDispatchToProps(dispatch: Dispatch<IApplicationState>) {
     return {
-        readData: bindActionCreators(gridActions.readData, dispatch)
+        readData: bindActionCreators(gridActions.readData, dispatch),
+        addToCard: bindActionCreators(addToCard, dispatch),
+        removeFromCard: bindActionCreators(removeFromCard, dispatch),
     };
 }
 

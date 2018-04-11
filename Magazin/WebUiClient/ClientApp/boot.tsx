@@ -39,3 +39,7 @@ if (module.hot) {
         });
 }
 
+configuredStore.subscribe(() => {
+    localStorage.setItem("state", JSON.stringify(configuredStore.getState()));
+});
+

@@ -14,6 +14,7 @@
 
     ChangeProductCategory = "Change_Product_Category",
 
+    Card_Add = "Card_Add",
+    Card_Remove = "Card_Remove",
 
-    
 }
