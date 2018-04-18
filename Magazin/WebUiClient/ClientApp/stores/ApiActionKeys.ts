@@ -15,6 +15,7 @@
     ChangeProductCategory = "Change_Product_Category",
 
     Card_Add = "Card_Add",
-    Card_Remove = "Card_Remove",
+    Card_Remove = "Card_Remove", // Добавить -1 к продукту
+    Card_Remove_Product = "Card_Remove_Product" // Удалить все по продукту
 
 }

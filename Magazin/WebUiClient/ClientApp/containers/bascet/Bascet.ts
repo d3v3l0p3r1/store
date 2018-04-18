@@ -4,6 +4,7 @@ import {ApiActionKeys} from "../../stores/ApiActionKeys"
 
 export interface IBascetState {
     readonly products: ReadonlyArray<IBascetItem>;
+    readonly total: number;
 }
 
 export interface IBascetItem {
@@ -18,6 +19,11 @@ export interface IAddToCardAction extends Action {
 
 export interface IRemoveFromCardAction extends Action {
     readonly type: ApiActionKeys.Card_Remove,
+    readonly payload: number,
+}
+
+export interface IRemoveAllProduct extends Action {
+    readonly type: ApiActionKeys.Card_Remove_Product,
     readonly payload: number,
 }
 

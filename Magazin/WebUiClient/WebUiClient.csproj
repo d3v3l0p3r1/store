@@ -25,6 +25,7 @@
     <None Remove="ClientApp\api.ts" />
     <None Remove="ClientApp\containers\bascet\actions.ts" />
     <None Remove="ClientApp\containers\bascet\Bascet.ts" />
+    <None Remove="ClientApp\containers\bascet\mainBascet.tsx" />
     <None Remove="ClientApp\containers\bascet\reducer.ts" />
     <None Remove="ClientApp\containers\categories\actions.ts" />
     <None Remove="ClientApp\containers\categories\ICategoriesState.ts" />
@@ -39,6 +40,7 @@
     <None Remove="ClientApp\components\Login\Login.tsx" />
     <None Remove="ClientApp\components\News.tsx" />
     <None Remove="ClientApp\components\SearchBox.tsx" />
+    <None Remove="ClientApp\containers\main-bascet.tsx" />
     <None Remove="ClientApp\containers\mainpage\main-page.tsx" />
     <None Remove="ClientApp\models\Category.ts" />
     <None Remove="ClientApp\models\News.ts" />
@@ -64,6 +66,7 @@
     <TypeScriptCompile Include="ClientApp\api.ts" />
     <TypeScriptCompile Include="ClientApp\containers\bascet\actions.ts" />
     <TypeScriptCompile Include="ClientApp\containers\bascet\Bascet.ts" />
+    <TypeScriptCompile Include="ClientApp\containers\bascet\mainBascet.tsx" />
     <TypeScriptCompile Include="ClientApp\containers\bascet\reducer.ts" />
     <TypeScriptCompile Include="ClientApp\containers\categories\actions.ts" />
     <TypeScriptCompile Include="ClientApp\containers\categories\ICategoriesState.ts" />
@@ -78,6 +81,7 @@
     <TypeScriptCompile Include="ClientApp\components\Login\Login.tsx" />
     <TypeScriptCompile Include="ClientApp\components\News.tsx" />
     <TypeScriptCompile Include="ClientApp\components\SearchBox.tsx" />
+    <TypeScriptCompile Include="ClientApp\containers\main-bascet.tsx" />
     <TypeScriptCompile Include="ClientApp\containers\mainpage\main-page.tsx" />
     <TypeScriptCompile Include="ClientApp\models\Category.ts" />
     <TypeScriptCompile Include="ClientApp\models\News.ts" />

@@ -4,6 +4,7 @@ import ProductGird from "../product/ProductGrid"
 import { IApplicationState } from "../../stores/IApplicationState";
 import { connect } from 'react-redux';
 import { Dispatch } from "redux";
+import MainBascet from "../bascet/mainBascet"
 
 
 export interface IMainPageProps extends RouteComponentProps<any> {
@@ -15,17 +16,15 @@ export class MainPage extends React.Component<IMainPageProps, {}> {
 
     public render() {
         return <div className="row">
-                   <div className="col-md-4">
-                       <div className="main-basket-container">
-                           <div className="container-fluid">
-
-                           </div>
-                       </div>
-                   </div>
-                   <div className="col-md-8 main-grid-container">
-                       <ProductGird/>
-                   </div>
-               </div>;
+            <div className="col-md-4 d-none d-lg-block">
+                <div className="main-basket-container">
+                    <MainBascet />
+                </div>
+            </div>
+            <div className="col-md-8 main-grid-container">
+                <ProductGird />
+            </div>
+        </div>;
     }
 }
 
