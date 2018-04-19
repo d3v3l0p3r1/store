@@ -32,28 +32,27 @@ export class ProductGrid extends React.Component<IProductGridProps, {}> {
     }
 
 
-    componentDidMount() {
-        this.props.readData(this.props.currentCategory);
-    }
-
-    componentDidUpdate(previuos: any) {
-        if (this.props.currentCategory !== previuos.currentCategory) {
-            this.props.readData(this.props.currentCategory);
+    public componentWillUpdate(next: IProductGridProps) {        
+        if (next.currentCategory !== this.props.currentCategory) {
+            this.props.readData(next.currentCategory);
         }
     }
 
-    getCountFromBascet = (id: number) => {
+    public componentDidMount() {
+        this.props.readData(this.props.currentCategory);
+    }   
+
+    getCountFromBascet = (id: number) => {        
         var items = this.props.bascetState.products.filter(x => x.product.id === id);
 
-        if (items.length > 0) {
+        if (items.length > 0) {            
             return items[0].count;
         }
 
         return 0;
     }
 
-    public render() {
-
+    public render() {        
         if (this.props.isFetching) {
             return <div className="container-fluid">
                 <span className="fa fa-spinner load-spinner"></span>
@@ -79,7 +78,7 @@ function mapStateToProps(state: IApplicationState, ownProps: any) {
     return {
         isFetching: state.productGridState.isBusy,
         products: state.productGridState.products,
-        currentCategory: ownProps.match.params.category,
+        currentCategory: state.productGridState.currentCategory,
         bascetState: state.bascetState,
     };
 }

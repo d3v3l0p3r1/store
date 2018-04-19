@@ -13,4 +13,5 @@ export interface IApplicationState {
     readonly bascetState: IBascetState;
     readonly isAuthenticated: boolean;
     readonly location: string;
+    
 }

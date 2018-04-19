@@ -32,7 +32,7 @@ export const categoriesReducer: Reducer<ICategoriesState> = (state: ICategoriesS
                 var payload = (action as IReadCategoryAction).payload;
                 retState = { ...state, categories: payload, errorMessage: "" }
                 break;
-            }        
+            }               
     }
 
     return retState;

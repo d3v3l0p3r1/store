@@ -3,6 +3,7 @@ import { ThunkAction } from "redux-thunk";
 import { ICategoriesState } from "./ICategoriesState"
 import { readCategories } from "../../api"
 import { ApiActionKeys } from "../../stores/ApiActionKeys"
+import {IChangeCategoryAction} from "./types"
 
 export const readData: ActionCreator<ThunkAction<Action, ICategoriesState, void>> = () => {
 
@@ -28,3 +29,10 @@ export const readData: ActionCreator<ThunkAction<Action, ICategoriesState, void>
         return dispatch({ type: ApiActionKeys.Category_Fetching, payload: true });
     };
 };
+
+export const changeCategory: ActionCreator<IChangeCategoryAction> = (id: number) => {
+    return {
+        type: ApiActionKeys.ChangeProductCategory,
+        payload: id
+    };
+}

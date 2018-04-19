@@ -8,12 +8,7 @@ export interface IProductItemProps {
     removeFromCard: Function,
 }
 
-interface IProductItemState {
-    count: number
-}
-
-
-export class ProductItem extends React.Component<IProductItemProps, IProductItemState> {
+export class ProductItem extends React.Component<IProductItemProps, {}> {
     constructor(props: IProductItemProps) {
         super(props);
         this.state = {
@@ -22,19 +17,11 @@ export class ProductItem extends React.Component<IProductItemProps, IProductItem
     }
 
     onAddClick = () => {
-        this.props.addToCard(this.props.product);
-        this.setState({
-            count: this.state.count +1
-        });
+        this.props.addToCard(this.props.product);        
     }
 
     onRemoveClick = () => {
-        this.props.removeFromCard(this.props.product.id);
-        if (this.state.count > 0) {
-            this.setState({
-                count: this.state.count - 1
-            });
-        }   
+        this.props.removeFromCard(this.props.product.id);        
     }
 
 
@@ -53,7 +40,7 @@ export class ProductItem extends React.Component<IProductItemProps, IProductItem
                     <div className="input-group-prepend">
                         <button className="btn" onClick={this.onRemoveClick}>-</button>
                     </div>
-                    <label className="form-control product-card-count-input">{this.state.count}</label>
+                    <label className="form-control product-card-count-input">{this.props.itemInBucketCount}</label>
                     <div className="input-group-append">
                         <button className="btn" onClick={this.onAddClick}>+</button>
                     </div>

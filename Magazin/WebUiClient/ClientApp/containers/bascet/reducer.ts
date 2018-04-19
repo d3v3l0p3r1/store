@@ -72,8 +72,7 @@ export const bascetReducer: Reducer<IBascetState> = (state: IBascetState = initi
             }
     }
 
-    total = Calculate(items);
-    console.log('Total: ' + total);
+    total = Calculate(items);    
 
     return { ...state, products: items, total: total };
 

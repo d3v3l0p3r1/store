@@ -7,10 +7,13 @@ import { ICategoriesState } from "./ICategoriesState"
 import { IApplicationState } from "../../stores/IApplicationState"
 import { readData } from "./actions"
 import { Link, NavLink } from 'react-router-dom';
+import { IChangeCategoryAction } from "./types"
+import {changeCategory} from "./actions"
 
 export interface ICategoriesProps {
     categories: ReadonlyArray<Category>;
     readData: ActionCreator<ThunkAction<Action, ICategoriesState, void>>;
+    changeCategory: ActionCreator<IChangeCategoryAction>,
 }
 
 export class Categories extends React.Component<ICategoriesProps> {
@@ -19,12 +22,18 @@ export class Categories extends React.Component<ICategoriesProps> {
         this.props.readData();
     }
 
+    public componentDidUpdate() {        
+        if (this.props.categories.length > 0) {
+            this.props.changeCategory(this.props.categories[0].id);
+        }
+    }   
+
     public render() {
         const list = this.props.categories.map(c => {
             return <li key={c.id} className="nav-item">
-                <Link to={'/Product/' + c.id} className="nav-link">
+                <button onClick={()=> this.props.changeCategory(c.id)} className="nav-link">
                     <span>{c.title}</span>
-                </Link>
+                </button>
             </li>;
         });
 
@@ -58,7 +67,8 @@ function mapStateToProps(storeState: IApplicationState) {
 
 function mapDispatchToProps(dispatch: Dispatch<ICategoriesState>) {
     return {
-        readData: bindActionCreators(readData, dispatch)
+        readData: bindActionCreators(readData, dispatch),
+        changeCategory: bindActionCreators(changeCategory, dispatch),
     };
 }
 

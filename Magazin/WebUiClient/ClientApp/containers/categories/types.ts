@@ -22,4 +22,6 @@ export interface IChangeCategoryAction extends Action {
 }
 
 
+
+
 export type CategoriesActions = IFetchingAction | IErrorAction | IReadCategoryAction | IChangeCategoryAction;
