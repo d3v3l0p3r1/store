@@ -1,10 +1,8 @@
 ﻿import { Reducer } from 'redux';
 import { IProductGridState, GridActions, IReadProductAction, IErrorAction } from "./types";
 import { ApiActionKeys } from "../../stores/ApiActionKeys"
-import { IChangeCategoryAction } from "../categories/types"
 
-export const initialState: IProductGridState = {
-    currentCategory: -1,
+export const initialState: IProductGridState = {    
     products: [],
     isBusy: false,
     errorMessage: "",
@@ -12,7 +10,7 @@ export const initialState: IProductGridState = {
 
 export const productGridReducer: Reducer<IProductGridState> = (state: IProductGridState = initialState, action) => {
     var ret: IProductGridState;
-    console.log('productGridReducer: ' , action);
+
     switch (action.type) {
         case ApiActionKeys.Product_Read:
             {
@@ -33,12 +31,7 @@ export const productGridReducer: Reducer<IProductGridState> = (state: IProductGr
                 ret = { ...state, products: [], isBusy: false, errorMessage: error };
                 break;
             }
-        case ApiActionKeys.ChangeProductCategory:
-            {
-                var payload = (action as IChangeCategoryAction).payload;
-                ret = { ...state, products: state.products, isBusy: false, currentCategory: payload };
-                break;
-            }
+
 
         default:
             ret = state;

@@ -2,5 +2,5 @@
 import { Category } from "../../models/Category"
 
 export interface ICategoriesState extends IBaseComponentState {
-    readonly categories: ReadonlyArray<Category>;
+    readonly categories: ReadonlyArray<Category>;    
 }

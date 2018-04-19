@@ -11,8 +11,7 @@
     Category_Read = "Category_Read",
     Category_Fetching = "Category_Fetching",
     Category_Error = "Category_Error",
-
-    ChangeProductCategory = "Change_Product_Category",
+    
 
     Card_Add = "Card_Add",
     Card_Remove = "Card_Remove", // Добавить -1 к продукту

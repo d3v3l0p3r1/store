@@ -3,19 +3,18 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import ProductGird from "../product/ProductGrid"
 import { IApplicationState } from "../../stores/IApplicationState";
 import { connect } from 'react-redux';
-import { Dispatch } from "redux";
+import { Dispatch, bindActionCreators, Action, ActionCreator } from "redux"
 import MainBascet from "../bascet/mainBascet"
 
 
-export interface IMainPageProps extends RouteComponentProps<any> {
-
+export interface IMainPageProps extends RouteComponentProps<any> {    
 }
 
 
 export class MainPage extends React.Component<IMainPageProps, {}> {
 
     public render() {
-        return <div className="row">
+        return <div className="row main-page">
             <div className="col-md-4 d-none d-lg-block">
                 <div className="main-basket-container">
                     <MainBascet />
@@ -28,9 +27,9 @@ export class MainPage extends React.Component<IMainPageProps, {}> {
     }
 }
 
-function mapStateToProps(state: IApplicationState, ownProps: any) {
+function mapStateToProps(state: IApplicationState, ownProps: any) {    
     return {
-
+        
     };
 }
 

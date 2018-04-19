@@ -82,6 +82,10 @@ li {
     color: black;
 }
 
+.main-page {
+    min-height: 700px;
+}
+
 .main-basket-container {
     height: 100%;
     background-color: #262425;

@@ -7,21 +7,22 @@ import { FeedbackComponent } from "./components/Feedback/Feedback"
 import { ContactsComponent } from "./components/Contacts/Contacts"
 import { NewsComponent } from "./components/News"
 import { LoginComponent } from "./components/Login/Login"
-import {MainPage} from "./containers/mainpage/main-page"
+import  MainPage  from "./containers/mainpage/main-page"
 
 
 export default function routes() {
     return (
-        <Switch>            
-            <Redirect exact={true} path={"/"} to={"/Product/"} />
-            <Route path={"/Product/:category?"} component={MainPage} />            
+        <Switch>
+             
+            <Route path={"/"} exact={true} component={MainPage}/>
+            <Route path={'/Product/:category'} component={MainPage} />
             <Route path={"/Delivery"} component={DeliveryComponent} />
             <Route path={"/About"} component={AboutComponent} />
             <Route path={"/Promo"} component={PromoComponent} />
             <Route path={"/Feedback"} component={FeedbackComponent} />
             <Route path={"/Contacts"} component={ContactsComponent} />
             <Route path={"/News"} component={NewsComponent} />
-            <Route path={"/Login"} component={LoginComponent}/>
+            <Route path={"/Login"} component={LoginComponent} />
         </Switch>
     );
-}
+} 

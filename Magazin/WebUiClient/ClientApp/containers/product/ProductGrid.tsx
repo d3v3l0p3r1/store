@@ -3,7 +3,7 @@ import { Action } from "redux"
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators, ActionCreator } from "redux";
 import { ThunkAction } from "redux-thunk"
-import { ProductItem, IProductItemProps } from "./ProductItem";
+import { ProductItem } from "./ProductItem";
 import { RouteComponentProps, withRouter } from 'react-router';
 import { gridActions } from "./actions";
 import { IApplicationState } from "../../stores/IApplicationState";
@@ -32,7 +32,8 @@ export class ProductGrid extends React.Component<IProductGridProps, {}> {
     }
 
 
-    public componentWillUpdate(next: IProductGridProps) {        
+    public componentWillUpdate(next: IProductGridProps) {
+        
         if (next.currentCategory !== this.props.currentCategory) {
             this.props.readData(next.currentCategory);
         }
@@ -40,19 +41,19 @@ export class ProductGrid extends React.Component<IProductGridProps, {}> {
 
     public componentDidMount() {
         this.props.readData(this.props.currentCategory);
-    }   
+    }
 
-    getCountFromBascet = (id: number) => {        
+    getCountFromBascet = (id: number) => {
         var items = this.props.bascetState.products.filter(x => x.product.id === id);
 
-        if (items.length > 0) {            
+        if (items.length > 0) {
             return items[0].count;
         }
 
         return 0;
     }
 
-    public render() {        
+    public render() {
         if (this.props.isFetching) {
             return <div className="container-fluid">
                 <span className="fa fa-spinner load-spinner"></span>
@@ -75,10 +76,11 @@ export class ProductGrid extends React.Component<IProductGridProps, {}> {
 }
 
 function mapStateToProps(state: IApplicationState, ownProps: any) {
+    console.log(ownProps.match.params.category);
     return {
         isFetching: state.productGridState.isBusy,
         products: state.productGridState.products,
-        currentCategory: state.productGridState.currentCategory,
+        currentCategory: ownProps.match.params.category,
         bascetState: state.bascetState,
     };
 }
