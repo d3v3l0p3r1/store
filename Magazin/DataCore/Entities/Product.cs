@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using BaseCore.Entities;
@@ -28,5 +29,9 @@ namespace DataCore.Entities
 
         [Display(Name = "Категория")]
         public virtual ProductCategory Category { get; set; }
+
+        public int KindID { get; set; }
+        [DisplayName("Вид")]
+        public virtual ProductKind Kind { get; set; }
     }
 }

@@ -100,6 +100,20 @@ namespace WebUiAdmin.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProductKinds",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Hidden = table.Column<bool>(nullable: false),
+                    Title = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductKinds", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -239,6 +253,7 @@ namespace WebUiAdmin.Migrations
                     Description = table.Column<string>(nullable: true),
                     FileID = table.Column<int>(nullable: true),
                     Hidden = table.Column<bool>(nullable: false),
+                    KindID = table.Column<int>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
                     Title = table.Column<string>(maxLength: 50, nullable: false)
                 },
@@ -257,6 +272,12 @@ namespace WebUiAdmin.Migrations
                         principalTable: "Files",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Products_ProductKinds_KindID",
+                        column: x => x.KindID,
+                        principalTable: "ProductKinds",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -350,6 +371,11 @@ namespace WebUiAdmin.Migrations
                 name: "IX_Products_FileID",
                 table: "Products",
                 column: "FileID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_KindID",
+                table: "Products",
+                column: "KindID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -392,6 +418,9 @@ namespace WebUiAdmin.Migrations
 
             migrationBuilder.DropTable(
                 name: "Files");
+
+            migrationBuilder.DropTable(
+                name: "ProductKinds");
         }
     }
 }

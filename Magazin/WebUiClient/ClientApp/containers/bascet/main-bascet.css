@@ -1,0 +1,55 @@
+﻿.main-basket-container {
+    height: 100%;
+    background-color: #262425;
+}
+
+.main-bascet {
+    border: 1px solid #ff0000;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+    float: none;
+    display: block;
+    margin: 0 auto;
+    margin-top: 15%;
+    background: #302E2F;
+}
+
+.main-bascet-header-container {
+    text-align: center;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+.main-bascet-footer {
+    padding: 10%;
+}
+
+.main-bascet-price-container {
+    text-align: center;
+    padding-top: 5%;
+}
+
+.main-bascet-price {
+    color: #ffffff;
+    text-decoration: #ff0000;
+    text-decoration-line: underline;
+}
+
+.main-bascet-header-text {
+    color: #ffffff;
+    text-decoration: #ff0000;
+    text-decoration-line: underline;
+}
+
+.main-bascet-item {
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.main-bascet-li {
+    border-top: 1px #000000 outset;
+}
+
+.main-bascet-button-icon {
+    font-size: xx-small;
+}

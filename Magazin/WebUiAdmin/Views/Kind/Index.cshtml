@@ -1,7 +1,7 @@
 ﻿@using WebUiAdmin.Components
 
 @{    
-    ViewBag.Title = "Категории";
+    ViewBag.Title = "Вид";
     Layout = "~/Views/Shared/_Layout.cshtml";
     string wrp = "wrp_" + Guid.NewGuid().ToString("N");
     string grid = "grd_" + Guid.NewGuid().ToString("N");
@@ -11,13 +11,12 @@
     <div>
         @await Component.InvokeAsync(typeof(GridToolbarComponent), wrp)
     </div>
-    <div id="@grid">
+    <div id="@grid"></div>
 
-    </div>
 </div>
 
 <script>
-    $(function() {
+    $(function () {
 
         var component = {
             addRow: function() {
@@ -53,7 +52,7 @@
             dataSource: {
                 type: "webapi",
                 transport: {
-                    read: "@Url.Action("GetAll", "Category")"
+                    read: "@Url.Action("GetAll", "Kind")"
                 },
                 schema: {
                     id: "ID",
@@ -72,7 +71,7 @@
 
         
         var editRow = function(id) {
-            var url = '@Url.Action("Edit","Category")?id=' + id;
+            var url = '@Url.Action("Edit", "Kind")?id=' + id;
 
             window.location.href = url;
         }

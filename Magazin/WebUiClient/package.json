@@ -24,12 +24,13 @@
     "@types/redux-immutable-state-invariant": "2.0.4",
     "@types/webpack-env": "1.13.0",
     "@types/react-slick": "0.15.1",
+    "@types/reactstrap": "5.0.22",
     "autoprefixer": "8.2.0",
     "aspnet-webpack": "2.0.3",
     "aspnet-webpack-react": "3.0.0",
     "awesome-typescript-loader": "3.2.1",
     "popper.js": "1.14.1",
-    "bootstrap": "4.0.0",
+    "bootstrap": "4.1.0",
     "postcss": "6.0.21",
     "postcss-loader": "2.1.3",
     "imports-loader": "0.8.0",
@@ -50,7 +51,6 @@
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
     "react-router-redux": "5.0.0-alpha.9",
-    "react-bootstrap": "0.32.1",
     "redux": "3.7.2",
     "redux-immutable-state-invariant": "2.1.0",
     "redux-thunk": "2.2.0",
@@ -64,6 +64,7 @@
     "react-slick": "0.22.3",
     "react-slick-carousel": "0.14.9",
     "roboto-fontface": "0.9.0",
-    "font-awesome": "4.7.0"
+    "font-awesome": "4.7.0",
+    "reactstrap": "5.0.0"
   }
 }

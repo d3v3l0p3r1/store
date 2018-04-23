@@ -11,7 +11,7 @@ import Categories  from "./categories/Categories"
 
 
 interface IAppProps extends RouteComponentProps<any> {
-    readonly isAuthentificated: boolean;
+    
 }
 
 class App extends React.Component<IAppProps, IApplicationState> {
@@ -55,7 +55,7 @@ class App extends React.Component<IAppProps, IApplicationState> {
 
 function mapStateToProps(state: IApplicationState) {
     return {
-        isAuthentificated: state.isAuthenticated
+        
     };
 }
 

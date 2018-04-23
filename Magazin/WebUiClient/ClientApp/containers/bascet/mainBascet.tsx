@@ -4,7 +4,8 @@ import { connect } from "react-redux"
 import { IApplicationState } from "../../stores/IApplicationState";
 import { Dispatch, ActionCreator, bindActionCreators } from "redux";
 import { IBascetItem, IRemoveAllProduct, IAddToCardAction, IRemoveFromCardAction } from "./Bascet"
-import {addToCard, removeFromCard, removeProductFromCard} from "./actions"
+import { addToCard, removeFromCard, removeProductFromCard } from "./actions"
+import "./main-bascet.css"
 
 export interface IMainBascetProps {
     readonly products: ReadonlyArray<IBascetItem>,
@@ -64,26 +65,28 @@ export class MainBascet extends React.Component<IMainBascetProps, {}> {
             </li>;
         });
 
-        return <div className="row">
-            <div className=" col-md-8 main-bascet">
-                <div className="main-bascet-header-container">
-                    <h3 className="main-bascet-header-text">Ваш заказ</h3>
-                </div>
-                <ul>
-                    {items}
-                </ul>
+        return <div className="main-basket-container">
+                   <div className="row">
+                       <div className=" col-md-8 main-bascet">
+                           <div className="main-bascet-header-container">
+                               <h3 className="main-bascet-header-text">Ваш заказ</h3>
+                           </div>
+                           <ul>
+                               {items}
+                           </ul>
 
-                <div className="main-bascet-price-container">
-                    <h3 className="main-bascet-price"> {this.props.total}&nbsp;руб</h3>                    
-                </div>
-                <div className="main-bascet-footer">
-                    <button className="btn btn-outline-danger w-100">
-                        <span>Оформить</span>
-                    </button>
-                </div>
-            </div>
+                           <div className="main-bascet-price-container">
+                               <h3 className="main-bascet-price"> {this.props.total}&nbsp;руб</h3>
+                           </div>
+                           <div className="main-bascet-footer">
+                               <button className="btn btn-outline-danger w-100">
+                                   <span>Оформить</span>
+                               </button>
+                           </div>
+                       </div>
 
-        </div>;
+                   </div>
+               </div>;
     }
 }
 

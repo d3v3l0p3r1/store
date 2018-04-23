@@ -27,12 +27,14 @@ namespace WebUiAdmin
             services.AddScoped<IProductCategoryService, ProductCategoryService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<INewsService, NewsService>();
+            services.AddScoped<IKindService, KindService>();
 
             services.AddScoped<IRepository<Product>, Repository<Product>>();
             services.AddScoped<IRepository<ProductCategory>, Repository<ProductCategory>>();
             services.AddScoped<IRepository<FileData>, Repository<FileData>>();
             services.AddScoped<IRepository<Order>, Repository<Order>>();
             services.AddScoped<IRepository<News>, Repository<News>>();
+            services.AddScoped<IRepository<ProductKind>, Repository<ProductKind>>();
 
             services.AddScoped<IFileService, FileService>();
         }

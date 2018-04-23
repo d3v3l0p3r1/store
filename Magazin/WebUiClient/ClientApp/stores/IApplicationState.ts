@@ -10,8 +10,5 @@ export interface IApplicationState {
     readonly sliderState: ISliderState;
     readonly routerState: RouterState;
     readonly categoryState: ICategoriesState;
-    readonly bascetState: IBascetState;
-    readonly isAuthenticated: boolean;
-    readonly location: string;
-    
+    readonly bascetState: IBascetState;        
 }

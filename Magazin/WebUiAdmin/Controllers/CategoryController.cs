@@ -9,11 +9,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebUiAdmin.Controllers
 {
-    public class CategoryController : BaseController
+    public class CategoryController : BaseController<ProductCategory>
     {
         private readonly IProductCategoryService _productCategoryService;
 
-        public CategoryController(IProductCategoryService productCategoryService)
+        public CategoryController(IProductCategoryService productCategoryService) :base(productCategoryService)
         {
             _productCategoryService = productCategoryService;
         }
@@ -23,7 +23,7 @@ namespace WebUiAdmin.Controllers
             return View();
         }
 
-        [Route("api/category/all")]
+        
         [Produces("application/json")]
         public IActionResult GetAll()
         {
@@ -43,26 +43,6 @@ namespace WebUiAdmin.Controllers
             });
 
 
-        }
-
-        public IActionResult Edit(int id)
-        {
-            var cat = _productCategoryService.Find(id);
-            return View(cat);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(ProductCategory category)
-        {
-            try
-            {
-                _productCategoryService.Update(category);
-                return View("Index");
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }            
-        }
+        }        
     }
 }

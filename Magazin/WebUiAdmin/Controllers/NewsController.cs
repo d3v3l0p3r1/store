@@ -5,16 +5,17 @@ using System.Threading.Tasks;
 using DataCore.Entities;
 using DataCore.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebUiAdmin.Controllers
 {
-    public class NewsController : Controller
+    public class NewsController : BaseController<News>
     {
         private readonly INewsService _newsService;
 
-        public NewsController(INewsService newsService)
+        public NewsController(INewsService newsService) : base(newsService)
         {
             _newsService = newsService;
         }
@@ -48,21 +49,7 @@ namespace WebUiAdmin.Controllers
             });
         }
 
-        public IActionResult Edit(int id)
-        {
-            var n = _newsService.Find(id);
-            
-            return View(n);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(News product)
-        {
-            _newsService.Update(product);
-            return View("Index");
-        }
-
-        public IActionResult Create()
+        public override IActionResult Create()
         {
             var news = new News
             {
@@ -71,14 +58,6 @@ namespace WebUiAdmin.Controllers
 
             return View("Edit", news);
         }
-
-        [HttpPost]
-        public IActionResult Create(News product)
-        {
-            _newsService.Update(product);
-            return View("Index");
-        }
-
-
+        
     }
 }

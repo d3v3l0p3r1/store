@@ -11,11 +11,11 @@ using WebUiAdmin.Models;
 
 namespace WebUiAdmin.Controllers
 {
-    public class UserController : BaseController
+    public class UserController : BaseController<User>
     {
         private readonly IUserService _userService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService) :base(userService)
         {
             _userService = userService;
         }
@@ -47,31 +47,11 @@ namespace WebUiAdmin.Controllers
 
         }
 
-
-
-
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Edit(int id)
-        {
-            var user = _userService.Find(id);
-
-            if (user != null)
-            {
-                return PartialView(user);
-            }
-
-            return View("Error", new ErrorViewModel() { });
-
-        }
-
-        [HttpPost]
-        public IActionResult Edit(User user)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

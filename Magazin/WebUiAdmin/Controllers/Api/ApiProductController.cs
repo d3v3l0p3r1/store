@@ -33,6 +33,8 @@ namespace WebUiAdmin.Controllers.Api
                 x.Price,
                 x.Description,
                 x.Title,
+                x.KindID,
+                KindTitle = x.Kind.Title,
                 File = x.FileID != null ? url + x.FileID : url + 1
             });
 

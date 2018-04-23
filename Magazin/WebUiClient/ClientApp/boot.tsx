@@ -39,7 +39,8 @@ if (module.hot) {
         });
 }
 
-configuredStore.subscribe(() => {
-    localStorage.setItem("state", JSON.stringify(configuredStore.getState()));
+configuredStore.subscribe(() => {    
+    var state = configuredStore.getState();
+    localStorage.setItem("bascetState", JSON.stringify(state.bascetState));
 });
 

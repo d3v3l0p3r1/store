@@ -16,6 +16,7 @@ namespace DataCore.DAL
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
         public DbSet<News> News { get; set; }
+        public DbSet<ProductKind> ProductKinds { get; set; }
 
         public DataContext()
         {
@@ -31,6 +32,7 @@ namespace DataCore.DAL
             base.OnModelCreating(builder);
 
             builder.Entity<Product>().HasOne(x => x.Category);
+            builder.Entity<Product>().HasOne(x => x.Kind);
         }
     }
 }

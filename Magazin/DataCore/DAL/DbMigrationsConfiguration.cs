@@ -30,6 +30,14 @@ namespace DataCore.DAL
                 WriteCategory("Блюда за бонусы", 9, dataContext);                
             }
 
+            if (!dataContext.ProductKinds.Any())
+            {
+                WriteKind("Классические роллы", dataContext);
+                WriteKind("Горячие роллы", dataContext);
+                WriteKind("Запеченные роллы", dataContext);
+            }
+
+
             if (!dataContext.Products.Any())
             {
                 var random = new Random();
@@ -41,7 +49,8 @@ namespace DataCore.DAL
                         CategoryID = random.Next(1, 9),
                         Title = Faker.Name.First(),
                         Description = Faker.Name.FullName(),
-                        Price = random.Next(100, 1000)
+                        Price = random.Next(100, 1000),
+                        KindID =  random.Next(1,3)
                     };
 
                     dataContext.Products.Add(product);
@@ -60,6 +69,17 @@ namespace DataCore.DAL
             };
 
             context.ProductCategories.Add(category);
+            context.SaveChanges();
+        }
+
+        private static void WriteKind(string name, DataContext context)
+        {
+            var kind = new ProductKind
+            {
+                Title = name
+            };
+
+            context.ProductKinds.Add(kind);
             context.SaveChanges();
         }
 

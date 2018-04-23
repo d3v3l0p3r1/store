@@ -29,7 +29,9 @@ export function readProducts(category: number): Promise<ReadonlyArray<Product>> 
                     product.img = x.File;
                     product.price = x.Price;
                     product.title = x.Title;
-
+                    product.kindId = x.KindID;
+                    product.kindName = x.KindTitle;
+                    
                     return product;
                 });
                 resolve(arr);

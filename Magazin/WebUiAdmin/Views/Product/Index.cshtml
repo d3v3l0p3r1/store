@@ -1,4 +1,5 @@
-﻿@{
+﻿@using WebUiAdmin.Components
+@{
     ViewBag.Title = "Продукты";
     Layout = "_Layout";
     string wrapID = "wrp_" + Guid.NewGuid().ToString("N");
@@ -9,7 +10,13 @@
 
 <div id="@wrapID">
     <div id="@catGrid"></div>
-    <div id="@productGrid"></div>
+    <div>
+        <div>
+            @await Component.InvokeAsync(typeof(GridToolbarComponent), wrapID)
+        </div>
+        <div id="@productGrid"></div>
+    </div>
+    
 </div>
 
 
@@ -54,7 +61,36 @@
 
 
 
-    $(function() {
+    $(function () {
+
+        var component = {
+            addRow: function() {
+                document.location.href = "@Url.Action("Create")";
+            },
+            editRow: function() {
+                var grid = $('#@productGrid').data('kendoGrid');
+
+                var selectedItem = grid.dataItem(grid.select());                
+
+                if (selectedItem)
+                    document.location.href = "@Url.Action("Edit")?id=" + selectedItem.Id;
+
+            },
+            deleteRow: function() {
+                var grid = $('#@productGrid').data('kendoGrid');
+
+                var selectedItem = grid.dataItem(grid.select());
+
+                if (selectedItem) {
+                    $.post('@Url.Action("Delete")?id=' + selectedItem.Id).then(() => {
+                        grid.dataSource.read();
+                    });   
+                }                    
+            }
+        }
+
+        window['@wrapID'] = component;
+
         $productGrid.kendoGrid({
             dataSource: {
                 type: "webapi",

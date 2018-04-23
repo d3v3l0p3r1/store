@@ -1,0 +1,19 @@
+﻿.product-card-description {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.product-card-count-input {
+    text-align: center;
+}
+
+.product-group {
+    margin-top: 3%;
+}
+
+.product-group-header {
+    background: red;
+    color: white;
+    padding: 1%;
+}

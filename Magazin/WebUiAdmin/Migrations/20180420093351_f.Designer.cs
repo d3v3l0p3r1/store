@@ -11,7 +11,7 @@ using System;
 namespace WebUiAdmin.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180405180456_f")]
+    [Migration("20180420093351_f")]
     partial class f
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -195,6 +195,8 @@ namespace WebUiAdmin.Migrations
 
                     b.Property<bool>("Hidden");
 
+                    b.Property<int>("KindID");
+
                     b.Property<decimal>("Price");
 
                     b.Property<string>("Title")
@@ -206,6 +208,8 @@ namespace WebUiAdmin.Migrations
                     b.HasIndex("CategoryID");
 
                     b.HasIndex("FileID");
+
+                    b.HasIndex("KindID");
 
                     b.ToTable("Products");
                 });
@@ -224,6 +228,20 @@ namespace WebUiAdmin.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductCategories");
+                });
+
+            modelBuilder.Entity("DataCore.Entities.ProductKind", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Hidden");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductKinds");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -336,6 +354,11 @@ namespace WebUiAdmin.Migrations
                     b.HasOne("BaseCore.Entities.FileData", "File")
                         .WithMany()
                         .HasForeignKey("FileID");
+
+                    b.HasOne("DataCore.Entities.ProductKind", "Kind")
+                        .WithMany()
+                        .HasForeignKey("KindID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

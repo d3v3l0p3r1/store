@@ -11,15 +11,17 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebUiAdmin.Controllers
 {
-    public class ProductController : BaseController
+    public class ProductController : BaseController<Product>
     {
         private readonly IProductService _productService;
         private readonly IProductCategoryService _productCategoryService;
+        private readonly IKindService _kindService;
 
-        public ProductController(IProductService productService, IProductCategoryService productCategoryService)
+        public ProductController(IProductService productService, IProductCategoryService productCategoryService, IKindService kindService) :base(productService)
         {
             _productService = productService;
             _productCategoryService = productCategoryService;
+            _kindService = kindService;
         }
 
         [Produces("application/json")]
@@ -46,22 +48,36 @@ namespace WebUiAdmin.Controllers
                 Data = products,
                 Total = total
             });
-
         }
 
-        public IActionResult Edit(int id)
+        public override IActionResult Create()
+        {
+            ViewBag.CategoryID = _productCategoryService.GetAll()
+                .Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Title });
+
+            ViewBag.KindID = _kindService.GetAll()
+                .Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Title });
+
+            return base.Create();
+        }
+
+        public override IActionResult Edit(int id)
         {
             var product = _productService.Find(id);
 
             ViewBag.CategoryID = _productCategoryService.GetAll()
                 .Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Title });
+
+            ViewBag.KindID = _kindService.GetAll()
+                .Select(x => new SelectListItem() {Value = x.Id.ToString(), Text = x.Title});
+
             ViewData["Product"] = product;
 
             return View(product);
         }
 
         [HttpPost]
-        public IActionResult Edit(Product product)
+        public override IActionResult Edit(Product product)
         {
             _productService.Update(product);
             return View("Index");

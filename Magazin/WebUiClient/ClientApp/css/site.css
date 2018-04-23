@@ -3,7 +3,7 @@ body {
 }
 
 span {
-    color: white !important;
+    color: white;
     font-family: "Roboto";
     font-size: 18px;
 }
@@ -20,6 +20,7 @@ ul {
     list-style: none;
     padding: 0;
 }
+
 li {
     padding: 0;
 }
@@ -86,73 +87,18 @@ li {
     min-height: 700px;
 }
 
-.main-basket-container {
-    height: 100%;
-    background-color: #262425;
-}
-
 .main-grid-container {
     background-color: #252324 !important;
 }
 
-.main-bascet {
-    border: 1px solid #ff0000;
-    -ms-border-radius: 3px;
-    border-radius: 3px;
-    float: none;
-    display: block;
-    margin: 0 auto;
-    margin-top: 15%;
-    background: #302E2F;
-    
+
+.modal-container {
+    position: relative;
+}
+.modal-container .modal, .modal-container .modal-backdrop {
+    position: absolute;
 }
 
-.main-bascet-header-container {
-    text-align: center;
-    padding-top: 5%;
-    padding-bottom: 5%;
-}
-
-.main-bascet-footer {
-    padding: 10%;
-}
-
-.main-bascet-price-container {
-    text-align: center;
-    padding-top: 5%;
-}
-
-.main-bascet-price {
-    color: #ffffff;
-    text-decoration: #ff0000;
-    text-decoration-line: underline;
-}
-
-.main-bascet-header-text {
-    color: #ffffff;
-    text-decoration: #ff0000;
-    text-decoration-line: underline;
-}
-
-.main-bascet-item {    
-    margin-top: 5%;
-    margin-bottom: 5%;
-}
-
-.main-bascet-li {
-    border-top: 1px #000000 outset;
-}
-
-.main-bascet-button-icon {
-    font-size: xx-small;
-}
-
-.product-card-description {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-.product-card-count-input {
-    text-align: center;
+.close  > span {
+    color: #000000 !important;
 }

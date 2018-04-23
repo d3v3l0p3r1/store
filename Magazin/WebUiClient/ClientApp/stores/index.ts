@@ -11,5 +11,5 @@ export const rootReducer: Reducer<IApplicationState> = combineReducers<IApplicat
     productGridState: productGridReducer,
     sliderState: sliderReducer,
     categoryState: categoriesReducer,
-    bascetState: bascetReducer,
+    bascetState: bascetReducer    
 });
