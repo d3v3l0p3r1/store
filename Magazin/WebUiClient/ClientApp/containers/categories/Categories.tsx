@@ -6,7 +6,6 @@ import { Category } from "../../models/Category"
 import { ICategoriesState } from "./ICategoriesState"
 import { IApplicationState } from "../../stores/IApplicationState"
 import { readData } from "./actions"
-import { withRouter, RouteComponentProps } from "react-router"
 import { Link, NavLink } from 'react-router-dom';
 
 

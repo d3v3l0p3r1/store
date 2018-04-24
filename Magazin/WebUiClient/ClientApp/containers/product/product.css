@@ -1,4 +1,8 @@
-﻿.product-card-description {
+﻿.product-card-image {
+    cursor: pointer;
+}
+
+.product-card-description {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -17,3 +21,5 @@
     color: white;
     padding: 1%;
 }
+
+

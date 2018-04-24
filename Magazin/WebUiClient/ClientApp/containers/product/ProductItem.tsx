@@ -40,10 +40,10 @@ export class ProductItem extends React.Component<IProductItemProps, IProductItem
 
     public render() {
         return <div>
-            <ProductItemModal product={this.props.product} isOpen={this.state.modalOpen} closeModal={this.modalClose} />
+            <ProductItemModal product={this.props.product} isOpen={this.state.modalOpen} closeModal={this.modalClose} addToCard={this.props.addToCard} removeFromCard={this.props.removeFromCard} itemInBucketCount={this.props.itemInBucketCount} />
             <div className="card mb-4 box-shadow">
                 <div className="p-3">
-                    <img src={this.props.product.img} className="card-img-top" onClick={this.onItemClick} height="100" />
+                    <img src={this.props.product.img} className="card-img-top product-card-image" onClick={this.onItemClick} height="100" />
                 </div>
                 <div className="card-body">
                     <h5 className="card-text">{this.props.product.title}</h5>
