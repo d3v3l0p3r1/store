@@ -5,14 +5,16 @@ import { IApplicationState } from "../../stores/IApplicationState";
 import { Dispatch, ActionCreator, bindActionCreators } from "redux";
 import { IBascetItem, IRemoveAllProduct, IAddToCardAction, IRemoveFromCardAction } from "./Bascet"
 import { addToCard, removeFromCard, removeProductFromCard } from "./actions"
+import { Redirect } from 'react-router'
 import "./main-bascet.css"
+import { history } from "../../stores/configureStore"
 
 export interface IMainBascetProps {
     readonly products: ReadonlyArray<IBascetItem>,
     readonly total: number;
     readonly addToCard: ActionCreator<IAddToCardAction>,
     readonly removeFromCard: ActionCreator<IRemoveFromCardAction>,
-    readonly removeProduct: ActionCreator<IRemoveAllProduct>,    
+    readonly removeProduct: ActionCreator<IRemoveAllProduct>,
 }
 
 export class MainBascet extends React.Component<IMainBascetProps, {}> {
@@ -25,8 +27,12 @@ export class MainBascet extends React.Component<IMainBascetProps, {}> {
         this.props.removeFromCard(id);
     }
 
-    onDeleteProductClick = (id: number) => {        
+    onDeleteProductClick = (id: number) => {
         this.props.removeProduct(id);
+    }
+
+    onOrderClick = () => {
+        history.push("/Order");        
     }
 
     public render() {
@@ -66,31 +72,32 @@ export class MainBascet extends React.Component<IMainBascetProps, {}> {
         });
 
         return <div className="main-basket-container">
-                   <div className="row">
-                       <div className=" col-md-8 main-bascet">
-                           <div className="main-bascet-header-container">
-                               <h3 className="main-bascet-header-text">Ваш заказ</h3>
-                           </div>
-                           <ul>
-                               {items}
-                           </ul>
+            <div className="row">
+                <div className=" col-md-8 main-bascet">
+                    <div className="main-bascet-header-container">
+                        <h3 className="main-bascet-header-text">Ваш заказ</h3>
+                    </div>
+                    <ul>
+                        {items}
+                    </ul>
 
-                           <div className="main-bascet-price-container">
-                               <h3 className="main-bascet-price"> {this.props.total}&nbsp;руб</h3>
-                           </div>
-                           <div className="main-bascet-footer">
-                               <button className="btn btn-outline-danger w-100">
-                                   <span>Оформить</span>
-                               </button>
-                           </div>
-                       </div>
+                    <div className="main-bascet-price-container">
+                        <h3 className="main-bascet-price"> {this.props.total}&nbsp;руб</h3>
+                    </div>
+                    <div className="main-bascet-footer">
+                        <button className="btn btn-outline-danger w-100" onClick={this.onOrderClick}>
+                            <span>Оформить</span>
+                        </button>
+                    </div>
+                </div>
 
-                   </div>
-               </div>;
+            </div>
+        </div>;
     }
 }
 
 function mapStateToProps(state: IApplicationState, ownProps: any) {
+    
     return {
         products: state.bascetState.products,
         total: state.bascetState.total,

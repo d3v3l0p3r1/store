@@ -7,13 +7,13 @@ import { FeedbackComponent } from "./components/Feedback/Feedback"
 import { ContactsComponent } from "./components/Contacts/Contacts"
 import { NewsComponent } from "./components/News"
 import { LoginComponent } from "./components/Login/Login"
-import  MainPage  from "./containers/mainpage/main-page"
+import MainPage from "./containers/mainpage/main-page"
+import OrderContainer from "./containers/order/OrderContainer"
 
 
 export default function routes() {
     return (
-        <Switch>
-             
+        <Switch>             
             <Route path={"/"} exact={true} component={MainPage}/>
             <Route path={'/Product/:category'} component={MainPage} />
             <Route path={"/Delivery"} component={DeliveryComponent} />
@@ -23,6 +23,7 @@ export default function routes() {
             <Route path={"/Contacts"} component={ContactsComponent} />
             <Route path={"/News"} component={NewsComponent} />
             <Route path={"/Login"} component={LoginComponent} />
+            <Route path={"/Order"} component={OrderContainer} />
         </Switch>
     );
 } 
