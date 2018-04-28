@@ -5,7 +5,8 @@ import { ApiActionKeys } from "../../stores/ApiActionKeys"
 
 export const initialState: IBascetState = {
     products: new Array(),
-    total: 0
+    totalPrice: 0,
+    totalCount: 0
 }
 
 
@@ -46,13 +47,17 @@ const Calculate = (state = initialState.products) => {
     return s;
 }
 
+const CalculateCount = (state = initialState.products) => {
+    var s = state.map(x => x.count).reduce((a, b) => a + b, 0);
+    return s;
+}
+
 const RemoveProductFormCard = (state = initialState.products, action: IRemoveAllProduct) => {
     return state.filter(x => x.product.id !== action.payload);
 }
 
 export const bascetReducer: Reducer<IBascetState> = (state: IBascetState = initialState, action) => {
-    var items = state.products;
-    var total = state.total;
+    var items = state.products;    
 
     switch (action.type) {
         case ApiActionKeys.Card_Add:
@@ -72,8 +77,9 @@ export const bascetReducer: Reducer<IBascetState> = (state: IBascetState = initi
             }
     }
 
-    total = Calculate(items);    
+    var totalPrice = Calculate(items);
+    var totalCount = CalculateCount(items);
 
-    return { ...state, products: items, total: total };
+    return { ...state, products: items, totalPrice: totalPrice, totalCount: totalCount };
 
 }

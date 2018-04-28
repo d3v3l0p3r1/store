@@ -1,0 +1,26 @@
+﻿
+
+.order-header {
+    color: white;
+    padding: 2%;
+}
+
+.order-container {
+    color: black;
+    margin: 2%;
+}
+
+.order-text {
+    display: block !important;
+    color: black !important;
+}
+
+.order-product-container {
+
+}
+
+.order-total-text {
+    text-align: right;
+    color: white;
+    padding: 2%;
+}

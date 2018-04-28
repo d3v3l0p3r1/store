@@ -1,6 +1,7 @@
 ﻿import * as React from 'react';
 import { NavMenu } from './NavMenu';
 import { Link } from 'react-router-dom';
+import LayoutBascet from "../containers/bascet/layoutBascet"
 import 'bootstrap/dist/css/bootstrap.css';
 
 export interface LayoutProps {
@@ -17,14 +18,6 @@ export class Layout extends React.Component<LayoutProps, ILayoutState> {
 
     constructor(props: LayoutProps) {
         super(props);
-    }
-
-
-    componentWillMount() {
-
-    }
-
-    componentDidMount() {
     }
 
 
@@ -54,9 +47,7 @@ export class Layout extends React.Component<LayoutProps, ILayoutState> {
                                    </span>
                         </div>
                         <div className="col-md-2">
-                            <div>
-                                <span>Корзина</span>
-                            </div>
+                            <LayoutBascet/>
                         </div>
                     </div>
                 </div>

@@ -6,7 +6,7 @@ import { Dispatch, ActionCreator, bindActionCreators } from "redux";
 import { IBascetItem, IRemoveAllProduct, IAddToCardAction, IRemoveFromCardAction } from "./Bascet"
 import { addToCard, removeFromCard, removeProductFromCard } from "./actions"
 import { Redirect } from 'react-router'
-import "./main-bascet.css"
+import "./styles/main-bascet.css"
 import { history } from "../../stores/configureStore"
 
 export interface IMainBascetProps {
@@ -100,7 +100,7 @@ function mapStateToProps(state: IApplicationState, ownProps: any) {
     
     return {
         products: state.bascetState.products,
-        total: state.bascetState.total,
+        total: state.bascetState.totalPrice,
     };
 }
 

@@ -4,7 +4,8 @@ import {ApiActionKeys} from "../../stores/ApiActionKeys"
 
 export interface IBascetState {
     readonly products: ReadonlyArray<IBascetItem>;
-    readonly total: number;
+    readonly totalPrice: number;
+    readonly totalCount: number;
 }
 
 export interface IBascetItem {
