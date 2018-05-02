@@ -3,7 +3,8 @@ import { Product } from "../../models/Product"
 import { connect } from "react-redux"
 import { IApplicationState } from "../../stores/IApplicationState";
 import { Dispatch, ActionCreator, bindActionCreators } from "redux";
-import { IBascetItem, IRemoveAllProduct, IAddToCardAction, IRemoveFromCardAction } from "./Bascet"
+import { IRemoveAllProduct, IAddToCardAction, IRemoveFromCardAction } from "./Bascet"
+import { IBascetState, IBascetItem } from "./BascetState"
 import { addToCard, removeFromCard, removeProductFromCard } from "./actions"
 import { Redirect } from 'react-router'
 import "./styles/main-bascet.css"

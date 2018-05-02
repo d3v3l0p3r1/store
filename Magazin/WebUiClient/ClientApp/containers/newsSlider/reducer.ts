@@ -1,13 +1,9 @@
 ﻿import { Reducer } from "redux"
-import { News } from "../../models/News"
+import {ISliderState} from "./SliderState"
 import { SliderActions, IReadNewsAction } from "./types"
-import { IBaseComponentState } from "../../stores/IBaseComponentState"
 import {ApiActionKeys} from "../../stores/ApiActionKeys"
 
-export interface ISliderState extends IBaseComponentState {
-    readonly newsArray: ReadonlyArray<News>;
- 
-}
+
 
 export const initialState: ISliderState = {
     errorMessage: "",

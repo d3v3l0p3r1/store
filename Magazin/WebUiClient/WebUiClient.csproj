@@ -25,6 +25,7 @@
     <None Remove="ClientApp\api.ts" />
     <None Remove="ClientApp\containers\bascet\actions.ts" />
     <None Remove="ClientApp\containers\bascet\Bascet.ts" />
+    <None Remove="ClientApp\containers\bascet\BascetState.ts" />
     <None Remove="ClientApp\containers\bascet\layoutBascet.tsx" />
     <None Remove="ClientApp\containers\bascet\mainBascet.tsx" />
     <None Remove="ClientApp\containers\bascet\reducer.ts" />
@@ -42,10 +43,16 @@
     <None Remove="ClientApp\components\News.tsx" />
     <None Remove="ClientApp\components\SearchBox.tsx" />
     <None Remove="ClientApp\containers\login\LoginContainer.tsx" />
-    <None Remove="ClientApp\containers\main-bascet.tsx" />
     <None Remove="ClientApp\containers\mainpage\main-page.tsx" />
+    <None Remove="ClientApp\containers\newsSlider\SliderState.ts" />
     <None Remove="ClientApp\containers\order\OrderContainer.tsx" />
     <None Remove="ClientApp\containers\product\ProductItemModal.tsx" />
+    <None Remove="ClientApp\containers\user\actions.ts" />
+    <None Remove="ClientApp\containers\user\LoginContainer.tsx" />
+    <None Remove="ClientApp\containers\user\reducer.ts" />
+    <None Remove="ClientApp\containers\user\RegistrationContainer.tsx" />
+    <None Remove="ClientApp\containers\user\UserNavMenuItem.tsx" />
+    <None Remove="ClientApp\containers\user\UserState.ts" />
     <None Remove="ClientApp\models\Category.ts" />
     <None Remove="ClientApp\models\News.ts" />
     <None Remove="ClientApp\containers\newsSlider\actions.ts" />
@@ -56,6 +63,7 @@
     <None Remove="ClientApp\models\Product.tsx" />
     <None Remove="ClientApp\containers\newsSlider\reducer.ts" />
     <None Remove="ClientApp\containers\newsSlider\types.ts" />
+    <None Remove="ClientApp\models\UserModel.ts" />
     <None Remove="ClientApp\Settings.ts" />
     <None Remove="ClientApp\stores\ApiActionKeys.ts" />
     <None Remove="ClientApp\stores\configureStore.dev.tsx" />
@@ -70,6 +78,7 @@
     <TypeScriptCompile Include="ClientApp\api.ts" />
     <TypeScriptCompile Include="ClientApp\containers\bascet\actions.ts" />
     <TypeScriptCompile Include="ClientApp\containers\bascet\Bascet.ts" />
+    <TypeScriptCompile Include="ClientApp\containers\bascet\BascetState.ts" />
     <TypeScriptCompile Include="ClientApp\containers\bascet\layoutBascet.tsx" />
     <TypeScriptCompile Include="ClientApp\containers\bascet\mainBascet.tsx" />
     <TypeScriptCompile Include="ClientApp\containers\bascet\reducer.ts" />
@@ -87,10 +96,16 @@
     <TypeScriptCompile Include="ClientApp\components\News.tsx" />
     <TypeScriptCompile Include="ClientApp\components\SearchBox.tsx" />
     <TypeScriptCompile Include="ClientApp\containers\login\LoginContainer.tsx" />
-    <TypeScriptCompile Include="ClientApp\containers\main-bascet.tsx" />
     <TypeScriptCompile Include="ClientApp\containers\mainpage\main-page.tsx" />
+    <TypeScriptCompile Include="ClientApp\containers\newsSlider\SliderState.ts" />
     <TypeScriptCompile Include="ClientApp\containers\order\OrderContainer.tsx" />
     <TypeScriptCompile Include="ClientApp\containers\product\ProductItemModal.tsx" />
+    <TypeScriptCompile Include="ClientApp\containers\user\actions.ts" />
+    <TypeScriptCompile Include="ClientApp\containers\user\LoginContainer.tsx" />
+    <TypeScriptCompile Include="ClientApp\containers\user\reducer.ts" />
+    <TypeScriptCompile Include="ClientApp\containers\user\RegistrationContainer.tsx" />
+    <TypeScriptCompile Include="ClientApp\containers\user\UserNavMenuItem.tsx" />
+    <TypeScriptCompile Include="ClientApp\containers\user\UserState.ts" />
     <TypeScriptCompile Include="ClientApp\models\Category.ts" />
     <TypeScriptCompile Include="ClientApp\models\News.ts" />
     <TypeScriptCompile Include="ClientApp\containers\newsSlider\actions.ts" />
@@ -103,6 +118,7 @@
     <TypeScriptCompile Include="ClientApp\components\Slider.tsx" />
     <TypeScriptCompile Include="ClientApp\containers\App.tsx" />
     <TypeScriptCompile Include="ClientApp\models\Product.tsx" />
+    <TypeScriptCompile Include="ClientApp\models\UserModel.ts" />
     <TypeScriptCompile Include="ClientApp\Settings.ts" />
     <TypeScriptCompile Include="ClientApp\stores\ApiActionKeys.ts" />
     <TypeScriptCompile Include="ClientApp\stores\configureStore.dev.tsx" />

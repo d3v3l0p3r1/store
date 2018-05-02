@@ -1,5 +1,5 @@
 ﻿import * as React from "react"
-import { IBascetItem } from "./Bascet"
+import { IBascetItem } from "./BascetState"
 import { IApplicationState } from "../../stores/IApplicationState";
 import { Dispatch } from "redux";
 import { connect } from "react-redux"

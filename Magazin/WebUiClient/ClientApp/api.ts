@@ -6,11 +6,18 @@ import { Category } from "./models/Category"
 
 const apiRoot = "http://localhost:51145";
 
+const headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+};
+
 function call(endpoint: string) {
     const fullUrl = apiRoot + endpoint;
 
     return fetch(fullUrl);
 }
+
+
 
 export function readProducts(category: number): Promise<ReadonlyArray<Product>> {
     var url = Settings.ProductURL + "?cat=" + category;
@@ -31,7 +38,7 @@ export function readProducts(category: number): Promise<ReadonlyArray<Product>> 
                     product.title = x.Title;
                     product.kindId = x.KindID;
                     product.kindName = x.KindTitle;
-                    
+
                     return product;
                 });
                 resolve(arr);
@@ -74,7 +81,6 @@ export function readNews(): Promise<ReadonlyArray<News>> {
 
 }
 
-
 export function readCategories(): Promise<ReadonlyArray<Category>> {
 
     var ret = new Promise<ReadonlyArray<Category>>((resolve, reject) => {
@@ -97,6 +103,74 @@ export function readCategories(): Promise<ReadonlyArray<Category>> {
             .catch((error) => {
                 reject(error);
             });
+    });
+
+    return ret;
+}
+
+export function registerUser(name: string, email: string, password: string, passwordConfirm: string) {
+
+    var ret = new Promise((resolve, reject) => {
+        fetch(apiRoot + Settings.RegisterUrl,
+            {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    password: password,
+                    passwordConfirm: passwordConfirm
+                })
+            })
+            .then((response) => {                
+                if (response.ok) {
+                    return Promise.resolve(response.json());
+                }
+                return Promise.reject(response);
+            })
+            .then((json) => {                
+                resolve(json);
+            })
+
+            // after error
+            .catch((error) => {                
+                return error.json();
+            })
+            .then((error) => {               
+                reject(error);
+            });
+    });
+
+    return ret;
+}
+
+export function loginUser(email: string, password: string) {
+    var ret = new Promise((resolve, reject) => {
+        fetch(apiRoot + Settings.LoginUrl,
+            {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                return Promise.reject(response);
+            })            
+            .then(json => {
+                return resolve(json);
+            })
+            .catch((error) => {                
+                return error.json();
+            })
+            .then((error) => {                
+                reject(error);
+            });
+
     });
 
     return ret;

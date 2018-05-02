@@ -6,6 +6,7 @@ using BaseCore.Services.Abstract;
 using DataCore.DAL;
 using DataCore.Services.Abstract;
 using DataCore.Services.Concrete;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.StaticFiles.Infrastructure;
@@ -13,7 +14,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
+using WebUiAdmin.Models;
 
 namespace WebUiAdmin
 {
@@ -38,13 +41,31 @@ namespace WebUiAdmin
                 opts.Password.RequiredLength = 5;
                 opts.Password.RequireNonAlphanumeric = false;   // требуются ли не алфавитно-цифровые символы
                 opts.Password.RequireLowercase = false; // требуются ли символы в нижнем регистре
-                opts.Password.RequireUppercase = false; // требуются ли символы в верхнем регистре                
+                opts.Password.RequireUppercase = false; // требуются ли символы в верхнем регистре        
+                opts.User.RequireUniqueEmail = true;                
             }).AddEntityFrameworkStores<DataContext>();
 
             services.AddMvc().AddJsonOptions(opts =>
             {
                 opts.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
+
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer =  AuthOptions.ISSUER,
+
+                        ValidateAudience =  true,
+                        ValidAudience =  AuthOptions.AUDIENCE,
+
+                        IssuerSigningKey = AuthOptions.GetKey(),
+                        ValidateIssuerSigningKey = true
+                    };
+                });
 
             services.AddSingleton<IFileProvider>(
                 new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));

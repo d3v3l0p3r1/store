@@ -2,16 +2,7 @@
 import { Action } from "redux"
 import {ApiActionKeys} from "../../stores/ApiActionKeys"
 
-export interface IBascetState {
-    readonly products: ReadonlyArray<IBascetItem>;
-    readonly totalPrice: number;
-    readonly totalCount: number;
-}
 
-export interface IBascetItem {
-    product: Product;
-    count: number;
-}
 
 export interface IAddToCardAction extends Action {
     readonly type: ApiActionKeys.Card_Add,

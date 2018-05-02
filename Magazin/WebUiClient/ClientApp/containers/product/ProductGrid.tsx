@@ -9,10 +9,11 @@ import { gridActions } from "./actions";
 import { IApplicationState } from "../../stores/IApplicationState";
 import { Product } from "../../models/Product";
 import { IProductGridState } from "./types";
-import { IAddToCardAction, IRemoveFromCardAction, IBascetState } from "../bascet/Bascet"
+import { IAddToCardAction, IRemoveFromCardAction } from "../bascet/Bascet"
 import { addToCard, removeFromCard } from "../bascet/actions"
 import "./Product.css"
-import {ProductItemModal} from "./ProductItemModal"
+import { ProductItemModal } from "./ProductItemModal"
+import {IBascetState} from "../bascet/BascetState"
 
 
 

@@ -1,6 +1,6 @@
 ﻿import { ActionCreator, Dispatch, Action } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { ISliderState } from "./reducer"
+import { ISliderState } from "./SliderState"
 import { readNews } from "../../api"
 import {ApiActionKeys} from "../../stores/ApiActionKeys"
 

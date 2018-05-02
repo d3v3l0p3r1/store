@@ -1,5 +1,6 @@
 ﻿import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import UserNavMenuItem from "../containers/user/UserNavMenuItem"
 
 
 export class NavMenu extends React.Component<{}, {}> {    
@@ -53,9 +54,7 @@ export class NavMenu extends React.Component<{}, {}> {
                     </li>
 
                     <li className="nav-item">
-                        <Link to={'/Login'} className={"nav-link"}>
-                            <span>Вход | Регистрация</span>
-                        </Link>
+                        <UserNavMenuItem/>
                     </li>
 
                 </ul>

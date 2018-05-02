@@ -41,6 +41,12 @@ if (module.hot) {
 
 configuredStore.subscribe(() => {    
     var state = configuredStore.getState();
-    localStorage.setItem("bascetState", JSON.stringify(state.bascetState));
+    localStorage.setItem("bascetState", JSON.stringify(state.bascetState));    
+    
+
+    if (state.userState.user != null) {
+        localStorage.setItem("user", JSON.stringify(state.userState.user));
+    }
+    
 });
 

@@ -1,0 +1,23 @@
+﻿
+
+.control-text {
+    cursor: pointer;
+}
+
+.modal-header {
+    background-color: #2F2F2F !important;
+}
+
+.modal-header > h5 {
+    color: white;
+}
+
+.modal-footer {
+    -o-justify-content: center !important;
+    -webkit-justify-content: center !important;
+    justify-content: center !important;
+}
+
+.modal-footer > span {    
+    color: black;
+}

@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 import { IApplicationState } from "../../stores/IApplicationState"
 import { News } from "../../models/News"
 import { Dispatch, bindActionCreators, Action, ActionCreator } from "redux"
-import { ISliderState } from "./reducer"
+import { ISliderState } from "./SliderState"
 import { readNewsAction } from "./actions"
 import { ThunkAction } from "redux-thunk"
 

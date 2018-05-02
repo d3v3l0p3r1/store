@@ -1,5 +1,6 @@
 ﻿import { Reducer } from "redux"
-import { IBascetState, IBascetItem, IAddToCardAction, IRemoveFromCardAction, IRemoveAllProduct } from "./Bascet"
+import { IAddToCardAction, IRemoveFromCardAction, IRemoveAllProduct } from "./Bascet"
+import { IBascetState, IBascetItem} from "./BascetState"
 import { ApiActionKeys } from "../../stores/ApiActionKeys"
 
 

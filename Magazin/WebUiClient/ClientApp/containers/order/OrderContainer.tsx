@@ -2,7 +2,8 @@
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Dispatch, bindActionCreators, ActionCreator } from "redux";
-import { IAddToCardAction, IRemoveFromCardAction, IBascetState } from "../bascet/Bascet"
+import { IAddToCardAction, IRemoveFromCardAction } from "../bascet/Bascet"
+import { IBascetState } from "../bascet/BascetState"
 import { IApplicationState } from "../../stores/IApplicationState";
 import { addToCard, removeFromCard } from "../bascet/actions"
 import { Product } from "../../models/Product"
@@ -73,8 +74,8 @@ class OrderContainer extends React.Component<IOrderContainerProps> {
                 <h3 className="order-header">Оформление заказа</h3>;
                  <div className="order-product-container">
                     {list}
-                 </div>
-                <div> 
+                </div>
+                <div>
                     <h3 className="order-total-text">Итоговая сумма: {this.props.bascetState.totalPrice} р</h3>
                 </div>
             </div>
