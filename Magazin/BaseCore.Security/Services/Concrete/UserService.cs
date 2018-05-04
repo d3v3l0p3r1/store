@@ -36,6 +36,11 @@ namespace BaseCore.Security.Services.Concrete
             return entity;
         }
 
+        public Task<User> UpdateAsync(User entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Delete(int id)
         {
             var user = _userManager.Users.FirstOrDefault(x=>x.Id == id);
@@ -47,6 +52,16 @@ namespace BaseCore.Security.Services.Concrete
 
             user.Hidden = true;
             _userManager.UpdateAsync(user);
+        }
+
+        public User Create(User entity)
+        {   
+            throw new NotImplementedException();
+        }
+
+        public Task<User> CreateAsync(User entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

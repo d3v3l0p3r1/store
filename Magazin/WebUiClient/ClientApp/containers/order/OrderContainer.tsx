@@ -7,15 +7,63 @@ import { IBascetState } from "../bascet/BascetState"
 import { IApplicationState } from "../../stores/IApplicationState";
 import { addToCard, removeFromCard } from "../bascet/actions"
 import { Product } from "../../models/Product"
+import { UserModel } from "../../models/UserModel"
 import "./Order.css"
 
 export interface IOrderContainerProps extends RouteComponentProps<any> {
     addToCard: ActionCreator<IAddToCardAction>;
     removeFromCard: ActionCreator<IRemoveFromCardAction>;
+    user: UserModel,
     bascetState: IBascetState;
+    error: string,
+    fetching: boolean,
+    complete: boolean,
 }
 
-class OrderContainer extends React.Component<IOrderContainerProps> {
+export interface IOrderContainerState {
+    name: string,
+    phone: string,
+    delivery: number,
+    address: string,
+    comment: string,
+    change: string, // Сдача с какой суммы
+    delyveryTime: number,
+    personCount: number
+}
+
+export enum DeliveryType {
+    Delivery = 0,
+    Pickup = 1,
+}
+
+export enum DeliveryTime {
+    Today = 0,
+    Tomorow = 1,
+}
+
+class OrderContainer extends React.Component<IOrderContainerProps, IOrderContainerState> {
+    constructor(props: IOrderContainerProps) {
+        super(props);
+
+        this.state = {
+            name: "",
+            address: "",
+            change: "",
+            comment: "",
+            delivery: DeliveryType.Delivery,
+            delyveryTime: DeliveryTime.Today,
+            personCount: 1,
+            phone: ""
+        };
+
+        if (props.user) {
+            this.setState({
+                address: this.props.user.address,
+                name: this.props.user.name,
+                phone: this.props.user.phone
+            });
+        }
+    }
 
 
     onAddClick = (product: Product) => {
@@ -25,6 +73,63 @@ class OrderContainer extends React.Component<IOrderContainerProps> {
     onRemoveClick = (id: number) => {
         this.props.removeFromCard(id);
     }
+
+    onDeliveryTypeChange = (e: any) => {
+        var value = e.target.value;
+        this.setState({
+            delivery: value
+        });
+    }
+
+
+    onNameChange = (e: any) => {
+        var value = e.target.value;
+
+        this.setState({
+            name: value
+        });
+    }
+
+    onPhoneChange = (e: any) => {
+        var value = e.target.value;
+
+        this.setState({
+            phone: value
+        });        
+    }
+
+    onAddressChange = (e: any) => {
+        var value = e.target.value;
+
+        this.setState({
+            address: value
+        });        
+    }
+
+    onCommentChange = (e: any) => {
+        var value = e.target.value;
+
+        this.setState({
+            comment: value
+        });        
+    }
+
+    onChangeChange = (e: any) => {
+        var value = e.target.value;
+
+        this.setState({
+            change: value
+        });        
+    }
+
+    onPersonCountChange = (e: any) => {
+        var value = e.target.value;
+
+        this.setState({
+            personCount: value
+        });        
+    }
+
 
 
     public render() {
@@ -66,6 +171,91 @@ class OrderContainer extends React.Component<IOrderContainerProps> {
             </div>;
         });
 
+        const userData = <div className="order-user-container">
+
+            <div className="form-group">
+                <input disabled={this.props.fetching}
+                    onChange={this.onNameChange}
+                    className="form-control"
+                    placeholder="Ваше имя"
+                    value={this.state.name} />
+            </div>
+
+            <div className="form-group">
+                <input disabled={this.props.fetching}
+                    onChange={this.onPhoneChange}
+                    className="form-control"
+                    placeholder="Телефон"
+                    value={this.state.phone} />
+            </div>
+
+            <div className="form-group row">
+                <label htmlFor="Delivery" className="col-sm-6 col-form-label">Способ получения заказа</label>
+                <div className="col-sm-6">
+                    <select className="form-control" onChange={this.onDeliveryTypeChange}>
+                        <option value={DeliveryType.Delivery}>Доставка</option>
+                        <option value={DeliveryType.Pickup}>Самовывоз</option>
+                    </select>
+                </div>
+            </div>
+
+            <div className="form-group">
+                <input disabled={this.props.fetching}
+                    onChange={this.onAddressChange}
+                    className="form-control"
+                    placeholder="Адрес доставки"
+                    value={this.state.address} />
+            </div>
+
+            <div className="form-group">
+                <textarea disabled={this.props.fetching}
+                    onChange={this.onCommentChange}
+                    className="form-control"
+                    placeholder="Коментарий к заказу"
+                    value={this.state.comment}
+                    rows={2}></textarea>
+            </div>
+
+
+            <div className="form-group row">
+                <label htmlFor="change" className="col-sm-6 col-form-label">С какой суммы готовить сдачу</label>
+                <div className="col-sm-6">
+                    <input id="change"
+                        disabled={this.props.fetching}
+                        onChange={this.onChangeChange}
+                        className="form-control"
+                        placeholder="5000"
+                        value={this.state.change} />
+                </div>
+            </div>
+
+            <div className="form-group row">
+                <label htmlFor="DeliveryTime" className="col-sm-6 col-form-label">Время доставки</label>
+                <div className="col-sm-6">
+                    <select className="form-control" id="DeliveryTime" onChange={this.onDeliveryTypeChange}>
+                        <option value={DeliveryTime.Today}>Ближайшее</option>
+                        <option value={DeliveryTime.Tomorow}>Завтра</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div className="form-group row">
+                <label htmlFor="personCount" className="col-sm-6 col-form-label">Количество приборов</label>
+                <div className="col-sm-6">
+                    <input id="personCount"
+                        type="number"
+                        disabled={this.props.fetching}
+                        onChange={this.onPersonCountChange}
+                        className="form-control"
+                        placeholder="5000"
+                        value={this.state.personCount} />
+                </div>
+            </div>
+
+
+        </div>;
+
         return <div className="row main-page">
             <div className="col-md-4 d-none d-lg-block">
 
@@ -78,6 +268,11 @@ class OrderContainer extends React.Component<IOrderContainerProps> {
                 <div>
                     <h3 className="order-total-text">Итоговая сумма: {this.props.bascetState.totalPrice} р</h3>
                 </div>
+
+                <div className="order-user-container-wrapper">
+
+                    {userData}
+                </div>
             </div>
 
 
@@ -88,7 +283,9 @@ class OrderContainer extends React.Component<IOrderContainerProps> {
 
 function mapStateToProps(state: IApplicationState, ownProps: any) {
     return {
-        bascetState: state.bascetState
+        bascetState: state.bascetState,
+        user: state.userState.user,
+
     }
 }
 

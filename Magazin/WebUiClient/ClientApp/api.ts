@@ -3,12 +3,15 @@ import { Settings } from "./Settings"
 import { News } from "./models/News"
 import { Product } from "./models/Product"
 import { Category } from "./models/Category"
+import { IBascetState } from "./containers/bascet/BascetState"
+import { IUserState } from "./containers/user/UserState"
 
 const apiRoot = "http://localhost:51145";
 
-const headers = {
+var headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
+    'Authorization': 'Bearer ${localStorage.jwt}'
 };
 
 function call(endpoint: string) {
@@ -108,7 +111,7 @@ export function readCategories(): Promise<ReadonlyArray<Category>> {
     return ret;
 }
 
-export function registerUser(name: string, email: string, password: string, passwordConfirm: string) {
+export function registerUser(name: string, email: string, password: string, passwordConfirm: string, address: string, phone: string) {
 
     var ret = new Promise((resolve, reject) => {
         fetch(apiRoot + Settings.RegisterUrl,
@@ -119,24 +122,26 @@ export function registerUser(name: string, email: string, password: string, pass
                     name: name,
                     email: email,
                     password: password,
-                    passwordConfirm: passwordConfirm
+                    passwordConfirm: passwordConfirm,
+                    address: address,
+                    phone: phone
                 })
             })
-            .then((response) => {                
+            .then((response) => {
                 if (response.ok) {
                     return Promise.resolve(response.json());
                 }
                 return Promise.reject(response);
             })
-            .then((json) => {                
+            .then((json) => {
                 resolve(json);
             })
 
             // after error
-            .catch((error) => {                
+            .catch((error) => {
                 return error.json();
             })
-            .then((error) => {               
+            .then((error) => {
                 reject(error);
             });
     });
@@ -146,10 +151,13 @@ export function registerUser(name: string, email: string, password: string, pass
 
 export function loginUser(email: string, password: string) {
     var ret = new Promise((resolve, reject) => {
+
+        var authHeaders = headers;
+
         fetch(apiRoot + Settings.LoginUrl,
             {
                 method: "POST",
-                headers: headers,
+                headers: authHeaders,
                 body: JSON.stringify({
                     email: email,
                     password: password
@@ -160,18 +168,57 @@ export function loginUser(email: string, password: string) {
                     return response.json();
                 }
                 return Promise.reject(response);
-            })            
+            })
             .then(json => {
                 return resolve(json);
             })
-            .catch((error) => {                
+            .catch((error) => {
                 return error.json();
             })
-            .then((error) => {                
+            .then((error) => {
                 reject(error);
             });
 
     });
 
+    return ret;
+}
+
+
+
+export function order(bascet: IBascetState, user: IUserState) {
+
+    var products = bascet.products.map((x) => {
+        return { ProductID: x.product.id, Count: x.count }
+    });
+
+
+    var model = {
+        Products: products
+    }
+
+    var ret = new Promise((resolve, reject) => {
+        fetch(apiRoot + Settings.OrderUrl,
+            {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify({
+                    model
+                })
+            })
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    return Promise.reject(response);
+                }
+            })
+            .then((json) => {
+                resolve(json);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
     return ret;
 }

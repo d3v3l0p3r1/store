@@ -9,10 +9,12 @@ namespace BaseCore.Services.Abstract
     public interface IRepository<T> where T: BaseEntity
     {
         T Create(T entity);
+        Task<T> CreateAsync(T entity);
         void Delete(T entity);
         T Update(T entity);
         T Find(int id);
         IQueryable<T> GetAll();
         DbSet<T> GetDbSet();
+        Task<T> UpdateAsync(T entity);
     }
 }

@@ -19,7 +19,15 @@ namespace DataCore.DAL
         {
             var dbSet = _dataContext.Set<T>();
             dbSet.Add(entity);
-            _dataContext.SaveChanges();
+            _dataContext.SaveChanges();            
+            return entity;
+        }
+
+        public async Task<T> CreateAsync(T entity)
+        {
+            var dbSet = _dataContext.Set<T>();
+            await dbSet.AddAsync(entity);
+            await _dataContext.SaveChangesAsync();
             return entity;
         }
 
@@ -34,6 +42,13 @@ namespace DataCore.DAL
             var dbSet = _dataContext.Set<T>();
             dbSet.Update(entity);
             _dataContext.SaveChanges();
+            return entity;
+        }        
+        public async Task<T> UpdateAsync(T entity)
+        {
+            var dbSet = _dataContext.Set<T>();            
+            dbSet.Update(entity);
+            await _dataContext.SaveChangesAsync();
             return entity;
         }
 
@@ -53,5 +68,6 @@ namespace DataCore.DAL
         {
             return _dataContext.Set<T>();
         }
+
     }
 }

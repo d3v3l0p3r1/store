@@ -9,6 +9,9 @@ namespace BaseCore.Services.Abstract
         IQueryable<T> GetAll();
         T Find(int id);
         T Update(T entity);
+        Task<T> UpdateAsync(T entity);
         void Delete(int id);
+        T Create(T entity);
+        Task<T> CreateAsync(T entity);
     }
 }

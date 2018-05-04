@@ -24,3 +24,16 @@
     color: white;
     padding: 2%;
 }
+
+.order-user-container {
+    padding: 3%;
+    width: 100%;
+    background-color: white;
+    -ms-border-radius: 0.25rem;
+    border-radius: 0.25rem;
+}
+
+.order-user-container-wrapper {
+    padding: 2%;
+    width: 100%;
+}

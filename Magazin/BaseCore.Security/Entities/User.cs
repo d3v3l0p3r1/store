@@ -12,5 +12,10 @@ namespace BaseCore.Security.Entities
         /// ФИО пользователя
         /// </summary>
         public string FullName { get; set; }
+
+        /// <summary>
+        /// Адрес
+        /// </summary>
+        public string Address { get; set; }
     }
 }

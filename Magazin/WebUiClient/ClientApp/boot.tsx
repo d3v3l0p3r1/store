@@ -46,6 +46,10 @@ configuredStore.subscribe(() => {
 
     if (state.userState.user != null) {
         localStorage.setItem("user", JSON.stringify(state.userState.user));
+        localStorage.setItem("jwt", state.userState.user.access_token);
+    } else {
+        localStorage.removeItem("user");
+        localStorage.removeItem("jwt");
     }
     
 });

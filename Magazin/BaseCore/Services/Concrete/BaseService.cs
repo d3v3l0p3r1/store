@@ -17,7 +17,7 @@ namespace BaseCore.Services.Concrete
 
 
         public virtual IQueryable<T> GetAll()
-        {            
+        {
             var all = _repository.GetAll();
             return all.Where(x => !x.Hidden);
         }
@@ -27,7 +27,7 @@ namespace BaseCore.Services.Concrete
             if (id == 0)
             {
                 return null;
-            }            
+            }
 
             return _repository.Find(id);
         }
@@ -37,15 +37,27 @@ namespace BaseCore.Services.Concrete
             if (entity == null)
             {
                 throw new ArgumentNullException();
-            }            
+            }
 
             var result = _repository.Update(entity);
-            
+
 
             return result;
         }
 
-        public virtual  void Delete(int id)
+        public virtual async Task<T> UpdateAsync(T entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            var result = await _repository.UpdateAsync(entity);
+
+            return result;
+        }
+
+        public virtual void Delete(int id)
         {
             if (id == 0)
             {
@@ -56,7 +68,27 @@ namespace BaseCore.Services.Concrete
 
             entity.Hidden = true;
 
-            _repository.Update(entity);            
+            _repository.Update(entity);
+        }
+
+        public virtual T Create(T entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            return _repository.Create(entity);
+        }
+
+        public virtual async Task<T> CreateAsync(T entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            return await _repository.CreateAsync(entity);
         }
     }
 }

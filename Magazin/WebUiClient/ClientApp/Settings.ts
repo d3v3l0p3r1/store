@@ -6,4 +6,6 @@
 
     public static readonly RegisterUrl = "/api/account/register";
     public static readonly LoginUrl = "/api/account/login";
+
+    public static readonly OrderUrl ="/api/Order";
 }

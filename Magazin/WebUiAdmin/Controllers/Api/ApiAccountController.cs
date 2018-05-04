@@ -52,7 +52,9 @@ namespace WebUiAdmin.Controllers.Api
             {
                 access_token = token,
                 name = user.FullName,
-                email = user.Email
+                email = user.Email,
+                phone = user.PhoneNumber,
+                address = user.Address
             };
 
             return Ok(response);
@@ -78,7 +80,9 @@ namespace WebUiAdmin.Controllers.Api
             {
                 UserName = model.Email,
                 Email = model.Email,
-                FullName = model.Name
+                FullName = model.Name,
+                Address = model.Address,
+                PhoneNumber = model.Phone
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -95,7 +99,9 @@ namespace WebUiAdmin.Controllers.Api
                 {
                     access_token = token,
                     name = user.FullName,
-                    email = user.Email
+                    email = user.Email,
+                    address = user.Address,
+                    phone = user.PhoneNumber
                 };
 
                 return Ok(response);

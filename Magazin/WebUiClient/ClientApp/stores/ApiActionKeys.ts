@@ -25,5 +25,10 @@
 
     Register_Fetching = "Register_Fetching",
     Register_Complete = "Register_Complete",
-    Register_Error = "Register_Error"
+    Register_Error = "Register_Error",
+
+
+    Order_Fetching = "Order_Fetching",
+    Order_Error = "Order_Error",
+    Order_Complete = "Order_Complete",
 }

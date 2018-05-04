@@ -23,6 +23,8 @@ interface IRegisterFormState {
     password: string,
     passwordConfirm: string,
     name: string,
+    address: string,
+    phone: string,
 }
 
 class RegisterContainer extends React.Component<IRegisterContainerProps, IRegisterFormState> {
@@ -33,6 +35,8 @@ class RegisterContainer extends React.Component<IRegisterContainerProps, IRegist
             email: "",
             password: "",
             passwordConfirm: "",
+            address: "",
+            phone: "",
             name: ""
         };
     }
@@ -57,8 +61,18 @@ class RegisterContainer extends React.Component<IRegisterContainerProps, IRegist
         this.setState({ passwordConfirm: pass });
     }
 
+    onAddressChange = (e: any) => {
+        var address = e.target.value;
+        this.setState({address: address});
+    }
+
+    onPhoneChange = (e: any) => {
+        var phone = e.target.value;
+        this.setState({phone: phone});
+    }
+
     register = () => {
-        this.props.registerAction(this.state.email, this.state.name, this.state.password, this.state.passwordConfirm);
+        this.props.registerAction(this.state.email, this.state.name, this.state.password, this.state.passwordConfirm, this.state.address, this.state.phone);
     }
 
     public render() {
@@ -92,6 +106,23 @@ class RegisterContainer extends React.Component<IRegisterContainerProps, IRegist
                             placeholder="Электронная почта"
                             value={this.state.email}
                             onChange={this.onEmailChange} />
+                    </div>
+
+                    <div className="form-group">
+                        <input disabled={this.props.fetching}                               
+                               className="form-control"
+                               placeholder="Адрес доставки"
+                               value={this.state.address}
+                               onChange={this.onAddressChange} />
+                    </div>
+
+                    <div className="form-group">
+                        <input disabled={this.props.fetching}
+                               type="phone"
+                               className="form-control"
+                               placeholder="Телефон"
+                               value={this.state.phone}
+                               onChange={this.onPhoneChange} />
                     </div>
 
                     <div className="form-group">
