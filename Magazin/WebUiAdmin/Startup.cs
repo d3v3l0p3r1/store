@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.IO;
+using System.Security.Claims;
 using BaseCore.Security.Entities;
 using BaseCore.Security.Services.Abstract;
 using BaseCore.Security.Services.Concrete;
@@ -9,6 +11,7 @@ using DataCore.Services.Concrete;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.StaticFiles.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -43,13 +46,12 @@ namespace WebUiAdmin
                 opts.Password.RequireLowercase = false; // требуются ли символы в нижнем регистре
                 opts.Password.RequireUppercase = false; // требуются ли символы в верхнем регистре        
                 opts.User.RequireUniqueEmail = true;                
-            }).AddEntityFrameworkStores<DataContext>();
+            }).AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
 
             services.AddMvc().AddJsonOptions(opts =>
             {
-                opts.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                opts.SerializerSettings.ContractResolver = new DefaultContractResolver();                
             });
-
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
                 {
@@ -66,6 +68,10 @@ namespace WebUiAdmin
                         ValidateIssuerSigningKey = true
                     };
                 });
+
+            services.AddAuthorization(options =>
+            {                
+            });
 
             services.AddSingleton<IFileProvider>(
                 new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
@@ -95,8 +101,7 @@ namespace WebUiAdmin
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),               
             });
 
-            app.UseAuthentication();
-            
+            app.UseAuthentication();       
 
             app.UseMvc(routes =>
             {
@@ -104,6 +109,8 @@ namespace WebUiAdmin
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            
         }
 
         private void InitDbContext(IServiceCollection services)

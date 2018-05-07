@@ -12,9 +12,10 @@ using System;
 namespace WebUiAdmin.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20180505134040_fdgfhhf")]
+    partial class fdgfhhf
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,8 +176,6 @@ namespace WebUiAdmin.Migrations
 
                     b.Property<int>("State");
 
-                    b.Property<decimal>("TotalAmount");
-
                     b.Property<int?>("UserID");
 
                     b.Property<string>("UserName");
@@ -197,7 +196,7 @@ namespace WebUiAdmin.Migrations
 
                     b.Property<bool>("Hidden");
 
-                    b.Property<int>("OrderID");
+                    b.Property<int?>("OrderId");
 
                     b.Property<decimal>("Price");
 
@@ -205,7 +204,7 @@ namespace WebUiAdmin.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderID");
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("ProductID");
 
@@ -371,10 +370,9 @@ namespace WebUiAdmin.Migrations
 
             modelBuilder.Entity("DataCore.Entities.OrderProduct", b =>
                 {
-                    b.HasOne("DataCore.Entities.Order", "Order")
+                    b.HasOne("DataCore.Entities.Order")
                         .WithMany("Products")
-                        .HasForeignKey("OrderID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("DataCore.Entities.Product", "Product")
                         .WithMany()

@@ -9,7 +9,7 @@ namespace DataCore.DAL
 {
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly DataContext _dataContext;
+        protected readonly DataContext _dataContext;
         public Repository(DataContext context)
         {
             _dataContext = context;
@@ -52,7 +52,7 @@ namespace DataCore.DAL
             return entity;
         }
 
-        public T Find(int id)
+        public virtual T Find(int id)
         {
             var dbSet = _dataContext.Set<T>();
             return dbSet.Single(x=> x.Id == id);

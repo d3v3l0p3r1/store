@@ -1,13 +1,17 @@
 ﻿import * as React from "react"
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { Dispatch, bindActionCreators, ActionCreator } from "redux";
+import { Action, Dispatch, bindActionCreators, ActionCreator } from "redux";
+import { ThunkAction } from "redux-thunk"
 import { IAddToCardAction, IRemoveFromCardAction } from "../bascet/Bascet"
 import { IBascetState } from "../bascet/BascetState"
 import { IApplicationState } from "../../stores/IApplicationState";
 import { addToCard, removeFromCard } from "../bascet/actions"
 import { Product } from "../../models/Product"
 import { UserModel } from "../../models/UserModel"
+import { OrderAction } from "./actions"
+import { IOrderState } from "./OrderState"
+import { IOrderModel } from "../../models/OrderModel"
 import "./Order.css"
 
 export interface IOrderContainerProps extends RouteComponentProps<any> {
@@ -18,6 +22,7 @@ export interface IOrderContainerProps extends RouteComponentProps<any> {
     error: string,
     fetching: boolean,
     complete: boolean,
+    orderAction: ActionCreator<ThunkAction<Action, IOrderState, void>>,
 }
 
 export interface IOrderContainerState {
@@ -42,6 +47,9 @@ export enum DeliveryTime {
 }
 
 class OrderContainer extends React.Component<IOrderContainerProps, IOrderContainerState> {
+
+    private orderModel: IOrderModel;
+
     constructor(props: IOrderContainerProps) {
         super(props);
 
@@ -55,8 +63,11 @@ class OrderContainer extends React.Component<IOrderContainerProps, IOrderContain
             personCount: 1,
             phone: ""
         };
+    }
 
-        if (props.user) {
+    public componentWillMount() {
+
+        if (this.props.user) {
             this.setState({
                 address: this.props.user.address,
                 name: this.props.user.name,
@@ -95,7 +106,7 @@ class OrderContainer extends React.Component<IOrderContainerProps, IOrderContain
 
         this.setState({
             phone: value
-        });        
+        });
     }
 
     onAddressChange = (e: any) => {
@@ -103,7 +114,7 @@ class OrderContainer extends React.Component<IOrderContainerProps, IOrderContain
 
         this.setState({
             address: value
-        });        
+        });
     }
 
     onCommentChange = (e: any) => {
@@ -111,7 +122,7 @@ class OrderContainer extends React.Component<IOrderContainerProps, IOrderContain
 
         this.setState({
             comment: value
-        });        
+        });
     }
 
     onChangeChange = (e: any) => {
@@ -119,7 +130,7 @@ class OrderContainer extends React.Component<IOrderContainerProps, IOrderContain
 
         this.setState({
             change: value
-        });        
+        });
     }
 
     onPersonCountChange = (e: any) => {
@@ -127,7 +138,22 @@ class OrderContainer extends React.Component<IOrderContainerProps, IOrderContain
 
         this.setState({
             personCount: value
-        });        
+        });
+    }
+
+    orderRequest = () => {
+        this.orderModel = {
+            address: this.state.address,
+            change: this.state.change,
+            comment: this.state.comment,
+            deliveryTime: this.state.delyveryTime,
+            deliveryType: this.state.delivery,
+            name: this.state.name,
+            personCount: this.state.personCount,
+            phone: this.state.phone,
+            products: this.props.bascetState.products
+        };
+        this.props.orderAction(this.orderModel);
     }
 
 
@@ -172,7 +198,6 @@ class OrderContainer extends React.Component<IOrderContainerProps, IOrderContain
         });
 
         const userData = <div className="order-user-container">
-
             <div className="form-group">
                 <input disabled={this.props.fetching}
                     onChange={this.onNameChange}
@@ -252,8 +277,6 @@ class OrderContainer extends React.Component<IOrderContainerProps, IOrderContain
                         value={this.state.personCount} />
                 </div>
             </div>
-
-
         </div>;
 
         return <div className="row main-page">
@@ -270,8 +293,10 @@ class OrderContainer extends React.Component<IOrderContainerProps, IOrderContain
                 </div>
 
                 <div className="order-user-container-wrapper">
-
                     {userData}
+                </div>
+                <div className="order-user-container-wrapper">
+                    <button className="btn btn-outline-danger" onClick={this.orderRequest}>Оформить</button>
                 </div>
             </div>
 
@@ -293,6 +318,7 @@ function mapDispatchtoProps(dispatch: Dispatch<IApplicationState>) {
     return {
         addToCard: bindActionCreators(addToCard, dispatch),
         removeFromCard: bindActionCreators(removeFromCard, dispatch),
+        orderAction: bindActionCreators(OrderAction, dispatch)
     }
 }
 

@@ -62,6 +62,7 @@
     <None Remove="ClientApp\components\Promo\Promo.tsx" />
     <None Remove="ClientApp\components\Slider.tsx" />
     <None Remove="ClientApp\containers\App.tsx" />
+    <None Remove="ClientApp\models\OrderModel.ts" />
     <None Remove="ClientApp\models\Product.tsx" />
     <None Remove="ClientApp\containers\newsSlider\reducer.ts" />
     <None Remove="ClientApp\containers\newsSlider\types.ts" />
@@ -121,6 +122,7 @@
     <TypeScriptCompile Include="ClientApp\components\Promo\Promo.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Slider.tsx" />
     <TypeScriptCompile Include="ClientApp\containers\App.tsx" />
+    <TypeScriptCompile Include="ClientApp\models\OrderModel.ts" />
     <TypeScriptCompile Include="ClientApp\models\Product.tsx" />
     <TypeScriptCompile Include="ClientApp\models\UserModel.ts" />
     <TypeScriptCompile Include="ClientApp\Settings.ts" />

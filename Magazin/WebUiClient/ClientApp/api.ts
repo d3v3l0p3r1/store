@@ -4,15 +4,23 @@ import { News } from "./models/News"
 import { Product } from "./models/Product"
 import { Category } from "./models/Category"
 import { IBascetState } from "./containers/bascet/BascetState"
-import { IUserState } from "./containers/user/UserState"
+import { IOrderModel } from "./models/OrderModel"
 
 const apiRoot = "http://localhost:51145";
 
-var headers = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer ${localStorage.jwt}'
-};
+var token = localStorage.getItem("jwt");
+
+function headers() {
+
+    var t = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': token ? "bearer " + token : ""
+    };
+
+    return t;
+}
+
 
 function call(endpoint: string) {
     const fullUrl = apiRoot + endpoint;
@@ -117,7 +125,7 @@ export function registerUser(name: string, email: string, password: string, pass
         fetch(apiRoot + Settings.RegisterUrl,
             {
                 method: "POST",
-                headers: headers,
+                headers: headers(),
                 body: JSON.stringify({
                     name: name,
                     email: email,
@@ -152,7 +160,7 @@ export function registerUser(name: string, email: string, password: string, pass
 export function loginUser(email: string, password: string) {
     var ret = new Promise((resolve, reject) => {
 
-        var authHeaders = headers;
+        var authHeaders = headers();
 
         fetch(apiRoot + Settings.LoginUrl,
             {
@@ -186,25 +194,15 @@ export function loginUser(email: string, password: string) {
 
 
 
-export function order(bascet: IBascetState, user: IUserState) {
-
-    var products = bascet.products.map((x) => {
-        return { ProductID: x.product.id, Count: x.count }
-    });
-
-
-    var model = {
-        Products: products
-    }
+export function order(model: IOrderModel) {
 
     var ret = new Promise((resolve, reject) => {
         fetch(apiRoot + Settings.OrderUrl,
             {
+                mode: "cors",
                 method: "POST",
-                headers: headers,
-                body: JSON.stringify({
-                    model
-                })
+                headers: headers(),
+                body: JSON.stringify(model)
             })
             .then((response) => {
                 if (response.ok) {

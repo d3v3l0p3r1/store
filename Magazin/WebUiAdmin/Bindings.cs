@@ -8,6 +8,8 @@ using BaseCore.Security.Services.Concrete;
 using BaseCore.Services.Abstract;
 using DataCore.DAL;
 using DataCore.Entities;
+using DataCore.Repositories.Abstract;
+using DataCore.Repositories.Concrete;
 using DataCore.Services.Abstract;
 using DataCore.Services.Concrete;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,7 +34,7 @@ namespace WebUiAdmin
             services.AddScoped<IRepository<Product>, Repository<Product>>();
             services.AddScoped<IRepository<ProductCategory>, Repository<ProductCategory>>();
             services.AddScoped<IRepository<FileData>, Repository<FileData>>();
-            services.AddScoped<IRepository<Order>, Repository<Order>>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IRepository<News>, Repository<News>>();
             services.AddScoped<IRepository<ProductKind>, Repository<ProductKind>>();
 

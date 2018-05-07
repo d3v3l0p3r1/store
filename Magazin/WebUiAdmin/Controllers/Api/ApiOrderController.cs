@@ -4,11 +4,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using DataCore.Entities;
+using DataCore.Models;
 using DataCore.Services.Abstract;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebUiAdmin.Models.Api.Order;
 
 namespace WebUiAdmin.Controllers.Api
 {
@@ -23,25 +23,28 @@ namespace WebUiAdmin.Controllers.Api
             _orderService = orderService;
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Order([FromBody]OrderModel model)
         {
             try
             {
-                var t = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                int userID = 13244;
+                int? userID = null;
+                string nameIdentifier = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-                var orderProducts = model.Products.Select(x => new OrderProduct
-                {
-                    ProductID = x.ProductID,
-                    Count = x.Count,
-                }).ToList();
+                if (!String.IsNullOrWhiteSpace(nameIdentifier))
+                {                    
+                    int.TryParse(nameIdentifier, out int id);
+                    if (id != 0)
+                    {
+                        userID = id;
+                    }
+                }
+                
+                var res = await _orderService.CreateAsync(userID, model);
 
-                var res = await _orderService.CreateAsync(userID, orderProducts);
-
-                return Ok();
+                return Ok(res);
             }
             catch (Exception e)
             {

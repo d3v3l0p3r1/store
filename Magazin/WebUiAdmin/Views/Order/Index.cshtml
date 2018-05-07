@@ -2,15 +2,21 @@
 @{
     Layout = "_Layout";
     string wrp = "wrp_" + Guid.NewGuid().ToString("N");
+    string grid = "grd_" + Guid.NewGuid().ToString("N");
 }
 
-<div id="@wrp"> 
+<div id="@wrp">
     
+    <div>
+
+    </div>
+    <div id="@grid"></div>
+
 </div>
 
 <script>
     $(function() {
-        var $grid = $('#@wrp');
+        var $grid = $('#@grid');
 
         $grid.kendoGrid({
             dataSource: {
@@ -36,19 +42,25 @@
             pageable: true,
             columns: [
                 {
-                    field: "Title",
-                    title: "Имя",
-                }, {
-                    field: "Description",
-                    title: "Описание"
-                }, {
-                    field: "Price",
-                    title: "Цена"
+                    field: "State",
+                    title: "Статус",
+                },
+                {
+                    field: "Address",
+                    title: "Адрес"
+                },
+                {
+                    field: "Phone",
+                    title: "Телефон"
+                },
+                {
+                    field: "UserName",
+                    title: "Имя покупателя"
                 },
                 {
                     title: '',
                     field: null,
-                    template: '<a href="/Product/Edit?id=#:Id#">Edit</a>'
+                    template: '<a href="/Order/Edit?id=#:Id#">Edit</a>'
                 }
             ]
         });

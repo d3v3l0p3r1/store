@@ -33,6 +33,9 @@ namespace DataCore.DAL
 
             builder.Entity<Product>().HasOne(x => x.Category);
             builder.Entity<Product>().HasOne(x => x.Kind);
+
+            builder.Entity<Order>().HasMany(x => x.Products).WithOne(x => x.Order);
+            builder.Entity<OrderProduct>().HasOne(x => x.Product);
         }
     }
 }

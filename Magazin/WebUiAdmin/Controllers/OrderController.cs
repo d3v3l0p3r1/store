@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataCore.Entities;
 using DataCore.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
+using WebUiAdmin.Models.Api.Order;
 
 namespace WebUiAdmin.Controllers
 {
-    public class OrderController : Controller
+    public class OrderController : BaseController<Order>
     {
         private readonly IOrderService _orderService;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService) : base(orderService)
         {
             _orderService = orderService;
         }
@@ -35,6 +37,28 @@ namespace WebUiAdmin.Controllers
             });
         }
 
+        public override IActionResult Edit(int id)
+        {
+            var order = _orderService.Find(id);
+            
+            return View(order);
+        }
 
+        public IActionResult Update([FromBody]Order order)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok();
+            }
+
+            return BadRequest("Model invalid");
+
+        }
+
+        public IActionResult AddItemToOrder()
+        {
+            return View("OrderItemEdit" );
+        }
+   
     }
 }
