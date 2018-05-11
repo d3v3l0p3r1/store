@@ -102,33 +102,67 @@
 
     kendo.culture("ru-RU");
 
+    var $grid = $('#@grid');
+    var $toolbar = $('#@toolbar');
+    var $saveButton = $('#@saveButton');
+    var $kendoWindow = $('#@editProductWindow');
+    var contentUrl = "@Url.Action("OrderItemEdit", new { parent = wrap })";
+    var windowOptions = {
+        content: contentUrl,
+        width: "700",
+        height: "500",
+        modal: true,
+    }
+
+
     $(function() {
 
-        var model =
-            @Html.Raw(Json.Serialize(Model, new JsonSerializerSettings() {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
+        var model = new kendo.observable(@Html.Raw(Json.Serialize(Model, new JsonSerializerSettings() {ReferenceLoopHandling = ReferenceLoopHandling.Ignore})));
+        var closeModal = function () { $('#@editProductWindow').data('kendoWindow').close(); }
 
-        model = new kendo.observable(model);
-
-        kendo.bind($('#@wrap'), model);
-
-
-        var addRow = function() {
-            $('#@editProductWindow').kendoWindow({
-                content: "@Url.Action("AddItemToOrder")"
-            }).data('kendoWindow').center().open();
+        var form = {
+            model: model,
+            closeModal: closeModal,
+            selectedRow: null,
+            op: ""
         };
 
-        var editRow = function() {
+      
 
+        window['@wrap'] = form;
+
+        kendo.bind($('#@wrap'), form.model);
+
+
+        var addRow = function () {
+            form.op = "create";
+            form.selectedRow = null;
+            var kendoWindow = $kendoWindow.kendoWindow(windowOptions);
+            kendoWindow.data('kendoWindow').center().open();
+        };
+
+        var editRow = function () {            
+            var grid = $('#@grid').data('kendoGrid');
+            var row = grid.dataItem(grid.select());
+            if (row) {
+                form.op = "edit";
+                form.selectedRow = row;
+                var kendoWindow = $kendoWindow.kendoWindow(windowOptions);
+                kendoWindow.data('kendoWindow').center().open();
+            }
         };
 
         var deleteRow = function() {
-
+            var grid = $('#@grid').data('kendoGrid');
+            var row = grid.dataItem(grid.select());
+            
+            if (row) {
+                model.Products.remove(row);
+            }
         };
 
 
-        var $grid = $('#@grid');
-        var $toolbar = $('#@toolbar');
+      
 
         $grid.kendoGrid({
             dataSource: {
@@ -174,11 +208,8 @@
                 }
             ]
         });
-
-        $('#@saveButton').on('click', function () {
-
+        $saveButton.on('click', function() {
             var url = "@Url.Action("Update")";
-            
             var callback = function() {
 
             }
@@ -193,7 +224,7 @@
             });
         });
 
-        
+
     });
 
 </script>

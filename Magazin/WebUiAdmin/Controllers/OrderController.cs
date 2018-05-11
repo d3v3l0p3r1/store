@@ -52,13 +52,12 @@ namespace WebUiAdmin.Controllers
             }
 
             return BadRequest("Model invalid");
-
         }
 
-        public IActionResult AddItemToOrder()
+        public IActionResult OrderItemEdit(string parent)
         {
-            return View("OrderItemEdit" );
-        }
+            return View("OrderItemEdit", parent);
+        }        
    
     }
 }

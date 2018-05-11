@@ -40,5 +40,7 @@ namespace WebUiAdmin.Controllers.Api
 
             return Ok(res);
         }
+
+
     }
 }
