@@ -45,12 +45,12 @@ namespace WebUiAdmin
                 opts.Password.RequireNonAlphanumeric = false;   // требуются ли не алфавитно-цифровые символы
                 opts.Password.RequireLowercase = false; // требуются ли символы в нижнем регистре
                 opts.Password.RequireUppercase = false; // требуются ли символы в верхнем регистре        
-                opts.User.RequireUniqueEmail = true;                
+                opts.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
 
             services.AddMvc().AddJsonOptions(opts =>
             {
-                opts.SerializerSettings.ContractResolver = new DefaultContractResolver();                
+                opts.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
@@ -59,10 +59,10 @@ namespace WebUiAdmin
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidIssuer =  AuthOptions.ISSUER,
+                        ValidIssuer = AuthOptions.ISSUER,
 
-                        ValidateAudience =  true,
-                        ValidAudience =  AuthOptions.AUDIENCE,
+                        ValidateAudience = true,
+                        ValidAudience = AuthOptions.AUDIENCE,
 
                         IssuerSigningKey = AuthOptions.GetKey(),
                         ValidateIssuerSigningKey = true
@@ -70,13 +70,13 @@ namespace WebUiAdmin
                 });
 
             services.AddAuthorization(options =>
-            {                
+            {
             });
 
             services.AddSingleton<IFileProvider>(
                 new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
 
-            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -95,13 +95,13 @@ namespace WebUiAdmin
             app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().Build());
 
             app.UseStaticFiles(new StaticFileOptions()
-            {                 
+            {
                 ServeUnknownFileTypes = true,
                 DefaultContentType = "image/png",
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),               
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
             });
 
-            app.UseAuthentication();       
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
@@ -110,7 +110,7 @@ namespace WebUiAdmin
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            
+
         }
 
         private void InitDbContext(IServiceCollection services)
@@ -118,7 +118,9 @@ namespace WebUiAdmin
             var connectionString = Configuration.GetConnectionString(nameof(DataContext));
 
             services.AddEntityFrameworkSqlServer()
-                .AddDbContext<DataContext>(options => options.UseSqlServer(connectionString, builder => builder.MigrationsAssembly("WebUiAdmin")));
+                .AddDbContext<DataContext>(options => options
+                    .UseSqlServer(connectionString, builder => builder.MigrationsAssembly("WebUiAdmin"))
+                );
         }
     }
 }

@@ -34,6 +34,7 @@ namespace WebUiAdmin.Controllers.Api
                 x.Description,
                 x.Title,
                 x.KindID,
+                x.CategoryID,
                 KindTitle = x.Kind.Title,
                 File = x.FileID != null ? url + x.FileID : url + 1
             });

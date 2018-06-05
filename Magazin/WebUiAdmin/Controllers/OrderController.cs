@@ -23,11 +23,16 @@ namespace WebUiAdmin.Controllers
             return View();
         }
 
-        public IActionResult GetAll(int take, int skip)
+        public IActionResult GetAll(int take, int skip, OrderState? state = null)
         {
             var all = _orderService.GetAll();
 
+            if (state != null)
+            {
+                all = all.Where(x => x.State == state.Value);
+            }
             var orders = all.OrderByDescending(x => x.Id).Skip(skip).Take(take);
+            
             var total = all.Count();
 
             return new JsonResult(new
@@ -40,7 +45,7 @@ namespace WebUiAdmin.Controllers
         public override IActionResult Edit(int id)
         {
             var order = _orderService.Find(id);
-            
+
             return View(order);
         }
 
@@ -48,6 +53,7 @@ namespace WebUiAdmin.Controllers
         {
             if (ModelState.IsValid)
             {
+                _orderService.Update(order);
                 return Ok();
             }
 
@@ -57,7 +63,45 @@ namespace WebUiAdmin.Controllers
         public IActionResult OrderItemEdit(string parent)
         {
             return View("OrderItemEdit", parent);
-        }        
-   
+        }
+
+
+        public IActionResult GetOrderProducts(int orderID)
+        {
+            var products = _orderService.GetOrderProducts(orderID);
+
+            return Ok(products);
+        }
+
+        [HttpPost]
+        public IActionResult ToDelivery(int id)
+        {
+            var order = _orderService.Find(id);
+            if (order != null)
+            {
+                order.State = OrderState.InProgress;
+                _orderService.Update(order);
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPost]
+        public IActionResult ToComplete(int id)
+        {
+            var order = _orderService.Find(id);
+            if (order != null)
+            {
+                order.State = OrderState.Complete;
+                _orderService.Update(order);
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+
+
     }
 }

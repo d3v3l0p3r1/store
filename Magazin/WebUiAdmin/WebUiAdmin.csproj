@@ -303,4 +303,6 @@
     <Folder Include="wwwroot\css\" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties bower_1json__JSONSchema="" /></VisualStudio></ProjectExtensions>
+
 </Project>

@@ -18,7 +18,7 @@
 
         <div class="">
             <button id="@saveButton" class="btn btn-success">Сохранить</button>
-            <button id="@cancelButton" class="btn btn-info">Отмена</button>
+            <button id="@cancelButton" class="btn btn-info">Закрыть</button>
         </div>
 
 
@@ -105,6 +105,7 @@
     var $grid = $('#@grid');
     var $toolbar = $('#@toolbar');
     var $saveButton = $('#@saveButton');
+    var $cancelButton = $('#@cancelButton');
     var $kendoWindow = $('#@editProductWindow');
     var contentUrl = "@Url.Action("OrderItemEdit", new { parent = wrap })";
     var windowOptions = {
@@ -222,6 +223,11 @@
                 dataType: "json",
                 success: callback
             });
+        });
+
+        $cancelButton.on('click', function() {
+            var url = "@Url.Action("Index")";
+            window.location = url;
         });
 
 

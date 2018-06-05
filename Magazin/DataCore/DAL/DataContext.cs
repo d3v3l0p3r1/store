@@ -36,6 +36,8 @@ namespace DataCore.DAL
 
             builder.Entity<Order>().HasMany(x => x.Products).WithOne(x => x.Order);
             builder.Entity<OrderProduct>().HasOne(x => x.Product);
+
+            
         }
     }
 }

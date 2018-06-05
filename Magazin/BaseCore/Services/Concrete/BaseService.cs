@@ -39,8 +39,9 @@ namespace BaseCore.Services.Concrete
                 throw new ArgumentNullException();
             }
 
-            var result = _repository.Update(entity);
+            PrepareEntity(entity);
 
+            var result = _repository.Update(entity);
 
             return result;
         }
@@ -51,6 +52,8 @@ namespace BaseCore.Services.Concrete
             {
                 throw new ArgumentNullException();
             }
+
+            PrepareEntity(entity);
 
             var result = await _repository.UpdateAsync(entity);
 
@@ -89,6 +92,11 @@ namespace BaseCore.Services.Concrete
             }
 
             return await _repository.CreateAsync(entity);
+        }
+
+        protected virtual void PrepareEntity(T entity)
+        {
+
         }
     }
 }

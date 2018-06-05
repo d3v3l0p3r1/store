@@ -13,6 +13,8 @@ namespace DataCore.DAL
         public Repository(DataContext context)
         {
             _dataContext = context;
+            
+            
         }
 
         public T Create(T entity)

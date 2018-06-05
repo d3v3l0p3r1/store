@@ -94,7 +94,19 @@ namespace DataCore.Services.Concrete
         {
             var total = order.Products.Sum(x => x.Price * x.Count);
             order.TotalAmount = total;
+        }
 
+
+        protected override void PrepareEntity(Order entity)
+        {
+            var newProducts = entity.Products.Where(x => x.Id == 0);
+
+            foreach (var orderProduct in newProducts)
+            {
+                orderProduct.Product.Category = null;
+            }
+
+            base.PrepareEntity(entity);
         }
     }
 }

@@ -5,10 +5,12 @@ using BaseCore.Services;
 using BaseCore.Services.Abstract;
 using DataCore.DAL;
 using DataCore.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUiAdmin.Controllers
 {    
+    [Authorize(Roles = "admin")]
     public class BaseController<T> : Controller where T: IBaseEntity, new()
     {
         private readonly IBaseService<T> _baseService;
