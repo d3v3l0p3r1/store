@@ -3,18 +3,19 @@ import Slider from "react-slick";
 import { connect } from "react-redux"
 import { IApplicationState } from "../../stores/IApplicationState"
 import { News } from "../../models/News"
-import { Dispatch, bindActionCreators, Action, ActionCreator } from "redux"
+import { Dispatch, bindActionCreators, Action, ActionCreator, AnyAction } from "redux"
 import { ISliderState } from "./SliderState"
 import { readNewsAction } from "./actions"
 import { ThunkAction } from "redux-thunk"
-
+import { SliderActions } from "./types"
+ 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 
 export interface ISliderProps {
     news: ReadonlyArray<News>;
-    readNewsAction: ActionCreator<ThunkAction<Action, ISliderState, void>>;
+    readNewsAction: ActionCreator<ThunkAction<Promise<SliderActions>, News[], null, SliderActions>>;
 }
 
 
@@ -59,7 +60,7 @@ function mapStateToProps(storeState: IApplicationState) {
     }
 }
 
-function mapDispatchToProps(dispatch: Dispatch<ISliderState>) {
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     return {
         readNewsAction: bindActionCreators(readNewsAction, dispatch)
     };

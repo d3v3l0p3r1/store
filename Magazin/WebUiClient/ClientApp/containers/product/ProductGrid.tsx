@@ -1,5 +1,5 @@
 ﻿import * as React from "react";
-import { Action } from "redux"
+import { Action, AnyAction } from "redux"
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators, ActionCreator } from "redux";
 import { ThunkAction } from "redux-thunk"
@@ -81,7 +81,7 @@ export class ProductGrid extends React.Component<IProductGridProps, {}> {
 
             const listItems = groups.map(p => {
 
-                return <div key={p.groupID.toString()} className="product-group">
+                return <div key={p.groupID} className="product-group">
                     <h3 className="product-group-header">{p.groupName}</h3>
                     <div className="row">
                         {
@@ -117,7 +117,7 @@ function mapStateToProps(state: IApplicationState, ownProps: any) {
     };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<IApplicationState>) {
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     return {
         readData: bindActionCreators(gridActions.readData, dispatch),
         addToCard: bindActionCreators(addToCard, dispatch),

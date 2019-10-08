@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using WebUiAdmin.Models;
@@ -48,10 +49,7 @@ namespace WebUiAdmin
                 opts.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
 
-            services.AddMvc().AddJsonOptions(opts =>
-            {
-                opts.SerializerSettings.ContractResolver = new DefaultContractResolver();
-            });
+            services.AddMvc();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
                 {
@@ -80,12 +78,11 @@ namespace WebUiAdmin
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
             }
             else
             {
@@ -101,15 +98,16 @@ namespace WebUiAdmin
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
             });
 
+            app.UseRouting();
+            app.UseAuthorization();
             app.UseAuthentication();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
-
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            }); 
 
         }
 
@@ -119,7 +117,7 @@ namespace WebUiAdmin
 
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<DataContext>(options => options
-                    .UseSqlServer(connectionString, builder => builder.MigrationsAssembly("WebUiAdmin"))
+                    .UseNpgsql(connectionString, builder => builder.MigrationsAssembly("WebUiAdmin"))
                 );
         }
     }

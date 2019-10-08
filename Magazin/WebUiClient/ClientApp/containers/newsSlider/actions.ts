@@ -2,11 +2,14 @@
 import { ThunkAction } from "redux-thunk";
 import { ISliderState } from "./SliderState"
 import { readNews } from "../../api"
-import {ApiActionKeys} from "../../stores/ApiActionKeys"
+import { ApiActionKeys } from "../../stores/ApiActionKeys"
+import { SliderActions } from "./types"
+import { News } from "../../models/News";
+import { async } from "q";
 
-export const readNewsAction: ActionCreator<ThunkAction<Action, ISliderState, void>> = () => {
+export const readNewsAction: ActionCreator<ThunkAction<Promise<SliderActions>, News[], null, SliderActions>> = () => {
 
-    return (dispatch: Dispatch<ISliderState>) => {
+    return async (dispatch: Dispatch<SliderActions>) => {
         const result = readNews();
 
         result.then((response) => {

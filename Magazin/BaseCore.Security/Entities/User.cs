@@ -4,9 +4,10 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BaseCore.Security.Entities
 {
-    public class User : IdentityUser<int>, IBaseEntity
+    public class User : IdentityUser<long>, IBaseEntity
     {
-        public bool Hidden { get; set; }        
+        
+        public bool Hidden { get; set; }
 
         /// <summary>
         /// ФИО пользователя

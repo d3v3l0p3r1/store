@@ -118,7 +118,7 @@
 
     $(function() {
 
-        var model = new kendo.observable(@Html.Raw(Json.Serialize(Model, new JsonSerializerSettings() {ReferenceLoopHandling = ReferenceLoopHandling.Ignore})));
+        var model = new kendo.observable(@Html.Raw(Json.Serialize(Model)));
         var closeModal = function () { $('#@editProductWindow').data('kendoWindow').close(); }
 
         var form = {

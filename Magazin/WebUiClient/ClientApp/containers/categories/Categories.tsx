@@ -1,19 +1,20 @@
 ﻿import * as React from "react"
 import { connect } from "react-redux"
-import { Dispatch, bindActionCreators, Action, ActionCreator } from "redux"
-import { ThunkAction } from "redux-thunk"
+import { Dispatch, bindActionCreators, Action, ActionCreator, AnyAction } from "redux"
+import { ThunkAction, ThunkDispatch } from "redux-thunk"
 import { Category } from "../../models/Category"
 import { ICategoriesState } from "./ICategoriesState"
 import { IApplicationState } from "../../stores/IApplicationState"
 import { readData } from "./actions"
 import { Link, NavLink } from 'react-router-dom';
+import { CategoriesActions } from "./types"
 
 
 
 
 export interface ICategoriesProps {
     categories: ReadonlyArray<Category>;
-    readData: ActionCreator<ThunkAction<Action, ICategoriesState, void>>;
+    readData: ActionCreator<ThunkAction<Promise<CategoriesActions>, Category[], null, CategoriesActions>>;
     routeCategory: number;
 }
 
@@ -25,7 +26,7 @@ export class Categories extends React.Component<ICategoriesProps, {}> {
 
     public render() {
         const list = this.props.categories.map(c => {
-            return <li key={c.id.toString()} className="nav-item">
+            return <li key={c.id} className="nav-item">
                 <Link to={'/Product/' + c.id}  className="nav-link">
                     <span>{c.title}</span>
                 </Link>
@@ -53,15 +54,15 @@ export class Categories extends React.Component<ICategoriesProps, {}> {
 
 
 
-function mapStateToProps(storeState: IApplicationState, ownProps: any) {        
+function mapStateToProps(storeState: IApplicationState, ownProps: any) {
     return {
         categories: storeState.categoryState.categories,        
     }
 }
 
-function mapDispatchToProps(dispatch: Dispatch<ICategoriesState>) {
+function mapDispatchToProps(dispatch: ThunkDispatch<any, any, AnyAction>) {
     return {
-        readData: bindActionCreators(readData, dispatch),        
+        readData: bindActionCreators(readData, dispatch),
     };
 }
 

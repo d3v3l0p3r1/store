@@ -1,7 +1,7 @@
 ﻿import * as React from "react"
 import { IBascetItem } from "./BascetState"
 import { IApplicationState } from "../../stores/IApplicationState";
-import { Dispatch } from "redux";
+import { Dispatch, AnyAction } from "redux";
 import { connect } from "react-redux"
 import { history } from "../../stores/configureStore"
 import "./styles/layout-bascet.css"
@@ -39,10 +39,10 @@ function mapStateToProps(state: IApplicationState, ownProps: any) {
     };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<IApplicationState>) {
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     return {
     };
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(LayoutBascet) as React.ComponentClass<{}>;
+export default connect(mapStateToProps, mapDispatchToProps)(LayoutBascet);

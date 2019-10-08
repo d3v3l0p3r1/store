@@ -3,7 +3,7 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import ProductGird from "../product/ProductGrid"
 import { IApplicationState } from "../../stores/IApplicationState";
 import { connect } from 'react-redux';
-import { Dispatch, bindActionCreators, Action, ActionCreator } from "redux"
+import { Dispatch, bindActionCreators, Action, ActionCreator, AnyAction } from "redux"
 import MainBascet from "../bascet/mainBascet"
 
 
@@ -31,11 +31,11 @@ function mapStateToProps(state: IApplicationState, ownProps: any) {
     };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<IApplicationState>) {
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
 
     return {
 
     };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainPage)) as React.ComponentClass<{}>;
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainPage));

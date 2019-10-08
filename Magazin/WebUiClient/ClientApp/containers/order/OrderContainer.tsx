@@ -1,7 +1,7 @@
 ﻿import * as React from "react"
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { Action, Dispatch, bindActionCreators, ActionCreator } from "redux";
+import { Action, Dispatch, bindActionCreators, ActionCreator, AnyAction } from "redux";
 import { ThunkAction } from "redux-thunk"
 import { IAddToCardAction, IRemoveFromCardAction } from "../bascet/Bascet"
 import { IBascetState } from "../bascet/BascetState"
@@ -314,7 +314,7 @@ function mapStateToProps(state: IApplicationState, ownProps: any) {
     }
 }
 
-function mapDispatchtoProps(dispatch: Dispatch<IApplicationState>) {
+function mapDispatchtoProps(dispatch: Dispatch<AnyAction>) {
     return {
         addToCard: bindActionCreators(addToCard, dispatch),
         removeFromCard: bindActionCreators(removeFromCard, dispatch),

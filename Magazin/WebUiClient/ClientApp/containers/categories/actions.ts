@@ -3,10 +3,13 @@ import { ThunkAction } from "redux-thunk";
 import { ICategoriesState } from "./ICategoriesState"
 import { readCategories } from "../../api"
 import { ApiActionKeys } from "../../stores/ApiActionKeys"
+import { Category } from "../../models/Category";
+import { CategoriesActions } from "./types"
+import { async } from "q";
 
-export const readData: ActionCreator<ThunkAction<Action, ICategoriesState, void>> = () => {
+export const readData: ActionCreator<ThunkAction<Promise<CategoriesActions>, Category[], null, CategoriesActions>> = () => {
 
-    return (dispatch: Dispatch<ICategoriesState>) => {
+    return async (dispatch: Dispatch<CategoriesActions>) => {
         const result = readCategories();
 
         result.then((response) => {

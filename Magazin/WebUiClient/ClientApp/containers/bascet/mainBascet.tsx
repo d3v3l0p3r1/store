@@ -2,7 +2,7 @@
 import { Product } from "../../models/Product"
 import { connect } from "react-redux"
 import { IApplicationState } from "../../stores/IApplicationState";
-import { Dispatch, ActionCreator, bindActionCreators } from "redux";
+import { Dispatch, ActionCreator, bindActionCreators, AnyAction } from "redux";
 import { IRemoveAllProduct, IAddToCardAction, IRemoveFromCardAction } from "./Bascet"
 import { IBascetState, IBascetItem } from "./BascetState"
 import { addToCard, removeFromCard, removeProductFromCard } from "./actions"
@@ -105,7 +105,7 @@ function mapStateToProps(state: IApplicationState, ownProps: any) {
     };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<IApplicationState>) {
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
 
     return {
         addToCard: bindActionCreators(addToCard, dispatch),
@@ -115,4 +115,4 @@ function mapDispatchToProps(dispatch: Dispatch<IApplicationState>) {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainBascet) as React.ComponentClass<{}>;
+export default connect(mapStateToProps, mapDispatchToProps)(MainBascet);

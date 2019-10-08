@@ -53,7 +53,7 @@ namespace DataCore.Entities
 
     public class OrderProduct : BaseEntity
     {
-        public int ProductID { get; set; }
+        public long ProductID { get; set; }
         public virtual Product Product { get; set; }
 
         public decimal Price { get; set; }
