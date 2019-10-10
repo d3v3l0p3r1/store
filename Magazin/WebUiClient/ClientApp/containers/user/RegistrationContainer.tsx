@@ -1,11 +1,12 @@
 ﻿import * as React from "react"
-import { Action, ActionCreator, bindActionCreators, Dispatch } from "redux";
+import { Action, ActionCreator, bindActionCreators, Dispatch, AnyAction } from "redux";
 import { ThunkAction } from "redux-thunk"
 import { connect } from "react-redux"
 import { IApplicationState } from "../../stores/IApplicationState";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { IUserState } from "./UserState"
-import { LoginAction, IOpenLoginFormAction, IOpenRegisterAction, OpenLoginFormAction, OpenRegisterFormAction, RegisterAction } from "./actions"
+import { RegisterActions } from "./types"
+import { IOpenLoginFormAction, IOpenRegisterAction, OpenLoginFormAction, OpenRegisterFormAction, RegisterAction } from "./actions"
+import { UserModel } from "../../models/UserModel"
 import "./Styles/user.css"
 
 export interface IRegisterContainerProps {
@@ -13,7 +14,7 @@ export interface IRegisterContainerProps {
     closeModal: Function,
     fetching: boolean,
     error: string,
-    registerAction: ActionCreator<ThunkAction<Action, IUserState, void>>,
+    registerAction: ActionCreator<ThunkAction<Promise<RegisterActions>, UserModel, null, RegisterActions>>,
     openLoginForm: ActionCreator<IOpenLoginFormAction>,
     openRegisterForm: ActionCreator<IOpenRegisterAction>,
 }
@@ -109,7 +110,7 @@ class RegisterContainer extends React.Component<IRegisterContainerProps, IRegist
                     </div>
 
                     <div className="form-group">
-                        <input disabled={this.props.fetching}                               
+                        <input disabled={this.props.fetching}
                                className="form-control"
                                placeholder="Адрес доставки"
                                value={this.state.address}
@@ -168,7 +169,7 @@ function mapStateToProps(state: IApplicationState, ownProps: any) {
     }
 }
 
-function mapDispatchProps(dispatch: Dispatch<IApplicationState>) {
+function mapDispatchProps(dispatch: Dispatch<AnyAction>) {
     return {
 
         registerAction: bindActionCreators(RegisterAction, dispatch),
@@ -177,7 +178,7 @@ function mapDispatchProps(dispatch: Dispatch<IApplicationState>) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchProps)(RegisterContainer) as React.ComponentClass<{}>;
+export default connect(mapStateToProps, mapDispatchProps)(RegisterContainer);
 
 
 

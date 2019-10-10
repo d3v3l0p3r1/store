@@ -13,3 +13,9 @@ export interface IOrderModel {
 
     products: ReadonlyArray<IBascetItem>,
 }
+
+export class Order {
+    id: number;
+    state: number;
+}
+

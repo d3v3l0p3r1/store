@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import { IOpenLoginFormAction , OpenLoginFormAction} from "./actions"
 import { IApplicationState } from "../../stores/IApplicationState"
 import { UserModel } from "../../models/UserModel"
-import { ActionCreator, bindActionCreators, Dispatch } from "redux"
+import { ActionCreator, bindActionCreators, Dispatch, AnyAction } from "redux"
 import LoginContainer from "./LoginContainer"
 import RegisterContainer from "./RegistrationContainer"
 
@@ -39,10 +39,10 @@ function mapStateToProps(state: IApplicationState) {
     }
 }
 
-function mapDispatchToProps(dispatch: Dispatch<IApplicationState>) {
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     return {
         openLoginForm: bindActionCreators(OpenLoginFormAction, dispatch)
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserNavMenuItem) as React.ComponentClass<{}>;
+export default connect(mapStateToProps, mapDispatchToProps)(UserNavMenuItem);

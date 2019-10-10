@@ -1,11 +1,13 @@
 ﻿import * as React from "react"
-import { Action, ActionCreator, bindActionCreators, Dispatch } from "redux";
+import { Action, ActionCreator, bindActionCreators, Dispatch, AnyAction } from "redux";
 import { ThunkAction } from "redux-thunk"
 import { connect } from "react-redux"
 import { IApplicationState } from "../../stores/IApplicationState";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { IUserState } from "./UserState"
 import { LoginAction, IOpenLoginFormAction, IOpenRegisterAction, OpenLoginFormAction, OpenRegisterFormAction } from "./actions"
+import { LoginActions } from "./types"
+import { UserModel } from "../../models/UserModel"
 import "./Styles/user.css"
 
 export interface ILoginContainerProps {
@@ -13,7 +15,7 @@ export interface ILoginContainerProps {
     error: string,
     fetching: boolean,
     closeModal: Function,
-    loginAction: ActionCreator<ThunkAction<Action, IUserState, void>>,
+    loginAction: ActionCreator<ThunkAction<Promise<LoginActions>, UserModel, null, LoginActions>>,
     openLoginForm: ActionCreator<IOpenLoginFormAction>,
     openRegisterForm: ActionCreator<IOpenRegisterAction>,
 }
@@ -104,7 +106,7 @@ function mapStateToProps(state: IApplicationState, ownProps: any) {
     }
 }
 
-function mapDispatchToProps(dispatch: Dispatch<IApplicationState>) {
+function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
     return {
         loginAction: bindActionCreators(LoginAction, dispatch),
         openLoginForm: bindActionCreators(OpenLoginFormAction, dispatch),
@@ -113,4 +115,4 @@ function mapDispatchToProps(dispatch: Dispatch<IApplicationState>) {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer) as React.ComponentClass<{}>;
+export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

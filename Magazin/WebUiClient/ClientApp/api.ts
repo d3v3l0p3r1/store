@@ -4,7 +4,8 @@ import { News } from "./models/News"
 import { Product } from "./models/Product"
 import { Category } from "./models/Category"
 import { IBascetState } from "./containers/bascet/BascetState"
-import { IOrderModel } from "./models/OrderModel"
+import { IOrderModel, Order } from "./models/OrderModel"
+import { UserModel } from './models/UserModel';
 
 const apiRoot = "http://localhost:51145";
 
@@ -22,10 +23,10 @@ function headers() {
 }
 
 
-function call(endpoint: string) {
+function call(endpoint: string, body: any) {
     const fullUrl = apiRoot + endpoint;
 
-    return fetch(fullUrl);
+    return fetch(fullUrl, body);
 }
 
 
@@ -35,7 +36,7 @@ export function readProducts(category: number): Promise<ReadonlyArray<Product>> 
 
 
     var ret = new Promise<ReadonlyArray<Product>>((resolve, reject) => {
-        call(url)
+        call(url, null)
             .then((response) => {
                 return response.json();
             }).then((json) => {
@@ -66,7 +67,7 @@ export function readProducts(category: number): Promise<ReadonlyArray<Product>> 
 export function readNews(): Promise<ReadonlyArray<News>> {
 
     var ret = new Promise<ReadonlyArray<News>>((resolve, reject) => {
-        call(Settings.NewsUrl)
+        call(Settings.NewsUrl, null)
             .then((response) => {
                 return response.json();
             })
@@ -95,7 +96,7 @@ export function readNews(): Promise<ReadonlyArray<News>> {
 export function readCategories(): Promise<ReadonlyArray<Category>> {
 
     var ret = new Promise<ReadonlyArray<Category>>((resolve, reject) => {
-        call(Settings.CatsUrl)
+        call(Settings.CatsUrl, null)
             .then((response) => {
                 return response.json();
             })
@@ -121,8 +122,8 @@ export function readCategories(): Promise<ReadonlyArray<Category>> {
 
 export function registerUser(name: string, email: string, password: string, passwordConfirm: string, address: string, phone: string) {
 
-    var ret = new Promise((resolve, reject) => {
-        fetch(apiRoot + Settings.RegisterUrl,
+    var ret = new Promise<UserModel>((resolve, reject) => {
+        call(Settings.RegisterUrl,
             {
                 method: "POST",
                 headers: headers(),
@@ -136,15 +137,11 @@ export function registerUser(name: string, email: string, password: string, pass
                 })
             })
             .then((response) => {
-                if (response.ok) {
-                    return Promise.resolve(response.json());
-                }
-                return Promise.reject(response);
+                return response.json();
             })
             .then((json) => {
                 resolve(json);
             })
-
             // after error
             .catch((error) => {
                 return error.json();
@@ -158,11 +155,11 @@ export function registerUser(name: string, email: string, password: string, pass
 }
 
 export function loginUser(email: string, password: string) {
-    var ret = new Promise((resolve, reject) => {
+    var ret = new Promise<UserModel>((resolve, reject) => {
 
         var authHeaders = headers();
 
-        fetch(apiRoot + Settings.LoginUrl,
+        call(Settings.LoginUrl,
             {
                 method: "POST",
                 headers: authHeaders,
@@ -172,13 +169,11 @@ export function loginUser(email: string, password: string) {
                 }),
             })
             .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                return Promise.reject(response);
+                return response.json();
             })
             .then(json => {
-                return resolve(json);
+                var user = JSON.parse(json) as UserModel;
+                return resolve(user);
             })
             .catch((error) => {
                 return error.json();
@@ -196,7 +191,7 @@ export function loginUser(email: string, password: string) {
 
 export function order(model: IOrderModel) {
 
-    var ret = new Promise((resolve, reject) => {
+    var ret = new Promise<Order>((resolve, reject) => {
         fetch(apiRoot + Settings.OrderUrl,
             {
                 mode: "cors",
@@ -205,11 +200,7 @@ export function order(model: IOrderModel) {
                 body: JSON.stringify(model)
             })
             .then((response) => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    return Promise.reject(response);
-                }
+                return response.json();
             })
             .then((json) => {
                 resolve(json);

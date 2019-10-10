@@ -1,4 +1,4 @@
-﻿import { applyMiddleware, createStore } from "redux"
+﻿import { applyMiddleware, createStore, AnyAction } from "redux"
 import thunkMiddleware from "redux-thunk";
 import { routerMiddleware } from "react-router-redux"
 import { rootReducer } from "./index"
@@ -44,7 +44,7 @@ export default function configureStore() {
         userState: userState
     };
 
-    return createStore<IApplicationState>(
+    return createStore(
         rootReducer,
         initialState,
         applyMiddleware(thunkMiddleware, routeMiddleware)

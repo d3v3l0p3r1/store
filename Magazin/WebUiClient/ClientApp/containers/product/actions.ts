@@ -1,12 +1,14 @@
 ﻿import { ActionCreator, Dispatch, Action } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { IProductGridState } from "./types";
+import { IProductGridState, GridActions } from "./types";
 import { readProducts } from "../../api"
 import { ApiActionKeys } from "../../stores/ApiActionKeys"
+import { Product } from "../../models/Product"
+import { async } from "q";
 
-export const readData: ActionCreator<ThunkAction<Action, IProductGridState, void>> = (category: number) => {
+export const readData: ActionCreator<ThunkAction<Promise<GridActions>, Product[], null, GridActions>> = (category: number) => {
 
-    return (dispatch: Dispatch<IProductGridState>) => {
+    return async (dispatch: Dispatch<GridActions>) => {
         const result = readProducts(category);
 
         result.then((response) => {
@@ -14,6 +16,7 @@ export const readData: ActionCreator<ThunkAction<Action, IProductGridState, void
             return dispatch({
                 type: ApiActionKeys.Product_Read,
                 payload: response,
+                category: category
             });
         });
 

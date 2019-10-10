@@ -55,6 +55,7 @@
     <None Remove="ClientApp\containers\user\LoginContainer.tsx" />
     <None Remove="ClientApp\containers\user\reducer.ts" />
     <None Remove="ClientApp\containers\user\RegistrationContainer.tsx" />
+    <None Remove="ClientApp\containers\user\types.ts" />
     <None Remove="ClientApp\containers\user\UserNavMenuItem.tsx" />
     <None Remove="ClientApp\containers\user\UserState.ts" />
     <None Remove="ClientApp\models\Category.ts" />
@@ -112,6 +113,7 @@
     <TypeScriptCompile Include="ClientApp\containers\user\LoginContainer.tsx" />
     <TypeScriptCompile Include="ClientApp\containers\user\reducer.ts" />
     <TypeScriptCompile Include="ClientApp\containers\user\RegistrationContainer.tsx" />
+    <TypeScriptCompile Include="ClientApp\containers\user\types.ts" />
     <TypeScriptCompile Include="ClientApp\containers\user\UserNavMenuItem.tsx" />
     <TypeScriptCompile Include="ClientApp\containers\user\UserState.ts" />
     <TypeScriptCompile Include="ClientApp\models\Category.ts" />

@@ -3,12 +3,12 @@ import { ThunkAction } from "redux-thunk"
 import { ApiActionKeys } from "../../stores/ApiActionKeys"
 import { IOrderState } from "./OrderState"
 import { order } from "../../api"
-import { IOrderModel } from "../../models/OrderModel"
+import { IOrderModel, Order } from "../../models/OrderModel"
 import { OrderActions } from "./types"
 import { async } from "q"
 
 
-export const OrderAction: ActionCreator<ThunkAction<Promise<void>, void, null, OrderActions>> = (model: IOrderModel) => {
+export const OrderAction: ActionCreator<ThunkAction<Promise<OrderActions>, Order, null, OrderActions>> = (model: IOrderModel) => {
     return async (dispatch: Dispatch<OrderActions>) => {
 
         const result = order(model);
@@ -16,7 +16,8 @@ export const OrderAction: ActionCreator<ThunkAction<Promise<void>, void, null, O
         result.then((response) => {
 
             return dispatch({
-                type: ApiActionKeys.Order_Complete
+                type: ApiActionKeys.Order_Complete,
+                payload: response
             });
         });
 

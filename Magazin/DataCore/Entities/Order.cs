@@ -19,7 +19,7 @@ namespace DataCore.Entities
 
         public virtual ICollection<OrderProduct> Products { get; set; }
 
-        [DisplayName("Тип доставки")]        
+        [DisplayName("Тип доставки")]
         [EnumDataType(typeof(DeliveryType))]
         public DeliveryType DeliveryType { get; set; }
 
@@ -38,7 +38,7 @@ namespace DataCore.Entities
         [DisplayName("Сдача с ...")]
         public string Change { get; set; }
 
-        [DisplayName("Количество приборов")]        
+        [DisplayName("Количество приборов")]
         public int PersonCount { get; set; }
 
         [DisplayName("Имя получателя")]

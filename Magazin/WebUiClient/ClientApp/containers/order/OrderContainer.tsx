@@ -11,7 +11,8 @@ import { Product } from "../../models/Product"
 import { UserModel } from "../../models/UserModel"
 import { OrderAction } from "./actions"
 import { IOrderState } from "./OrderState"
-import { IOrderModel } from "../../models/OrderModel"
+import { IOrderModel, Order } from "../../models/OrderModel"
+import { OrderActions } from "./types"
 import "./Order.css"
 
 export interface IOrderContainerProps extends RouteComponentProps<any> {
@@ -22,7 +23,7 @@ export interface IOrderContainerProps extends RouteComponentProps<any> {
     error: string,
     fetching: boolean,
     complete: boolean,
-    orderAction: ActionCreator<ThunkAction<Action, IOrderState, void>>,
+    orderAction: ActionCreator<ThunkAction<Promise<OrderActions>, Order, null, OrderActions>>,
 }
 
 export interface IOrderContainerState {

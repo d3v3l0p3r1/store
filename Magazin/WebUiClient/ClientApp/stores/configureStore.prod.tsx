@@ -39,12 +39,12 @@ export default function configureStore() {
         productGridState: productGridState,
         sliderState: sliderState,
         bascetState: bascetState,
-        categoryState: CategoryState,        
-        routerState: routerState,        
+        categoryState: CategoryState,
+        routerState: routerState,
         userState: userState
     };
 
-    return createStore<IApplicationState>(
+    return createStore(
         rootReducer,
         initialState,
         applyMiddleware(thunkMiddleware, routeMiddleware)

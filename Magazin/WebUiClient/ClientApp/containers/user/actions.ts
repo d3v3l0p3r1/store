@@ -3,7 +3,9 @@ import { ApiActionKeys } from "../../stores/ApiActionKeys"
 import { UserModel } from "../../models/UserModel"
 import { ThunkAction } from "redux-thunk";
 import { IUserState } from "./UserState"
-import {loginUser, registerUser } from "../../api"
+import { loginUser, registerUser } from "../../api"
+import { LoginActions, RegisterActions } from "./types"
+import { async } from "q";
 
 
 export interface IOpenLoginFormAction extends Action {
@@ -18,9 +20,9 @@ export interface IOpenRegisterAction extends Action {
 
 
 
-export const LoginAction: ActionCreator<ThunkAction<Action, IUserState, void>> = (email: string, password: string) => {
+export const LoginAction: ActionCreator<ThunkAction<Promise<LoginActions>, UserModel, null, LoginActions>> = (email: string, password: string) => {
 
-    return (dispatch: Dispatch<IUserState>) => {
+    return async (dispatch: Dispatch<LoginActions>) => {
 
         const result = loginUser(email, password);
 
@@ -61,19 +63,19 @@ export const OpenRegisterFormAction: ActionCreator<IOpenRegisterAction> = (isOpe
 }
 
 
-export const RegisterAction: ActionCreator<ThunkAction<Action, IUserState, void>> = (email: string, name: string,password: string, passwordConfirm: string, address: string, phone: string) => {
-    return (dispatch: Dispatch<IUserState>) => {
+export const RegisterAction: ActionCreator<ThunkAction<Promise<RegisterActions>, UserModel, null, RegisterActions>> = (email: string, name: string, password: string, passwordConfirm: string, address: string, phone: string) => {
+    return async (dispatch: Dispatch<RegisterActions>) => {
 
         const result = registerUser(name, email, password, passwordConfirm, address, phone);
 
-        result.then((response) => {            
+        result.then((response) => {
             dispatch({
                 type: ApiActionKeys.Register_Complete,
                 payload: response
             });
         });
 
-        result.catch((error) => {            
+        result.catch((error) => {
             dispatch({
                 type: ApiActionKeys.Register_Error,
                 payload: error
