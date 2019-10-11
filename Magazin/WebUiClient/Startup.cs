@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SpaServices.Webpack;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace WebUiClient
+namespace WebUIClient2
 {
     public class Startup
     {
@@ -24,9 +21,11 @@ namespace WebUiClient
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddSpaStaticFiles(config =>
+
+            // In production, the React files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
             {
-                config.RootPath = "ClientApp";
+                configuration.RootPath = "ClientApp/build";
             });
         }
 
@@ -39,24 +38,30 @@ namespace WebUiClient
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
-            }            
+                app.UseExceptionHandler("/Error");
+            }
 
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
             app.UseRouting();
-            app.UseEndpoints(endpoints => 
+
+            app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller}/{action=Index}/{id?}");
             });
 
-            app.UseSpa(spa => 
+            app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "start");
+                }
             });
-            
         }
     }
 }
