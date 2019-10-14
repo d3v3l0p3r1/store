@@ -7,7 +7,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { IUserState } from "./UserState"
 import { LoginAction, IOpenLoginFormAction, IOpenRegisterAction, OpenLoginFormAction, OpenRegisterFormAction } from "./actions"
 import { LoginActions } from "./types"
-import { UserModel } from "../../models/UserModel"
+import UserModel from "../../models/UserModel"
 import "./Styles/user.css"
 
 export interface ILoginContainerProps {

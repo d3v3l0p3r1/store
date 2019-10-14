@@ -2,7 +2,7 @@
 import Slider from "react-slick";
 import { connect } from "react-redux"
 import { IApplicationState } from "../../stores/IApplicationState"
-import { News } from "../../models/News"
+import News from "../../models/News"
 import { Dispatch, bindActionCreators, Action, ActionCreator, AnyAction } from "redux"
 import { ISliderState } from "./SliderState"
 import { readNewsAction } from "./actions"

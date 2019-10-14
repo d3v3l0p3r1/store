@@ -15,7 +15,7 @@ export interface IOrderModel {
 }
 
 export class Order {
-    id: number;
-    state: number;
+    id: number = 0;
+    state: number = 0;
 }
 

@@ -1,7 +1,7 @@
 ﻿import { Reducer } from "redux"
-import {ISliderState} from "./SliderState"
+import { ISliderState } from "./SliderState"
 import { SliderActions, IReadNewsAction } from "./types"
-import {ApiActionKeys} from "../../stores/ApiActionKeys"
+import { ApiActionKeys } from "../../stores/ApiActionKeys"
 
 
 

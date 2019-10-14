@@ -1,6 +1,6 @@
-﻿import { Product } from "../../models/Product"
+﻿import Product from "../../models/Product"
 import { Action } from "redux"
-import {ApiActionKeys} from "../../stores/ApiActionKeys"
+import { ApiActionKeys } from "../../stores/ApiActionKeys"
 
 
 

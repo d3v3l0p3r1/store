@@ -2,7 +2,7 @@
 import { connect } from "react-redux"
 import { Dispatch, bindActionCreators, Action, ActionCreator, AnyAction } from "redux"
 import { ThunkAction, ThunkDispatch } from "redux-thunk"
-import { Category } from "../../models/Category"
+import Category from "../../models/Category"
 import { ICategoriesState } from "./ICategoriesState"
 import { IApplicationState } from "../../stores/IApplicationState"
 import { readData } from "./actions"

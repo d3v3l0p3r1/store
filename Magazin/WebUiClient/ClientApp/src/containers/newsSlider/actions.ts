@@ -4,7 +4,7 @@ import { ISliderState } from "./SliderState"
 import { readNews } from "../../api"
 import { ApiActionKeys } from "../../stores/ApiActionKeys"
 import { SliderActions } from "./types"
-import { News } from "../../models/News";
+import News from "../../models/News";
 import { async } from "q";
 
 export const readNewsAction: ActionCreator<ThunkAction<Promise<SliderActions>, News[], null, SliderActions>> = () => {

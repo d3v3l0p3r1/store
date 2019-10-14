@@ -7,7 +7,7 @@ import { ProductItem } from "./ProductItem";
 import { RouteComponentProps, withRouter } from 'react-router';
 import { gridActions } from "./actions";
 import { IApplicationState } from "../../stores/IApplicationState";
-import { Product } from "../../models/Product";
+import Product from "../../models/Product";
 import { IProductGridState, GridActions } from "./types";
 import { IAddToCardAction, IRemoveFromCardAction } from "../bascet/Bascet"
 import { addToCard, removeFromCard } from "../bascet/actions"

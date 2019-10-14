@@ -1,4 +1,4 @@
-﻿import { News } from "../../models/News"
+﻿import News from "../../models/News"
 import { Action } from "redux"
 import { ApiActionKeys } from "../../stores/ApiActionKeys"
 

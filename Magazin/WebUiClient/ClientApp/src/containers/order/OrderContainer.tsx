@@ -7,8 +7,8 @@ import { IAddToCardAction, IRemoveFromCardAction } from "../bascet/Bascet"
 import { IBascetState } from "../bascet/BascetState"
 import { IApplicationState } from "../../stores/IApplicationState";
 import { addToCard, removeFromCard } from "../bascet/actions"
-import { Product } from "../../models/Product"
-import { UserModel } from "../../models/UserModel"
+import Product from "../../models/Product"
+import UserModel from "../../models/UserModel"
 import { OrderAction } from "./actions"
 import { IOrderState } from "./OrderState"
 import { IOrderModel, Order } from "../../models/OrderModel"
@@ -18,7 +18,7 @@ import "./Order.css"
 export interface IOrderContainerProps extends RouteComponentProps<any> {
     addToCard: ActionCreator<IAddToCardAction>;
     removeFromCard: ActionCreator<IRemoveFromCardAction>;
-    user: UserModel,
+    user: UserModel | null,
     bascetState: IBascetState;
     error: string,
     fetching: boolean,

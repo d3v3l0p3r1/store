@@ -1,6 +1,6 @@
 ﻿
-export class News {
-    image: string;
-    title: string;
-    id: number;
+export default class News {
+    image: string = "";
+    title: string = "";
+    id: number = 0;
 }

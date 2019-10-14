@@ -3,7 +3,7 @@ import { ThunkAction } from "redux-thunk";
 import { IProductGridState, GridActions } from "./types";
 import { readProducts } from "../../api"
 import { ApiActionKeys } from "../../stores/ApiActionKeys"
-import { Product } from "../../models/Product"
+import Product from "../../models/Product"
 import { async } from "q";
 
 export const readData: ActionCreator<ThunkAction<Promise<GridActions>, Product[], null, GridActions>> = (category: number) => {

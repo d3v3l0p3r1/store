@@ -23,9 +23,6 @@ export default function configureStore() {
     const productGridState = ProductGridState;
 
     const sliderState = SliderState;
-    
-    const routerState: RouterState = { location: null };
-
 
     var userState = UserInitialState;
 
@@ -34,14 +31,18 @@ export default function configureStore() {
         userState = { ...userState, user: JSON.parse(userString) }
     }
 
+    const routerState: RouterState = {
+        action: history.action,
+        location: history.location
+    };
 
     const initialState: IApplicationState = {
         productGridState: productGridState,
         sliderState: sliderState,
         bascetState: bascetState,
         categoryState: CategoryState,
-        routerState: routerState,
-        userState: userState
+        userState: userState,
+        router: routerState
     };
 
     return createStore(

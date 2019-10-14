@@ -1,5 +1,5 @@
 ﻿
-export class Category {
-    public id: number;
-    public title: string;
+export default class Category {
+    public id: number = 0;
+    public title: string = "";
 }

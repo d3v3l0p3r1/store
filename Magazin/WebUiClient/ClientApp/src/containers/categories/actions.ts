@@ -3,7 +3,7 @@ import { ThunkAction } from "redux-thunk";
 import { ICategoriesState } from "./ICategoriesState"
 import { readCategories } from "../../api"
 import { ApiActionKeys } from "../../stores/ApiActionKeys"
-import { Category } from "../../models/Category";
+import Category from "../../models/Category";
 import { CategoriesActions } from "./types"
 import { async } from "q";
 

@@ -1,8 +1,9 @@
 ﻿import configureStoreDev from "./configureStore.dev";
 import configureStoreProd from "./configureStore.prod";
-import createHistory from 'history/createBrowserHistory'
+import { createBrowserHistory } from "history"
 
-export const history = createHistory();
+const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href') as string;
+export const history = createBrowserHistory({ basename: baseUrl });
 
 const configure =
     process.env.NODE_ENV === "production"

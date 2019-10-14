@@ -2,13 +2,13 @@
 import {connect} from "react-redux"
 import { IOpenLoginFormAction , OpenLoginFormAction} from "./actions"
 import { IApplicationState } from "../../stores/IApplicationState"
-import { UserModel } from "../../models/UserModel"
+import UserModel from "../../models/UserModel"
 import { ActionCreator, bindActionCreators, Dispatch, AnyAction } from "redux"
 import LoginContainer from "./LoginContainer"
 import RegisterContainer from "./RegistrationContainer"
 
 export interface IUSerNavProps {
-    user: UserModel,
+    user: UserModel | null,
     openLoginForm: ActionCreator<IOpenLoginFormAction>,
 }
 

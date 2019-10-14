@@ -1,5 +1,5 @@
 ﻿import * as React from 'react'
-import { Product } from "../../models/Product"
+import Product from "../../models/Product"
 import { connect } from "react-redux"
 import { IApplicationState } from "../../stores/IApplicationState";
 import { Dispatch, ActionCreator, bindActionCreators, AnyAction } from "redux";

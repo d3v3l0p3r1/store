@@ -1,5 +1,5 @@
 ﻿import * as React from "react";
-import { Product } from "../../models/Product"
+import Product from "../../models/Product"
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 export interface IProductItemModalProps {
@@ -25,13 +25,13 @@ export class ProductItemModal extends React.Component<IProductItemModalProps> {
         this.props.addToCard(product);
     }
 
-    onRemoveClick = (id : number) => {
+    onRemoveClick = (id: number) => {
         this.props.removeFromCard(id);
     }
 
 
     public render() {
-        return <Modal isOpen={this.props.isOpen} keyboard={true} backdrop={true} toggle={()=> this.props.closeModal()}>
+        return <Modal isOpen={this.props.isOpen} keyboard={true} backdrop={true} toggle={() => this.props.closeModal()}>
 
             <ModalHeader toggle={() => this.props.closeModal()} style={headerStyle}>
             </ModalHeader >
@@ -39,7 +39,7 @@ export class ProductItemModal extends React.Component<IProductItemModalProps> {
                 <img src={this.props.product.img} width="100%" />
                 <h3>{this.props.product.title}</h3>
                 <span className="text-muted">{this.props.product.description}</span>
-                <br/>
+                <br />
                 <span className="text-dark"><b>{this.props.product.price} руб</b></span>
             </ModalBody>
             <ModalFooter>

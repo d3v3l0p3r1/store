@@ -1,6 +1,6 @@
 ﻿import { ActionCreator, Dispatch } from "redux"
 import { IAddToCardAction, IRemoveFromCardAction , IRemoveAllProduct} from "./Bascet"
-import { Product } from "../../models/Product"
+import Product from "../../models/Product"
 import { ApiActionKeys } from "../../stores/ApiActionKeys"
 
 

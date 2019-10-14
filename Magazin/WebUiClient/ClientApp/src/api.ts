@@ -1,10 +1,10 @@
 ﻿import { Settings } from "./Settings"
-import { News } from "./models/News"
-import { Product } from "./models/Product"
-import { Category } from "./models/Category"
+import News from "./models/News"
+import Product from "./models/Product"
+import Category from "./models/Category"
 import { IBascetState } from "./containers/bascet/BascetState"
 import { IOrderModel, Order } from "./models/OrderModel"
-import { UserModel } from './models/UserModel';
+import UserModel from './models/UserModel';
 
 const apiRoot = "http://localhost:51145";
 

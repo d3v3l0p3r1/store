@@ -1,6 +1,6 @@
 ﻿import { Action } from "redux"
 import { ApiActionKeys } from "../../stores/ApiActionKeys";
-import { IOrderModel, Order } from "../../models/OrderModel"
+import { Order } from "../../models/OrderModel"
 
 
 export interface IOrderFetchingAction extends Action {

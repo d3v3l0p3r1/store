@@ -4,7 +4,7 @@ import ProductGird from "../product/ProductGrid"
 import { IApplicationState } from "../../stores/IApplicationState";
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators, Action, ActionCreator, AnyAction } from "redux"
-import MainBascet from "../bascet/mainBascet"
+import  MainBascet from "../bascet/mainBascet"
 
 
 export interface IMainPageProps extends RouteComponentProps<any> {

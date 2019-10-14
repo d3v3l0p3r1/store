@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { Product } from "../../models/Product"
+import Product from "../../models/Product"
 import { ProductItemModal } from "./ProductItemModal"
 
 export interface IProductItemProps {

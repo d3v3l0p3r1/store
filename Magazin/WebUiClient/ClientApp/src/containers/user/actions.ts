@@ -1,6 +1,6 @@
 ﻿import { Action, ActionCreator, Dispatch } from "redux"
 import { ApiActionKeys } from "../../stores/ApiActionKeys"
-import { UserModel } from "../../models/UserModel"
+import UserModel from "../../models/UserModel"
 import { ThunkAction } from "redux-thunk";
 import { IUserState } from "./UserState"
 import { loginUser, registerUser } from "../../api"

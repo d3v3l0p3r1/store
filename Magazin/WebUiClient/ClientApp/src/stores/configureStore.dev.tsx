@@ -1,6 +1,6 @@
 ﻿import { applyMiddleware, createStore, AnyAction } from "redux"
 import thunkMiddleware from "redux-thunk";
-import { routerMiddleware } from "connected-react-router"
+import { routerMiddleware, RouterState } from "connected-react-router"
 import { rootReducer } from "./index"
 import { IApplicationState } from "./IApplicationState"
 import { IBascetState } from "../containers/bascet/BascetState"
@@ -11,7 +11,6 @@ import { initialState as CategoryState } from "../containers/categories/reducer"
 import { initialState as UserInitialState } from "../containers/user/reducer"
 import { IUserState } from "../containers/user/UserState"
 import { history } from "./configureStore"
-import { RouterState } from "react-router-redux";
 
 
 
@@ -26,7 +25,10 @@ export default function configureStore() {
 
     const sliderState = SliderState;
 
-    const routerState: RouterState = { location: null };
+    const routerState: RouterState = {
+        action: history.action,
+        location: history.location
+    };
 
     var userState = UserInitialState;
     
@@ -40,9 +42,10 @@ export default function configureStore() {
         sliderState: sliderState,
         bascetState: bascetState,
         categoryState: CategoryState,
-        routerState: routerState,
-        userState: userState
+        userState: userState,
+        router: routerState
     };
+
 
     return createStore(
         rootReducer,

@@ -1,4 +1,4 @@
-﻿import { Category } from "../../models/Category"
+﻿import Category from "../../models/Category"
 import { Action } from "redux"
 import { ApiActionKeys } from "../../stores/ApiActionKeys"
 

@@ -1,8 +1,8 @@
-﻿import { Product } from "../../models/Product"
+﻿import Product from "../../models/Product"
 import { Action } from "redux"
-import {ApiActionKeys} from "../../stores/ApiActionKeys"
+import { ApiActionKeys } from "../../stores/ApiActionKeys"
 
-export interface IProductGridState {    
+export interface IProductGridState {
     readonly products: ReadonlyArray<Product>;
     readonly isBusy: boolean;
     readonly errorMessage: string;

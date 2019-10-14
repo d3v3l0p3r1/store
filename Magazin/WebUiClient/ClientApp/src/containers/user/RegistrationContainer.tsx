@@ -6,7 +6,7 @@ import { IApplicationState } from "../../stores/IApplicationState";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { RegisterActions } from "./types"
 import { IOpenLoginFormAction, IOpenRegisterAction, OpenLoginFormAction, OpenRegisterFormAction, RegisterAction } from "./actions"
-import { UserModel } from "../../models/UserModel"
+import UserModel from "../../models/UserModel"
 import "./Styles/user.css"
 
 export interface IRegisterContainerProps {

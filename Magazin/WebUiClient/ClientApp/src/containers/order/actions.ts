@@ -4,7 +4,7 @@ import { ApiActionKeys } from "../../stores/ApiActionKeys"
 import { IOrderState } from "./OrderState"
 import { order } from "../../api"
 import { IOrderModel, Order } from "../../models/OrderModel"
-import { OrderActions } from "./types"
+import { OrderActions, IOrderCompleteAction } from "./types"
 import { async } from "q"
 
 
