@@ -80,7 +80,6 @@
     <None Remove="ClientApp\src\stores\configureStore.tsx" />
     <None Remove="ClientApp\src\stores\IApplicationState.ts" />
     <None Remove="ClientApp\src\stores\IBaseComponentState.ts" />
-    <None Remove="ClientApp\src\stores\index.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -145,7 +144,6 @@
     <TypeScriptCompile Include="ClientApp\src\stores\configureStore.tsx" />
     <TypeScriptCompile Include="ClientApp\src\stores\IApplicationState.ts" />
     <TypeScriptCompile Include="ClientApp\src\stores\IBaseComponentState.ts" />
-    <TypeScriptCompile Include="ClientApp\src\stores\index.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -22,7 +22,7 @@ export class Categories extends React.Component<ICategoriesProps, {}> {
 
     public componentWillMount() {
         this.props.readData();
-    }    
+    }
 
     public render() {
         const list = this.props.categories.map(c => {
@@ -56,7 +56,7 @@ export class Categories extends React.Component<ICategoriesProps, {}> {
 
 function mapStateToProps(storeState: IApplicationState, ownProps: any) {
     return {
-        categories: storeState.categoryState.categories,        
+        categories: storeState.categoryState.categories,
     }
 }
 

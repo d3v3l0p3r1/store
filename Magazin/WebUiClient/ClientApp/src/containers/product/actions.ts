@@ -9,23 +9,22 @@ import { async } from "q";
 export const readData: ActionCreator<ThunkAction<Promise<GridActions>, Product[], null, GridActions>> = (category: number) => {
 
     return async (dispatch: Dispatch<GridActions>) => {
-        const result = readProducts(category);
-
-        result.then((response) => {
-
-            return dispatch({
+        try {
+            const result = await readProducts(category);
+            dispatch({
                 type: ApiActionKeys.Product_Read,
-                payload: response,
+                payload: result,
                 category: category
             });
-        });
-
-        result.catch((error) => {
-            return dispatch({
+        }
+        catch (error)
+        {
+            dispatch({
                 type: ApiActionKeys.Product_Error,
                 payload: error
             });
-        });
+        }
+        
 
         return dispatch({
             type: ApiActionKeys.Product_Fetching,
