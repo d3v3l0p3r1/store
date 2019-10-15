@@ -4,14 +4,19 @@ import { IProductGridState, GridActions } from "./types";
 import { readProducts } from "../../api"
 import { ApiActionKeys } from "../../stores/ApiActionKeys"
 import Product from "../../models/Product"
-import { async } from "q";
 
 export const readData: ActionCreator<ThunkAction<Promise<GridActions>, Product[], null, GridActions>> = (category: number) => {
 
     return async (dispatch: Dispatch<GridActions>) => {
+
+        dispatch({
+            type: ApiActionKeys.Product_Fetching,
+            payload: true
+        });
+
         try {
             const result = await readProducts(category);
-            dispatch({
+            return dispatch({
                 type: ApiActionKeys.Product_Read,
                 payload: result,
                 category: category
@@ -19,17 +24,11 @@ export const readData: ActionCreator<ThunkAction<Promise<GridActions>, Product[]
         }
         catch (error)
         {
-            dispatch({
+            return dispatch({
                 type: ApiActionKeys.Product_Error,
                 payload: error
             });
         }
-        
-
-        return dispatch({
-            type: ApiActionKeys.Product_Fetching,
-            payload: true
-        });
     };
 };
 

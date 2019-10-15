@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Security.Claims;
+using System.Text.Json;
 using BaseCore.Security.Entities;
 using BaseCore.Security.Services.Abstract;
 using BaseCore.Security.Services.Concrete;
@@ -45,11 +46,18 @@ namespace WebUiAdmin
                 opts.Password.RequiredLength = 5;
                 opts.Password.RequireNonAlphanumeric = false;   // требуются ли не алфавитно-цифровые символы
                 opts.Password.RequireLowercase = false; // требуются ли символы в нижнем регистре
-                opts.Password.RequireUppercase = false; // требуются ли символы в верхнем регистре        
+                opts.Password.RequireUppercase = false; // требуются ли символы в верхнем регистре
                 opts.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
 
             services.AddMvc();
+
+            services.AddControllers()
+                .AddJsonOptions(config =>
+                {
+                    config.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                    config.JsonSerializerOptions.PropertyNamingPolicy = null;
+                });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
                 {
@@ -89,6 +97,7 @@ namespace WebUiAdmin
                 app.UseExceptionHandler("/Home/Error");
             }
 
+
             app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().Build());
 
             app.UseStaticFiles(new StaticFileOptions()
@@ -107,7 +116,7 @@ namespace WebUiAdmin
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-            }); 
+            });
 
         }
 

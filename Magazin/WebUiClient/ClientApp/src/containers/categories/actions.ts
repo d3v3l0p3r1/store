@@ -10,20 +10,24 @@ import { async } from "q";
 export const readData: ActionCreator<ThunkAction<Promise<CategoriesActions>, Category[], null, CategoriesActions>> = () => {
 
     return async (dispatch: Dispatch<CategoriesActions>) => {
+
+        dispatch({
+            type: ApiActionKeys.Category_Fetching,
+            payload: true
+        });
+
         try {
             const result = await readCategories();
 
-            dispatch({
+            return dispatch({
                 type: ApiActionKeys.Category_Read,
                 payload: result
             });
         } catch (error) {
-            dispatch({
+            return dispatch({
                 type: ApiActionKeys.Category_Error,
                 payload: error
             });
         }
-
-        return dispatch({ type: ApiActionKeys.Category_Fetching, payload: true });
     };
 };
