@@ -50,14 +50,18 @@ namespace WebUiAdmin
                 opts.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
 
-            services.AddMvc();
+            services.AddAuthentication();
+            services.AddAuthorization();
+
+            services.AddRazorPages();
 
             services.AddControllers()
-                .AddJsonOptions(config =>
+                .AddNewtonsoftJson(config =>
                 {
-                    config.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-                    config.JsonSerializerOptions.PropertyNamingPolicy = null;
+                    config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 });
+
+            services.AddControllersWithViews();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
                 {
@@ -74,10 +78,6 @@ namespace WebUiAdmin
                         ValidateIssuerSigningKey = true
                     };
                 });
-
-            services.AddAuthorization(options =>
-            {
-            });
 
             services.AddSingleton<IFileProvider>(
                 new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
@@ -108,11 +108,12 @@ namespace WebUiAdmin
             });
 
             app.UseRouting();
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapRazorPages();
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
@@ -124,8 +125,7 @@ namespace WebUiAdmin
         {
             var connectionString = Configuration.GetConnectionString(nameof(DataContext));
 
-            services.AddEntityFrameworkSqlServer()
-                .AddDbContext<DataContext>(options => options
+            services.AddDbContext<DataContext>(options => options
                     .UseNpgsql(connectionString, builder => builder.MigrationsAssembly("WebUiAdmin"))
                 );
         }

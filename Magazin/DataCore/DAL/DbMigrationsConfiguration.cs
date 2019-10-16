@@ -27,7 +27,7 @@ namespace DataCore.DAL
                 WriteCategory("Десерты", 6, dataContext);
                 WriteCategory("Напитки", 7, dataContext);
                 WriteCategory("Соусы", 8,dataContext);
-                WriteCategory("Блюда за бонусы", 9, dataContext);                
+                WriteCategory("Блюда за бонусы", 9, dataContext);
             }
 
             if (!dataContext.ProductKinds.Any())
