@@ -6,6 +6,7 @@ using DataCore.DAL;
 using DataCore.Entities;
 using DataCore.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebUiAdmin.Controllers
 {
@@ -13,7 +14,7 @@ namespace WebUiAdmin.Controllers
     {
         private readonly IProductCategoryService _productCategoryService;
 
-        public CategoryController(IProductCategoryService productCategoryService) :base(productCategoryService)
+        public CategoryController(IProductCategoryService productCategoryService) : base(productCategoryService)
         {
             _productCategoryService = productCategoryService;
         }
@@ -23,26 +24,24 @@ namespace WebUiAdmin.Controllers
             return View();
         }
 
-        
+
         [Produces("application/json")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
             var all = _productCategoryService.GetAll();
 
-            var total = all.Count();
-            var cats = all.Select(x => new
+            var total = await all.CountAsync();
+            var cats = await all.Select(x => new
             {
                 x.Id,
-                x.Title,               
-            });
+                x.Title,
+            }).ToListAsync();
 
             return new JsonResult(new
             {
                 Data = cats,
                 Total = total
             });
-
-
-        }        
+        }
     }
 }

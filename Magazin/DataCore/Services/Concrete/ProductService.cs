@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using BaseCore.Services.Abstract;
 using BaseCore.Services.Concrete;
 using DataCore.Entities;
@@ -16,9 +17,11 @@ namespace DataCore.Services.Concrete
         {
         }
 
-        public override Product Find(int id)
+        public override Task<Product> FindAsync(int id)
         {
-            return _repository.GetDbSet().Include(x => x.Category).Single(x => x.Id == id);            
+            return _repository.GetDbSet()
+                .Include(x => x.Category)
+                .SingleAsync(x => x.Id == id);
         }
 
         

@@ -7,6 +7,7 @@ using BaseCore.Security.Services.Abstract;
 using DataCore.DAL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebUiAdmin.Models;
 
 namespace WebUiAdmin.Controllers
@@ -22,22 +23,21 @@ namespace WebUiAdmin.Controllers
 
         [Route("GetUsers")]
         [Produces("application/json")]
-        public IActionResult GetUsers()
+        public async Task<IActionResult> GetUsers()
         {
 
             var users = _userService.GetAll();
 
 
-            var result = users.Select(x => new
+            var result = await users.Select(x => new
             {
                 x.Id,
                 x.UserName,
                 x.Email,
                 x.PhoneNumber
-            });
+            }).ToListAsync();
 
-            var total = users.Count();
-
+            var total = await users.CountAsync();
 
             return new JsonResult(new
             {

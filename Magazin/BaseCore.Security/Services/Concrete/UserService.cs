@@ -54,14 +54,20 @@ namespace BaseCore.Security.Services.Concrete
             _userManager.UpdateAsync(user);
         }
 
-        public User Create(User entity)
-        {   
-            throw new NotImplementedException();
+        public async Task<User> CreateAsync(User entity)
+        {
+            await _userManager.CreateAsync(entity);
+            return entity;
         }
 
-        public Task<User> CreateAsync(User entity)
+        public Task<User> FindAsync(int id)
         {
-            throw new NotImplementedException();
+            return _userManager.FindByIdAsync(id.ToString());
+        }
+
+        public Task DeleteAsync(int id)
+        {
+            throw new NotSupportedException();
         }
     }
 }

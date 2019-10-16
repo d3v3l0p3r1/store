@@ -6,6 +6,7 @@ using DataCore.Entities;
 using DataCore.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -29,18 +30,18 @@ namespace WebUiAdmin.Controllers
 
 
         [Produces("application/json")]
-        public IActionResult GetAll(int take, int skip)
+        public async Task<IActionResult> GetAll(int take, int skip)
         {
             if (take == 0)
             {
                 take = 100;
             }
 
-            var all = _newsService.GetAll();            
+            var all = _newsService.GetAll();
 
-            var products = all.OrderByDescending(x => x.Id).Skip(skip).Take(take);
+            var products = await all.OrderByDescending(x => x.Id).Skip(skip).Take(take).ToListAsync();
 
-            var total = all.Count();
+            var total = await all.CountAsync();
 
             return new JsonResult(new
             {
@@ -49,7 +50,7 @@ namespace WebUiAdmin.Controllers
             });
         }
 
-        public override IActionResult Create()
+        public ViewResult Create()
         {
             var news = new News
             {
@@ -58,6 +59,6 @@ namespace WebUiAdmin.Controllers
 
             return View("Edit", news);
         }
-        
+
     }
 }

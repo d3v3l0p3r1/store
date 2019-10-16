@@ -9,6 +9,6 @@ namespace DataCore.Repositories.Abstract
 {
     public interface IOrderRepository : IRepository<Order>
     {
-        IQueryable<OrderProduct> GetOrderProducts(int orderID);
+        IQueryable<OrderProduct> GetOrderProducts(long orderID);
     }
 }

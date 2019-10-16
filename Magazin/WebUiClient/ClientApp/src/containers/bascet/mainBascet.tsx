@@ -33,7 +33,7 @@ export class MainBascet extends React.Component<IMainBascetProps, {}> {
     }
 
     onOrderClick = () => {
-        history.push("/Order");        
+        history.push("/Order");
     }
 
     public render() {
@@ -98,7 +98,7 @@ export class MainBascet extends React.Component<IMainBascetProps, {}> {
 }
 
 function mapStateToProps(state: IApplicationState, ownProps: any) {
-    
+
     return {
         products: state.bascetState.products,
         total: state.bascetState.totalPrice,

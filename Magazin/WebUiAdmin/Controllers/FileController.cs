@@ -47,23 +47,24 @@ namespace WebUiAdmin.Controllers
 
             } while (isFileSection == false);
 
-            var fileData = _fileService.SaveFile(filePart.FileName, filePart.FileStream);
+            var fileData = await _fileService.SaveFile(filePart.FileName, filePart.FileStream);
             return new JsonResult(fileData);
         }
 
-        public IActionResult GetFilePath(int id)
-        {            
-            return new JsonResult(_fileService.GetFilePath(id));
+        public async Task<IActionResult> GetFilePath(int id)
+        {
+            var result = await _fileService.GetFilePath(id);
+            return new JsonResult(result);
         }
 
-        public IActionResult GetFile(int id)
+        public async Task<IActionResult> GetFile(int id)
         {
             if (id == 0)
             {
                 return NoContent();
             }
 
-            var path = _fileService.GetVirtualPath(id);
+            var path = await _fileService.GetVirtualPath(id);
 
             if (path == null)
             {

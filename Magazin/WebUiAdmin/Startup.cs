@@ -58,7 +58,7 @@ namespace WebUiAdmin
             services.AddControllers()
                 .AddNewtonsoftJson(config =>
                 {
-                    config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    config.SerializerSettings.ContractResolver = new DefaultContractResolver();
                 });
 
             services.AddControllersWithViews();
