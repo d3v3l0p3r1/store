@@ -17,6 +17,7 @@ namespace DataCore.DAL
         public DbSet<OrderProduct> OrderProducts { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<ProductKind> ProductKinds { get; set; }
+        public DbSet<Balance> Balance { get; set; }
 
         public DataContext()
         {
