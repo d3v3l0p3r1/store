@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using BaseCore.Entities;
 using BaseCore.Services.Abstract;
 using BaseCore.Services.Concrete;
@@ -22,13 +23,13 @@ namespace WebUiAdmin.Concrete
             }
         }
 
-        public FileData SaveFile(string fileName, Stream stream)
+        public async Task<FileData> SaveFile(string fileName, Stream stream)
         {
             var fileID = Guid.NewGuid();
 
-            using (var fs = new FileStream(dir + fileID, FileMode.Create))
+            using (var fs = new FileStream(dir + fileID, FileMode.CreateNew))
             {
-                stream.CopyTo(fs);
+                await stream.CopyToAsync(fs);
             }
 
             var fileData = new FileData
@@ -39,19 +40,19 @@ namespace WebUiAdmin.Concrete
                 FileID = fileID,
             };
 
-            return _repository.Create(fileData);
+            return await _repository.CreateAsync(fileData);
         }
 
-        public string GetFilePath(int id)
+        public async Task<string> GetFilePath(int id)
         {
-            var fileData = Find(id);
+            var fileData = await FindAsync(id);
 
             return Path.Combine(dir, fileData.FileID.ToString());
         }
 
-        public string GetVirtualPath(int id)
+        public async Task<string> GetVirtualPath(int id)
         {
-            var fileData = Find(id);
+            var fileData = await FindAsync(id);
 
             if (fileData == null)
             {

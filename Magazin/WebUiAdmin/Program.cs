@@ -32,17 +32,17 @@ namespace WebUiAdmin
 
         private static async void InitUsers(IWebHost host)
         {
-            using (var scope = host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                var dataContext = services.GetService<DataContext>();
-                var userManager = services.GetRequiredService<UserManager>();
-                var roleManager = services.GetRequiredService<RoleManager>();
+            using var scope = host.Services.CreateScope();
+            var services = scope.ServiceProvider;
+            var dataContext = services.GetService<DataContext>();
+            var userManager = services.GetRequiredService<UserManager>();
+            var roleManager = services.GetRequiredService<RoleManager>();
 
-                await DbMigrationsConfiguration.InitializeAsync(userManager, roleManager);
+            await dataContext.Database.EnsureCreatedAsync();            
 
-                DbMigrationsConfiguration.Seed(dataContext);
-            }
+            await DbMigrationsConfiguration.InitializeAsync(userManager, roleManager);
+
+            DbMigrationsConfiguration.Seed(dataContext);
 
         }
     }

@@ -8,7 +8,7 @@ using News = DataCore.Entities.News;
 
 namespace DataCore.DAL
 {
-    public class DataContext : IdentityDbContext<User, Role, int>
+    public class DataContext : IdentityDbContext<User, Role, long>
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }

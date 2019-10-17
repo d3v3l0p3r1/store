@@ -6,7 +6,7 @@ namespace BaseCore.Entities
     public abstract class BaseEntity : IBaseEntity
     {
         [Key]
-        public int Id { get; set; }
+        public long Id { get; set; }
         public bool Hidden { get; set; }
     }
 }

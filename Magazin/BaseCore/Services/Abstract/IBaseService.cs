@@ -7,11 +7,9 @@ namespace BaseCore.Services.Abstract
     public interface IBaseService<T> where T : IBaseEntity
     {
         IQueryable<T> GetAll();
-        T Find(int id);
-        T Update(T entity);
+        Task<T> FindAsync(int id);
         Task<T> UpdateAsync(T entity);
-        void Delete(int id);
-        T Create(T entity);
+        Task DeleteAsync(int id);
         Task<T> CreateAsync(T entity);
     }
 }

@@ -11,7 +11,7 @@ module.exports = function (grunt) {
                 expand: true,
                 cwd: 'Content/vendor/kendo/',
                 src: '**',
-                dest: 'wwwroot/lib/kendo/',                
+                dest: 'wwwroot/lib/kendo/',
                 filter: 'isFile'
             }
         },

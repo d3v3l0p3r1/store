@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DataCore.Entities;
 using DataCore.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebUiAdmin.Models.Api.Order;
 
 namespace WebUiAdmin.Controllers
@@ -23,7 +24,7 @@ namespace WebUiAdmin.Controllers
             return View();
         }
 
-        public IActionResult GetAll(int take, int skip, OrderState? state = null)
+        public async Task<IActionResult> GetAll(int take, int skip, OrderState? state = null)
         {
             var all = _orderService.GetAll();
 
@@ -31,10 +32,10 @@ namespace WebUiAdmin.Controllers
             {
                 all = all.Where(x => x.State == state.Value);
             }
-            var orders = all.OrderByDescending(x => x.Id).Skip(skip).Take(take);
-            
-            var total = all.Count();
 
+            var total = await all.CountAsync();
+            var orders = await all.OrderByDescending(x => x.Id).Skip(skip).Take(take).ToListAsync();
+            
             return new JsonResult(new
             {
                 Data = orders,
@@ -42,18 +43,18 @@ namespace WebUiAdmin.Controllers
             });
         }
 
-        public override IActionResult Edit(int id)
+        public override async Task<IActionResult> Edit(int id)
         {
-            var order = _orderService.Find(id);
+            var order = await _orderService.FindAsync(id);
 
             return View(order);
         }
 
-        public IActionResult Update([FromBody]Order order)
+        public async Task<IActionResult> Update([FromBody]Order order)
         {
             if (ModelState.IsValid)
             {
-                _orderService.Update(order);
+                await _orderService.UpdateAsync(order);
                 return Ok();
             }
 
@@ -66,21 +67,21 @@ namespace WebUiAdmin.Controllers
         }
 
 
-        public IActionResult GetOrderProducts(int orderID)
+        public async Task<IActionResult> GetOrderProducts(int orderID)
         {
-            var products = _orderService.GetOrderProducts(orderID);
+            var products = await _orderService.GetOrderProducts(orderID);
 
             return Ok(products);
         }
 
         [HttpPost]
-        public IActionResult ToDelivery(int id)
+        public async Task<IActionResult> ToDelivery(int id)
         {
-            var order = _orderService.Find(id);
+            var order = await _orderService.FindAsync(id);
             if (order != null)
             {
                 order.State = OrderState.InProgress;
-                _orderService.Update(order);
+                await _orderService.UpdateAsync(order);
                 return Ok();
             }
 
@@ -88,13 +89,13 @@ namespace WebUiAdmin.Controllers
         }
 
         [HttpPost]
-        public IActionResult ToComplete(int id)
+        public async Task<IActionResult> ToComplete(int id)
         {
-            var order = _orderService.Find(id);
+            var order = await _orderService.FindAsync(id);
             if (order != null)
             {
                 order.State = OrderState.Complete;
-                _orderService.Update(order);
+                await _orderService.UpdateAsync(order);
                 return Ok();
             }
 

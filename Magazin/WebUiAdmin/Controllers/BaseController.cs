@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using BaseCore.Entities;
 using BaseCore.Services;
 using BaseCore.Services.Abstract;
@@ -9,29 +10,29 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUiAdmin.Controllers
-{    
+{
     [Authorize(Roles = "admin")]
-    public class BaseController<T> : Controller where T: IBaseEntity, new()
+    public class BaseController<T> : Controller where T : IBaseEntity, new()
     {
         private readonly IBaseService<T> _baseService;
 
         public BaseController(IBaseService<T> baseService)
         {
             _baseService = baseService;
-        } 
+        }
 
-        public virtual IActionResult Edit(int id)
+        public virtual async Task<IActionResult> Edit(int id)
         {
-            var cat = _baseService.Find(id);
+            var cat = await _baseService.FindAsync(id);
             return View(cat);
         }
 
         [HttpPost]
-        public virtual IActionResult Edit(T entity)
+        public virtual async Task<IActionResult> Edit(T entity)
         {
             try
             {
-                _baseService.Update(entity);
+                await _baseService.UpdateAsync(entity);
                 return RedirectToAction("Index");
             }
             catch (Exception e)
@@ -40,24 +41,17 @@ namespace WebUiAdmin.Controllers
             }
         }
 
-        public virtual IActionResult Create()
-        {
-            var kind = new T();
-
-            return View("Edit", kind);
-        }
-
         [HttpPost]
-        public virtual IActionResult Create(T entity)
+        public virtual async Task<IActionResult> Create(T entity)
         {
-            _baseService.Update(entity);
+            await _baseService.UpdateAsync(entity);
             return View("Index");
         }
 
         [HttpPost]
-        public virtual IActionResult Delete(int id)
+        public virtual async Task<IActionResult> Delete(int id)
         {
-            _baseService.Delete(id);
+            await _baseService.DeleteAsync(id);
             return View("Index");
         }
     }

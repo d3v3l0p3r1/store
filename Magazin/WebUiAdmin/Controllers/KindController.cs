@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DataCore.Entities;
 using DataCore.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebUiAdmin.Controllers
 {
@@ -24,16 +25,16 @@ namespace WebUiAdmin.Controllers
         }
 
         [Produces("application/json")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
             var all = _kindService.GetAll();
 
-            var total = all.Count();
-            var cats = all.Select(x => new
+            var total = await all.CountAsync();
+            var cats = await all.Select(x => new
             {
                 x.Id,
                 x.Title,
-            });
+            }).ToListAsync();
 
             return new JsonResult(new
             {

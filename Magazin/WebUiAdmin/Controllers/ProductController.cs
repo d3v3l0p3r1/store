@@ -8,6 +8,7 @@ using DataCore.Services.Abstract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebUiAdmin.Controllers
 {
@@ -25,7 +26,7 @@ namespace WebUiAdmin.Controllers
         }
 
         [Produces("application/json")]
-        public IActionResult GetAll(int take, int skip, int? catID = null)
+        public async Task<IActionResult> GetAll(int take, int skip, int? catID = null)
         {
             if (take == 0)
             {
@@ -38,10 +39,10 @@ namespace WebUiAdmin.Controllers
             {
                 all = all.Where(x => x.CategoryID == catID.Value);
             }
-            
-            var products = all.OrderByDescending(x => x.Id).Skip(skip).Take(take);            
 
-            var total = all.Count();
+            var products = await all.OrderByDescending(x => x.Id).Skip(skip).Take(take).ToListAsync();
+
+            var total = await all.CountAsync();
 
             return new JsonResult(new
             {
@@ -50,26 +51,28 @@ namespace WebUiAdmin.Controllers
             });
         }
 
-        public override IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewBag.CategoryID = _productCategoryService.GetAll()
-                .Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Title });
+            ViewBag.CategoryID = await _productCategoryService.GetAll()
+                .Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Title }).ToListAsync();
 
-            ViewBag.KindID = _kindService.GetAll()
-                .Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Title });
+            ViewBag.KindID = await _kindService.GetAll()
+                .Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Title }).ToListAsync();
 
-            return base.Create();
+            return View("Edit", new Product());
         }
 
-        public override IActionResult Edit(int id)
+        public override async Task<IActionResult> Edit(int id)
         {
-            var product = _productService.Find(id);
+            var product = await _productService.FindAsync(id);
 
-            ViewBag.CategoryID = _productCategoryService.GetAll()
-                .Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Title });
+            ViewBag.CategoryID = await _productCategoryService.GetAll()
+                .Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Title })
+                .ToListAsync();
 
-            ViewBag.KindID = _kindService.GetAll()
-                .Select(x => new SelectListItem() {Value = x.Id.ToString(), Text = x.Title});
+            ViewBag.KindID = await _kindService.GetAll()
+                .Select(x => new SelectListItem() {Value = x.Id.ToString(), Text = x.Title})
+                .ToListAsync();
 
             ViewData["Product"] = product;
 
@@ -77,9 +80,9 @@ namespace WebUiAdmin.Controllers
         }
 
         [HttpPost]
-        public override IActionResult Edit(Product product)
+        public override async Task<IActionResult> Edit(Product product)
         {
-            _productService.Update(product);
+            await _productService.UpdateAsync(product);
             return View("Index");
         }
 

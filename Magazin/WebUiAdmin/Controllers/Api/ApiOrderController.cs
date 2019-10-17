@@ -34,7 +34,7 @@ namespace WebUiAdmin.Controllers.Api
                 string nameIdentifier = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
                 if (!String.IsNullOrWhiteSpace(nameIdentifier))
-                {                    
+                {
                     int.TryParse(nameIdentifier, out int id);
                     if (id != 0)
                     {

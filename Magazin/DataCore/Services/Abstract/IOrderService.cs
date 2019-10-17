@@ -10,8 +10,8 @@ using DataCore.Models;
 namespace DataCore.Services.Abstract
 {
     public interface IOrderService : IBaseService<Order>
-    {        
+    {
         Task<Order> CreateAsync(int? userID, OrderModel model);
-        IQueryable<OrderProduct> GetOrderProducts(int orderID);
+        Task<List<OrderProduct>> GetOrderProducts(int orderID);
     }
 }

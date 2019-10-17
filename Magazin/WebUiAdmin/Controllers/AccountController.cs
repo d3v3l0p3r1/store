@@ -19,7 +19,7 @@ namespace WebUiAdmin.Controllers
 
         public AccountController(SignInManager<User> signInManager)
         {
-            _signInManager = signInManager;            
+            _signInManager = signInManager;
         }
         
         public IActionResult Index()
