@@ -36,8 +36,4 @@
     </Compile>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\Abstract\Documents\" />
-  </ItemGroup>
-
 </Project>

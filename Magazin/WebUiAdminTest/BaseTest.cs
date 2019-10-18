@@ -1,5 +1,6 @@
 ﻿using DataCore.DAL;
 using DataCore.Entities;
+using DataCore.Entities.Documents;
 using DataCore.Repositories.Concrete;
 using DataCore.Services.Concrete;
 using DataCore.Services.Concrete.Documents;
@@ -24,6 +25,9 @@ namespace WebUiAdminTest
         protected Repository<ProductCategory> ProductCategoryRepository;
         protected ProductCategoryService ProductCategoryService;
 
+        protected Repository<IncomingDocument> IncomingDocumentRepository;
+        protected IncomingDocumentService IncomingDocumentService;
+
         public BaseTest()
         {
             var builder = new DbContextOptionsBuilder<DataContext>();
@@ -40,6 +44,9 @@ namespace WebUiAdminTest
 
             ProductCategoryRepository = new Repository<ProductCategory>(DataContext);
             ProductCategoryService = new ProductCategoryService(ProductCategoryRepository);
+
+            IncomingDocumentRepository = new Repository<IncomingDocument>(DataContext);
+            IncomingDocumentService = new IncomingDocumentService(IncomingDocumentRepository, BalanceService);
         }
 
         [SetUp]

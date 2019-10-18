@@ -1,5 +1,6 @@
 ﻿using DataCore.DAL;
 using DataCore.Entities;
+using DataCore.Entities.Documents;
 using DataCore.Repositories.Concrete;
 using DataCore.Services.Concrete;
 using DataCore.Services.Concrete.Documents;
@@ -46,7 +47,22 @@ namespace WebUiAdminTest
         [Test]
         public async Task AddToBalanceTest()
         {
-            await BalanceService.AddToBalance(_product, 100);
+            var incomingDocument = new IncomingDocument() 
+            {
+                Date = DateTime.Now,
+                Entries = new List<IncomingDocumentEntry>()
+            };
+
+            var entry = new IncomingDocumentEntry()
+            {
+                Count = 100,
+                Product = _product
+            };
+
+            incomingDocument.Entries.Add(entry);
+
+            await IncomingDocumentService.CreateAsync(incomingDocument);
+            
             var count = await BalanceService.GetBalance(_product);
 
             Assert.AreEqual(100, count);

@@ -6,10 +6,21 @@ using System.Text;
 
 namespace DataCore.Entities
 {
-    public class Balance: BaseEntity
+    public class Balance : BaseEntity
     {
         public long ProductId { get; set; }
+
         public Product Product { get; set; }
+
+        public DateTime? ZeroDate { get; set; }
+
+        public List<BalanceEntry> BalanceEntries { get; set; } = new List<BalanceEntry>();
+    }
+
+    public class BalanceEntry : BaseEntity
+    {
+        public long BalanceId { get; set; }
+        public Balance Balance { get; set; }
 
         public int Count { get; set; }
 
@@ -18,7 +29,5 @@ namespace DataCore.Entities
 
         public long? OutcomingDocumentId { get; set; }
         public OutComingDocument GetOutComingDocument { get; set; }
-
-        public DateTime? ZeroDate { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using BaseCore.Entities;
 using BaseCore.Security.Entities;
 using DataCore.Entities;
+using DataCore.Entities.Documents;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using News = DataCore.Entities.News;
@@ -17,6 +18,7 @@ namespace DataCore.DAL
         public DbSet<OrderProduct> OrderProducts { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<ProductKind> ProductKinds { get; set; }
+        public DbSet<IncomingDocument> IncomingDocuments { get; set; }
         public DbSet<Balance> Balance { get; set; }
 
         public DataContext()
@@ -38,7 +40,9 @@ namespace DataCore.DAL
             builder.Entity<Order>().HasMany(x => x.Products).WithOne(x => x.Order);
             builder.Entity<OrderProduct>().HasOne(x => x.Product);
 
-            
+            builder.Entity<IncomingDocument>().HasMany(x => x.Entries).WithOne(x => x.Document);
+
+            builder.Entity<Balance>().HasMany(x => x.BalanceEntries).WithOne(x => x.Balance);
         }
     }
 }
