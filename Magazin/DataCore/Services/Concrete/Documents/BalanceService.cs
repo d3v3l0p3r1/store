@@ -33,6 +33,32 @@ namespace DataCore.Services.Concrete.Documents
             await _repository.UpdateAsync(balance);
         }
 
+        public async Task RemoveFrombalance(OutComingDocumentEntry entry)
+        {
+            var balance = await _repository.GetAll()
+                .Include(x=>x.BalanceEntries)
+                .FirstOrDefaultAsync(x => x.ProductId == entry.ProductId && x.ZeroDate != null);
+            if (balance == null)
+            {
+                throw new Exception("Нет товаров для списания");
+            }
+
+            var count = await GetBalance(entry.Product);
+
+            if (entry.Count > count)
+            {
+                throw new Exception("Нет достаточного количества товара для продажи");
+            }
+
+            balance.BalanceEntries.Add(new BalanceEntry 
+            { 
+                Count = -entry.Count, 
+                OutcomingDocumentId = entry.DocumentId
+            });
+
+            await _repository.UpdateAsync(balance);
+        }
+
         public async Task<int> GetBalance(Product product)
         {
             var query = _repository.GetAll()
@@ -43,7 +69,6 @@ namespace DataCore.Services.Concrete.Documents
 
             return result;
         }
-
 
 
     }

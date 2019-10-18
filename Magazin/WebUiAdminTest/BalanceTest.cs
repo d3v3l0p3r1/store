@@ -47,7 +47,7 @@ namespace WebUiAdminTest
         [Test]
         public async Task AddToBalanceTest()
         {
-            var incomingDocument = new IncomingDocument() 
+            var incomingDocument = new IncomingDocument()
             {
                 Date = DateTime.Now,
                 Entries = new List<IncomingDocumentEntry>()
@@ -62,10 +62,57 @@ namespace WebUiAdminTest
             incomingDocument.Entries.Add(entry);
 
             await IncomingDocumentService.CreateAsync(incomingDocument);
-            
+
             var count = await BalanceService.GetBalance(_product);
 
             Assert.AreEqual(100, count);
+        }
+
+
+        [Test]
+        public async Task RemoveFromBalanceTest()
+        {
+            var product = new Product()
+            {
+                Category = _productCategory,
+                Title = "Remove Title"
+            };
+            await ProductService.CreateAsync(product);
+
+            var incomingDocument = new IncomingDocument
+            {
+                Entries = new List<IncomingDocumentEntry>
+                {
+                    { 
+                        new IncomingDocumentEntry
+                        {
+                            Count = 100,
+                            Product = product
+                        }
+                    }
+                }
+            };
+
+            await IncomingDocumentService.CreateAsync(incomingDocument);
+
+            var outcomingDocument = new OutComingDocument()
+            {
+                Entry = new List<OutComingDocumentEntry>()
+                {
+                    {
+                        new OutComingDocumentEntry()
+                        {
+                            Count = 100,
+                            Product = product
+                        }
+                    }
+                }
+            };
+
+            await OutcomingDocumentService.CreateAsync(outcomingDocument);
+
+            var count = await BalanceService.GetBalance(_product);
+            Assert.AreEqual(0, count);
         }
     }
 }

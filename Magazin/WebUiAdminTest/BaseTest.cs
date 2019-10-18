@@ -15,7 +15,7 @@ namespace WebUiAdminTest
 {
     public abstract class BaseTest
     {
-        protected readonly DataContext DataContext;
+        protected DataContext DataContext;
         protected BalanceService BalanceService;
         protected BalanceRepository BalanceRepository;
 
@@ -28,11 +28,19 @@ namespace WebUiAdminTest
         protected Repository<IncomingDocument> IncomingDocumentRepository;
         protected IncomingDocumentService IncomingDocumentService;
 
+        protected Repository<OutComingDocument> OutcomingDocumentRepository;
+        protected OutcomingDocumentService OutcomingDocumentService;
+
         public BaseTest()
+        {
+            InitScope("default");
+        }
+
+        public void InitScope(string dbName)
         {
             var builder = new DbContextOptionsBuilder<DataContext>();
 
-            builder.UseInMemoryDatabase("testBase1");
+            builder.UseInMemoryDatabase(dbName);
 
             DataContext = new DataContext(builder.Options);
 
@@ -47,6 +55,9 @@ namespace WebUiAdminTest
 
             IncomingDocumentRepository = new Repository<IncomingDocument>(DataContext);
             IncomingDocumentService = new IncomingDocumentService(IncomingDocumentRepository, BalanceService);
+
+            OutcomingDocumentRepository = new Repository<OutComingDocument>(DataContext);
+            OutcomingDocumentService = new OutcomingDocumentService(OutcomingDocumentRepository, BalanceService);
         }
 
         [SetUp]
