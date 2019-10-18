@@ -44,7 +44,7 @@ namespace DataCore.Services.Concrete
 
             var productIds = model.Products.Select(x => x.Product.Id);
 
-            var products = _productService.GetAll()
+            var products = _productService.GetAllAsNotracking()
                     .Where(x => productIds.Contains(x.Id))
                     .Distinct()
                     .ToList()

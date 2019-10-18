@@ -6,7 +6,7 @@ namespace BaseCore.Services.Abstract
 {
     public interface IBaseService<T> where T : IBaseEntity
     {
-        IQueryable<T> GetAll();
+        IQueryable<T> GetAllAsNotracking();
         Task<T> FindAsync(int id);
         Task<T> UpdateAsync(T entity);
         Task DeleteAsync(int id);

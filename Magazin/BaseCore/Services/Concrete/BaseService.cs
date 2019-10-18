@@ -16,9 +16,9 @@ namespace BaseCore.Services.Concrete
         }
 
 
-        public virtual IQueryable<T> GetAll()
+        public virtual IQueryable<T> GetAllAsNotracking()
         {
-            var all = _repository.GetAll();
+            var all = _repository.GetAllAsNotracking();
             return all.Where(x => !x.Hidden);
         }
 

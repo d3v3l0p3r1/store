@@ -23,7 +23,7 @@ namespace WebUiAdmin.Controllers.Api
         [HttpGet]
         public IActionResult GetAll(int cat = 1)
         {
-            var all = _newsService.GetAll().OrderBy(x => x.Date);
+            var all = _newsService.GetAllAsNotracking().OrderBy(x => x.Date);
 
             var res = all.Select(x => new
             {

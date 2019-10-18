@@ -26,14 +26,14 @@ namespace WebUiAdmin.Controllers
         }
 
         [Produces("application/json")]
-        public async Task<IActionResult> GetAll(int take, int skip, int? catID = null)
+        public async Task<IActionResult> GetAllAsNotracking(int take, int skip, int? catID = null)
         {
             if (take == 0)
             {
                 take = 100;
             }
 
-            var all = _productService.GetAll();
+            var all = _productService.GetAllAsNotracking();
 
             if (catID != null)
             {
@@ -53,10 +53,10 @@ namespace WebUiAdmin.Controllers
 
         public async Task<IActionResult> Create()
         {
-            ViewBag.CategoryID = await _productCategoryService.GetAll()
+            ViewBag.CategoryID = await _productCategoryService.GetAllAsNotracking()
                 .Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Title }).ToListAsync();
 
-            ViewBag.KindID = await _kindService.GetAll()
+            ViewBag.KindID = await _kindService.GetAllAsNotracking()
                 .Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Title }).ToListAsync();
 
             return View("Edit", new Product());
@@ -66,11 +66,11 @@ namespace WebUiAdmin.Controllers
         {
             var product = await _productService.FindAsync(id);
 
-            ViewBag.CategoryID = await _productCategoryService.GetAll()
+            ViewBag.CategoryID = await _productCategoryService.GetAllAsNotracking()
                 .Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Title })
                 .ToListAsync();
 
-            ViewBag.KindID = await _kindService.GetAll()
+            ViewBag.KindID = await _kindService.GetAllAsNotracking()
                 .Select(x => new SelectListItem() {Value = x.Id.ToString(), Text = x.Title})
                 .ToListAsync();
 

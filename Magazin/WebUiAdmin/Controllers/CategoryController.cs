@@ -28,7 +28,7 @@ namespace WebUiAdmin.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> GetAll()
         {
-            var all = _productCategoryService.GetAll();
+            var all = _productCategoryService.GetAllAsNotracking();
 
             var total = await all.CountAsync();
             var cats = await all.Select(x => new

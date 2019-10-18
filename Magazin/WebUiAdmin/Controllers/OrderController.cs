@@ -26,7 +26,7 @@ namespace WebUiAdmin.Controllers
 
         public async Task<IActionResult> GetAll(int take, int skip, OrderState? state = null)
         {
-            var all = _orderService.GetAll();
+            var all = _orderService.GetAllAsNotracking();
 
             if (state != null)
             {

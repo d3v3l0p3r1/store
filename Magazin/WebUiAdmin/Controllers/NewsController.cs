@@ -37,7 +37,7 @@ namespace WebUiAdmin.Controllers
                 take = 100;
             }
 
-            var all = _newsService.GetAll();
+            var all = _newsService.GetAllAsNotracking();
 
             var products = await all.OrderByDescending(x => x.Id).Skip(skip).Take(take).ToListAsync();
 

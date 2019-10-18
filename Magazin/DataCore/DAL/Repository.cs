@@ -32,7 +32,7 @@ namespace DataCore.DAL
         }
 
 
-        public virtual IQueryable<T> GetAll()
+        public virtual IQueryable<T> GetAllAsNotracking()
         {
             var dbSet = _dataContext.Set<T>().AsNoTracking();
             return dbSet;

@@ -19,7 +19,7 @@ namespace BaseCore.Security.Services.Concrete
             _userManager = userManager;
         }
 
-        public IQueryable<User> GetAll()
+        public IQueryable<User> GetAllAsNotracking()
         {
             return _userManager.Users.Where(x=> x.Hidden == false);
         }

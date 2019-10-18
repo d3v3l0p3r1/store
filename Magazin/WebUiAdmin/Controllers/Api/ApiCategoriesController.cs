@@ -22,7 +22,7 @@ namespace WebUiAdmin.Controllers.Api
         [Route("GetAll")]
         public IActionResult GetAll()
         {
-            var all = _categoryService.GetAll();
+            var all = _categoryService.GetAllAsNotracking();
 
             var res = all.Select(x => new
             {

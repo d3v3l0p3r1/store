@@ -26,7 +26,7 @@ namespace WebUiAdmin.Controllers
         public async Task<IActionResult> GetUsers()
         {
 
-            var users = _userService.GetAll();
+            var users = _userService.GetAllAsNotracking();
 
 
             var result = await users.Select(x => new
