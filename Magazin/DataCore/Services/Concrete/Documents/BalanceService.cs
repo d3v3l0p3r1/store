@@ -37,7 +37,7 @@ namespace DataCore.Services.Concrete.Documents
         {
             var balance = await _repository.GetAll()
                 .Include(x=>x.BalanceEntries)
-                .FirstOrDefaultAsync(x => x.ProductId == entry.ProductId && x.ZeroDate != null);
+                .FirstOrDefaultAsync(x => x.ProductId == entry.ProductId && x.ZeroDate == null);
             if (balance == null)
             {
                 throw new Exception("Нет товаров для списания");
