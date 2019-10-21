@@ -221,8 +221,20 @@ namespace WebUiAdmin.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<int>("DocumentStatus")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("Hidden")
                         .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("ProcessDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -267,8 +279,20 @@ namespace WebUiAdmin.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<int>("DocumentStatus")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("Hidden")
                         .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("ProcessDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

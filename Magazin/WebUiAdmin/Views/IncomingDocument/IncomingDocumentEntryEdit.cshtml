@@ -59,10 +59,9 @@
         model = {
             ProductId: null,
             Product: null,
-            Price: null,
             Count: 1,
             Id: 0,
-            OrderID: 0,
+            DocumentId:0,
             Hidden: false
         }
     }
@@ -110,7 +109,6 @@
             value.File = null;
             viewModel.Product = value;
             viewModel.ProductId = value.Id;
-            viewModel.Price = value.Price;
         },
         dataSource: {
             type: "webapi",
@@ -130,7 +128,7 @@
     $('#@saveButton').on('click', function () {
 
         if (parentForm.op === "create") {
-            parentForm.model.Products.push(viewModel);
+            parentForm.model.Entries.push(viewModel);
         }
 
         parentForm.closeModal();

@@ -6,7 +6,7 @@ namespace DataCore.Entities.Documents
 {
     public class OutComingDocument : BaseDocument
     {
-        public List<OutComingDocumentEntry> Entry { get; set; }
+        public List<OutComingDocumentEntry> Entry { get; set; } = new List<OutComingDocumentEntry>();
     }
 
     public class OutComingDocumentEntry: BaseDocumentEntry<OutComingDocument>

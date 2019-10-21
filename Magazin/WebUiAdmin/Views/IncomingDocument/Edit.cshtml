@@ -113,7 +113,7 @@
             var row = grid.dataItem(grid.select());
 
             if (row) {
-                model.Products.remove(row);
+                model.Entries.remove(row);
             }
         };
 
@@ -122,7 +122,7 @@
 
         $grid.kendoGrid({
             dataSource: {
-                data: model.Products
+                data: model.Entries
             },
             selectable: "single,row",
             filterable: true,
@@ -165,7 +165,7 @@
             ]
         });
         $saveButton.on('click', function() {
-            var url = "@Url.Action("Update")";
+            var url = "@Url.Action("Edit")";
             var callback = function() {
 
             }

@@ -59,13 +59,29 @@
                     id: "ID",
                     data: "Data",
                     total: "Total"
-                }
+                },
+                pageSize: 20,
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
             },
             selectable: "single,row",
             columns: [
                 {
                     field: "Title",
-                    title: "Title"
+                    title: "Имя документа"
+                },
+                {
+                    field: "DocumentStatus",
+                    title: "Статус"
+                },
+                {
+                    field: "Date",
+                    title: "Дата создания"
+                },
+                {
+                    field: "ProcessDate",
+                    title: "Дата проводки"
                 }
             ]
         });

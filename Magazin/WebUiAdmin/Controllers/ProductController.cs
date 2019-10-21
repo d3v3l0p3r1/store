@@ -51,6 +51,7 @@ namespace WebUiAdmin.Controllers
             });
         }
 
+        [HttpGet]
         public override async Task<IActionResult> Create()
         {
             ViewBag.CategoryID = await _productCategoryService.GetAllAsNotracking()
@@ -59,9 +60,10 @@ namespace WebUiAdmin.Controllers
             ViewBag.KindID = await _kindService.GetAllAsNotracking()
                 .Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Title }).ToListAsync();
 
-            return View("Edit", new Product());
+            return await base.Create();
         }
 
+        [HttpGet]
         public override async Task<IActionResult> Edit(int id)
         {
             var product = await _productService.FindAsync(id);
@@ -78,14 +80,6 @@ namespace WebUiAdmin.Controllers
 
             return View(product);
         }
-
-        [HttpPost]
-        public override async Task<IActionResult> Edit(Product product)
-        {
-            await _productService.UpdateAsync(product);
-            return View("Index");
-        }
-
 
         public IActionResult Index()
         {

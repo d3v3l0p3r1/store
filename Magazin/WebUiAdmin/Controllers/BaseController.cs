@@ -21,6 +21,7 @@ namespace WebUiAdmin.Controllers
             _baseService = baseService;
         }
 
+        [HttpGet]
         public virtual async Task<IActionResult> Edit(int id)
         {
             var cat = await _baseService.FindAsync(id);
@@ -32,7 +33,15 @@ namespace WebUiAdmin.Controllers
         {
             try
             {
-                await _baseService.UpdateAsync(entity);
+                if(entity.Id == 0)
+                {
+                    await _baseService.CreateAsync(entity);
+                }
+                else
+                {
+                    await _baseService.UpdateAsync(entity);
+                }
+                
                 return RedirectToAction("Index");
             }
             catch (Exception e)
@@ -48,15 +57,7 @@ namespace WebUiAdmin.Controllers
             return Task.FromResult((IActionResult)result);
         }
 
-
-        [HttpPost]
-        public virtual async Task<IActionResult> Create(T entity)
-        {
-            await _baseService.UpdateAsync(entity);
-            return View("Index");
-        }
-
-        [HttpPost]
+        [HttpDelete]
         public virtual async Task<IActionResult> Delete(int id)
         {
             await _baseService.DeleteAsync(id);

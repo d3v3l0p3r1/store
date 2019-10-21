@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace WebUiAdmin.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20191021083848_initial")]
+    [Migration("20191021102106_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -223,8 +223,20 @@ namespace WebUiAdmin.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<int>("DocumentStatus")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("Hidden")
                         .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("ProcessDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -269,8 +281,20 @@ namespace WebUiAdmin.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<int>("DocumentStatus")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("Hidden")
                         .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("ProcessDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
