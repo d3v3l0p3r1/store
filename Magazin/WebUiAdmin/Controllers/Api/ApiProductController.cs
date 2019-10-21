@@ -23,7 +23,7 @@ namespace WebUiAdmin.Controllers.Api
         [Route("GetAll")]
         public IActionResult GetAll(int cat = 1)
         {
-            var all = _productService.GetAllAsNotracking().Where(x => x.CategoryID == cat);
+            var all = _productService.GetAllAsNotracking().Where(x => x.CategoryId == cat);
 
             var url = $"{Request.Scheme}://{Request.Host}/File/GetFile/";
 
@@ -33,8 +33,8 @@ namespace WebUiAdmin.Controllers.Api
                 x.Price,
                 x.Description,
                 x.Title,
-                x.KindID,
-                x.CategoryID,
+                x.KindId,
+                x.CategoryId,
                 KindTitle = x.Kind.Title,
                 File = x.FileID != null ? url + x.FileID : url + 1
             });

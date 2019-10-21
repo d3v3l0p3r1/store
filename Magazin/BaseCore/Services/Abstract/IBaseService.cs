@@ -7,9 +7,9 @@ namespace BaseCore.Services.Abstract
     public interface IBaseService<T> where T : IBaseEntity
     {
         IQueryable<T> GetAllAsNotracking();
-        Task<T> FindAsync(int id);
+        Task<T> FindAsync(long id);
         Task<T> UpdateAsync(T entity);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(long id);
         Task<T> CreateAsync(T entity);
     }
 }

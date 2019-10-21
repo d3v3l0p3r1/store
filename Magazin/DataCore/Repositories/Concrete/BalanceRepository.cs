@@ -24,7 +24,7 @@ namespace DataCore.Repositories.Concrete
 
         public async Task<Balance> GetOrCreateBalance(Product product)
         {
-            var balance = await GetAllAsNotracking().FirstOrDefaultAsync(x => x.ProductId == product.Id && x.ZeroDate != null);
+            var balance = await GetDbSet().FirstOrDefaultAsync(x => x.ProductId == product.Id && x.ZeroDate == null);
             if (balance == null)
             {
                 balance = new Balance()

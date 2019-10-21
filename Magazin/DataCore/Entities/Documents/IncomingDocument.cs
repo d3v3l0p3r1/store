@@ -9,6 +9,8 @@ namespace DataCore.Entities.Documents
         public List<IncomingDocumentEntry> Entries { get; set; }
     }
 
+
+
     public class IncomingDocumentEntry: BaseDocumentEntry<IncomingDocument>
     {
         

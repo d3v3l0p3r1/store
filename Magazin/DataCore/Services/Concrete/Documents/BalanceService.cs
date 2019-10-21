@@ -1,5 +1,7 @@
 ﻿using DataCore.Entities;
 using DataCore.Entities.Documents;
+using DataCore.Exceptions.Balance;
+using DataCore.Models;
 using DataCore.Repositories.Abstract;
 using DataCore.Services.Abstract.Documents;
 using Microsoft.EntityFrameworkCore;
@@ -36,7 +38,7 @@ namespace DataCore.Services.Concrete.Documents
         public async Task RemoveFrombalance(OutComingDocumentEntry entry)
         {
             var balance = await _repository.GetDbSet()
-                .Include(x=>x.BalanceEntries)
+                .Include(x => x.BalanceEntries)
                 .FirstOrDefaultAsync(x => x.ProductId == entry.ProductId && x.ZeroDate == null);
             if (balance == null)
             {
@@ -47,12 +49,17 @@ namespace DataCore.Services.Concrete.Documents
 
             if (entry.Count > count)
             {
-                throw new Exception("Нет достаточного количества товара для продажи");
+                throw new BalanceBelowZeroException();
             }
 
-            balance.BalanceEntries.Add(new BalanceEntry 
-            { 
-                Count = -entry.Count, 
+            if (entry.Count == count)
+            {
+                balance.ZeroDate = DateTime.Now;
+            }
+
+            balance.BalanceEntries.Add(new BalanceEntry
+            {
+                Count = -entry.Count,
                 OutcomingDocumentId = entry.DocumentId
             });
 
@@ -70,6 +77,49 @@ namespace DataCore.Services.Concrete.Documents
             return result;
         }
 
+        public async Task<Balance> Get(Product product)
+        {
+            var query = _repository.GetAllAsNotracking()
+                .Include(x => x.BalanceEntries)
+                .Where(x => x.ProductId == product.Id && x.ZeroDate == null);
 
+            return await query.SingleOrDefaultAsync();
+        }
+
+        public IQueryable<Balance> GetDbSet()
+        {
+            return _repository.GetDbSet();
+        }
+
+        public IQueryable<Balance> GetAllAsNoTracking()
+        {
+            return _repository.GetAllAsNotracking();
+        }
+
+        public async Task<List<BalancedProductModel>> GetProductBalance(long categoryId, string schema, string host)
+        {
+            var url = $"{schema}://{host}/File/GetFile/";
+
+            var query = _repository.GetAllAsNotracking()
+                .Include(x => x.Product)
+                .Include(x => x.Product.Kind)
+                .Include(x => x.BalanceEntries)
+                .Where(x => x.ZeroDate == null && x.BalanceEntries.Sum(z => z.Count) > 0);
+
+            var result = query.Select(x => new BalancedProductModel
+            {
+                Count = x.BalanceEntries.Sum(z => z.Count),
+                CateogryId = x.Product.CategoryId,
+                Description = x.Product.Description,
+                File = x.Product.FileID != null ? url + x.Product.FileID : url + 1,
+                KindId = x.Product.KindId,
+                Id = x.ProductId,
+                KingTitle = x.Product.Kind.Title,
+                Price = x.Product.Price,
+                Title = x.Product.Title
+            });
+
+            return await result.ToListAsync();
+        }
     }
 }

@@ -31,6 +31,9 @@ namespace WebUiAdminTest
         protected Repository<OutComingDocument> OutcomingDocumentRepository;
         protected OutcomingDocumentService OutcomingDocumentService;
 
+        protected Repository<ProductKind> ProductKingRepository;
+        protected KindService ProductKindService;
+
         public BaseTest()
         {
             InitScope("default");
@@ -48,7 +51,7 @@ namespace WebUiAdminTest
             ProductRepository = new Repository<Product>(DataContext);
 
             BalanceService = new BalanceService(BalanceRepository);
-            ProductService = new ProductService(ProductRepository);
+            ProductService = new ProductService(ProductRepository, BalanceService);
 
             ProductCategoryRepository = new Repository<ProductCategory>(DataContext);
             ProductCategoryService = new ProductCategoryService(ProductCategoryRepository);
@@ -58,6 +61,9 @@ namespace WebUiAdminTest
 
             OutcomingDocumentRepository = new Repository<OutComingDocument>(DataContext);
             OutcomingDocumentService = new OutcomingDocumentService(OutcomingDocumentRepository, BalanceService);
+
+            ProductKingRepository = new Repository<ProductKind>(DataContext);
+            ProductKindService = new KindService(ProductKingRepository);
         }
 
         [SetUp]
@@ -78,6 +84,49 @@ namespace WebUiAdminTest
             };
 
             await ProductService.CreateAsync(product);
+        }
+
+        protected async Task<IncomingDocument> CreateIncomingDocument(Product product, int count)
+        {
+            var incomingDocument = new IncomingDocument
+            {
+                Entries = new List<IncomingDocumentEntry>
+                {
+                    {
+                        new IncomingDocumentEntry
+                        {
+                            Count = count,
+                            Product = product
+                        }
+                    }
+                }
+            };
+
+            await IncomingDocumentService.CreateAsync(incomingDocument);
+            await IncomingDocumentService.Apply(incomingDocument.Id);
+
+            return incomingDocument;
+        }
+
+        protected async Task<OutComingDocument> CreateOutcomingDocument(Product product, int count)
+        {
+            var outcomingDocument = new OutComingDocument()
+            {
+                Entry = new List<OutComingDocumentEntry>()
+                {
+                    {
+                        new OutComingDocumentEntry()
+                        {
+                            Count = count,
+                            Product = product
+                        }
+                    }
+                }
+            };
+
+            await OutcomingDocumentService.CreateAsync(outcomingDocument);
+
+            return outcomingDocument;
         }
     }
 }

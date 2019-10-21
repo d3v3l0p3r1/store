@@ -1,6 +1,7 @@
 ﻿using DataCore.DAL;
 using DataCore.Entities;
 using DataCore.Entities.Documents;
+using DataCore.Exceptions.Balance;
 using DataCore.Repositories.Concrete;
 using DataCore.Services.Concrete;
 using DataCore.Services.Concrete.Documents;
@@ -44,32 +45,9 @@ namespace WebUiAdminTest
             await ProductService.CreateAsync(_product);
         }
 
-        [Test]
-        public async Task AddToBalanceTest()
-        {
-            var incomingDocument = new IncomingDocument()
-            {
-                Date = DateTime.Now,
-                Entries = new List<IncomingDocumentEntry>()
-            };
 
-            var entry = new IncomingDocumentEntry()
-            {
-                Count = 100,
-                Product = _product
-            };
-
-            incomingDocument.Entries.Add(entry);
-
-            await IncomingDocumentService.CreateAsync(incomingDocument);
-
-            var count = await BalanceService.GetBalance(_product);
-
-            Assert.AreEqual(100, count);
-        }
-
-
-        [Test]
+        [Test(Description = "Документ расхода")]
+        [Order(1)]
         public async Task RemoveFromBalanceTest()
         {
             var product = new Product()
@@ -79,40 +57,70 @@ namespace WebUiAdminTest
             };
             await ProductService.CreateAsync(product);
 
-            var incomingDocument = new IncomingDocument
-            {
-                Entries = new List<IncomingDocumentEntry>
-                {
-                    { 
-                        new IncomingDocumentEntry
-                        {
-                            Count = 100,
-                            Product = product
-                        }
-                    }
-                }
-            };
+            await CreateIncomingDocument(product, 100);
 
-            await IncomingDocumentService.CreateAsync(incomingDocument);
-
-            var outcomingDocument = new OutComingDocument()
-            {
-                Entry = new List<OutComingDocumentEntry>()
-                {
-                    {
-                        new OutComingDocumentEntry()
-                        {
-                            Count = 100,
-                            Product = product
-                        }
-                    }
-                }
-            };
-
-            await OutcomingDocumentService.CreateAsync(outcomingDocument);
+            await CreateOutcomingDocument(product, 100);
 
             var count = await BalanceService.GetBalance(_product);
             Assert.AreEqual(0, count);
         }
+
+        [Test(Description = "Документ прихода")]
+        [Order(2)]
+        public async Task AddToBalanceTest()
+        {
+            await CreateIncomingDocument(_product, 100);
+
+            var count = await BalanceService.GetBalance(_product);
+
+            Assert.AreEqual(100, count);
+        }
+
+        [Test(Description = "Попытка списать больше чем есть на балансе")]
+        [Order(3)]
+        public async Task BelowZeroBalanceTest()
+        {
+            var product = new Product()
+            {
+                Category = _productCategory
+            };
+
+            await ProductService.CreateAsync(product);
+
+            await CreateIncomingDocument(product, 10);
+
+
+            Assert.Throws<BalanceBelowZeroException>(() =>
+            {
+                var task = CreateOutcomingDocument(product, 100);
+
+                task.GetAwaiter().GetResult();
+            });
+        }
+
+        [Test(Description = "Когда количетсво продукта становится равным 0 надо выставить ZeroDate и создать новый баланс, т.к. это удобнее для подсчета")]
+        [Order(4)]
+        public async Task CreateNewBalanceTest()
+        {
+            var product = new Product()
+            {
+                Category = _productCategory,
+            };
+            await ProductService.CreateAsync(product);
+
+            await CreateIncomingDocument(product, 100);
+
+            var balanceBefore = await BalanceService.Get(product);
+
+            await CreateOutcomingDocument(product, 100);
+            await CreateIncomingDocument(product, 100);
+
+            var lastBalance = await BalanceService.Get(product);
+
+            Assert.AreNotEqual(balanceBefore.Id, lastBalance.Id);
+
+        }
+
+      
     }
 }

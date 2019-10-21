@@ -46,11 +46,11 @@ namespace DataCore.DAL
                 {
                     var product = new Product
                     {
-                        CategoryID = random.Next(1, 9),
+                        CategoryId = random.Next(1, 9),
                         Title = Faker.Name.First(),
                         Description = Faker.Name.FullName(),
                         Price = random.Next(100, 1000),
-                        KindID =  random.Next(1,3)
+                        KindId =  random.Next(1,3)
                     };
 
                     dataContext.Products.Add(product);

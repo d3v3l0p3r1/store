@@ -1,7 +1,7 @@
 ﻿@using WebUiAdmin.Components
 
-@{    
-    ViewBag.Title = "Вид";
+@{
+    ViewBag.Title = "Документы прихода";
     Layout = "~/Views/Shared/_Layout.cshtml";
     string wrp = "wrp_" + Guid.NewGuid().ToString("N");
     string grid = "grd_" + Guid.NewGuid().ToString("N");
@@ -14,6 +14,8 @@
     <div id="@grid"></div>
 
 </div>
+
+
 
 <script>
     $(function () {
@@ -38,8 +40,8 @@
                 if (selectedItem) {
                     $.post('@Url.Action("Delete")?id=' + selectedItem.Id).then(() => {
                         grid.dataSource.read();
-                    });   
-                }                    
+                    });
+                }
             }
         }
 
@@ -51,7 +53,7 @@
             dataSource: {
                 type: "webapi",
                 transport: {
-                    read: "@Url.Action("GetAll", "Kind")"
+                    read: "@Url.Action("GetAll", "IncomingDocument")"
                 },
                 schema: {
                     id: "ID",
@@ -68,9 +70,9 @@
             ]
         });
 
-        
+
         var editRow = function(id) {
-            var url = '@Url.Action("Edit", "Kind")?id=' + id;
+            var url = '@Url.Action("Edit", "IncomingDocument")?id=' + id;
 
             window.location.href = url;
         }
@@ -88,4 +90,3 @@
 
 
 </script>
-

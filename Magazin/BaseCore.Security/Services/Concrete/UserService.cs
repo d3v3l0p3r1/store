@@ -60,12 +60,12 @@ namespace BaseCore.Security.Services.Concrete
             return entity;
         }
 
-        public Task<User> FindAsync(int id)
+        public Task<User> FindAsync(long id)
         {
             return _userManager.FindByIdAsync(id.ToString());
         }
 
-        public Task DeleteAsync(int id)
+        public Task DeleteAsync(long id)
         {
             throw new NotSupportedException();
         }

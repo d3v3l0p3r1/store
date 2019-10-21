@@ -6,4 +6,5 @@
     public price: number = 0;
     public kindId: number = 0;
     public kindName: string = "";
+    public count: number = 0;
 }

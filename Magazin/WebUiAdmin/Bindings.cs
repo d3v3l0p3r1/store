@@ -8,10 +8,13 @@ using BaseCore.Security.Services.Concrete;
 using BaseCore.Services.Abstract;
 using DataCore.DAL;
 using DataCore.Entities;
+using DataCore.Entities.Documents;
 using DataCore.Repositories.Abstract;
 using DataCore.Repositories.Concrete;
 using DataCore.Services.Abstract;
+using DataCore.Services.Abstract.Documents;
 using DataCore.Services.Concrete;
+using DataCore.Services.Concrete.Documents;
 using Microsoft.Extensions.DependencyInjection;
 using WebUiAdmin.Concrete;
 
@@ -30,6 +33,8 @@ namespace WebUiAdmin
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<INewsService, NewsService>();
             services.AddScoped<IKindService, KindService>();
+            services.AddScoped<IBalanceService, BalanceService>();
+            services.AddScoped<IIncomingDocumentService, IncomingDocumentService>();
 
             services.AddScoped<IRepository<Product>, Repository<Product>>();
             services.AddScoped<IRepository<ProductCategory>, Repository<ProductCategory>>();
@@ -37,8 +42,12 @@ namespace WebUiAdmin
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IRepository<News>, Repository<News>>();
             services.AddScoped<IRepository<ProductKind>, Repository<ProductKind>>();
+            services.AddScoped<IBalanceRepository, BalanceRepository>();
+            services.AddScoped<IRepository<IncomingDocument>, Repository<IncomingDocument>>();
 
             services.AddScoped<IFileService, FileService>();
+
+            
         }
     }
 }

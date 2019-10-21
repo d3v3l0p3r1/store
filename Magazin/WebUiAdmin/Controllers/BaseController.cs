@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebUiAdmin.Controllers
 {
     [Authorize(Roles = "admin")]
-    public class BaseController<T> : Controller where T : IBaseEntity, new()
+    public abstract class BaseController<T> : Controller where T : IBaseEntity, new()
     {
         private readonly IBaseService<T> _baseService;
 
@@ -40,6 +40,14 @@ namespace WebUiAdmin.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet]
+        public virtual Task<IActionResult> Create()
+        {
+            var result = View("Edit", new T());
+            return Task.FromResult((IActionResult)result);
+        }
+
 
         [HttpPost]
         public virtual async Task<IActionResult> Create(T entity)

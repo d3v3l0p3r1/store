@@ -26,7 +26,7 @@ namespace WebUiAdmin.Controllers
         }
 
         [Produces("application/json")]
-        public async Task<IActionResult> GetAllAsNotracking(int take, int skip, int? catID = null)
+        public async Task<IActionResult> GetAll(int take, int skip, int? catID = null)
         {
             if (take == 0)
             {
@@ -37,7 +37,7 @@ namespace WebUiAdmin.Controllers
 
             if (catID != null)
             {
-                all = all.Where(x => x.CategoryID == catID.Value);
+                all = all.Where(x => x.CategoryId == catID.Value);
             }
 
             var products = await all.OrderByDescending(x => x.Id).Skip(skip).Take(take).ToListAsync();
@@ -51,7 +51,7 @@ namespace WebUiAdmin.Controllers
             });
         }
 
-        public async Task<IActionResult> Create()
+        public override async Task<IActionResult> Create()
         {
             ViewBag.CategoryID = await _productCategoryService.GetAllAsNotracking()
                 .Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Title }).ToListAsync();

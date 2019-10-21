@@ -7,6 +7,11 @@ namespace DataCore.Entities.Documents
 {
     public abstract class BaseDocument : BaseEntity
     {
+        
         public DateTime Date { get; set; }
+        public DateTime? ProcessDate { get; set; }
+        public DocumentStatus DocumentStatus { get; set; }
+        public string Title { get; set; } = $"Документ прихода от {DateTime.Now.Date}";
+        public string Description { get; set; }
     }
 }
