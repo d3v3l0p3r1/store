@@ -51,14 +51,14 @@ namespace BaseCore.Services.Concrete
 
         }
 
-        public virtual Task<T> FindAsync(long id)
+        public virtual Task<T> GetAsync(long id)
         {
-            return _repository.FindAsync(id);
+            return _repository.GetAsync(id);
         }
 
         public virtual async Task DeleteAsync(long id)
         {
-            var entity = await FindAsync(id);
+            var entity = await GetAsync(id);
             await _repository.DeleteAsync(entity);
         }
     }

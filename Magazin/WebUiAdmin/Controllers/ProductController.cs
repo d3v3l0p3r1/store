@@ -66,7 +66,7 @@ namespace WebUiAdmin.Controllers
         [HttpGet]
         public override async Task<IActionResult> Edit(int id)
         {
-            var product = await _productService.FindAsync(id);
+            var product = await _productService.GetAsync(id);
 
             ViewBag.CategoryID = await _productCategoryService.GetAllAsNotracking()
                 .Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Title })

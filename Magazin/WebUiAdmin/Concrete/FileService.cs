@@ -45,14 +45,14 @@ namespace WebUiAdmin.Concrete
 
         public async Task<string> GetFilePath(int id)
         {
-            var fileData = await FindAsync(id);
+            var fileData = await GetAsync(id);
 
             return Path.Combine(dir, fileData.FileID.ToString());
         }
 
         public async Task<string> GetVirtualPath(int id)
         {
-            var fileData = await FindAsync(id);
+            var fileData = await GetAsync(id);
 
             if (fileData == null)
             {

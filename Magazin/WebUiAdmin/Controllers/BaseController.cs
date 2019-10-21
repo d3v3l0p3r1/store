@@ -20,20 +20,20 @@ namespace WebUiAdmin.Controllers
         {
             _baseService = baseService;
         }
-
+        
         [HttpGet]
         public virtual async Task<IActionResult> Edit(int id)
         {
-            var cat = await _baseService.FindAsync(id);
+            var cat = await _baseService.GetAsync(id);
             return View(cat);
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Edit(T entity)
+        public virtual async Task<IActionResult> Edit([FromBody]T entity)
         {
             try
             {
-                if(entity.Id == 0)
+                if (entity.Id == 0)
                 {
                     await _baseService.CreateAsync(entity);
                 }
@@ -41,7 +41,7 @@ namespace WebUiAdmin.Controllers
                 {
                     await _baseService.UpdateAsync(entity);
                 }
-                
+
                 return RedirectToAction("Index");
             }
             catch (Exception e)

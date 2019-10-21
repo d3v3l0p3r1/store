@@ -52,5 +52,18 @@ namespace WebUiAdmin.Controllers
                 Total = total
             });
         }
+
+        public async Task<IActionResult> Apply([FromBody]IncomingDocument document)
+        {
+            try
+            {
+                await incomingDocumentService.Apply(document);
+                return RedirectToAction("Index");
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.GetBaseException().Message);
+            }
+        }
     }
 }

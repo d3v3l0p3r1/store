@@ -22,7 +22,7 @@ namespace DataCore.Services.Concrete
             _balanceService = balanceService;
         }
 
-        public override Task<Product> FindAsync(long id)
+        public override Task<Product> GetAsync(long id)
         {
             return _repository.GetDbSet()
                 .Include(x => x.Category)

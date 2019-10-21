@@ -49,10 +49,9 @@ namespace DataCore.DAL
             return _dataContext.SaveChangesAsync();
         }
 
-        public virtual async Task<T> FindAsync(long id)
+        public virtual Task<T> GetAsync(long id)
         {
-            var result = await _dataContext.Set<T>().FindAsync(id);
-            return result;
+            return _dataContext.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

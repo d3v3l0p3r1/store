@@ -60,7 +60,7 @@ namespace BaseCore.Security.Services.Concrete
             return entity;
         }
 
-        public Task<User> FindAsync(long id)
+        public Task<User> GetAsync(long id)
         {
             return _userManager.FindByIdAsync(id.ToString());
         }

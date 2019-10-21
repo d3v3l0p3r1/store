@@ -45,7 +45,7 @@ namespace WebUiAdmin.Controllers
 
         public override async Task<IActionResult> Edit(int id)
         {
-            var order = await _orderService.FindAsync(id);
+            var order = await _orderService.GetAsync(id);
 
             return View(order);
         }
@@ -67,7 +67,7 @@ namespace WebUiAdmin.Controllers
         }
 
 
-        public async Task<IActionResult> GetOrderProducts(int orderID)
+        public async Task<IActionResult> GetOrderProducts(long orderID)
         {
             var products = await _orderService.GetOrderProducts(orderID);
 
@@ -75,9 +75,9 @@ namespace WebUiAdmin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ToDelivery(int id)
+        public async Task<IActionResult> ToDelivery(long id)
         {
-            var order = await _orderService.FindAsync(id);
+            var order = await _orderService.GetAsync(id);
             if (order != null)
             {
                 order.State = OrderState.InProgress;
@@ -89,9 +89,9 @@ namespace WebUiAdmin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ToComplete(int id)
+        public async Task<IActionResult> ToComplete(long id)
         {
-            var order = await _orderService.FindAsync(id);
+            var order = await _orderService.GetAsync(id);
             if (order != null)
             {
                 order.State = OrderState.Complete;

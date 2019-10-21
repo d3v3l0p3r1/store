@@ -103,7 +103,7 @@ namespace WebUiAdminTest
             };
 
             await IncomingDocumentService.CreateAsync(incomingDocument);
-            await IncomingDocumentService.Apply(incomingDocument.Id);
+            await IncomingDocumentService.Apply(incomingDocument);
 
             return incomingDocument;
         }

@@ -8,17 +8,29 @@
     string cancelButton = "btn_" + Guid.NewGuid().ToString("N");
     string wrap = "wrp_" + Guid.NewGuid().ToString("N");
     string editProductWindow = "wnd_" + Guid.NewGuid().ToString("N");
+    string applyButtonId = "btn_" + Guid.NewGuid().ToString("N");
+    string revertButtonId = "btn_" + Guid.NewGuid().ToString("N");
 }
 
 
 <div id="@wrap" class="edit-container">
     <div class="navbar navbar-light bg-light justify-content-end">
-
         <div class="">
+            @if (Model.Id != 0)
+            {
+                if (Model.DocumentStatus == DataCore.Entities.Documents.DocumentStatus.New || Model.DocumentStatus == DataCore.Entities.Documents.DocumentStatus.Canceled)
+                {
+                    <button id="@applyButtonId" class="btn btn-success">Провести документ</button>
+                }
+                if (Model.DocumentStatus == DataCore.Entities.Documents.DocumentStatus.Processed)
+                {
+                    <button id="@revertButtonId" class="btn btn-success">Отменить проводку</button>
+                }
+
+            }
             <button id="@saveButton" class="btn btn-success">Сохранить</button>
             <button id="@cancelButton" class="btn btn-info">Закрыть</button>
         </div>
-
 
     </div>
     <div class="row">
@@ -62,6 +74,7 @@
     var $saveButton = $('#@saveButton');
     var $cancelButton = $('#@cancelButton');
     var $kendoWindow = $('#@editProductWindow');
+    var $applyButton = $('#@applyButtonId');
     var contentUrl = "@Url.Action("IncomingDocumentEntryEdit", new { parent = wrap })";
     var windowOptions = {
         content: contentUrl,
@@ -83,6 +96,7 @@
             op: ""
         };
 
+        var indexRoute = "@Url.Action("Index")";
 
 
         window['@wrap'] = form;
@@ -164,11 +178,12 @@
                 }
             ]
         });
+
         $saveButton.on('click', function() {
             var url = "@Url.Action("Edit")";
-            var callback = function() {
-
-            }
+            var callback = function () {
+                window.location = indexRoute;
+            };
 
             $.ajax({
                 url: url,
@@ -184,6 +199,26 @@
             var url = "@Url.Action("Index")";
             window.location = url;
         });
+
+        $applyButton.on('click', function () {
+
+            var callback = function (response) {
+
+                window.location = indexRoute;
+            };
+            var url = "@Url.Action("Apply")";
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: JSON.stringify(model),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: callback
+            });
+        });
+
+
+
 
 
     });

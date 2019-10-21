@@ -2,6 +2,7 @@
 using BaseCore.Services.Concrete;
 using DataCore.Entities.Documents;
 using DataCore.Services.Abstract.Documents;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,6 +19,14 @@ namespace DataCore.Services.Concrete.Documents
             _balanceService = balanceService;
         }
 
+        public override Task<IncomingDocument> GetAsync(long id)
+        {
+            return _repository.GetDbSet()
+                .Include(x => x.Entries)
+                .ThenInclude(x => x.Product)
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public override async Task<IncomingDocument> CreateAsync(IncomingDocument entity)
         {
             entity.DocumentStatus = DocumentStatus.New;
@@ -28,19 +37,26 @@ namespace DataCore.Services.Concrete.Documents
             return entity;
         }
 
-        public async Task Apply(long id)
+        public async Task Apply(IncomingDocument document)
         {
-            var entity = await FindAsync(id);
+            var original = await GetAsync(document.Id);
 
-            foreach (var entry in entity.Entries)
+            if (original.DocumentStatus == DocumentStatus.Processed)
+            {
+                throw new Exception("Документ уже проведен");
+            }
+
+            original.Entries = document.Entries;
+
+            foreach (var entry in document.Entries)
             {
                 await _balanceService.AddToBalance(entry);
             }
 
-            entity.DocumentStatus = DocumentStatus.Processed;
-            entity.ProcessDate = DateTime.Now;
+            original.DocumentStatus = DocumentStatus.Processed;
+            original.ProcessDate = DateTime.Now;
 
-            await UpdateAsync(entity);
+            await UpdateAsync(original);
         }
     }
 }

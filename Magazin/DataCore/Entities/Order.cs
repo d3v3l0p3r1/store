@@ -10,7 +10,7 @@ namespace DataCore.Entities
 {
     public class Order : BaseEntity
     {
-        public int? UserID { get; set; }
+        public long? UserID { get; set; }
         public virtual User User { get; set; }
 
         [DisplayName("Дата создания")]

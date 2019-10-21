@@ -59,6 +59,7 @@ namespace WebUiAdmin
                 .AddNewtonsoftJson(config =>
                 {
                     config.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                    config.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
 
             services.AddControllersWithViews();

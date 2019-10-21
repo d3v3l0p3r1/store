@@ -11,7 +11,7 @@ namespace BaseCore.Services.Abstract
         Task<T> CreateAsync(T entity);
         Task DeleteAsync(T entity);
         Task<T> UpdateAsync(T entity);
-        Task<T> FindAsync(long id);
+        Task<T> GetAsync(long id);
         IQueryable<T> GetAllAsNotracking();
         DbSet<T> GetDbSet();
     }

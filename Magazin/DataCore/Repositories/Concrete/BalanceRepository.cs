@@ -29,7 +29,7 @@ namespace DataCore.Repositories.Concrete
             {
                 balance = new Balance()
                 {
-                    Product = product,
+                    ProductId = product.Id
                 };
 
                 await CreateAsync(balance);
