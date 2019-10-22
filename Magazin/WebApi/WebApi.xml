@@ -4,6 +4,17 @@
         <name>WebApi</name>
     </assembly>
     <members>
+        <member name="T:WebUiAdmin.Controllers.AccountController">
+            <summary>
+            Авторизация, Аутентификация
+            </summary>
+        </member>
+        <member name="M:WebUiAdmin.Controllers.AccountController.#ctor(Microsoft.AspNetCore.Identity.SignInManager{BaseCore.Security.Entities.User})">
+            <summary>
+            ctor
+            </summary>
+            <param name="signInManager"></param>
+        </member>
         <member name="T:WebUiAdmin.Controllers.BaseController`1">
             <summary>
             Базовый контроллер

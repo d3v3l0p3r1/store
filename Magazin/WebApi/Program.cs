@@ -27,7 +27,7 @@ namespace WebUiAdmin
         private static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseStartup<Startup>()                
+                .UseStartup<Startup>()
                 .Build();
 
         private static async void InitUsers(IWebHost host)

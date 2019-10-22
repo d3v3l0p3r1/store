@@ -12,16 +12,24 @@ using WebUiAdmin.Models.AccountViewModels;
 
 namespace WebUiAdmin.Controllers
 {
+    /// <summary>
+    /// Авторизация, Аутентификация
+    /// </summary>
     [Authorize(Roles = "admin")]
     public class AccountController : Controller
     {
         private readonly SignInManager<User> _signInManager;
-
+        
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="signInManager"></param>
         public AccountController(SignInManager<User> signInManager)
         {
             _signInManager = signInManager;
         }
-        
+
+
 
     }
 }

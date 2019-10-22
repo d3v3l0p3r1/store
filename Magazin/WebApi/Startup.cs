@@ -1,15 +1,6 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.IO;
-using System.Security.Claims;
-using System.Text.Json;
+﻿using System.IO;
 using BaseCore.Security.Entities;
-using BaseCore.Security.Services.Abstract;
-using BaseCore.Security.Services.Concrete;
-using BaseCore.Services.Abstract;
 using DataCore.DAL;
-using DataCore.Services.Abstract;
-using DataCore.Services.Concrete;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -24,6 +15,7 @@ using Newtonsoft.Json.Serialization;
 using Microsoft.AspNetCore.SpaServices;
 using WebUiAdmin.Models;
 using System;
+using WebApi.Extensions;
 
 namespace WebUiAdmin
 {
@@ -43,17 +35,8 @@ namespace WebUiAdmin
 
             Bindings.Bind(services);
 
-            services.AddIdentity<User, Role>(opts =>
-            {
-                opts.Password.RequiredLength = 5;
-                opts.Password.RequireNonAlphanumeric = false;   // требуются ли не алфавитно-цифровые символы
-                opts.Password.RequireLowercase = false; // требуются ли символы в нижнем регистре
-                opts.Password.RequireUppercase = false; // требуются ли символы в верхнем регистре
-                opts.User.RequireUniqueEmail = true;
-            }).AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
-
-            services.AddAuthentication();
-            services.AddAuthorization();
+            services.InitAuth();
+            
             services.AddControllers()
                 .AddNewtonsoftJson(config =>
                 {
@@ -61,21 +44,6 @@ namespace WebUiAdmin
                     config.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-                {
-                    options.RequireHttpsMetadata = false;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidIssuer = AuthOptions.ISSUER,
-
-                        ValidateAudience = true,
-                        ValidAudience = AuthOptions.AUDIENCE,
-
-                        IssuerSigningKey = AuthOptions.GetKey(),
-                        ValidateIssuerSigningKey = true
-                    };
-                });
 
             services.AddSingleton<IFileProvider>(
                 new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
@@ -114,6 +82,10 @@ namespace WebUiAdmin
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
             });
 
+            app.UseIdentityServer();
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseSwagger();
             app.UseSwaggerUI(c => {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
@@ -121,8 +93,6 @@ namespace WebUiAdmin
             });
 
             app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
         }
 
         private void InitDbContext(IServiceCollection services)

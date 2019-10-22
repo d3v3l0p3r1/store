@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using DataCore.Entities;
 using DataCore.Models;
 using DataCore.Services.Abstract;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +22,7 @@ namespace WebUiAdmin.Controllers.Api
             _orderService = orderService;
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Order([FromBody]OrderModel model)
