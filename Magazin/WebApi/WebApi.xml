@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebApi</name>
+    </assembly>
+    <members>
+        <member name="T:WebUiAdmin.Controllers.BaseController`1">
+            <summary>
+            Базовый контроллер
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:WebUiAdmin.Controllers.BaseController`1.#ctor(BaseCore.Services.Abstract.IBaseService{`0})">
+            <summary>
+            ctor
+            </summary>
+            <param name="baseService"></param>
+        </member>
+        <member name="M:WebUiAdmin.Controllers.BaseController`1.Create(`0)">
+            <summary>
+            Создать сущность
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebUiAdmin.Controllers.BaseController`1.Update(`0)">
+            <summary>
+            Обновить сущность
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebUiAdmin.Controllers.BaseController`1.Delete(System.Int32)">
+            <summary>
+            Удалить сущность
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebUiAdmin.Controllers.CategoryController">
+            <summary>
+            Категории продукта
+            </summary>
+        </member>
+        <member name="T:WebUiAdmin.Controllers.IncomingDocumentController">
+            <summary>
+            Документы прихода
+            </summary>
+        </member>
+        <member name="T:WebUiAdmin.Controllers.KindController">
+            <summary>
+            Вид продукта
+            </summary>
+        </member>
+        <member name="T:WebUiAdmin.Controllers.NewsController">
+            <summary>
+            Новости
+            </summary>
+        </member>
+        <member name="T:WebUiAdmin.Controllers.OrderController">
+            <summary>
+            Заказы
+            </summary>
+        </member>
+        <member name="M:WebUiAdmin.Controllers.OrderController.GetOrderProducts(System.Int64)">
+            <summary>
+            Получить список продуктов по заказу
+            </summary>
+            <param name="orderID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebUiAdmin.Controllers.OrderController.ToDelivery(System.Int64)">
+            <summary>
+            Отпраить заказ на доставку
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebUiAdmin.Controllers.OrderController.ToComplete(System.Int64)">
+            <summary>
+            Закрыть заказ
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebUiAdmin.Controllers.ProductController">
+            <summary>
+            Продукты
+            </summary>
+        </member>
+        <member name="M:WebUiAdmin.Controllers.ProductController.GetAll(System.Int32,System.Int32,System.Nullable{System.Int32})">
+            <summary>
+            Получить список продуктов
+            </summary>
+            <param name="take"></param>
+            <param name="skip"></param>
+            <param name="catID"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebUiAdmin.Controllers.UserController">
+            <summary>
+            Пользователи
+            </summary>
+        </member>
+        <member name="M:WebUiAdmin.Controllers.UserController.GetUsers">
+            <summary>
+            Список пользователей
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WebUiAdmin.Controllers.Api.AccountController">
+            <summary>
+            Account controller
+            </summary>
+        </member>
+        <member name="M:WebUiAdmin.Controllers.Api.AccountController.#ctor(Microsoft.AspNetCore.Identity.SignInManager{BaseCore.Security.Entities.User},Microsoft.AspNetCore.Identity.UserManager{BaseCore.Security.Entities.User})">
+            <summary>
+            Ctor
+            </summary>
+            <param name="signInManager"></param>
+            <param name="userManager"></param>
+        </member>
+        <member name="T:WebUiAdmin.Controllers.Api.BalanceController">
+            <summary>
+            Остатки
+            </summary>
+        </member>
+        <member name="T:WebUiAdmin.Controllers.Api.CategoryController">
+            <summary>
+            Категории продукта
+            </summary>
+        </member>
+        <member name="T:WebUiAdmin.Controllers.Api.NewsController">
+            <summary>
+            Новости
+            </summary>
+        </member>
+        <member name="T:WebUiAdmin.Controllers.Api.OrderController">
+            <summary>
+            Заказы
+            </summary>
+        </member>
+        <member name="T:WebUiAdmin.Controllers.Api.ProductController">
+            <summary>
+            Продукты
+            </summary>
+        </member>
+        <member name="P:WebUiAdmin.Models.Api.Order.OrderProductDTO.Count">
+            <summary>
+            Количество
+            </summary>
+        </member>
+        <member name="P:WebUiAdmin.Models.Api.Order.OrderProductDTO.SelledPrice">
+            <summary>
+            Цена продажи
+            </summary>
+        </member>
+    </members>
+</doc>
