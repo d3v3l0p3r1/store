@@ -45,7 +45,7 @@ namespace WebUiAdminTest
 
             builder.UseInMemoryDatabase(dbName);
 
-            DataContext = new DataContext(builder.Options);
+            DataContext = new DataContext(builder.Options, null);
 
             BalanceRepository = new BalanceRepository(DataContext);
             ProductRepository = new Repository<Product>(DataContext);
