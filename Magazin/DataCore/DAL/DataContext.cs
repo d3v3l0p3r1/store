@@ -1,15 +1,21 @@
 ﻿
+using System.Threading.Tasks;
 using BaseCore.Entities;
 using BaseCore.Security.Entities;
 using DataCore.Entities;
 using DataCore.Entities.Documents;
+using IdentityServer4.EntityFramework.Entities;
+using IdentityServer4.EntityFramework.Extensions;
+using IdentityServer4.EntityFramework.Interfaces;
+using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using News = DataCore.Entities.News;
 
 namespace DataCore.DAL
 {
-    public class DataContext : IdentityDbContext<User, Role, long>
+    public class DataContext : IdentityDbContext<User, Role, long>, IConfigurationDbContext, IPersistedGrantDbContext
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
@@ -20,14 +26,22 @@ namespace DataCore.DAL
         public DbSet<ProductKind> ProductKinds { get; set; }
         public DbSet<IncomingDocument> IncomingDocuments { get; set; }
         public DbSet<Balance> Balance { get; set; }
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<IdentityResource> IdentityResources { get; set; }
+        public DbSet<ApiResource> ApiResources { get; set; }
+        public DbSet<PersistedGrant> PersistedGrants { get; set; }
+        public DbSet<DeviceFlowCodes> DeviceFlowCodes { get; set; }
+
+        private readonly IOptions<OperationalStoreOptions> _operationalStoreOptions;
 
         public DataContext()
         {
 
         }
 
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        public DataContext(DbContextOptions<DataContext> options, IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options)
         {
+            _operationalStoreOptions = operationalStoreOptions;
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -43,6 +57,13 @@ namespace DataCore.DAL
             builder.Entity<IncomingDocument>().HasMany(x => x.Entries).WithOne(x => x.Document);
 
             builder.Entity<Balance>().HasMany(x => x.BalanceEntries).WithOne(x => x.Balance);
+
+            builder.ConfigurePersistedGrantContext(_operationalStoreOptions.Value);
+        }
+
+        public Task<int> SaveChangesAsync()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -5,8 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using BaseCore.Security.Services.Concrete;
 using DataCore.DAL;
+using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -39,11 +41,9 @@ namespace WebUiAdmin
             var roleManager = services.GetRequiredService<RoleManager>();
 
             await dataContext.Database.EnsureCreatedAsync();
-
+            dataContext.Database.Migrate();
             await DbMigrationsConfiguration.InitializeAsync(userManager, roleManager);
-
             DbMigrationsConfiguration.Seed(dataContext);
-
         }
     }
 }

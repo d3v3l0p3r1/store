@@ -39,6 +39,11 @@ namespace WebUiAdmin.Controllers.Api
             _userManager = userManager;
         }
 
+        /// <summary>
+        /// Вход пользователя
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Login")]
         public async Task<IActionResult> Token([FromBody]LoginModel model)
@@ -53,7 +58,7 @@ namespace WebUiAdmin.Controllers.Api
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, true, true);
 
             if (!result.Succeeded)
-            {                                
+            {
                 return BadRequest("Неправильное имя пользователя или пароль");
             }
 

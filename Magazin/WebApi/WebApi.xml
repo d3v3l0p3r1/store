@@ -4,17 +4,6 @@
         <name>WebApi</name>
     </assembly>
     <members>
-        <member name="T:WebUiAdmin.Controllers.AccountController">
-            <summary>
-            Авторизация, Аутентификация
-            </summary>
-        </member>
-        <member name="M:WebUiAdmin.Controllers.AccountController.#ctor(Microsoft.AspNetCore.Identity.SignInManager{BaseCore.Security.Entities.User})">
-            <summary>
-            ctor
-            </summary>
-            <param name="signInManager"></param>
-        </member>
         <member name="T:WebUiAdmin.Controllers.BaseController`1">
             <summary>
             Базовый контроллер
@@ -130,6 +119,13 @@
             <param name="signInManager"></param>
             <param name="userManager"></param>
         </member>
+        <member name="M:WebUiAdmin.Controllers.Api.AccountController.Token(WebUiAdmin.Models.Api.Account.LoginModel)">
+            <summary>
+            Вход пользователя
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="T:WebUiAdmin.Controllers.Api.BalanceController">
             <summary>
             Остатки
@@ -153,6 +149,21 @@
         <member name="T:WebUiAdmin.Controllers.Api.ProductController">
             <summary>
             Продукты
+            </summary>
+        </member>
+        <member name="T:WebUiAdmin.Models.Api.Account.LoginModel">
+            <summary>
+            Модель входа пользователя
+            </summary>
+        </member>
+        <member name="P:WebUiAdmin.Models.Api.Account.LoginModel.Email">
+            <summary>
+            Email
+            </summary>
+        </member>
+        <member name="P:WebUiAdmin.Models.Api.Account.LoginModel.Password">
+            <summary>
+            Password
             </summary>
         </member>
         <member name="P:WebUiAdmin.Models.Api.Order.OrderProductDTO.Count">

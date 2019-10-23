@@ -35,7 +35,7 @@ namespace WebUiAdmin
 
             Bindings.Bind(services);
 
-            services.InitAuth();
+            services.InitAuth(Configuration);
             
             services.AddControllers()
                 .AddNewtonsoftJson(config =>
@@ -82,6 +82,7 @@ namespace WebUiAdmin
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
             });
 
+            app.UseRouting();
             app.UseIdentityServer();
             app.UseAuthentication();
             app.UseAuthorization();
@@ -92,7 +93,10 @@ namespace WebUiAdmin
                 c.RoutePrefix = string.Empty;
             });
 
-            app.UseRouting();
+            app.UseEndpoints(config => 
+            {
+                config.MapControllers();
+            });
         }
 
         private void InitDbContext(IServiceCollection services)
@@ -100,7 +104,7 @@ namespace WebUiAdmin
             var connectionString = Configuration.GetConnectionString(nameof(DataContext));
 
             services.AddDbContext<DataContext>(options => options
-                    .UseNpgsql(connectionString, builder => builder.MigrationsAssembly("WebUiAdmin"))
+                    .UseNpgsql(connectionString, builder => builder.MigrationsAssembly("WebApi"))
                 );
         }
     }
