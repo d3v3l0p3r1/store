@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using BaseCore.Security.Entities;
 using BaseCore.Security.Services.Abstract;
 using BaseCore.Security.Services.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -21,6 +22,7 @@ namespace WebUiAdmin.Controllers.Api
     /// <summary>
     /// Account controller
     /// </summary>
+    [Authorize]
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class AccountController : Controller
@@ -46,6 +48,7 @@ namespace WebUiAdmin.Controllers.Api
         /// <returns></returns>
         [HttpPost]
         [Route("Login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Token([FromBody]LoginModel model)
         {
             var user = await _signInManager.UserManager.FindByEmailAsync(model.Email);
@@ -75,8 +78,14 @@ namespace WebUiAdmin.Controllers.Api
             return Ok(response);
         }
 
+        /// <summary>
+        /// Регистрация пользователя
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Register")]
+        [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody]RegisterModel model)
         {
             if (model.Password != model.PasswordConfirm)
@@ -123,6 +132,27 @@ namespace WebUiAdmin.Controllers.Api
             }
 
             return BadRequest(result.Errors.FirstOrDefault()?.Description);
+        }
+
+        /// <summary>
+        /// Получить информацию пользователя
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<IActionResult> Info()
+        {
+            var user = await _userManager.GetUserAsync(ClaimsPrincipal.Current);
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var result = new 
+            {
+                Roles = roles,
+                Name = user.UserName,
+            };
+
+            return Ok();
         }
 
         private async Task<string> GetToken(User user)
