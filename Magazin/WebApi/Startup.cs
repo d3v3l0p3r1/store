@@ -36,7 +36,7 @@ namespace WebUiAdmin
             Bindings.Bind(services);
 
             services.InitAuth(Configuration);
-            
+
             services.AddControllers()
                 .AddNewtonsoftJson(config =>
                 {
@@ -56,7 +56,7 @@ namespace WebUiAdmin
                     Version = "v1"
                 });
 
-                foreach(var dir in Directory.GetFiles(AppContext.BaseDirectory, "*.xml"))
+                foreach (var dir in Directory.GetFiles(AppContext.BaseDirectory, "*.xml"))
                 {
                     var xmlFile = dir;
                     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -83,17 +83,17 @@ namespace WebUiAdmin
             });
 
             app.UseRouting();
-            app.UseIdentityServer();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseIdentityServer();
             app.UseSwagger();
-            app.UseSwaggerUI(c => {
+            app.UseSwaggerUI(c =>
+            {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                 c.RoutePrefix = string.Empty;
             });
 
-            app.UseEndpoints(config => 
+            app.UseEndpoints(config =>
             {
                 config.MapControllers();
             });

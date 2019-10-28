@@ -142,17 +142,16 @@ namespace WebUiAdmin.Controllers.Api
         [Route("[action]")]
         public async Task<IActionResult> Info()
         {
-            var user = await _userManager.GetUserAsync(ClaimsPrincipal.Current);
-
+            var user = await _userManager.GetUserAsync(HttpContext.User);
             var roles = await _userManager.GetRolesAsync(user);
 
-            var result = new 
+            var result = new
             {
                 Roles = roles,
                 Name = user.UserName,
             };
 
-            return Ok();
+            return Ok(result);
         }
 
         private async Task<string> GetToken(User user)

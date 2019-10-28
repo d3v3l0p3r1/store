@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using BaseCore.Security.Entities;
 using BaseCore.Security.Services.Concrete;
 using DataCore.Entities;
+using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Identity;
+using WebApi.Extensions;
 
 namespace DataCore.DAL
 {
@@ -18,7 +20,7 @@ namespace DataCore.DAL
         {
             if (!dataContext.ProductCategories.Any())
             {
-                
+
                 WriteCategory("Роллы", 1, dataContext);
                 WriteCategory("Суши", 2, dataContext);
                 WriteCategory("Сеты", 2, dataContext);
@@ -26,7 +28,7 @@ namespace DataCore.DAL
                 WriteCategory("Салаты", 5, dataContext);
                 WriteCategory("Десерты", 6, dataContext);
                 WriteCategory("Напитки", 7, dataContext);
-                WriteCategory("Соусы", 8,dataContext);
+                WriteCategory("Соусы", 8, dataContext);
                 WriteCategory("Блюда за бонусы", 9, dataContext);
             }
 
@@ -50,12 +52,21 @@ namespace DataCore.DAL
                         Title = Faker.Name.First(),
                         Description = Faker.Name.FullName(),
                         Price = random.Next(100, 1000),
-                        KindId =  random.Next(1,3)
+                        KindId = random.Next(1, 3)
                     };
 
                     dataContext.Products.Add(product);
                     dataContext.SaveChanges();
                 }
+            }
+
+            if (!dataContext.ApiResources.Any())
+            {
+                foreach (var resource in IdentityConfig.GetApis())
+                {
+                    dataContext.ApiResources.Add(resource.ToEntity());
+                }
+                dataContext.SaveChanges();
             }
 
         }
@@ -128,6 +139,8 @@ namespace DataCore.DAL
                     await userManager.AddToRoleAsync(admin, "admin");
                 }
             }
+
+            
         }
     }
 }
