@@ -40,7 +40,7 @@ namespace WebUiAdmin
             services.AddControllers()
                 .AddNewtonsoftJson(config =>
                 {
-                    config.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                    config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     config.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
 

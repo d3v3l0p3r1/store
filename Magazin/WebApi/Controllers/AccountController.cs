@@ -149,6 +149,8 @@ namespace WebUiAdmin.Controllers.Api
             {
                 Roles = roles,
                 Name = user.UserName,
+                Avatar = "",
+                Introduction = ""
             };
 
             return Ok(result);
