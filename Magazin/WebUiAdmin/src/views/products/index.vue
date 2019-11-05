@@ -130,6 +130,7 @@ export default {
         },
         onProductDialogClose() {
             this.dialog.visible = false
+            this.selectedProductId = 0
             this.getProducts()
         }
     }

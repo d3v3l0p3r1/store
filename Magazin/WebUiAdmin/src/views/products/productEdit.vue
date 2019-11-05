@@ -43,6 +43,7 @@
               :multiple="false"
               :show-file-list="true"
               :file-list="fileList"
+              drag
               :on-change="handleMainImageChange"
               list-type="picture"
             >
@@ -59,6 +60,7 @@
               :multiple="true"
               :show-file-list="true"
               :file-list="otherFiles"
+              drag
               list-type="picture"
             >
               <i class="el-icon-upload" />
@@ -78,8 +80,8 @@
 </template>
 
 <script>
-import { getProduct, createProduct, updateProduct, getCategories, getKinds } from '@/api/products'
-import { uploadImage } from '@/api/upload'
+import { getProduct, createProduct, getCategories, getKinds } from '@/api/products'
+//import { uploadImage } from '@/api/upload'
 
 export default {
     name: 'ProductEdit',
@@ -158,18 +160,14 @@ export default {
         onSubmit() {
             const fileData = new FormData()
             fileData.append('file', this.fileList[0].raw)
-            fileData.append('name', 'temp')
-            uploadImage(fileData).then((resposne) => {
-                this.product.fileId = resposne.id
-                if (this.product.id === 0) {
-                    createProduct(this.product).then((response) => {
-                        this.$emit('onProductDialogClose')
-                    })
-                } else {
-                    updateProduct(this.product).then((resposne) => {
-                        this.$emit('onProductDialogClose')
-                    })
-                }
+            fileData.append('model', this.product)
+            this.product.file = this.fileList[0].raw
+            for (var i = 0; i < this.otherFiles.length; i++) {
+                fileData.append(this.otherFiles[i].name, this.otherFiles[i].raw)
+            }
+
+            createProduct(this.product).then((response) => {
+                this.$emit('onProductDialogClose')
             })
         },
         handleMainImageChange(file, fileList) {
