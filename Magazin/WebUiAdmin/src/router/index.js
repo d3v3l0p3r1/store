@@ -203,6 +203,20 @@ export const asyncRoutes = [
       }
     ]
   },
+
+  {
+    path: '/products',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/products/index'),
+        name: 'ProductGrid',
+        meta: { title: 'Продукты', icon: 'theme' }
+      }
+    ]
+  },
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

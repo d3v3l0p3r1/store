@@ -15,6 +15,10 @@ namespace BaseCore.Services.Concrete
             _repository = repository;
         }
 
+        public virtual IQueryable<T> GetQuery()
+        {
+            return _repository.GetDbSet();
+        }
 
         public virtual IQueryable<T> GetAllAsNotracking()
         {

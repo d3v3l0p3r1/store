@@ -16,6 +16,8 @@ namespace WebUiAdmin.Controllers
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [Authorize(Roles = "admin")]
+    [Route("[controller]")]
+    [ApiExplorerSettings(GroupName = "admin")]
     public abstract class BaseController<T> : Controller where T : IBaseEntity, new()
     {
         private readonly IBaseService<T> _baseService;
@@ -34,6 +36,7 @@ namespace WebUiAdmin.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+        [Route("[action]")]
         public virtual async Task<IActionResult> Create([FromBody]T entity)
         {
             try
@@ -53,6 +56,7 @@ namespace WebUiAdmin.Controllers
         /// <param name="entity"></param>
         /// <returns></returns>
         [HttpPatch]
+        [Route("[action]")]
         public virtual async Task<IActionResult> Update([FromBody]T entity)
         {
             try
@@ -73,6 +77,7 @@ namespace WebUiAdmin.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
+        [Route("[action]")]
         public virtual async Task<IActionResult> Delete(int id)
         {
             await _baseService.DeleteAsync(id);

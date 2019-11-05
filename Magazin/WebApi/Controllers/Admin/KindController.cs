@@ -20,13 +20,9 @@ namespace WebUiAdmin.Controllers
         {
             _kindService = kindService;
         }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [Produces("application/json")]
+        
+        [HttpGet]
+        [Route("[action]")]
         public async Task<IActionResult> GetAll()
         {
             var all = _kindService.GetAllAsNotracking();

@@ -26,6 +26,8 @@ namespace DataCore.Services.Concrete
         {
             return _repository.GetDbSet()
                 .Include(x => x.Category)
+                .Include(x => x.File)
+                .Include(x => x.Kind)
                 .SingleAsync(x => x.Id == id);
         }
 

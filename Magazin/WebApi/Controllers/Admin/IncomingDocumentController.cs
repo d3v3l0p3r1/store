@@ -25,18 +25,14 @@ namespace WebUiAdmin.Controllers
 
 
         [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpGet]
+        [Route("[action]")]
         public IActionResult IncomingDocumentEntryEdit(string parent)
         {
             return View("IncomingDocumentEntryEdit", parent);
         }
 
         [HttpGet]
+        [Route("[action]")]
         public async Task<IActionResult> GetAll(int take = 20, int skip = 0, DocumentStatus? state = null)
         {
             var all = incomingDocumentService.GetAllAsNotracking();
@@ -56,6 +52,7 @@ namespace WebUiAdmin.Controllers
             });
         }
 
+        [HttpPost]
         public async Task<IActionResult> Apply([FromBody]IncomingDocument document)
         {
             try

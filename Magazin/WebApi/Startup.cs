@@ -56,6 +56,12 @@ namespace WebUiAdmin
                     Version = "v1"
                 });
 
+                config.SwaggerDoc("admin", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title ="Admin api",
+                    Version = "v2"
+                });
+
                 foreach (var dir in Directory.GetFiles(AppContext.BaseDirectory, "*.xml"))
                 {
                     var xmlFile = dir;
@@ -90,6 +96,7 @@ namespace WebUiAdmin
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/admin/swagger.json", "Admin API V1");
                 c.RoutePrefix = string.Empty;
             });
 

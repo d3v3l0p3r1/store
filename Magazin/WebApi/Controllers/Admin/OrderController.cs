@@ -22,11 +22,8 @@ namespace WebUiAdmin.Controllers
             _orderService = orderService;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
+        [HttpGet]
+        [Route("[action]")]
         public async Task<IActionResult> GetAll(int take = 20, int skip = 0, OrderState? state = null)
         {
             var all = _orderService.GetAllAsNotracking();
@@ -52,6 +49,8 @@ namespace WebUiAdmin.Controllers
         /// </summary>
         /// <param name="orderID"></param>
         /// <returns></returns>
+        [HttpGet]
+        [Route("[action]")]
         public async Task<IActionResult> GetOrderProducts(long orderID)
         {
             var products = await _orderService.GetOrderProducts(orderID);
@@ -65,6 +64,7 @@ namespace WebUiAdmin.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost]
+        [Route("[action]")]
         public async Task<IActionResult> ToDelivery(long id)
         {
             var order = await _orderService.GetAsync(id);
@@ -84,6 +84,7 @@ namespace WebUiAdmin.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost]
+        [Route("[action]")]
         public async Task<IActionResult> ToComplete(long id)
         {
             var order = await _orderService.GetAsync(id);

@@ -30,7 +30,6 @@ namespace WebUiAdmin.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetUsers")]
-        [Produces("application/json")]
         public async Task<IActionResult> GetUsers()
         {
 

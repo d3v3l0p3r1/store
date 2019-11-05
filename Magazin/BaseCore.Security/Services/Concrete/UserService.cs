@@ -69,5 +69,10 @@ namespace BaseCore.Security.Services.Concrete
         {
             throw new NotSupportedException();
         }
+
+        public IQueryable<User> GetQuery()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

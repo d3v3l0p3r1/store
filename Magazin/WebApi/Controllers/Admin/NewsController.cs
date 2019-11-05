@@ -25,14 +25,8 @@ namespace WebUiAdmin.Controllers
         }
 
 
-        // GET: /<controller>/
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-
-        [Produces("application/json")]
+        [HttpGet]
+        [Route("[action]")]
         public async Task<IActionResult> GetAll(int take, int skip)
         {
             if (take == 0)
@@ -52,16 +46,5 @@ namespace WebUiAdmin.Controllers
                 Total = total
             });
         }
-
-        public ViewResult Create()
-        {
-            var news = new News
-            {
-                Date = DateTime.Now
-            };
-
-            return View("Edit", news);
-        }
-
     }
 }
