@@ -15,7 +15,7 @@ using News = DataCore.Entities.News;
 
 namespace DataCore.DAL
 {
-    public class DataContext : IdentityDbContext<User, Role, long>, IConfigurationDbContext, IPersistedGrantDbContext
+    public class DataContext : IdentityDbContext<User, Role, long>, IPersistedGrantDbContext
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
@@ -28,9 +28,9 @@ namespace DataCore.DAL
         public DbSet<Balance> Balance { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<IdentityResource> IdentityResources { get; set; }
-        public DbSet<ApiResource> ApiResources { get; set; }
         public DbSet<PersistedGrant> PersistedGrants { get; set; }
         public DbSet<DeviceFlowCodes> DeviceFlowCodes { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
 
         private readonly IOptions<OperationalStoreOptions> _operationalStoreOptions;
 
@@ -61,7 +61,12 @@ namespace DataCore.DAL
             builder.ConfigurePersistedGrantContext(_operationalStoreOptions.Value);
         }
 
-        public Task<int> SaveChangesAsync()
+        int IPersistedGrantDbContext.SaveChanges()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        Task<int> IPersistedGrantDbContext.SaveChangesAsync()
         {
             throw new System.NotImplementedException();
         }

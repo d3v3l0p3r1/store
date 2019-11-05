@@ -28,6 +28,7 @@ namespace DataCore.Services.Concrete
                 .Include(x => x.Category)
                 .Include(x => x.File)
                 .Include(x => x.Kind)
+                .Include(x => x.Images)
                 .SingleAsync(x => x.Id == id);
         }
 

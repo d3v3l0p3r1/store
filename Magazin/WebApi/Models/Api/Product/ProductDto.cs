@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataCore.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -39,6 +40,5 @@ namespace WebApi.Models.Api.Product
         /// Вид
         /// </summary>
         public string Kind { get; set; }
-
     }
 }

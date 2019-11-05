@@ -5,12 +5,12 @@
         <el-option v-for="item in categories" :key="item.id" :label="item.title" :value="item" />
       </el-select>
 
-      <el-button @click="handleCreateProduct">
-        <span>Create</span>
+      <el-button @click="handleCreateProduct" class="filter-item">
+        <span>Создать</span>
       </el-button>
 
-      <el-button @click="handleEditProduct">
-        <span>Edit</span>
+      <el-button @click="handleEditProduct" class="filter-item">
+        <span>Изменить</span>
       </el-button>
     </div>
 
@@ -22,6 +22,7 @@
       highlight-current-row
       row-key="id"
       style="width: 100%;"
+      empty-text="Нет данных"
       @current-change="handleSelectProduct"
     >
       <el-table-column>
@@ -42,9 +43,9 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Изображение">
+      <el-table-column label="Изображение" width="120px">
         <template slot-scope="scope">
-          <img :src="scope.row.fileUrl">
+          <img :src="scope.row.fileUrl" width="60px">
         </template>
       </el-table-column>
 
@@ -106,7 +107,7 @@ export default {
         },
         async getProducts() {
             this.listLoading = true
-            const cat = this.selectedCategory == null ? 1 : this.selectedCategory.id
+            const cat = this.selectedCategory == null ? null : this.selectedCategory.id
             const res = await getProducts(cat, this.listQuery.page, this.listQuery.limit)
             this.products = res.data
             this.total = res.total
@@ -130,6 +131,7 @@ export default {
         },
         onProductDialogClose() {
             this.dialog.visible = false
+            this.getProducts()
         }
     }
 }

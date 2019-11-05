@@ -17,8 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7B6F6491-8
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackendTest", "BakcendTest\BackendTest.csproj", "{FF3F61AA-7D86-4FF7-9364-EDB52CE0297B}"
 EndProject
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "WebUIAdmin", "WebUIAdmin\WebUIAdmin.njsproj", "{A231C759-9D85-4464-8317-8448A973E2AC}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,10 +43,6 @@ Global
 		{FF3F61AA-7D86-4FF7-9364-EDB52CE0297B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF3F61AA-7D86-4FF7-9364-EDB52CE0297B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF3F61AA-7D86-4FF7-9364-EDB52CE0297B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A231C759-9D85-4464-8317-8448A973E2AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A231C759-9D85-4464-8317-8448A973E2AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A231C759-9D85-4464-8317-8448A973E2AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A231C759-9D85-4464-8317-8448A973E2AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,7 +53,6 @@ Global
 		{5B28D201-5D4F-40BA-8254-52E8D1DC58A1} = {F0706EA9-62BC-4803-A77B-7CC38000C540}
 		{F8FCA297-EEB3-4227-875A-D365690A2722} = {F0706EA9-62BC-4803-A77B-7CC38000C540}
 		{FF3F61AA-7D86-4FF7-9364-EDB52CE0297B} = {7B6F6491-8948-44B4-9B39-EEE3AEC244CF}
-		{A231C759-9D85-4464-8317-8448A973E2AC} = {F0706EA9-62BC-4803-A77B-7CC38000C540}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A0BC8E8D-2DC7-4041-A706-D30B4D90C0C7}

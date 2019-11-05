@@ -16,11 +16,13 @@ import router from './router'
 import './icons' // icon
 import './permission' // permission control
 import './utils/error-log' // error log
+import locale from "element-ui/lib/locale/lang/ru-RU"
 
 import * as filters from './filters' // global filters
 
 Vue.use(Element, {
-  size: Cookies.get('size') || 'medium' // set element-ui default size
+  size: Cookies.get('size') || 'medium', // set element-ui default size,
+  locale
 })
 
 // register global utility filters

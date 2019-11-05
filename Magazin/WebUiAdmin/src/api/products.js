@@ -20,3 +20,18 @@ export function getProduct(id) {
         method: 'GET'
     })
 }
+
+export function createProduct(data) {
+    return request({
+        url: 'product/create',
+        method: 'post',
+        data
+    })
+}
+
+export function getKinds() {
+    return request({
+        url: 'kind/getAll',
+        method: 'get'
+    })
+}

@@ -68,6 +68,7 @@ namespace WebApi.Extensions
                         ValidateIssuerSigningKey = true,
                     };
                 }).AddIdentityServerJwt();
+
             services.AddAuthorization(x =>
             {
 

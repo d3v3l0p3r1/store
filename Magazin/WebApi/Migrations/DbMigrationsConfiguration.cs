@@ -40,35 +40,25 @@ namespace DataCore.DAL
             }
 
 
-            if (!dataContext.Products.Any())
-            {
-                var random = new Random();
+            //if (!dataContext.Products.Any())
+            //{
+            //    var random = new Random();
 
-                for (int i = 0; i < 100; i++)
-                {
-                    var product = new Product
-                    {
-                        CategoryId = random.Next(1, 9),
-                        Title = Faker.Name.First(),
-                        Description = Faker.Name.FullName(),
-                        Price = random.Next(100, 1000),
-                        KindId = random.Next(1, 3)
-                    };
+            //    for (int i = 0; i < 100; i++)
+            //    {
+            //        var product = new Product
+            //        {
+            //            CategoryId = random.Next(1, 9),
+            //            Title = Faker.Name.First(),
+            //            Description = Faker.Name.FullName(),
+            //            Price = random.Next(100, 1000),
+            //            KindId = random.Next(1, 3)
+            //        };
 
-                    dataContext.Products.Add(product);
-                    dataContext.SaveChanges();
-                }
-            }
-
-            if (!dataContext.ApiResources.Any())
-            {
-                foreach (var resource in IdentityConfig.GetApis())
-                {
-                    dataContext.ApiResources.Add(resource.ToEntity());
-                }
-                dataContext.SaveChanges();
-            }
-
+            //        dataContext.Products.Add(product);
+            //        dataContext.SaveChanges();
+            //    }
+            //}
         }
 
         private static void WriteCategory(string name, decimal sortOrder, DataContext context)
@@ -139,8 +129,6 @@ namespace DataCore.DAL
                     await userManager.AddToRoleAsync(admin, "admin");
                 }
             }
-
-            
         }
     }
 }

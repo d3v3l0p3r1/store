@@ -10,7 +10,7 @@ namespace DataCore.Models
         public decimal Price { get; set; }
         public string Description { get; set; }
         public string Title { get; set; }
-        public long KindId { get; set; }
+        public long? KindId { get; set; }
         public string KingTitle { get; set; }
         public long CateogryId { get; set; }
         public int Count { get; set; }

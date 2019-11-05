@@ -60,7 +60,7 @@ namespace WebUiAdmin.Controllers
                 all = all.Where(x => x.CategoryId == catID.Value);
             }
 
-            var url = $"{Request.Scheme}://{Request.Host}/File/GetFile/";
+            var url = $"{Request.Scheme}://{Request.Host}/File/GetFile?id=";
 
             var products = await all.OrderByDescending(x => x.Id).Skip(skip).Take(take).Select(x => new ProductDto
             {
@@ -69,7 +69,7 @@ namespace WebUiAdmin.Controllers
                 Description = x.Description,
                 Title = x.Title,
                 Kind = x.Kind.Title,
-                FileUrl = x.FileID != null ? url + x.FileID : url + 1
+                FileUrl = x.FileID != null ? url + x.FileID : url + 1,
             }).ToListAsync();
 
             var total = await all.CountAsync();

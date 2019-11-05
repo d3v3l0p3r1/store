@@ -30,8 +30,20 @@ namespace DataCore.Entities
         [Display(Name = "Категория")]
         public virtual ProductCategory Category { get; set; }
 
-        public long KindId { get; set; }
+        public long? KindId { get; set; }
         [DisplayName("Вид")]
         public virtual ProductKind Kind { get; set; }
+
+        public List<ProductImage> Images { get; set; }
+
+    }
+
+    public class ProductImage : BaseEntity
+    {
+        public long ProductId { get; set; }
+        public Product Product { get; set; }
+
+        public long FileId { get; set; }
+        public FileData File { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace WebUiAdmin
         {
             var host = BuildWebHost(args);
 
-            InitUsers(host);
+            InitUsers(host).Wait();
 
             host.Run();
         }
@@ -32,15 +32,15 @@ namespace WebUiAdmin
                 .UseStartup<Startup>()
                 .Build();
 
-        private static async void InitUsers(IWebHost host)
-        {
+        private static async Task InitUsers(IWebHost host)
+      {
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
             var dataContext = services.GetService<DataContext>();
             var userManager = services.GetRequiredService<UserManager>();
             var roleManager = services.GetRequiredService<RoleManager>();
 
-            await dataContext.Database.EnsureCreatedAsync();
+            //await dataContext.Database.EnsureCreatedAsync();
             dataContext.Database.Migrate();
             await DbMigrationsConfiguration.InitializeAsync(userManager, roleManager);
             DbMigrationsConfiguration.Seed(dataContext);

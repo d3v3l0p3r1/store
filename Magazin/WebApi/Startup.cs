@@ -58,7 +58,7 @@ namespace WebUiAdmin
 
                 config.SwaggerDoc("admin", new Microsoft.OpenApi.Models.OpenApiInfo()
                 {
-                    Title ="Admin api",
+                    Title = "Admin api",
                     Version = "v2"
                 });
 
@@ -110,9 +110,10 @@ namespace WebUiAdmin
         {
             var connectionString = Configuration.GetConnectionString(nameof(DataContext));
 
-            services.AddDbContext<DataContext>(options => options
-                    .UseNpgsql(connectionString, builder => builder.MigrationsAssembly("WebApi"))
-                );
+            services.AddDbContext<DataContext>(options =>
+            {
+                options.UseNpgsql(connectionString, builder => builder.MigrationsAssembly("WebApi"));
+            });
         }
     }
 }
