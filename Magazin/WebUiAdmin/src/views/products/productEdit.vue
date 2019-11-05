@@ -81,7 +81,7 @@
 
 <script>
 import { getProduct, createProduct, getCategories, getKinds } from '@/api/products'
-//import { uploadImage } from '@/api/upload'
+// import { uploadImage } from '@/api/upload'
 
 export default {
     name: 'ProductEdit',
