@@ -8,70 +8,70 @@
     width="80%"
   >
     <el-form :model="product" label-position="top">
-        <el-tabs>
-            <el-tab-pane label="Основное">
-                <el-form-item label="Название">
-                    <el-input v-model="product.title" />
-                </el-form-item>
+      <el-tabs>
+        <el-tab-pane label="Основное">
+          <el-form-item label="Название">
+            <el-input v-model="product.title" />
+          </el-form-item>
 
-                <el-form-item label="Категория">
-                    <el-select v-model="product.categoryId" placeholder="Выбирите категорию" value-key="id">
-                    <el-option v-for="item in categories" :key="item.id" :label="item.title" :value="item.id" />
-                    </el-select>
-                </el-form-item>
+          <el-form-item label="Категория">
+            <el-select v-model="product.categoryId" placeholder="Выбирите категорию" value-key="id">
+              <el-option v-for="item in categories" :key="item.id" :label="item.title" :value="item.id" />
+            </el-select>
+          </el-form-item>
 
-                <el-form-item label="Вид">
-                    <el-select v-model="product.kindId" placeholder="Выбирите вид" value-key="id">
-                    <el-option v-for="item in kinds" :key="item.id" :label="item.title" :value="item.id" />
-                    </el-select>
-                </el-form-item>
+          <el-form-item label="Вид">
+            <el-select v-model="product.kindId" placeholder="Выбирите вид" value-key="id">
+              <el-option v-for="item in kinds" :key="item.id" :label="item.title" :value="item.id" />
+            </el-select>
+          </el-form-item>
 
-                <el-form-item label="Описание">
-                    <el-input v-model="product.description" type="textarea" />
-                </el-form-item>
+          <el-form-item label="Описание">
+            <el-input v-model="product.description" type="textarea" />
+          </el-form-item>
 
-                <el-form-item label="Цена">
-                    <el-input v-model="product.price" type="number" />
-                </el-form-item>
+          <el-form-item label="Цена">
+            <el-input v-model="product.price" type="number" />
+          </el-form-item>
 
-                <el-form-item label="Главное изображение">
-                    <el-upload
-                    action=""
-                    accept=".jpg, .jpeg, .png, .jfif"
-                    :limit="1"
-                    :auto-upload="false"
-                    :multiple="false"
-                    :show-file-list="true"
-                    :file-list="fileList"
-                    :on-change="handleMainImageChange"
-                    list-type="picture"
-                    >
-                    <i class="el-icon-upload" />
-                    </el-upload>
-                </el-form-item>
-            </el-tab-pane>
-            <el-tab-pane label="Изображения">
-                <el-form-item label="Изображения">
-                    <el-upload
-                    action=""
-                    accept=".jpg, .jpeg, .png, .jfif"                    
-                    :auto-upload="false"
-                    :multiple="true"
-                    :show-file-list="true"
-                    :file-list="otherFiles"                    
-                    list-type="picture"
-                    >
-                    <i class="el-icon-upload" />
-                    </el-upload>
-                </el-form-item>
-            </el-tab-pane>
+          <el-form-item label="Главное изображение">
+            <el-upload
+              action=""
+              accept=".jpg, .jpeg, .png, .jfif"
+              :limit="1"
+              :auto-upload="false"
+              :multiple="false"
+              :show-file-list="true"
+              :file-list="fileList"
+              :on-change="handleMainImageChange"
+              list-type="picture"
+            >
+              <i class="el-icon-upload" />
+            </el-upload>
+          </el-form-item>
+        </el-tab-pane>
+        <el-tab-pane label="Изображения">
+          <el-form-item label="Изображения">
+            <el-upload
+              action=""
+              accept=".jpg, .jpeg, .png, .jfif"
+              :auto-upload="false"
+              :multiple="true"
+              :show-file-list="true"
+              :file-list="otherFiles"
+              list-type="picture"
+            >
+              <i class="el-icon-upload" />
+            </el-upload>
+          </el-form-item>
+        </el-tab-pane>
       </el-tabs>
     </el-form>
     <footer slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="onSubmit"> 
-          <span v-if="product.id===0">Создать</span>
-          <span v-else>Обновить</span>
-        </el-button>
+      <el-button type="primary" @click="onSubmit">
+        <span v-if="product.id===0">Создать</span>
+        <span v-else>Обновить</span>
+      </el-button>
       <el-button>Отмена</el-button>
     </footer>
   </el-dialog>
