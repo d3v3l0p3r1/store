@@ -5,11 +5,11 @@
         <el-option v-for="item in categories" :key="item.id" :label="item.title" :value="item" />
       </el-select>
 
-      <el-button @click="handleCreateProduct" class="filter-item">
+      <el-button class="filter-item" @click="handleCreateProduct">
         <span>Создать</span>
       </el-button>
 
-      <el-button @click="handleEditProduct" class="filter-item">
+      <el-button class="filter-item" @click="handleEditProduct">
         <span>Изменить</span>
       </el-button>
     </div>
@@ -124,7 +124,6 @@ export default {
         },
         handleEditProduct() {
             if (this.selectedProduct != null) {
-                debugger
                 this.selectedProductId = this.selectedProduct.id
                 this.dialog.visible = true
             }

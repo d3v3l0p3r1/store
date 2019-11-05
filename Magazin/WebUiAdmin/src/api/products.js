@@ -29,6 +29,14 @@ export function createProduct(data) {
     })
 }
 
+export function updateProduct(data) {
+    return request({
+        url: 'product/update',
+        method: 'patch',
+        data
+    })
+}
+
 export function getKinds() {
     return request({
         url: 'kind/getAll',

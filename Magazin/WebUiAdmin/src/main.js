@@ -16,7 +16,7 @@ import router from './router'
 import './icons' // icon
 import './permission' // permission control
 import './utils/error-log' // error log
-import locale from "element-ui/lib/locale/lang/ru-RU"
+import locale from 'element-ui/lib/locale/lang/ru-RU'
 
 import * as filters from './filters' // global filters
 
