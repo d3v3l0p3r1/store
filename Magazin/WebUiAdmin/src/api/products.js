@@ -25,15 +25,21 @@ export function createProduct(data) {
     return request({
         url: 'product/create',
         method: 'post',
-        data
+        data,
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
     })
 }
 
 export function updateProduct(data) {
     return request({
         url: 'product/update',
-        method: 'patch',
-        data
+        method: 'post',
+        data,
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
     })
 }
 
