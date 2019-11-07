@@ -6,10 +6,11 @@ namespace BaseCore.Services.Abstract
 {
     public interface IBaseService<T> where T : IBaseEntity
     {
-        IQueryable<T> GetAll();
-        Task<T> FindAsync(int id);
+        IQueryable<T> GetQuery();
+        IQueryable<T> GetAllAsNotracking();
+        Task<T> GetAsync(long id);
         Task<T> UpdateAsync(T entity);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(long id);
         Task<T> CreateAsync(T entity);
     }
 }

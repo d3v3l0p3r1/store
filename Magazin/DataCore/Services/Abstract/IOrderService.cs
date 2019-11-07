@@ -11,7 +11,7 @@ namespace DataCore.Services.Abstract
 {
     public interface IOrderService : IBaseService<Order>
     {
-        Task<Order> CreateAsync(int? userID, OrderModel model);
-        Task<List<OrderProduct>> GetOrderProducts(int orderID);
+        Task<Order> CreateAsync(long? userID, OrderModel model);
+        Task<List<OrderProduct>> GetOrderProducts(long orderID);
     }
 }

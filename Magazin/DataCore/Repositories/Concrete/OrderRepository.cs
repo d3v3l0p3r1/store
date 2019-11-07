@@ -16,7 +16,7 @@ namespace DataCore.Repositories.Concrete
         {
         }
 
-        public override async Task<Order> FindAsync(long id)
+        public override async Task<Order> GetAsync(long id)
         {
             var dbSet = _dataContext.Set<Order>();
 

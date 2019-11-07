@@ -15,10 +15,14 @@ namespace BaseCore.Services.Concrete
             _repository = repository;
         }
 
-
-        public virtual IQueryable<T> GetAll()
+        public virtual IQueryable<T> GetQuery()
         {
-            var all = _repository.GetAll();
+            return _repository.GetDbSet();
+        }
+
+        public virtual IQueryable<T> GetAllAsNotracking()
+        {
+            var all = _repository.GetAllAsNotracking();
             return all.Where(x => !x.Hidden);
         }
 
@@ -51,14 +55,14 @@ namespace BaseCore.Services.Concrete
 
         }
 
-        public virtual Task<T> FindAsync(int id)
+        public virtual Task<T> GetAsync(long id)
         {
-            return _repository.FindAsync(id);
+            return _repository.GetAsync(id);
         }
 
-        public virtual async Task DeleteAsync(int id)
+        public virtual async Task DeleteAsync(long id)
         {
-            var entity = await FindAsync(id);
+            var entity = await GetAsync(id);
             await _repository.DeleteAsync(entity);
         }
     }

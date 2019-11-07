@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BaseCore.Entities;
 using BaseCore.Services;
@@ -32,7 +33,7 @@ namespace DataCore.DAL
         }
 
 
-        public virtual IQueryable<T> GetAll()
+        public virtual IQueryable<T> GetAllAsNotracking()
         {
             var dbSet = _dataContext.Set<T>().AsNoTracking();
             return dbSet;
@@ -49,10 +50,15 @@ namespace DataCore.DAL
             return _dataContext.SaveChangesAsync();
         }
 
-        public virtual async Task<T> FindAsync(long id)
+        public Task DeleteAsync(IEnumerable<T> entities)
         {
-            var result = await _dataContext.Set<T>().FindAsync(id);
-            return result;
+            _dataContext.Set<T>().RemoveRange(entities);
+            return _dataContext.SaveChangesAsync();
+        }
+
+        public virtual Task<T> GetAsync(long id)
+        {
+            return _dataContext.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

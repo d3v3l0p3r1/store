@@ -19,7 +19,7 @@ namespace BaseCore.Security.Services.Concrete
             _userManager = userManager;
         }
 
-        public IQueryable<User> GetAll()
+        public IQueryable<User> GetAllAsNotracking()
         {
             return _userManager.Users.Where(x=> x.Hidden == false);
         }
@@ -60,14 +60,19 @@ namespace BaseCore.Security.Services.Concrete
             return entity;
         }
 
-        public Task<User> FindAsync(int id)
+        public Task<User> GetAsync(long id)
         {
             return _userManager.FindByIdAsync(id.ToString());
         }
 
-        public Task DeleteAsync(int id)
+        public Task DeleteAsync(long id)
         {
             throw new NotSupportedException();
+        }
+
+        public IQueryable<User> GetQuery()
+        {
+            throw new NotImplementedException();
         }
     }
 }
