@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BaseCore.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ namespace BaseCore.Services.Abstract
     {
         Task<T> CreateAsync(T entity);
         Task DeleteAsync(T entity);
+        Task DeleteAsync(IEnumerable<T> entities);
         Task<T> UpdateAsync(T entity);
         Task<T> GetAsync(long id);
         IQueryable<T> GetAllAsNotracking();

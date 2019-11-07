@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BaseCore.Entities;
 using BaseCore.Services;
@@ -46,6 +47,12 @@ namespace DataCore.DAL
         public virtual Task DeleteAsync(T entity)
         {
             _dataContext.Set<T>().Remove(entity);
+            return _dataContext.SaveChangesAsync();
+        }
+
+        public Task DeleteAsync(IEnumerable<T> entities)
+        {
+            _dataContext.Set<T>().RemoveRange(entities);
             return _dataContext.SaveChangesAsync();
         }
 

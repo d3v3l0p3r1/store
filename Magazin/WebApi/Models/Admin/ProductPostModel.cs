@@ -21,12 +21,11 @@ namespace WebApi.Models.Admin
         /// <summary>
         /// Main image
         /// </summary>
-        [Required]
         public IFormFile MainImage { get; set; }
 
         /// <summary>
         /// Images
         /// </summary>
-        public List<IFormFile> Images { get; set; }
+        public List<IFormFile> Images { get; set; } = new List<IFormFile>();
     }
 }

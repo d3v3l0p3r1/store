@@ -61,11 +61,26 @@ namespace DataCore.Services.Concrete
                 product.FileID = mainFd.Id;
             }
 
-            if (images.Any())
-            {
-                var productImages = await _productImageRepository.GetDbSet().Where(x => x.ProductId == product.Id).ToListAsync();
+            var currentImageIds = product.Images.Select(x => x.Id);
+            var productImages = await _productImageRepository.GetAllAsNotracking().Where(x => x.ProductId == product.Id).ToListAsync();
+            var iamgesToRemove = productImages.Where(x => !currentImageIds.Contains(x.Id));
+            await _productImageRepository.DeleteAsync(iamgesToRemove);
 
+            foreach (var image in images)
+            {
+                using var fs = image.OpenReadStream();
+                var fd = await _fileService.SaveFile(image.FileName, fs);
+
+                var productImage = new ProductImage
+                {
+                    FileId = fd.Id,
+                    ProductId = product.Id
+                };
+
+                await _productImageRepository.CreateAsync(productImage);
             }
+
+            await UpdateAsync(product);
         }
 
         public override Task<Product> GetAsync(long id)
