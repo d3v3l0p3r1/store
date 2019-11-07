@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function getDocuments() {
+export function getDocuments(page, limit) {
     return request({
-        url: '/IncomingDocument/GetAll',
+        url: '/IncomingDocument/GetAll?page=' + page + '&take=' + limit,
         method: 'GET'
     })
 }

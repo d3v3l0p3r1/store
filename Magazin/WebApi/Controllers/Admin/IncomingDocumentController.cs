@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BaseCore.Services.Abstract;
 using DataCore.Entities.Documents;
 using DataCore.Services.Abstract.Documents;
-using DataCore.Services.Concrete.Documents;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,23 +12,42 @@ namespace WebUiAdmin.Controllers
     /// <summary>
     /// Документы прихода
     /// </summary>
-    public class IncomingDocumentController : BaseController<IncomingDocument>
+    [Authorize(Roles = "admin")]
+    [Route("[controller]")]
+    [ApiExplorerSettings(GroupName = "admin")]
+    public class IncomingDocumentController : Controller
     {
         private readonly IIncomingDocumentService incomingDocumentService;
 
-        public IncomingDocumentController(IIncomingDocumentService incomingDocumentService) : base(incomingDocumentService)
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="incomingDocumentService"></param>
+        public IncomingDocumentController(IIncomingDocumentService incomingDocumentService)
         {
             this.incomingDocumentService = incomingDocumentService;
         }
 
-
+        /// <summary>
+        /// Получить документ прихода
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
-        [Route("[action]")]
-        public IActionResult IncomingDocumentEntryEdit(string parent)
+        [ProducesResponseType(typeof(IncomingDocument), 200)]
+        public async Task<IActionResult> Get(long id)
         {
-            return View("IncomingDocumentEntryEdit", parent);
+            var entity = await incomingDocumentService.GetAsync(id);
+            return Ok(entity);
         }
 
+        /// <summary>
+        /// Получить список
+        /// </summary>
+        /// <param name="take"></param>
+        /// <param name="skip"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("[action]")]
         public async Task<IActionResult> GetAll(int take = 20, int skip = 0, DocumentStatus? state = null)

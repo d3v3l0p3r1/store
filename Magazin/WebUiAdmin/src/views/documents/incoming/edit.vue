@@ -1,0 +1,134 @@
+<template>
+  <el-dialog
+    title="Документ"
+    :visible.sync="dialogVisible"
+    :before-close="onCancel"
+    draggable
+    modal
+    width="80%"
+  >
+
+    <el-form :model="entity" label-position="top">
+      <el-tabs>
+        <el-tab-pane label="Основное">
+
+          <el-form-item label="Название">
+            <el-input v-model="entity.title" />
+          </el-form-item>
+
+          <el-form-item label="Описание">
+            <el-input v-model="entity.description" />
+          </el-form-item>
+
+        </el-tab-pane>
+
+        <el-tab-pane label="Позиции">
+          <div class="filter-container">
+            <el-button class="filter-item el-button el-button--success" @click="handleCreate">
+              <span>Создать</span>
+            </el-button>
+            <el-button class="filter-item el-button el-button--warning" @click="handleEdit">
+              <span>Изменить</span>
+            </el-button>
+          </div>
+          <DocumentEntry :entries.sync="entity.entries" />
+        </el-tab-pane>
+
+      </el-tabs>
+    </el-form>
+
+    <footer slot="footer" class="dialog-footer">
+      <el-button type="primary" @click="onSubmit">
+        <span v-if="entity.id===0">Создать</span>
+        <span v-else>Обновить</span>
+      </el-button>
+      <el-button @click="onCancel">Отмена</el-button>
+    </footer>
+
+  </el-dialog>
+</template>
+<script>
+import DocumentEntry from '@/components/DocumentEntry'
+
+export default {
+    name: 'Edit',
+    components: { DocumentEntry },
+    props: {
+      entityId: {
+        required: false,
+        type: Number,
+        default: 0
+      },
+      dialogVisible: {
+        required: true,
+        type: Boolean
+      }
+  },
+  data() {
+    return {
+      entity: {
+        id: 0,
+        date: null,
+        processDate: null,
+        documentStatus: 0,
+        title: '',
+        description: '',
+        entries: []
+      },
+      nestedDialogVisible: false,
+      entry: {
+        product: null,
+        count: 0
+      }
+    }
+  },
+   watch: {
+    dialogVisible: function(newVisible, oldVisible) {
+      if (newVisible === true) {
+        this.reset()
+      } else {
+        this.reset()
+      }
+    }
+  },
+  methods: {
+    reset() {
+      this.entity = {
+        id: 0,
+        date: null,
+        processDate: null,
+        documentStatus: 0,
+        title: '',
+        description: '',
+        entries: []
+      }
+      this.entry = {
+        product: null,
+        count: 0
+      }
+    },
+    handleClose() {
+
+    },
+    onSubmit() {
+
+    },
+    onCancel() {
+      this.$emit('onEditDialogClose')
+    },
+    handleCreate() {
+      this.entry = {
+        product: null,
+        count: 0
+      }
+      this.nestedDialogVisible = true
+    },
+    handleEdit() {
+
+    },
+    searchProductClick() {
+
+    }
+  }
+}
+</script>

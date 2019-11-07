@@ -1,4 +1,5 @@
-﻿using DataCore.DAL;
+﻿using BackendTest.Services.Concrete;
+using DataCore.DAL;
 using DataCore.Entities;
 using DataCore.Entities.Documents;
 using DataCore.Repositories.Concrete;
@@ -19,6 +20,7 @@ namespace WebUiAdminTest
         protected BalanceService BalanceService;
         protected BalanceRepository BalanceRepository;
 
+        protected Repository<ProductImage> ProductImageRepository;
         protected ProductService ProductService;
         protected Repository<Product> ProductRepository;
 
@@ -33,6 +35,8 @@ namespace WebUiAdminTest
 
         protected Repository<ProductKind> ProductKingRepository;
         protected KindService ProductKindService;
+
+        protected DummyFileService DummyFileService;
 
         public BaseTest()
         {
@@ -49,9 +53,11 @@ namespace WebUiAdminTest
 
             BalanceRepository = new BalanceRepository(DataContext);
             ProductRepository = new Repository<Product>(DataContext);
+            ProductImageRepository = new Repository<ProductImage>(DataContext);
 
+            DummyFileService = new DummyFileService();
             BalanceService = new BalanceService(BalanceRepository);
-            ProductService = new ProductService(ProductRepository, BalanceService);
+            ProductService = new ProductService(ProductRepository, BalanceService, DummyFileService, ProductImageRepository);
 
             ProductCategoryRepository = new Repository<ProductCategory>(DataContext);
             ProductCategoryService = new ProductCategoryService(ProductCategoryRepository);
