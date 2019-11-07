@@ -39,7 +39,7 @@
 
       <el-table-column label="Описание">
         <template slot-scope="scope">
-          <span>{{ scope.row.description }}</span>
+          <span style="overflow: hidden; white-space: nowrap;">{{ scope.row.description }}</span>
         </template>
       </el-table-column>
 
