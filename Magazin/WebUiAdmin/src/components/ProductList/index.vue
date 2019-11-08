@@ -59,7 +59,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="pagination.total" :page.sync="pagination.page" :limit.sync="pagination.limit" @pagination="getProducts" />
+    <pagination v-show="pagination.total>0" :total="pagination.total" :page.sync="pagination.page" :limit.sync="pagination.limit" @pagination="getProducts" />
 
   </div>
 </template>
@@ -72,11 +72,11 @@ export default {
     name: 'Products',
     components: { Pagination },
     props: {
-        selectedCategory: null,
-        selectedProduct: null
     },
     data() {
         return {
+            selectedCategory: null,
+            selectedProduct: null,
             products: [],
             categories: [],
             listLoading: true,
@@ -87,6 +87,10 @@ export default {
                 total: 0
             }
         }
+    },
+    created() {
+      this.getCategories()
+      this.getProducts()
     },
     methods: {
         async getCategories() {
@@ -106,7 +110,8 @@ export default {
             this.getProducts()
         },
         handleSelectProduct(val) {
-            this.selectedProduct = val
+          this.$emit('selectedProductChange', val)
+          this.selectedProduct = val
         }
     }
 

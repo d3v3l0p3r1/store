@@ -2,7 +2,7 @@
   <div>
     <div class="filter-container">
       <el-button class="filter-item el-button el-button--success" @click="handleCreate">
-        <span>Создать</span>
+        <span>Добавить</span>
       </el-button>
       <el-button class="filter-item el-button el-button--warning" @click="handleEdit">
         <span>Изменить</span>
@@ -42,20 +42,56 @@
           <span>{{ scope.row.count }}</span>
         </template>
       </el-table-column>
-
     </el-table>
-  </div>
+    <EntryEdit :entry="entry" :dialogVisible.sync="editDialogVisible" v-on:onSubmit="onEntryEditComplete"/>
+</div>
 </template>
 
 <script>
+import EntryEdit from '@/components/DocumentEntry/edit'
+
 export default {
   name: 'DocumentEntry',
+  components: { EntryEdit },
   props: {
     entries: {
       type: Array,
       required: true
     }
-  }
+  },
+  data() {
+    return {
+      entry: {
+        id: 0,
+        documentId: 0,
+        productId: 0,
+        product: null,
+        count: 0
+      },
+      editDialogVisible: false
+    }
+  },
+  methods: {
+      handleCreate() {
+        this.entry = {
+          id: 0,
+          documentId: 0,
+          productId: 0,
+          product: null,
+          count: 0
+        }
+        this.editDialogVisible = true
+      },
+      handleEdit() {
 
+      },
+      onEntryEditComplete(val) {
+        if (val.id === 0) {
+          this.entries.push(this.entry)
+        }
+
+        this.editDialogVisible = false
+      }
+  }
 }
 </script>

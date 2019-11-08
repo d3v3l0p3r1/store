@@ -6,8 +6,14 @@
     draggable
     modal
     width="80%"
+    append-to-body
   >
-    <ProductList />
+    <ProductList v-on:selectedProductChange="onSelectedProductChange" />
+
+    <footer slot="footer" class="dialog-footer">
+      <el-button type="primary" @click="onSubmit">Выбрать</el-button>
+      <el-button @click="handleClose">Отмена</el-button>
+    </footer>
   </el-dialog>
 
 </template>
@@ -30,7 +36,22 @@ export default {
         }
     },
     methods: {
-
+      handleClose() {
+        this.$emit('update:dialogVisible', false)
+      },
+      onSelectedProductChange(val) {
+        this.selectedProduct = val
+      },
+      onSubmit() {
+        if(this.selectedProduct == null) {
+          this.$notify.error({
+            title: 'Ошибка',
+            message: 'Необходимо выбрать продукт'
+          })
+        } else {
+          this.$emit('onProductSelect', this.selectedProduct)
+        }
+      }
     }
 
 }

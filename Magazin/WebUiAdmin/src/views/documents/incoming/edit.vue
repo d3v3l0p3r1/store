@@ -5,6 +5,7 @@
     :before-close="onCancel"
     draggable
     modal
+    append-to-body
     width="80%"
   >
 
@@ -22,15 +23,7 @@
 
         </el-tab-pane>
 
-        <el-tab-pane label="Позиции">
-          <div class="filter-container">
-            <el-button class="filter-item el-button el-button--success" @click="handleCreate">
-              <span>Создать</span>
-            </el-button>
-            <el-button class="filter-item el-button el-button--warning" @click="handleEdit">
-              <span>Изменить</span>
-            </el-button>
-          </div>
+        <el-tab-pane label="Позиции">          
           <DocumentEntry :entries.sync="entity.entries" />
         </el-tab-pane>
 
@@ -44,7 +37,7 @@
       </el-button>
       <el-button @click="onCancel">Отмена</el-button>
     </footer>
-
+    
   </el-dialog>
 </template>
 <script>
@@ -115,19 +108,6 @@ export default {
     },
     onCancel() {
       this.$emit('onEditDialogClose')
-    },
-    handleCreate() {
-      this.entry = {
-        product: null,
-        count: 0
-      }
-      this.nestedDialogVisible = true
-    },
-    handleEdit() {
-
-    },
-    searchProductClick() {
-
     }
   }
 }
