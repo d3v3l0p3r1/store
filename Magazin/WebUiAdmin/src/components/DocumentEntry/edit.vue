@@ -98,7 +98,6 @@ export default {
             this.selectProductVisible = true
         },
         onCancel() {
-            
             this.$emit('update:dialogVisible', false)
         },
         onProductSelect(val) {

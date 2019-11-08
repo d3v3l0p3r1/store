@@ -42,7 +42,7 @@
 </template>
 <script>
 import DocumentEntry from '@/components/DocumentEntry'
-import { create , get } from '@/api/incmoingDocuments'
+import { create, get } from '@/api/incmoingDocuments'
 
 export default {
     name: 'Edit',
@@ -84,7 +84,6 @@ export default {
         } else {
           this.loadDocument()
         }
-        
       } else {
         this.reset()
       }
@@ -113,7 +112,6 @@ export default {
       if (this.entity.id !== 0) {
         create(this.entity)
       }
-      
     },
     onCancel() {
       this.$emit('onEditDialogClose')
