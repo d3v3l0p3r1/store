@@ -1,33 +1,34 @@
 <template>
-    <el-dialog
-        title="Позиция документа"
-        :visible.sync="dialogVisible"
-        :before-close="onCancel"
-        draggable
-        modal
-        append-to-body
-        width="40%">
+  <el-dialog
+    title="Позиция документа"
+    :visible.sync="dialogVisible"
+    :before-close="onCancel"
+    draggable
+    modal
+    append-to-body
+    width="40%"
+  >
 
-        <el-form v-model="entry">
-            <el-form-item label="Продукт">
-                <el-input placeholder="Выбирете продукт" readonly v-model="productTitle">
-                    <el-button slot="append" icon="el-icon-search" @click="searchProduct"/>
-                </el-input>
-            </el-form-item>
+    <el-form v-model="entry">
+      <el-form-item label="Продукт">
+        <el-input v-model="productTitle" placeholder="Выбирете продукт" readonly>
+          <el-button slot="append" icon="el-icon-search" @click="searchProduct" />
+        </el-input>
+      </el-form-item>
 
-            <el-form-item label="Количество" v-model="entry.count">
-                <el-input-number v-model="entry.count"></el-input-number>
-            </el-form-item>
-        </el-form>
+      <el-form-item v-model="entry.count" label="Количество">
+        <el-input-number v-model="entry.count" />
+      </el-form-item>
+    </el-form>
 
-        <SelectProduct :dialogVisible.sync="selectProductVisible" v-on:onProductSelect="onProductSelect"/>
+    <SelectProduct :dialog-visible.sync="selectProductVisible" @onProductSelect="onProductSelect" />
 
-        <footer slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="onSubmit">Выбрать</el-button>
-            <el-button @click="onCancel">Отмена</el-button>
-        </footer>
+    <footer slot="footer" class="dialog-footer">
+      <el-button type="primary" @click="onSubmit">Выбрать</el-button>
+      <el-button @click="onCancel">Отмена</el-button>
+    </footer>
 
-    </el-dialog>
+  </el-dialog>
 </template>
 
 <script>
@@ -80,7 +81,6 @@ export default {
             }
 
             this.$emit('onSubmit', this.entry)
-            
         },
         searchProduct() {
             this.selectProductVisible = true

@@ -23,7 +23,7 @@
 
         </el-tab-pane>
 
-        <el-tab-pane label="Позиции">          
+        <el-tab-pane label="Позиции">
           <DocumentEntry :entries.sync="entity.entries" />
         </el-tab-pane>
 
@@ -37,7 +37,7 @@
       </el-button>
       <el-button @click="onCancel">Отмена</el-button>
     </footer>
-    
+
   </el-dialog>
 </template>
 <script>

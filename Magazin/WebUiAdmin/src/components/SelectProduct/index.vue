@@ -8,7 +8,7 @@
     width="80%"
     append-to-body
   >
-    <ProductList v-on:selectedProductChange="onSelectedProductChange" />
+    <ProductList @selectedProductChange="onSelectedProductChange" />
 
     <footer slot="footer" class="dialog-footer">
       <el-button type="primary" @click="onSubmit">Выбрать</el-button>
@@ -43,7 +43,7 @@ export default {
         this.selectedProduct = val
       },
       onSubmit() {
-        if(this.selectedProduct == null) {
+        if (this.selectedProduct == null) {
           this.$notify.error({
             title: 'Ошибка',
             message: 'Необходимо выбрать продукт'

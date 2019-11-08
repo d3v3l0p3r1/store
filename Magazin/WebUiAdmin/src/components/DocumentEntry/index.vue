@@ -43,8 +43,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <EntryEdit :entry="entry" :dialogVisible.sync="editDialogVisible" v-on:onSubmit="onEntryEditComplete"/>
-</div>
+    <EntryEdit :entry="entry" :dialog-visible.sync="editDialogVisible" @onSubmit="onEntryEditComplete" />
+  </div>
 </template>
 
 <script>
