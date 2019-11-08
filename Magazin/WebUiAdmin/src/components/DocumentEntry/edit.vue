@@ -54,7 +54,19 @@ export default {
             selectProductVisible: false
         }
     },
+    watch: {
+        dialogVisible: function(newVisible, oldVisible) {
+            if (newVisible === true) {
+                this.reset()
+            } else {
+                this.reset()
+            }
+        }
+    },
     methods: {
+        reset() {
+            this.productTitle = null
+        },
         onSubmit() {
             if (this.entry == null) {
                 this.$notify.error({
@@ -86,6 +98,7 @@ export default {
             this.selectProductVisible = true
         },
         onCancel() {
+            
             this.$emit('update:dialogVisible', false)
         },
         onProductSelect(val) {

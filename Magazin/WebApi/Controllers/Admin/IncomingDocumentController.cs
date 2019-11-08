@@ -69,6 +69,31 @@ namespace WebUiAdmin.Controllers
             });
         }
 
+        /// <summary>
+        /// Создать документ
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> Create(IncomingDocument document)
+        {
+            try
+            {
+                await incomingDocumentService.CreateAsync(document);
+                return Ok();
+            }
+            catch(Exception error)
+            {
+                return BadRequest(error.GetBaseException().Message);
+            }
+        }
+
+        /// <summary>
+        /// Провести документ
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        [Route("[action]")]
         [HttpPost]
         public async Task<IActionResult> Apply([FromBody]IncomingDocument document)
         {

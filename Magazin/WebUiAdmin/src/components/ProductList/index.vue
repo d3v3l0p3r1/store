@@ -59,7 +59,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="pagination.total>0" :total="pagination.total" :page.sync="pagination.page" :limit.sync="pagination.limit" @pagination="getProducts" />
+    <pagination v-show="pagination.total>0" :total="pagination.total" :page.sync="pagination.page" :limit.sync="pagination.limit" @pagination="getProducts" small="true"/>
 
   </div>
 </template>

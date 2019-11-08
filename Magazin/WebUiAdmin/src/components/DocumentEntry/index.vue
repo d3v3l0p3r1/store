@@ -17,6 +17,7 @@
       row-key="id"
       style="width: 100%;"
       empty-text="Нет данных"
+      @current-change="handleSelectEntry"
     >
 
       <el-table-column>
@@ -68,7 +69,8 @@ export default {
         product: null,
         count: 0
       },
-      editDialogVisible: false
+      editDialogVisible: false,
+      selectedEntry: null
     }
   },
   methods: {
@@ -83,10 +85,17 @@ export default {
         this.editDialogVisible = true
       },
       handleEdit() {
-
+        if (this.selectedEntry != null) {
+          this.entry = this.selectedEntry
+          this.editDialogVisible = true
+        }
+      },
+      handleSelectEntry(val) {
+        this.selectedEntry = val
       },
       onEntryEditComplete(val) {
-        if (val.id === 0) {
+        var contains = this.entries.indexOf(val)
+        if (contains === -1) {
           this.entries.push(this.entry)
         }
 

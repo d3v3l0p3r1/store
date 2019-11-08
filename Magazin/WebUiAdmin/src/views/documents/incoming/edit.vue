@@ -42,6 +42,7 @@
 </template>
 <script>
 import DocumentEntry from '@/components/DocumentEntry'
+import { create , get } from '@/api/incmoingDocuments'
 
 export default {
     name: 'Edit',
@@ -78,7 +79,12 @@ export default {
    watch: {
     dialogVisible: function(newVisible, oldVisible) {
       if (newVisible === true) {
-        this.reset()
+        if (this.entityId === 0) {
+          this.reset()
+        } else {
+          this.loadDocument()
+        }
+        
       } else {
         this.reset()
       }
@@ -104,10 +110,17 @@ export default {
 
     },
     onSubmit() {
-
+      if (this.entity.id !== 0) {
+        create(this.entity)
+      }
+      
     },
     onCancel() {
       this.$emit('onEditDialogClose')
+    },
+    async loadDocument() {
+      var res = await get(this.entityId)
+      this.entity = res
     }
   }
 }

@@ -98,7 +98,9 @@ export default {
           this.dialogVisible = true
         },
         handleEdit() {
-
+          if (this.selectedId !== 0) {
+            this.dialogVisible = true
+          }
         },
         handleCurrentChange(val) {
           if (val != null) {
