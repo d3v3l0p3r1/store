@@ -19,7 +19,7 @@ namespace BaseCore.Security.Services.Concrete
             _userManager = userManager;
         }
 
-        public IQueryable<User> GetAll()
+        public IQueryable<User> GetAllAsNotracking()
         {
             return _userManager.Users.Where(x=> x.Hidden == false);
         }
@@ -54,12 +54,23 @@ namespace BaseCore.Security.Services.Concrete
             _userManager.UpdateAsync(user);
         }
 
-        public User Create(User entity)
-        {   
-            throw new NotImplementedException();
+        public async Task<User> CreateAsync(User entity)
+        {
+            await _userManager.CreateAsync(entity);
+            return entity;
         }
 
-        public Task<User> CreateAsync(User entity)
+        public Task<User> GetAsync(long id)
+        {
+            return _userManager.FindByIdAsync(id.ToString());
+        }
+
+        public Task DeleteAsync(long id)
+        {
+            throw new NotSupportedException();
+        }
+
+        public IQueryable<User> GetQuery()
         {
             throw new NotImplementedException();
         }

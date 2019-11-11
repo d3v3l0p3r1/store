@@ -1,20 +1,20 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BaseCore.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BaseCore.Services.Abstract
-{  
+{
 
-    public interface IRepository<T> where T: BaseEntity
+    public interface IRepository<T> where T : BaseEntity
     {
-        T Create(T entity);
         Task<T> CreateAsync(T entity);
-        void Delete(T entity);
-        T Update(T entity);
-        T Find(int id);
-        IQueryable<T> GetAll();
-        DbSet<T> GetDbSet();
+        Task DeleteAsync(T entity);
+        Task DeleteAsync(IEnumerable<T> entities);
         Task<T> UpdateAsync(T entity);
+        Task<T> GetAsync(long id);
+        IQueryable<T> GetAllAsNotracking();
+        DbSet<T> GetDbSet();
     }
 }

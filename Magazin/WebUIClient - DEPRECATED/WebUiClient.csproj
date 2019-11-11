@@ -1,0 +1,193 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <IsPackable>false</IsPackable>
+    <SpaRoot>ClientApp\</SpaRoot>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Content Remove="$(SpaRoot)**" />
+    <None Remove="$(SpaRoot)**" />
+    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\src\api.ts" />
+    <None Remove="ClientApp\src\components\AboutComponent.tsx" />
+    <None Remove="ClientApp\src\components\Contacts\Contacts.tsx" />
+    <None Remove="ClientApp\src\components\Delivery.tsx" />
+    <None Remove="ClientApp\src\components\FastOrder.tsx" />
+    <None Remove="ClientApp\src\components\Feedback\Feedback.tsx" />
+    <None Remove="ClientApp\src\components\Login\Login.tsx" />
+    <None Remove="ClientApp\src\components\News.tsx" />
+    <None Remove="ClientApp\src\components\Promo\Promo.tsx" />
+    <None Remove="ClientApp\src\components\SearchBox.tsx" />
+    <None Remove="ClientApp\src\components\Slider.tsx" />
+    <None Remove="ClientApp\src\containers\App.tsx" />
+    <None Remove="ClientApp\src\containers\bascet\actions.ts" />
+    <None Remove="ClientApp\src\containers\bascet\Bascet.ts" />
+    <None Remove="ClientApp\src\containers\bascet\BascetState.ts" />
+    <None Remove="ClientApp\src\containers\bascet\layoutBascet.tsx" />
+    <None Remove="ClientApp\src\containers\bascet\mainBascet.tsx" />
+    <None Remove="ClientApp\src\containers\bascet\reducer.ts" />
+    <None Remove="ClientApp\src\containers\categories\actions.ts" />
+    <None Remove="ClientApp\src\containers\categories\Categories.tsx" />
+    <None Remove="ClientApp\src\containers\categories\ICategoriesState.ts" />
+    <None Remove="ClientApp\src\containers\categories\reducer.ts" />
+    <None Remove="ClientApp\src\containers\categories\types.ts" />
+    <None Remove="ClientApp\src\containers\mainpage\main-page.tsx" />
+    <None Remove="ClientApp\src\containers\newsSlider\actions.ts" />
+    <None Remove="ClientApp\src\containers\newsSlider\NewsSlider.tsx" />
+    <None Remove="ClientApp\src\containers\newsSlider\reducer.ts" />
+    <None Remove="ClientApp\src\containers\newsSlider\SliderState.ts" />
+    <None Remove="ClientApp\src\containers\newsSlider\types.ts" />
+    <None Remove="ClientApp\src\containers\order\actions.ts" />
+    <None Remove="ClientApp\src\containers\order\OrderContainer.tsx" />
+    <None Remove="ClientApp\src\containers\order\OrderState.ts" />
+    <None Remove="ClientApp\src\containers\order\reducer.ts" />
+    <None Remove="ClientApp\src\containers\order\types.ts" />
+    <None Remove="ClientApp\src\containers\product\actions.ts" />
+    <None Remove="ClientApp\src\containers\product\ProductGrid.tsx" />
+    <None Remove="ClientApp\src\containers\product\ProductItem.tsx" />
+    <None Remove="ClientApp\src\containers\product\ProductItemModal.tsx" />
+    <None Remove="ClientApp\src\containers\product\reducer.ts" />
+    <None Remove="ClientApp\src\containers\product\types.ts" />
+    <None Remove="ClientApp\src\containers\user\actions.ts" />
+    <None Remove="ClientApp\src\containers\user\LoginContainer.tsx" />
+    <None Remove="ClientApp\src\containers\user\reducer.ts" />
+    <None Remove="ClientApp\src\containers\user\RegistrationContainer.tsx" />
+    <None Remove="ClientApp\src\containers\user\types.ts" />
+    <None Remove="ClientApp\src\containers\user\UserNavMenuItem.tsx" />
+    <None Remove="ClientApp\src\containers\user\UserState.ts" />
+    <None Remove="ClientApp\src\models\Category.ts" />
+    <None Remove="ClientApp\src\models\News.ts" />
+    <None Remove="ClientApp\src\models\OrderModel.ts" />
+    <None Remove="ClientApp\src\models\Product.tsx" />
+    <None Remove="ClientApp\src\models\UserModel.ts" />
+    <None Remove="ClientApp\src\Settings.ts" />
+    <None Remove="ClientApp\src\stores\ApiActionKeys.ts" />
+    <None Remove="ClientApp\src\stores\configureStore.dev.tsx" />
+    <None Remove="ClientApp\src\stores\configureStore.prod.tsx" />
+    <None Remove="ClientApp\src\stores\configureStore.tsx" />
+    <None Remove="ClientApp\src\stores\IApplicationState.ts" />
+    <None Remove="ClientApp\src\stores\IBaseComponentState.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\api.ts" />
+    <TypeScriptCompile Include="ClientApp\src\components\AboutComponent.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\Contacts\Contacts.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\Delivery.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\FastOrder.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\Feedback\Feedback.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\Login\Login.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\News.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\Promo\Promo.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\SearchBox.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\Slider.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\containers\App.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\containers\bascet\actions.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\bascet\Bascet.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\bascet\BascetState.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\bascet\layoutBascet.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\containers\bascet\mainBascet.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\containers\bascet\reducer.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\categories\actions.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\categories\Categories.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\containers\categories\ICategoriesState.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\categories\reducer.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\categories\types.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\mainpage\main-page.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\containers\newsSlider\actions.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\newsSlider\NewsSlider.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\containers\newsSlider\reducer.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\newsSlider\SliderState.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\newsSlider\types.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\order\actions.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\order\OrderContainer.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\containers\order\OrderState.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\order\reducer.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\order\types.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\containers\product\actions.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\product\ProductGrid.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\containers\product\ProductItem.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\containers\product\ProductItemModal.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\containers\product\reducer.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\product\types.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\user\actions.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\user\LoginContainer.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\containers\user\reducer.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\user\RegistrationContainer.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\containers\user\types.ts" />
+    <TypeScriptCompile Include="ClientApp\src\containers\user\UserNavMenuItem.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\containers\user\UserState.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\Category.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\News.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\OrderModel.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\Product.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\models\UserModel.ts" />
+    <TypeScriptCompile Include="ClientApp\src\Settings.ts" />
+    <TypeScriptCompile Include="ClientApp\src\stores\ApiActionKeys.ts" />
+    <TypeScriptCompile Include="ClientApp\src\stores\configureStore.dev.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\stores\configureStore.prod.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\stores\configureStore.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\stores\IApplicationState.ts" />
+    <TypeScriptCompile Include="ClientApp\src\stores\IBaseComponentState.ts" />
+  </ItemGroup>
+
+  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+  </Target>
+
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
+
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="$(SpaRoot)build\**; $(SpaRoot)build-ssr\**" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+
+  <ProjectExtensions><VisualStudio><UserProperties clientapp_4package_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptTarget>ES2015</TypeScriptTarget>
+    <TypeScriptJSXEmit>React</TypeScriptJSXEmit>
+    <TypeScriptModuleKind>ES6</TypeScriptModuleKind>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile></TypeScriptOutFile>
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+
+</Project>

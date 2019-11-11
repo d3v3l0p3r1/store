@@ -10,7 +10,7 @@ namespace DataCore.Entities
 {
     public class Order : BaseEntity
     {
-        public int? UserID { get; set; }
+        public long? UserID { get; set; }
         public virtual User User { get; set; }
 
         [DisplayName("Дата создания")]
@@ -19,7 +19,7 @@ namespace DataCore.Entities
 
         public virtual ICollection<OrderProduct> Products { get; set; }
 
-        [DisplayName("Тип доставки")]        
+        [DisplayName("Тип доставки")]
         [EnumDataType(typeof(DeliveryType))]
         public DeliveryType DeliveryType { get; set; }
 
@@ -38,7 +38,7 @@ namespace DataCore.Entities
         [DisplayName("Сдача с ...")]
         public string Change { get; set; }
 
-        [DisplayName("Количество приборов")]        
+        [DisplayName("Количество приборов")]
         public int PersonCount { get; set; }
 
         [DisplayName("Имя получателя")]
@@ -53,7 +53,7 @@ namespace DataCore.Entities
 
     public class OrderProduct : BaseEntity
     {
-        public int ProductID { get; set; }
+        public long ProductID { get; set; }
         public virtual Product Product { get; set; }
 
         public decimal Price { get; set; }

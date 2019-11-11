@@ -15,35 +15,15 @@ namespace BaseCore.Services.Concrete
             _repository = repository;
         }
 
-
-        public virtual IQueryable<T> GetAll()
+        public virtual IQueryable<T> GetQuery()
         {
-            var all = _repository.GetAll();
+            return _repository.GetDbSet();
+        }
+
+        public virtual IQueryable<T> GetAllAsNotracking()
+        {
+            var all = _repository.GetAllAsNotracking();
             return all.Where(x => !x.Hidden);
-        }
-
-        public virtual T Find(int id)
-        {
-            if (id == 0)
-            {
-                return null;
-            }
-
-            return _repository.Find(id);
-        }
-
-        public virtual T Update(T entity)
-        {
-            if (entity == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            PrepareEntity(entity);
-
-            var result = _repository.Update(entity);
-
-            return result;
         }
 
         public virtual async Task<T> UpdateAsync(T entity)
@@ -60,30 +40,6 @@ namespace BaseCore.Services.Concrete
             return result;
         }
 
-        public virtual void Delete(int id)
-        {
-            if (id == 0)
-            {
-                throw new ArgumentException();
-            }
-
-            var entity = _repository.Find(id);
-
-            entity.Hidden = true;
-
-            _repository.Update(entity);
-        }
-
-        public virtual T Create(T entity)
-        {
-            if (entity == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            return _repository.Create(entity);
-        }
-
         public virtual async Task<T> CreateAsync(T entity)
         {
             if (entity == null)
@@ -97,6 +53,17 @@ namespace BaseCore.Services.Concrete
         protected virtual void PrepareEntity(T entity)
         {
 
+        }
+
+        public virtual Task<T> GetAsync(long id)
+        {
+            return _repository.GetAsync(id);
+        }
+
+        public virtual async Task DeleteAsync(long id)
+        {
+            var entity = await GetAsync(id);
+            await _repository.DeleteAsync(entity);
         }
     }
 }

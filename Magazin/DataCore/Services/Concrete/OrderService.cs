@@ -9,6 +9,7 @@ using DataCore.Entities;
 using DataCore.Models;
 using DataCore.Repositories.Abstract;
 using DataCore.Services.Abstract;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataCore.Services.Concrete
 {
@@ -23,7 +24,7 @@ namespace DataCore.Services.Concrete
             _productService = productService;
         }
 
-        public async Task<Order> CreateAsync(int? userID, OrderModel model)
+        public async Task<Order> CreateAsync(long? userID, OrderModel model)
         {
             var order = new Order
             {
@@ -43,7 +44,7 @@ namespace DataCore.Services.Concrete
 
             var productIds = model.Products.Select(x => x.Product.Id);
 
-            var products = _productService.GetAll()
+            var products = _productService.GetAllAsNotracking()
                     .Where(x => productIds.Contains(x.Id))
                     .Distinct()
                     .ToList()
@@ -78,16 +79,19 @@ namespace DataCore.Services.Concrete
             return order;
         }
 
-        public override Order Update(Order entity)
+        public override Task<Order> UpdateAsync(Order entity)
         {
             RecalculateTotalAmount(entity);
 
-            return base.Update(entity);
+            return base.UpdateAsync(entity);
         }
 
-        public IQueryable<OrderProduct> GetOrderProducts(int orderID)
+        public async Task<List<OrderProduct>> GetOrderProducts(long orderID)
         {
-            return _rep.GetOrderProducts(orderID);
+            var query = _rep.GetOrderProducts(orderID);
+            var result = await query.ToListAsync();
+
+            return result;
         }
 
         private void RecalculateTotalAmount(Order order)
