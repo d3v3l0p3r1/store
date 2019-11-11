@@ -16,6 +16,9 @@ using Microsoft.AspNetCore.SpaServices;
 using WebUiAdmin.Models;
 using System;
 using WebApi.Extensions;
+using AutoMapper;
+using WebApi.Mappings.Documents;
+using System.Reflection;
 
 namespace WebUiAdmin
 {
@@ -40,7 +43,6 @@ namespace WebUiAdmin
             services.AddControllers()
                 .AddNewtonsoftJson(config =>
                 {
-                    config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     config.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
 
@@ -69,6 +71,8 @@ namespace WebUiAdmin
                     config.IncludeXmlComments(xmlPath);
                 }
             });
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

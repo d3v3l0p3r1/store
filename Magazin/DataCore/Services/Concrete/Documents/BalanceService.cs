@@ -22,20 +22,20 @@ namespace DataCore.Services.Concrete.Documents
             _repository = repository;
         }
 
-        public async Task AddToBalance(IncomingDocumentEntry incomingDocumentEntry)
+        public async Task AddToBalance<T>(BaseDocumentEntry<T> incomingDocumentEntry) where T: BaseDocument
         {
             var balance = await _repository.GetOrCreateBalance(incomingDocumentEntry.Product);
 
             balance.BalanceEntries.Add(new BalanceEntry()
             {
                 Count = incomingDocumentEntry.Count,
-                IncomingDocument = incomingDocumentEntry.Document
+                IncomingDocumentId = incomingDocumentEntry.DocumentId
             });
 
             await _repository.UpdateAsync(balance);
         }
 
-        public async Task RemoveFrombalance(OutComingDocumentEntry entry)
+        public async Task RemoveFrombalance<T>(BaseDocumentEntry<T> entry) where T: BaseDocument
         {
             var balance = await _repository.GetDbSet()
                 .Include(x => x.BalanceEntries)

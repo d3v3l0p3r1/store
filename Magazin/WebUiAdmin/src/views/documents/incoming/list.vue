@@ -20,7 +20,7 @@
       @current-change="handleCurrentChange"
     >
 
-      <el-table-column>
+      <el-table-column label="Идентификатор">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
         </template>
@@ -38,21 +38,43 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Изображение" width="120px">
+      <el-table-column label="Дата создания">
         <template slot-scope="scope">
-          <img :src="scope.row.fileUrl" width="60px">
+          <span>{{ scope.row.date }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="Цена">
+      <el-table-column label="Дата проведения">
         <template slot-scope="scope">
-          <span>{{ scope.row.price }}</span>
+          <span>{{ scope.row.processDate }}</span>
+        </template>
+      </el-table-column>
+      
+      <el-table-column label="Статус">
+        <template slot-scope="scope">
+          <span>
+            {{statuses[scope.row.documentStatus]}}
+          </span>
         </template>
       </el-table-column>
 
-      <el-table-column label="Вид">
+      <el-table-column label="Операции">
         <template slot-scope="scope">
-          <span>{{ scope.row.kind }}</span>
+          <el-tooltip v-if="scope.row.documentStatus==0 || scope.row.documentStatus==20" content="Провести документ" placement="top-start" :open-delay=500 >
+            <el-button type="success" icon="el-icon-check" circle @click="handleApplyClick(scope.row)"/>
+          </el-tooltip>
+
+          <el-tooltip v-if="scope.row.documentStatus== 10" content="Отменить проводку" placement="top-start" :open-delay=500 >
+            <el-button type="danger" icon="el-icon-back" circle @click="handleDiscardClick(scope.row)"/>
+          </el-tooltip>
+
+          <el-tooltip content="Редактировать" placement="top-start" :open-delay=500 >
+            <el-button type="primary" icon="el-icon-edit" circle @click="handleEditClick(scope.row)" />
+          </el-tooltip>
+
+          <el-tooltip content="Удалить" placement="top-start" :open-delay=500 >
+            <el-button type="danger" icon="el-icon-delete" circle @click="handleRemoveClick(scope.row)" />
+          </el-tooltip>
         </template>
       </el-table-column>
 
@@ -64,7 +86,8 @@
 
 <script>
 import Pagination from '@/components/Pagination'
-import { getDocuments } from '@/api/incmoingDocuments'
+import { getDocuments, remove, apply, discard } from '@/api/incmoingDocuments'
+import { getDocumentStatusEnum } from '@/api/enums'
 import EditDialog from '@/views/documents/incoming/edit'
 
 export default {
@@ -79,19 +102,24 @@ export default {
             pagination: {
                 total: 0,
                 page: 1,
-                limit: 20
-            }
+                limit: 10
+            },
+            statuses: []
         }
     },
     created() {
-        this.loadEntities()
+      this.loadStatuses()
+      this.loadEntities()
     },
     methods: {
+        async loadStatuses() {
+          this.statuses = await getDocumentStatusEnum()
+        },
         async loadEntities() {
             this.listLoading = true
             const res = await getDocuments(this.pagination.page, this.pagination.limit)
             this.entities = res.data
-            this.total = res.total
+            this.pagination.total = res.total
             this.listLoading = false
         },
         handleCreate() {
@@ -112,6 +140,23 @@ export default {
         onEditDialogClose() {
           this.dialogVisible = false
           this.selectedId = 0
+          this.loadEntities()
+        },
+        handleEditClick(row) {
+          this.handleCurrentChange(row)
+          this.dialogVisible = true
+        },
+        async handleRemoveClick(row) {
+          this.listLoading = true
+          await remove(row.id)
+          this.loadEntities()
+        },
+        async handleApplyClick(row) {
+          await apply(row.id)
+          this.loadEntities()
+        },
+        async handleDiscardClick(row) {
+          await discard(row.id)
           this.loadEntities()
         }
     }

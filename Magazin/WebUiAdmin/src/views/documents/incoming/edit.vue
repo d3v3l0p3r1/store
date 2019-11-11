@@ -42,7 +42,7 @@
 </template>
 <script>
 import DocumentEntry from '@/components/DocumentEntry'
-import { create, get } from '@/api/incmoingDocuments'
+import { create, get, update } from '@/api/incmoingDocuments'
 
 export default {
     name: 'Edit',
@@ -105,15 +105,18 @@ export default {
         count: 0
       }
     },
-    handleClose() {
-
-    },
-    onSubmit() {
-      if (this.entity.id !== 0) {
-        create(this.entity)
+    async onSubmit() {
+      if (this.entity.id === 0) {
+        var res = await create(this.entity)
+        this.entityId = res.id
+        await this.loadDocument()
+      } else {
+        await update(this.entity)
+        await this.loadDocument()
       }
     },
     onCancel() {
+      this.reset()
       this.$emit('onEditDialogClose')
     },
     async loadDocument() {

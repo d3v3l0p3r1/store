@@ -50,23 +50,21 @@ export default {
     },
     data() {
         return {
-            productTitle: null,
             selectProductVisible: false
         }
-    },
+    },    
     watch: {
-        dialogVisible: function(newVisible, oldVisible) {
-            if (newVisible === true) {
-                this.reset()
+    },
+    computed: {
+        productTitle: function() {
+            if (this.entry.product != null) {
+                return this.entry.product.title
             } else {
-                this.reset()
-            }
+                return ""
+            }            
         }
     },
     methods: {
-        reset() {
-            this.productTitle = null
-        },
         onSubmit() {
             if (this.entry == null) {
                 this.$notify.error({
@@ -103,7 +101,6 @@ export default {
         onProductSelect(val) {
             this.entry.productId = val.id
             this.entry.product = val
-            this.productTitle = val.title
             this.selectProductVisible = false
         }
     }

@@ -1,8 +1,13 @@
 import request from '@/utils/request'
 
 export function getProducts(category, page, limit) {
+    var url = 'product/getall?page=' + page + '&take=' + limit
+    if (category != null) {
+        url += '&catID=' + category
+    }
+
     return request({
-        url: 'product/getall?page=' + page + '&catID=' + category + '&take=' + limit,
+        url: url,
         method: 'GET'
     })
 }

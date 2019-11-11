@@ -43,6 +43,20 @@
           <span>{{ scope.row.count }}</span>
         </template>
       </el-table-column>
+
+      <el-table-column label="Операции">
+        <template slot-scope="scope">
+
+           <el-tooltip content="Редактировать" placement="top-start" :open-delay=500 >
+            <el-button type="primary" icon="el-icon-edit" circle @click="handleEditClick(scope.row)" />
+          </el-tooltip>
+
+          <el-tooltip content="Удалить" placement="top-start" :open-delay=500 >
+            <el-button type="danger" icon="el-icon-delete" circle @click="handleRemoveClick(scope.row)" />
+          </el-tooltip>
+
+        </template>
+      </el-table-column>
     </el-table>
     <EntryEdit :entry="entry" :dialog-visible.sync="editDialogVisible" @onSubmit="onEntryEditComplete" />
   </div>
@@ -100,6 +114,18 @@ export default {
         }
 
         this.editDialogVisible = false
+      },
+      handleEditClick(row) {
+        var e = this.entries.filter(x => row.id === x.id)
+        this.selectedEntry = e[0]
+        this.handleEdit()
+      },
+      handleRemoveClick(row) {
+        var entry = this.entries.find(x => x.id === row.id)
+        var index = this.entries.indexOf(entry)
+        if (index !== -1) {
+          this.entries.splice(index, 1)
+        }
       }
   }
 }

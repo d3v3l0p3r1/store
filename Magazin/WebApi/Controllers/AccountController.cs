@@ -25,7 +25,8 @@ namespace WebUiAdmin.Controllers.Api
     [Authorize]
     [Produces("application/json")]
     [Route("api/[controller]")]
-    public class AccountController : Controller
+    [ApiController]
+    public class AccountController : ControllerBase
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
@@ -49,7 +50,7 @@ namespace WebUiAdmin.Controllers.Api
         [HttpPost]
         [Route("Login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Token([FromBody]LoginModel model)
+        public async Task<IActionResult> Token(LoginModel model)
         {
             var user = await _signInManager.UserManager.FindByEmailAsync(model.Email);
 
@@ -86,7 +87,7 @@ namespace WebUiAdmin.Controllers.Api
         [HttpPost]
         [Route("Register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody]RegisterModel model)
+        public async Task<IActionResult> Register(RegisterModel model)
         {
             if (model.Password != model.PasswordConfirm)
             {
