@@ -1,4 +1,5 @@
-﻿using DataCore.DAL;
+﻿using BackendTest.Services.Concrete;
+using DataCore.DAL;
 using DataCore.Entities;
 using DataCore.Entities.Documents;
 using DataCore.Repositories.Concrete;
@@ -19,12 +20,14 @@ namespace WebUiAdminTest
         protected BalanceService BalanceService;
         protected BalanceRepository BalanceRepository;
 
+        protected Repository<ProductImage> ProductImageRepository;
         protected ProductService ProductService;
         protected Repository<Product> ProductRepository;
 
         protected Repository<ProductCategory> ProductCategoryRepository;
         protected ProductCategoryService ProductCategoryService;
 
+        protected Repository<IncomingDocumentEntry> IncomingDocumentEntryRepository;
         protected Repository<IncomingDocument> IncomingDocumentRepository;
         protected IncomingDocumentService IncomingDocumentService;
 
@@ -33,6 +36,8 @@ namespace WebUiAdminTest
 
         protected Repository<ProductKind> ProductKingRepository;
         protected KindService ProductKindService;
+
+        protected DummyFileService DummyFileService;
 
         public BaseTest()
         {
@@ -49,15 +54,18 @@ namespace WebUiAdminTest
 
             BalanceRepository = new BalanceRepository(DataContext);
             ProductRepository = new Repository<Product>(DataContext);
+            ProductImageRepository = new Repository<ProductImage>(DataContext);
 
+            DummyFileService = new DummyFileService();
             BalanceService = new BalanceService(BalanceRepository);
-            ProductService = new ProductService(ProductRepository, BalanceService);
+            ProductService = new ProductService(ProductRepository, BalanceService, DummyFileService, ProductImageRepository);
 
             ProductCategoryRepository = new Repository<ProductCategory>(DataContext);
             ProductCategoryService = new ProductCategoryService(ProductCategoryRepository);
 
+            IncomingDocumentEntryRepository = new Repository<IncomingDocumentEntry>(DataContext);
             IncomingDocumentRepository = new Repository<IncomingDocument>(DataContext);
-            IncomingDocumentService = new IncomingDocumentService(IncomingDocumentRepository, BalanceService);
+            IncomingDocumentService = new IncomingDocumentService(IncomingDocumentRepository, BalanceService, IncomingDocumentEntryRepository);
 
             OutcomingDocumentRepository = new Repository<OutComingDocument>(DataContext);
             OutcomingDocumentService = new OutcomingDocumentService(OutcomingDocumentRepository, BalanceService);
@@ -103,7 +111,7 @@ namespace WebUiAdminTest
             };
 
             await IncomingDocumentService.CreateAsync(incomingDocument);
-            await IncomingDocumentService.Apply(incomingDocument);
+            await IncomingDocumentService.Apply(incomingDocument.Id);
 
             return incomingDocument;
         }

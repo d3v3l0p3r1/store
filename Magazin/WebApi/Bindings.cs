@@ -45,6 +45,7 @@ namespace WebUiAdmin
             services.AddScoped<IBalanceRepository, BalanceRepository>();
             services.AddScoped<IRepository<IncomingDocument>, Repository<IncomingDocument>>();
             services.AddScoped<IRepository<ProductImage>, Repository<ProductImage>>();
+            services.AddScoped<IRepository<IncomingDocumentEntry>, Repository<IncomingDocumentEntry>>();
 
             services.AddScoped<IFileService, FileService>();
 

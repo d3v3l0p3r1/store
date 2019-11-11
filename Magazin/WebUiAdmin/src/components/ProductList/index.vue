@@ -1,19 +1,10 @@
 <template>
-  <div class="app-container">
+  <div>
     <div class="filter-container">
       <el-select v-model="selectedCategory" placeholder="Выбирите категорию" style="width: 190px" clearable class="filter-item" value-key="id" @change="handelSelectCategory">
         <el-option v-for="item in categories" :key="item.id" :label="item.title" :value="item" />
       </el-select>
-
-      <el-button class="filter-item" @click="handleCreateProduct">
-        <span>Создать</span>
-      </el-button>
-
-      <el-button class="filter-item" @click="handleEditProduct">
-        <span>Изменить</span>
-      </el-button>
     </div>
-
     <el-table
       v-loading="listLoading"
       :data="products"
@@ -68,44 +59,38 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getProducts" />
-    <ProductEdit :dialog-visible.sync="dialog.visible" :entity-id.sync="selectedProductId" @onProductDialogClose="onProductDialogClose" />
+    <pagination v-show="pagination.total>0" :total="pagination.total" :page.sync="pagination.page" :limit.sync="pagination.limit" small @pagination="getProducts" />
+
   </div>
 </template>
 
 <script>
 import { getProducts, getCategories } from '@/api/products'
 import Pagination from '@/components/Pagination'
-import ProductEdit from '@/views/products/productEdit'
 
 export default {
     name: 'Products',
-    components: { Pagination, ProductEdit },
+    components: { Pagination },
+    props: {
+    },
     data() {
         return {
-            products: null,
-            categories: [],
             selectedCategory: null,
             selectedProduct: null,
-            selectedProductId: 0,
-            total: 0,
+            products: [],
+            categories: [],
             listLoading: true,
-            dialog: {
-                status: '',
-                visible: false
-            },
-            listQuery: {
+            dialogVisible: false,
+            pagination: {
                 page: 1,
-                limit: 20
+                limit: 20,
+                total: 0
             }
         }
     },
-    computed: {
-
-    },
     created() {
-        this.getCategories()
-        this.getProducts()
+      this.getCategories()
+      this.getProducts()
     },
     methods: {
         async getCategories() {
@@ -115,31 +100,20 @@ export default {
         async getProducts() {
             this.listLoading = true
             const cat = this.selectedCategory == null ? null : this.selectedCategory.id
-            const res = await getProducts(cat, this.listQuery.page, this.listQuery.limit)
+            const res = await getProducts(cat, this.pagination.page, this.pagination.limit)
             this.products = res.data
-            this.total = res.total
+            this.pagination.total = res.total
             this.listLoading = false
         },
-        handelSelectCategory() {
+        handelSelectCategory(val) {
+            this.$emit('update:selectedCategory', val)
             this.getProducts()
         },
         handleSelectProduct(val) {
-            this.selectedProduct = val
-        },
-        handleCreateProduct() {
-            this.dialog.visible = true
-        },
-        handleEditProduct() {
-            if (this.selectedProduct != null) {
-                this.selectedProductId = this.selectedProduct.id
-                this.dialog.visible = true
-            }
-        },
-        onProductDialogClose() {
-            this.dialog.visible = false
-            this.selectedProductId = 0
-            this.getProducts()
+          this.$emit('selectedProductChange', val)
+          this.selectedProduct = val
         }
     }
+
 }
 </script>

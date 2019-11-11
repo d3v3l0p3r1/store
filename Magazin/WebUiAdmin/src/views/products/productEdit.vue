@@ -134,6 +134,8 @@ export default {
     dialogVisible: function(newVisible, oldVisible) {
       if (newVisible === true) {
         this.loadProduct()
+      } else {
+        this.clear()
       }
     }
   },
@@ -142,6 +144,22 @@ export default {
     this.loadKinds()
   },
   methods: {
+    clear() {
+       this.product = {
+          id: 0,
+          title: '',
+          categoryId: 1,
+          desctiption: '',
+          price: 0,
+          file: null,
+          fileID: 0,
+          kindId: 1,
+          images: []
+        }
+
+        this.images = this.images.splice()
+        this.mainImage = this.mainImage.splice()
+    },
     async loadProduct() {
       this.loading = true
       this.mainImage = []
@@ -169,19 +187,8 @@ export default {
           }
         }
       } else {
-        this.product = {
-          id: 0,
-          title: '',
-          categoryId: 1,
-          desctiption: '',
-          price: 0,
-          file: null,
-          fileID: 0,
-          kindId: 1,
-          images: []
-        }
+        this.clear()
       }
-
       this.loading = false
     },
     async loadCategories() {

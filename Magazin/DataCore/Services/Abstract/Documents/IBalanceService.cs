@@ -9,8 +9,8 @@ namespace DataCore.Services.Abstract.Documents
 {
     public interface IBalanceService
     {
-        Task AddToBalance(IncomingDocumentEntry incomingDocumentEntry);
-        Task RemoveFrombalance(OutComingDocumentEntry entity);
+        Task AddToBalance<T>(BaseDocumentEntry<T> incomingDocumentEntry) where T : BaseDocument;
+        Task RemoveFrombalance<T>(BaseDocumentEntry<T> entity) where T : BaseDocument;
         Task<int> GetBalance(Product product);
         Task<Balance> Get(Product product);
         IQueryable<Balance> GetDbSet();

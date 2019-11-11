@@ -108,13 +108,13 @@ export const asyncRoutes = [
     children: [
       {
         path: 'incomingDocuments',
-        component: () => import('@/views/documents/IncomingDocuments'),
+        component: () => import('@/views/documents/incoming/list'),
         name: 'IncomingDocuments',
         meta: { title: 'Документы прихода', icon: 'documents-plus-symbol-for-interface-with-rounded-square-shape' }
       },
       {
         path: 'outcomingDocuments',
-        component: () => import('@/views/documents/IncomingDocuments'),
+        component: () => import('@/views/documents/incoming/list'),
         name: 'OutcomingDocuments',
         meta: { title: 'Документы расхода', icon: 'document-with-minus-sign' }
       }

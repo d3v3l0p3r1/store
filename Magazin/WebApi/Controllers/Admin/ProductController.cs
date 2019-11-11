@@ -26,7 +26,8 @@ namespace WebUiAdmin.Controllers
     [Authorize(Roles = "admin")]
     [Route("[controller]")]
     [ApiExplorerSettings(GroupName = "admin")]
-    public class ProductController : Controller
+    [ApiController]
+    public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
         private readonly IProductCategoryService _productCategoryService;

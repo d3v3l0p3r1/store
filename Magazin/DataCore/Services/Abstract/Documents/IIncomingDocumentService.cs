@@ -6,6 +6,7 @@ namespace DataCore.Services.Abstract.Documents
 {
     public interface IIncomingDocumentService : IBaseService<IncomingDocument>
     {
-        Task Apply(IncomingDocument document);
+        Task Apply(long id);
+        Task Discard(long id);
     }
 }
