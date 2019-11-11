@@ -47,11 +47,11 @@
       <el-table-column label="Операции">
         <template slot-scope="scope">
 
-           <el-tooltip content="Редактировать" placement="top-start" :open-delay=500 >
+          <el-tooltip content="Редактировать" placement="top-start" :open-delay="500">
             <el-button type="primary" icon="el-icon-edit" circle @click="handleEditClick(scope.row)" />
           </el-tooltip>
 
-          <el-tooltip content="Удалить" placement="top-start" :open-delay=500 >
+          <el-tooltip content="Удалить" placement="top-start" :open-delay="500">
             <el-button type="danger" icon="el-icon-delete" circle @click="handleRemoveClick(scope.row)" />
           </el-tooltip>
 

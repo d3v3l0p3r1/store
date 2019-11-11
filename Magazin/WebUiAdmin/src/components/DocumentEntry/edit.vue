@@ -52,17 +52,17 @@ export default {
         return {
             selectProductVisible: false
         }
-    },    
-    watch: {
     },
     computed: {
         productTitle: function() {
             if (this.entry.product != null) {
                 return this.entry.product.title
             } else {
-                return ""
-            }            
+                return ''
+            }
         }
+    },
+    watch: {
     },
     methods: {
         onSubmit() {

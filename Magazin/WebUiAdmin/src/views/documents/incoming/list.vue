@@ -49,30 +49,30 @@
           <span>{{ scope.row.processDate }}</span>
         </template>
       </el-table-column>
-      
+
       <el-table-column label="Статус">
         <template slot-scope="scope">
           <span>
-            {{statuses[scope.row.documentStatus]}}
+            {{ statuses[scope.row.documentStatus] }}
           </span>
         </template>
       </el-table-column>
 
       <el-table-column label="Операции">
         <template slot-scope="scope">
-          <el-tooltip v-if="scope.row.documentStatus==0 || scope.row.documentStatus==20" content="Провести документ" placement="top-start" :open-delay=500 >
-            <el-button type="success" icon="el-icon-check" circle @click="handleApplyClick(scope.row)"/>
+          <el-tooltip v-if="scope.row.documentStatus==0 || scope.row.documentStatus==20" content="Провести документ" placement="top-start" :open-delay="500">
+            <el-button type="success" icon="el-icon-check" circle @click="handleApplyClick(scope.row)" />
           </el-tooltip>
 
-          <el-tooltip v-if="scope.row.documentStatus== 10" content="Отменить проводку" placement="top-start" :open-delay=500 >
-            <el-button type="danger" icon="el-icon-back" circle @click="handleDiscardClick(scope.row)"/>
+          <el-tooltip v-if="scope.row.documentStatus== 10" content="Отменить проводку" placement="top-start" :open-delay="500">
+            <el-button type="danger" icon="el-icon-back" circle @click="handleDiscardClick(scope.row)" />
           </el-tooltip>
 
-          <el-tooltip content="Редактировать" placement="top-start" :open-delay=500 >
+          <el-tooltip content="Редактировать" placement="top-start" :open-delay="500">
             <el-button type="primary" icon="el-icon-edit" circle @click="handleEditClick(scope.row)" />
           </el-tooltip>
 
-          <el-tooltip content="Удалить" placement="top-start" :open-delay=500 >
+          <el-tooltip content="Удалить" placement="top-start" :open-delay="500">
             <el-button type="danger" icon="el-icon-delete" circle @click="handleRemoveClick(scope.row)" />
           </el-tooltip>
         </template>
