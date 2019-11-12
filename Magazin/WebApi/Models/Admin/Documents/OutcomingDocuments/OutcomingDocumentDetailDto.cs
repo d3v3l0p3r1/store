@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApi.Models.Admin.Documents.IncomingDocuments
+namespace WebApi.Models.Admin.Documents.OutcomingDocuments
 {
     /// <summary>
-    /// Модель для входящих документов
+    /// Детальное представление документа расхода
     /// </summary>
-    public class IncomingDocumentDetailDto : BaseDocumentDto
+    public class OutcomingDocumentDetailDto : BaseDocumentDto
     {
-
         /// <summary>
         /// Табличная часть
         /// </summary>

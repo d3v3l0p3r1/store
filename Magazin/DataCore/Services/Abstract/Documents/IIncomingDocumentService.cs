@@ -4,9 +4,7 @@ using DataCore.Entities.Documents;
 
 namespace DataCore.Services.Abstract.Documents
 {
-    public interface IIncomingDocumentService : IBaseService<IncomingDocument>
+    public interface IIncomingDocumentService : IBaseDocumentService<IncomingDocument, IncomingDocumentEntry>
     {
-        Task Apply(long id);
-        Task Discard(long id);
     }
 }

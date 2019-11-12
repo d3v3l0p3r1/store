@@ -1,39 +1,52 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using BaseCore.Security.Services.Concrete;
 using DataCore.Entities.Documents;
 using DataCore.Services.Abstract.Documents;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using WebApi.Models;
-using WebApi.Models.Admin.Documents;
-using WebApi.Models.Admin.Documents.IncomingDocuments;
 
-namespace WebUiAdmin.Controllers
+namespace WebApi.Controllers.Admin.Documents
 {
     /// <summary>
-    /// Документы прихода
+    /// Base oducment controller
     /// </summary>
+    /// <typeparam name="TService">Сервис</typeparam>
+    /// <typeparam name="TEntity">Сущность</typeparam>
+    /// <typeparam name="TEntry">Табличная часть</typeparam>
+    /// <typeparam name="TDetail">Детальное представление</typeparam>
+    /// <typeparam name="TList">Лист</typeparam>
     [Authorize(Roles = "admin")]
-    [Route("[controller]")]
     [ApiExplorerSettings(GroupName = "admin")]
     [ApiController]
-    public class IncomingDocumentController : ControllerBase
+    [Route("[controller]")]
+    public abstract class BaseDocumentController<TService, TEntity, TEntry, TDetail, TList> : ControllerBase
+        where TService : IBaseDocumentService<TEntity, TEntry>
+        where TEntity : BaseDocument<TEntry>
+        where TEntry : BaseDocumentEntry
+        where TDetail : class
+        where TList : class
     {
-        private readonly IIncomingDocumentService incomingDocumentService;
-        private readonly IMapper _mapper;
+        private TService _service;
+        private IMapper _mapper;
+        private UserManager _userManager;
 
         /// <summary>
-        /// ctor
+        /// Ctor
         /// </summary>
-        /// <param name="incomingDocumentService"></param>
+        /// <param name="service"></param>
         /// <param name="mapper"></param>
-        public IncomingDocumentController(IIncomingDocumentService incomingDocumentService, IMapper mapper)
+        public BaseDocumentController(TService service, IMapper mapper, UserManager userManager)
         {
-            this.incomingDocumentService = incomingDocumentService;
+            _service = service;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -42,11 +55,10 @@ namespace WebUiAdmin.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [ProducesResponseType(typeof(IncomingDocumentDetailDto), 200)]
-        public async Task<IActionResult> Get(long id)
+        public virtual async Task<ActionResult<TDetail>> Get(long id)
         {
-            var entity = await incomingDocumentService.GetAsync(id);
-            var result = _mapper.Map<IncomingDocumentDetailDto>(entity);
+            var entity = await _service.GetAsync(id);
+            var result = _mapper.Map<TDetail>(entity);
             return Ok(entity);
         }
 
@@ -59,8 +71,7 @@ namespace WebUiAdmin.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("[action]")]
-        [ProducesResponseType(typeof(ListRespone<IncomingDocumentListDto>), 200)]
-        public async Task<IActionResult> GetAll(int take = 20, int page = 1, DocumentStatus? state = null)
+        public virtual async Task<ActionResult<ListRespone<TList>>> GetAll(int take = 20, int page = 1, DocumentStatus? state = null)
         {
             if (take < 1)
             {
@@ -72,7 +83,7 @@ namespace WebUiAdmin.Controllers
                 return BadRequest("Страница не может быть меньше 1");
             }
 
-            var all = incomingDocumentService.GetAllAsNotracking();
+            var all = _service.GetAllAsNotracking().Include(x => x.Author).AsNoTracking();
 
             if (state != null)
             {
@@ -84,9 +95,9 @@ namespace WebUiAdmin.Controllers
             var total = await all.CountAsync();
             var orders = await all.OrderByDescending(x => x.Id).Skip(skip).Take(take).ToListAsync();
 
-            var result = new ListRespone<IncomingDocumentListDto>()
+            var result = new ListRespone<TList>()
             {
-                Data = orders.Select(x => _mapper.Map<IncomingDocumentListDto>(x)).ToList(),
+                Data = orders.Select(x => _mapper.Map<TList>(x)).ToList(),
                 Total = total
             };
 
@@ -99,15 +110,16 @@ namespace WebUiAdmin.Controllers
         /// <param name="document"></param>
         /// <returns></returns>
         [HttpPost]
-        [ProducesResponseType(typeof(IncomingDocument), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        public async Task<IActionResult> Create(IncomingDocumentDetailDto document)
+        public virtual async Task<ActionResult<TEntity>> Create(TDetail document)
         {
             try
             {
-                var entity = _mapper.Map<IncomingDocument>(document);
-                await incomingDocumentService.CreateAsync(entity);
+                var user = await _userManager.GetUserAsync(HttpContext.User);
+                var entity = _mapper.Map<TEntity>(document);
+                entity.AuthorId = user.Id;
+                await _service.CreateAsync(entity);
                 return Ok(entity);
             }
             catch (Exception error)
@@ -125,12 +137,12 @@ namespace WebUiAdmin.Controllers
         [ProducesResponseType(typeof(IncomingDocument), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        public async Task<IActionResult> Update(IncomingDocumentDetailDto document)
+        public async Task<IActionResult> Update(TDetail document)
         {
             try
             {
-                var entity = _mapper.Map<IncomingDocument>(document);
-                await incomingDocumentService.UpdateAsync(entity);
+                var entity = _mapper.Map<TEntity>(document);
+                await _service.UpdateAsync(entity);
                 return Ok(entity);
             }
             catch (Exception error)
@@ -138,6 +150,7 @@ namespace WebUiAdmin.Controllers
                 return BadRequest(error.GetBaseException().Message);
             }
         }
+
 
         /// <summary>
         /// Delete document
@@ -149,7 +162,7 @@ namespace WebUiAdmin.Controllers
         {
             try
             {
-                await incomingDocumentService.DeleteAsync(id);
+                await _service.DeleteAsync(id);
                 return Ok();
             }
             catch (Exception error)
@@ -169,7 +182,7 @@ namespace WebUiAdmin.Controllers
         {
             try
             {
-                await incomingDocumentService.Apply(id);
+                await _service.Apply(id);
                 return Ok();
             }
             catch (Exception e)
@@ -188,7 +201,7 @@ namespace WebUiAdmin.Controllers
         {
             try
             {
-                await incomingDocumentService.Discard(id);
+                await _service.Discard(id);
                 return Ok();
             }
             catch (Exception e)

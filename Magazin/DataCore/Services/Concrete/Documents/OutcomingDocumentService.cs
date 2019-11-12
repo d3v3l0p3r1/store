@@ -9,26 +9,10 @@ using System.Threading.Tasks;
 
 namespace DataCore.Services.Concrete.Documents
 {
-    public class OutcomingDocumentService : BaseService<OutComingDocument>
+    public class OutcomingDocumentService : BaseDocumentService<OutComingDocument, OutComingDocumentEntry>, IOutcomingDocumentService
     {
-        private readonly IBalanceService _balanceService;
-
-        public OutcomingDocumentService(IRepository<OutComingDocument> repository, IBalanceService balanceService) : base(repository)
+        public OutcomingDocumentService(IRepository<OutComingDocument> repository, IBalanceService balanceService, IRepository<OutComingDocumentEntry> entryRepository) : base(repository, balanceService, entryRepository)
         {
-            _balanceService = balanceService;
-        }
-
-        public override async Task<OutComingDocument> CreateAsync(OutComingDocument entity)
-        {
-            await base.CreateAsync(entity);
-
-            foreach(var entry in entity.Entry)
-            {
-                await _balanceService.RemoveFrombalance(entry);
-            }
-
-
-            return entity;
         }
 
 

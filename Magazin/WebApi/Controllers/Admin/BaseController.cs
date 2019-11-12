@@ -37,7 +37,7 @@ namespace WebUiAdmin.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("[action]")]
-        public virtual async Task<IActionResult> Create([FromBody]T entity)
+        public virtual async Task<IActionResult> Create(T entity)
         {
             try
             {

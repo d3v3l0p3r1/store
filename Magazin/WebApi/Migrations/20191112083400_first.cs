@@ -45,7 +45,8 @@ namespace WebApi.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     Hidden = table.Column<bool>(nullable: false),
                     FullName = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: true)
+                    Address = table.Column<string>(nullable: true),
+                    Type = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -161,42 +162,6 @@ namespace WebApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_IdentityResources", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "IncomingDocuments",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Hidden = table.Column<bool>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false),
-                    ProcessDate = table.Column<DateTime>(nullable: true),
-                    DocumentStatus = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_IncomingDocuments", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OutComingDocument",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Hidden = table.Column<bool>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false),
-                    ProcessDate = table.Column<DateTime>(nullable: true),
-                    DocumentStatus = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OutComingDocument", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -352,6 +317,38 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "IncomingDocuments",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Hidden = table.Column<bool>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    ProcessDate = table.Column<DateTime>(nullable: true),
+                    DocumentStatus = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    AuthorId = table.Column<long>(nullable: false),
+                    SenderId = table.Column<long>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IncomingDocuments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_IncomingDocuments_AspNetUsers_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_IncomingDocuments_AspNetUsers_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -380,6 +377,38 @@ namespace WebApi.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OutComingDocument",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Hidden = table.Column<bool>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    ProcessDate = table.Column<DateTime>(nullable: true),
+                    DocumentStatus = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    AuthorId = table.Column<long>(nullable: false),
+                    RecipientId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OutComingDocument", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OutComingDocument_AspNetUsers_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OutComingDocument_AspNetUsers_RecipientId",
+                        column: x => x.RecipientId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -974,6 +1003,16 @@ namespace WebApi.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_IncomingDocuments_AuthorId",
+                table: "IncomingDocuments",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IncomingDocuments_SenderId",
+                table: "IncomingDocuments",
+                column: "SenderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_News_ImageId",
                 table: "News",
                 column: "ImageId");
@@ -992,6 +1031,16 @@ namespace WebApi.Migrations
                 name: "IX_Orders_UserID",
                 table: "Orders",
                 column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OutComingDocument_AuthorId",
+                table: "OutComingDocument",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OutComingDocument_RecipientId",
+                table: "OutComingDocument",
+                column: "RecipientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OutComingDocumentEntry_DocumentId",

@@ -50,12 +50,6 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Автор">
-        <template slot-scope="scope">
-          <span>{{ scope.row.author.title }}</span>
-        </template>
-      </el-table-column>
-
       <el-table-column label="Статус">
         <template slot-scope="scope">
           <span>
@@ -92,9 +86,9 @@
 
 <script>
 import Pagination from '@/components/Pagination'
-import { getDocuments, remove, apply, discard } from '@/api/incmoingDocuments'
+import { getDocuments, remove, apply, discard } from '@/api/outcomingDocument'
 import { getDocumentStatusEnum } from '@/api/enums'
-import EditDialog from '@/views/documents/incoming/edit'
+import EditDialog from '@/views/documents/outcoming/edit'
 
 export default {
     name: 'IncomingDocuments',

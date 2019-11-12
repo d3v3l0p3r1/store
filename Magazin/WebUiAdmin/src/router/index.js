@@ -101,6 +101,7 @@ export const asyncRoutes = [
   {
     path: '/documents',
     component: Layout,
+    roles: ['admin'],
     meta: {
       title: 'Документы',
       icon: 'documentation'
@@ -114,7 +115,7 @@ export const asyncRoutes = [
       },
       {
         path: 'outcomingDocuments',
-        component: () => import('@/views/documents/incoming/list'),
+        component: () => import('@/views/documents/outcoming/list'),
         name: 'OutcomingDocuments',
         meta: { title: 'Документы расхода', icon: 'document-with-minus-sign' }
       }
@@ -122,6 +123,7 @@ export const asyncRoutes = [
   },
   {
     path: '/products',
+    roles: ['admin'],
     component: Layout,
     children: [
       {
@@ -129,6 +131,32 @@ export const asyncRoutes = [
         component: () => import('@/views/products/index'),
         name: 'ProductGrid',
         meta: { title: 'Продукты', icon: 'theme' }
+      }
+    ]
+  },
+  {
+    path: '/users',
+    roles: ['admin'],
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/users/list'),
+        name: 'UsersGrid',
+        meta: { title: 'Пользователи', icon: 'black-male-user-symbol' }
+      }
+    ]
+  },
+  {
+    path: '/companies',
+    roles: ['admin'],
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/companies/list'),
+        name: 'CompaniesGrid',
+        meta: { title: 'Компании', icon: 'planet-earth' }
       }
     ]
   },

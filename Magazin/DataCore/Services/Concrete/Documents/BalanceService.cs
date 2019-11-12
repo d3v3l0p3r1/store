@@ -22,7 +22,7 @@ namespace DataCore.Services.Concrete.Documents
             _repository = repository;
         }
 
-        public async Task AddToBalance<T>(BaseDocumentEntry<T> incomingDocumentEntry) where T: BaseDocument
+        public async Task AddToBalance<T>(T incomingDocumentEntry) where T: BaseDocumentEntry
         {
             var balance = await _repository.GetOrCreateBalance(incomingDocumentEntry.Product);
 
@@ -35,7 +35,7 @@ namespace DataCore.Services.Concrete.Documents
             await _repository.UpdateAsync(balance);
         }
 
-        public async Task RemoveFrombalance<T>(BaseDocumentEntry<T> entry) where T: BaseDocument
+        public async Task RemoveFrombalance<T>(T entry) where T: BaseDocumentEntry
         {
             var balance = await _repository.GetDbSet()
                 .Include(x => x.BalanceEntries)
@@ -120,6 +120,6 @@ namespace DataCore.Services.Concrete.Documents
             });
 
             return await result.ToListAsync();
-        }
+        }      
     }
 }

@@ -39,6 +39,11 @@ namespace DataCore.DAL
 
         }
 
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
+
+        }
+
         public DataContext(DbContextOptions<DataContext> options, IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options)
         {
             _operationalStoreOptions = operationalStoreOptions;
@@ -56,9 +61,14 @@ namespace DataCore.DAL
 
             builder.Entity<IncomingDocument>().HasMany(x => x.Entries).WithOne(x => x.Document);
 
+            builder.Entity<OutComingDocument>().HasMany(x => x.Entries).WithOne(x => x.Document);
+
             builder.Entity<Balance>().HasMany(x => x.BalanceEntries).WithOne(x => x.Balance);
 
-            builder.ConfigurePersistedGrantContext(_operationalStoreOptions.Value);
+            if (_operationalStoreOptions != null)
+            {
+                builder.ConfigurePersistedGrantContext(_operationalStoreOptions.Value);
+            }
         }
 
         int IPersistedGrantDbContext.SaveChanges()

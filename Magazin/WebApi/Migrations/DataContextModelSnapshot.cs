@@ -139,6 +139,9 @@ namespace WebApi.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
                     b.Property<string>("UserName")
                         .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
@@ -218,6 +221,9 @@ namespace WebApi.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<long>("AuthorId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp without time zone");
 
@@ -233,10 +239,17 @@ namespace WebApi.Migrations
                     b.Property<DateTime?>("ProcessDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<long?>("SenderId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("SenderId");
 
                     b.ToTable("IncomingDocuments");
                 });
@@ -276,6 +289,9 @@ namespace WebApi.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<long>("AuthorId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp without time zone");
 
@@ -291,10 +307,17 @@ namespace WebApi.Migrations
                     b.Property<DateTime?>("ProcessDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<long>("RecipientId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("RecipientId");
 
                     b.ToTable("OutComingDocument");
                 });
@@ -1185,6 +1208,19 @@ namespace WebApi.Migrations
                         .HasForeignKey("OutcomingDocumentId");
                 });
 
+            modelBuilder.Entity("DataCore.Entities.Documents.IncomingDocument", b =>
+                {
+                    b.HasOne("BaseCore.Security.Entities.User", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BaseCore.Security.Entities.User", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId");
+                });
+
             modelBuilder.Entity("DataCore.Entities.Documents.IncomingDocumentEntry", b =>
                 {
                     b.HasOne("DataCore.Entities.Documents.IncomingDocument", "Document")
@@ -1200,10 +1236,25 @@ namespace WebApi.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("DataCore.Entities.Documents.OutComingDocument", b =>
+                {
+                    b.HasOne("BaseCore.Security.Entities.User", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BaseCore.Security.Entities.User", "Recipient")
+                        .WithMany()
+                        .HasForeignKey("RecipientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DataCore.Entities.Documents.OutComingDocumentEntry", b =>
                 {
                     b.HasOne("DataCore.Entities.Documents.OutComingDocument", "Document")
-                        .WithMany("Entry")
+                        .WithMany("Entries")
                         .HasForeignKey("DocumentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
