@@ -61,6 +61,10 @@ const actions = {
           reject('getInfo: roles must be a non-null array!')
         }
 
+        if (roles.indexOf('admin') === -1) {
+          reject('Только для админов')
+        }
+
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)

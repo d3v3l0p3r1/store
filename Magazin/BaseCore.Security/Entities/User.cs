@@ -18,5 +18,26 @@ namespace BaseCore.Security.Entities
         /// Адрес
         /// </summary>
         public string Address { get; set; }
+
+        /// <summary>
+        /// Тип пользователя (полльзователь, компания)
+        /// </summary>
+        public UserType Type { get; set; }
+    }
+
+    /// <summary>
+    /// Тип пользователя
+    /// </summary>
+    public enum UserType
+    {
+        /// <summary>
+        /// Физическое лицо
+        /// </summary>
+        User = 0,
+
+        /// <summary>
+        /// Компания
+        /// </summary>
+        Company = 10
     }
 }

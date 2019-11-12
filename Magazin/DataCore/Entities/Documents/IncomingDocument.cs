@@ -1,18 +1,27 @@
-﻿using System;
+﻿using BaseCore.Security.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace DataCore.Entities.Documents
 {
-    public class IncomingDocument : BaseDocument
+    public class IncomingDocument : BaseDocument<IncomingDocumentEntry>
     {
-        public List<IncomingDocumentEntry> Entries { get; set; } = new List<IncomingDocumentEntry>();
+        /// <summary>
+        /// Отправитель
+        /// </summary>
+        public long? SenderId { get; set; }
+
+        /// <summary>
+        /// От кого полученно
+        /// </summary>
+        public User Sender { get; set; }
     }
 
 
 
-    public class IncomingDocumentEntry: BaseDocumentEntry<IncomingDocument>
+    public class IncomingDocumentEntry: BaseDocumentEntry
     {
-        
+        public IncomingDocument Document { get; set; }
     }
 }

@@ -93,7 +93,7 @@ namespace DataCore.DAL
             {
                 await roleManager.CreateAsync(new Role
                 {
-                    Name = "admin"
+                    Name = "admin",
                 });
             }
 
@@ -101,7 +101,7 @@ namespace DataCore.DAL
             {
                 await roleManager.CreateAsync(new Role
                 {
-                    Name = "user"
+                    Name = "user",
                 });
             }
 
@@ -109,7 +109,15 @@ namespace DataCore.DAL
             {
                 await roleManager.CreateAsync(new Role
                 {
-                    Name = "operator"
+                    Name = "operator",
+                });
+            }
+
+            if (await roleManager.FindByNameAsync("company") == null)
+            {
+                await roleManager.CreateAsync(new Role
+                {
+                    Name = "company",
                 });
             }
 
