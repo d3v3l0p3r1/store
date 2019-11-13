@@ -28,6 +28,6 @@ namespace DataCore.Entities
         public IncomingDocument IncomingDocument { get; set; }
 
         public long? OutcomingDocumentId { get; set; }
-        public OutComingDocument GetOutComingDocument { get; set; }
+        public OutComingDocument OutComingDocument { get; set; }
     }
 }

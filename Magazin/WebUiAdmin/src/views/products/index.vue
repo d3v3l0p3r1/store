@@ -5,13 +5,13 @@
         <el-option v-for="item in categories" :key="item.id" :label="item.title" :value="item" />
       </el-select>
 
-      <el-button class="filter-item" @click="handleCreateProduct">
+      <el-button class="filter-item el-button el-button--success" @click="handleCreateProduct">
         <span>Создать</span>
       </el-button>
-
-      <el-button class="filter-item" @click="handleEditProduct">
+      <el-button class="filter-item el-button el-button--warning" @click="handleEditProduct">
         <span>Изменить</span>
       </el-button>
+
     </div>
 
     <el-table
@@ -67,6 +67,21 @@
           <span>{{ scope.row.kind }}</span>
         </template>
       </el-table-column>
+
+      <el-table-column label="Операции">
+        <template slot-scope="scope">
+
+          <el-tooltip content="Редактировать" placement="top-start" :open-delay="500">
+            <el-button type="primary" icon="el-icon-edit" circle @click="handleEditClick(scope.row)" />
+          </el-tooltip>
+
+          <el-tooltip content="Удалить" placement="top-start" :open-delay="500">
+            <el-button type="danger" icon="el-icon-delete" circle @click="handleRemoveClick(scope.row)" />
+          </el-tooltip>
+
+        </template>
+      </el-table-column>
+
     </el-table>
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getProducts" />
     <ProductEdit :dialog-visible.sync="dialog.visible" :entity-id.sync="selectedProductId" @onProductDialogClose="onProductDialogClose" />
@@ -74,7 +89,7 @@
 </template>
 
 <script>
-import { getProducts, getCategories } from '@/api/products'
+import { getProducts, getCategories, remove } from '@/api/products'
 import Pagination from '@/components/Pagination'
 import ProductEdit from '@/views/products/productEdit'
 
@@ -139,6 +154,14 @@ export default {
             this.dialog.visible = false
             this.selectedProductId = 0
             this.getProducts()
+        },
+        handleEditClick(row) {
+          this.selectedProduct = row
+          this.handleEditProduct()
+        },
+        async handleRemoveClick(row) {
+          await remove(row.id)
+          this.getProducts()
         }
     }
 }

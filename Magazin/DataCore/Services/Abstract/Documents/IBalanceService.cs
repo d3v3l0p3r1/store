@@ -15,6 +15,7 @@ namespace DataCore.Services.Abstract.Documents
         Task<Balance> Get(Product product);
         IQueryable<Balance> GetDbSet();
         IQueryable<Balance> GetAllAsNoTracking();
-        Task<List<BalancedProductModel>> GetProductBalance(long categoryId, string schema, string host);
+        IQueryable<BalancedProductModel> GetProductBalance(long? categoryId, string schema, string host);
+        IQueryable<Balance> GetAll();
     }
 }

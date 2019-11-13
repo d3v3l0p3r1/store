@@ -150,5 +150,23 @@ namespace WebUiAdmin.Controllers
 
             return Ok();
         }
+
+        /// <summary>
+        /// Удалить продукт
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete]
+        public async Task<IActionResult> Remove(long id)
+        {
+            try
+            {
+                await _productService.DeleteAsync(id);
+                return Ok();
+            }
+            catch(Exception error)
+            {
+                return BadRequest(error.GetBaseException().Message);
+            }
+        }
     }
 }

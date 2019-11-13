@@ -122,6 +122,32 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/categories',
+    roles: ['admin'],
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/categories/list'),
+        name: 'CategoryGrid',
+        meta: { title: 'Категории продуктов', icon: 'theme' }
+      }
+    ]
+  },
+  {
+    path: '/kinds',
+    roles: ['admin'],
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/kinds/list'),
+        name: 'KindGrid',
+        meta: { title: 'Виды продуктов', icon: 'theme' }
+      }
+    ]
+  },
+  {
     path: '/products',
     roles: ['admin'],
     component: Layout,
@@ -131,6 +157,32 @@ export const asyncRoutes = [
         component: () => import('@/views/products/index'),
         name: 'ProductGrid',
         meta: { title: 'Продукты', icon: 'theme' }
+      }
+    ]
+  },
+  {
+    path: '/balance',
+    roles: ['admin'],
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/balanceRegister/list'),
+        name: 'BalanceGrid',
+        meta: { title: 'Остатки', icon: 'calculator' }
+      }
+    ]
+  },
+  {
+    path: '/moves',
+    roles: ['admin'],
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/balanceRegister/moves'),
+        name: 'MovesGrid',
+        meta: { title: 'Движения', icon: 'money-eyes-on-square-face' }
       }
     ]
   },

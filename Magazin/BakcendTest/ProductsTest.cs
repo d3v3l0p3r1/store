@@ -40,7 +40,7 @@ namespace WebUiAdminTest
             await CreateIncomingDocument(product2, 100);
             await CreateOutcomingDocument(product2, 100);
 
-            var list = await BalanceService.GetProductBalance(cateogry.Id, "http", "localhost");
+            var list = BalanceService.GetProductBalance(cateogry.Id, "http", "localhost");
 
             Assert.IsTrue(list.Any());
             Assert.IsFalse(list.Any(x => x.Id == product2.Id));

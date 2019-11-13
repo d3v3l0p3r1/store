@@ -30,15 +30,27 @@ namespace WebUiAdmin.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("[action]")]
-        [ProducesResponseType(typeof(ListRespone<Lookup>), 200)]
-        public async Task<IActionResult> GetAll()
+        [ProducesResponseType(typeof(ListRespone<ProductCategory>), 200)]
+        public async Task<IActionResult> GetAll(int take = 10, int page = 1)
         {
+            if (take < 1)
+            {
+                take = 10;
+            }
+
+            if (page < 1)
+            {
+                page = 1;
+            }
+
+            var skip = (page - 1) * take;
+
             var all = _productCategoryService.GetAllAsNotracking();
 
             var total = await all.CountAsync();
-            var cats = await all.Select(x => new Lookup() { Id = x.Id, Title = x.Title }).ToListAsync();
+            var cats = await all.Skip(skip).Take(take).ToListAsync();
 
-            var result = new ListRespone<Lookup>()
+            var result = new ListRespone<ProductCategory>()
             {
                 Data = cats,
                 Total = total
