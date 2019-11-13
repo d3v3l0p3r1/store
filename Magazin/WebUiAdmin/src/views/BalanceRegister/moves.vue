@@ -18,19 +18,18 @@
 
       <el-table-column type="expand">
         <template slot-scope="scope">
-          <el-table :data="scope.row.balanceEntries" border >
+          <el-table :data="scope.row.balanceEntries" border>
 
             <el-table-column label="Документ">
               <template slot-scope="childScope">
-                <span v-if="childScope.row.incomingDocument!=null" >Приход: {{childScope.row.incomingDocument.title}}</span>
-                <span v-else>Расход: {{childScope.row.outComingDocument.title}}</span>
+                <span v-if="childScope.row.incomingDocument!=null">Приход: {{ childScope.row.incomingDocument.title }}</span>
+                <span v-else>Расход: {{ childScope.row.outComingDocument.title }}</span>
               </template>
             </el-table-column>
-            
 
             <el-table-column label="Количество">
               <template slot-scope="childScope">
-                <span>{{childScope.row.count}}</span>
+                <span>{{ childScope.row.count }}</span>
               </template>
             </el-table-column>
 
@@ -52,7 +51,7 @@
 
       <el-table-column label="Остаток">
         <template slot-scope="scope">
-          <span>{{getSumm(scope.row)}}</span>
+          <span>{{ getSumm(scope.row) }}</span>
         </template>
       </el-table-column>
 
