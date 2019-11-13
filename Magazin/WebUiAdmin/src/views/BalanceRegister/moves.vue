@@ -16,33 +16,43 @@
       empty-text="Нет данных"
     >
 
-      <el-table-column label="Идентификатор">
+      <el-table-column type="expand">
         <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
+          <el-table :data="scope.row.balanceEntries" border >
+
+            <el-table-column label="Документ">
+              <template slot-scope="childScope">
+                <span v-if="childScope.row.incomingDocument!=null" >Приход: {{childScope.row.incomingDocument.title}}</span>
+                <span v-else>Расход: {{childScope.row.outComingDocument.title}}</span>
+              </template>
+            </el-table-column>
+            
+
+            <el-table-column label="Количество">
+              <template slot-scope="childScope">
+                <span>{{childScope.row.count}}</span>
+              </template>
+            </el-table-column>
+
+          </el-table>
         </template>
       </el-table-column>
 
       <el-table-column label="Продукт">
         <template slot-scope="scope">
-          <span>{{ scope.row.title }}</span>
+          <span>{{ scope.row.product.title }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="Цена">
+      <el-table-column label="Изображение">
         <template slot-scope="scope">
-          <span>{{ scope.row.price }}</span>
+          <img :src="getFileUrl(scope.row.product.fileID)" width="60px">
         </template>
       </el-table-column>
 
-      <el-table-column label="Вид">
+      <el-table-column label="Остаток">
         <template slot-scope="scope">
-          <span>{{ scope.row.kindTitle }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column label="Количество">
-        <template slot-scope="scope">
-          <span>{{ scope.row.count }}</span>
+          <span>{{getSumm(scope.row)}}</span>
         </template>
       </el-table-column>
 
@@ -55,7 +65,7 @@
 import Pagination from '@/components/Pagination'
 import { getMoves } from '@/api/balance'
 import { getCategories } from '@/api/products'
-
+import { getFileUrl } from '@/api/upload'
 export default {
     name: 'Users',
     components: { Pagination },
@@ -93,6 +103,15 @@ export default {
         },
         handelSelectCategory() {
           this.loadEntities()
+        },
+        getFileUrl(id) {
+          return getFileUrl(id)
+        },
+        getSumm(row) {
+          const reducer = (acc, val) => acc + val.count
+          const val = row.balanceEntries.reduce(reducer, 0)
+          console.log('acc value:', val)
+          return val
         }
     }
 }

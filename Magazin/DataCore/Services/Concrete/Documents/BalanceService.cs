@@ -132,7 +132,12 @@ namespace DataCore.Services.Concrete.Documents
             var query = _repository.GetAllAsNotracking()
                 .Include(x => x.Product)
                 .Include(x => x.Product.Kind)
-                .Include(x => x.BalanceEntries);
+                .Include(x => x.BalanceEntries)
+                    .ThenInclude(x => x.IncomingDocument)
+                    .ThenInclude(x => x.Entries)
+                .Include(x => x.BalanceEntries)
+                    .ThenInclude(x => x.OutComingDocument)
+                    .ThenInclude(x => x.Entries);
 
             return query;
         }

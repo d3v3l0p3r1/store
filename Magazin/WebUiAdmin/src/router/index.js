@@ -167,7 +167,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/BalanceRegister/list'),
+        component: () => import('@/views/balanceRegister/list'),
         name: 'BalanceGrid',
         meta: { title: 'Остатки', icon: 'calculator' }
       }
@@ -180,7 +180,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/BalanceRegister/moves'),
+        component: () => import('@/views/balanceRegister/moves'),
         name: 'MovesGrid',
         meta: { title: 'Движения', icon: 'money-eyes-on-square-face' }
       }
