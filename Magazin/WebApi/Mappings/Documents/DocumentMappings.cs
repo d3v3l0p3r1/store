@@ -80,6 +80,8 @@ namespace WebApi.Mappings.Documents
                 })));
 
             CreateMap<OutcomingDocumentDetailDto, OutComingDocument>()
+                .ForMember(x => x.Author, cfg => cfg.Ignore())
+                .ForMember(x => x.Recipient, cfg => cfg.Ignore())
                 .ForMember(x => x.Entries, cfg => cfg.MapFrom(z => z.Entries.Select(x => new OutComingDocumentEntry
                 {
                     Id = x.Id,

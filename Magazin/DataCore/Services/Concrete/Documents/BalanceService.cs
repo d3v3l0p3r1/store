@@ -26,11 +26,13 @@ namespace DataCore.Services.Concrete.Documents
         {
             var balance = await _repository.GetOrCreateBalance(incomingDocumentEntry.Product);
 
-            balance.BalanceEntries.Add(new BalanceEntry()
+            var balanceEntry = new BalanceEntry()
             {
                 Count = incomingDocumentEntry.Count,
                 IncomingDocumentId = incomingDocumentEntry.DocumentId
-            });
+            };
+
+            balance.BalanceEntries.Add(balanceEntry);
 
             await _repository.UpdateAsync(balance);
         }

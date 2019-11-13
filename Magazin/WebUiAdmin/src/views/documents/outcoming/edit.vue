@@ -21,6 +21,12 @@
             <el-input v-model="entity.description" />
           </el-form-item>
 
+          <el-form-item label="Получатель">
+            <el-input v-model="authorTitle" placeholder="Выбирете получателя" readonly>
+              <el-button slot="append" icon="el-icon-search" @click="searchCompany" />
+            </el-input>
+          </el-form-item>
+
         </el-tab-pane>
 
         <el-tab-pane label="Позиции">
@@ -38,15 +44,18 @@
       <el-button @click="onCancel">Отмена</el-button>
     </footer>
 
+    <CompanySelect :dialog-visible.sync="serachCompanyVisible" @on-select="handleCompanySelect"/>
+
   </el-dialog>
 </template>
 <script>
 import DocumentEntry from '@/components/DocumentEntry'
+import CompanySelect from '@/components/SelectCompany'
 import { create, get, update } from '@/api/outcomingDocument'
 
 export default {
     name: 'Edit',
-    components: { DocumentEntry },
+    components: { DocumentEntry, CompanySelect },
     props: {
       entityId: {
         required: false,
@@ -58,6 +67,15 @@ export default {
         type: Boolean
       }
   },
+  computed: {
+    authorTitle: function() {
+      if (this.entity.recipient != null) {
+        return this.entity.recipient.fullName + ' ' + this.entity.recipient.userName
+      } else {
+        return ''
+      }
+    }
+  },
   data() {
     return {
       entity: {
@@ -67,9 +85,14 @@ export default {
         documentStatus: 0,
         title: '',
         description: '',
+        author: null,
+        authorId: 0,
+        recipient: null,
+        recipientId: 0,
         entries: []
       },
       nestedDialogVisible: false,
+      serachCompanyVisible: false,
       entry: {
         product: null,
         count: 0
@@ -98,6 +121,10 @@ export default {
         documentStatus: 0,
         title: '',
         description: '',
+        author: null,
+        authorId: 0,
+        recipient: null,
+        recipientId: 0,
         entries: []
       }
       this.entry = {
@@ -106,6 +133,7 @@ export default {
       }
     },
     async onSubmit() {
+      
       if (this.entity.id === 0) {
         var res = await create(this.entity)
         this.entityId = res.id
@@ -122,6 +150,14 @@ export default {
     async loadDocument() {
       var res = await get(this.entityId)
       this.entity = res
+    },
+    searchCompany() {
+      this.serachCompanyVisible = true
+    },
+    handleCompanySelect(val) {
+      this.entity.recipient = val
+      this.entity.recipientId = val.id
+      this.serachCompanyVisible = false
     }
   }
 }
