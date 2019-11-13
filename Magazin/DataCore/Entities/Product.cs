@@ -21,10 +21,6 @@ namespace DataCore.Entities
         [Display(Name = "Файл")]
         public FileData File { get; set; }
 
-        [Required]
-        [Display(Name = "Цена")]
-        public decimal Price { get; set; }
-
         public long CategoryId { get; set; }
 
         [Display(Name = "Категория")]
