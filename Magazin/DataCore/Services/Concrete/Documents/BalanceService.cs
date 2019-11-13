@@ -22,7 +22,7 @@ namespace DataCore.Services.Concrete.Documents
             _repository = repository;
         }
 
-        public async Task AddToBalance<T>(T incomingDocumentEntry) where T: BaseDocumentEntry
+        public async Task AddToBalance<T>(T incomingDocumentEntry) where T : BaseDocumentEntry
         {
             var balance = await _repository.GetOrCreateBalance(incomingDocumentEntry.Product);
 
@@ -35,7 +35,7 @@ namespace DataCore.Services.Concrete.Documents
             await _repository.UpdateAsync(balance);
         }
 
-        public async Task RemoveFrombalance<T>(T entry) where T: BaseDocumentEntry
+        public async Task RemoveFrombalance<T>(T entry) where T : BaseDocumentEntry
         {
             var balance = await _repository.GetDbSet()
                 .Include(x => x.BalanceEntries)
@@ -96,7 +96,7 @@ namespace DataCore.Services.Concrete.Documents
             return _repository.GetAllAsNotracking();
         }
 
-        public async Task<List<BalancedProductModel>> GetProductBalance(long categoryId, string schema, string host)
+        public IQueryable<BalancedProductModel> GetProductBalance(long? categoryId, string schema, string host)
         {
             var url = $"{schema}://{host}/File/GetFile/";
 
@@ -105,6 +105,11 @@ namespace DataCore.Services.Concrete.Documents
                 .Include(x => x.Product.Kind)
                 .Include(x => x.BalanceEntries)
                 .Where(x => x.ZeroDate == null && x.BalanceEntries.Sum(z => z.Count) > 0);
+
+            if (categoryId != null)
+            {
+                query = query.Where(x => x.Product.CategoryId == categoryId.Value);
+            }
 
             var result = query.Select(x => new BalancedProductModel
             {
@@ -119,7 +124,17 @@ namespace DataCore.Services.Concrete.Documents
                 Title = x.Product.Title
             });
 
-            return await result.ToListAsync();
-        }      
+            return result;
+        }
+
+        public IQueryable<Balance> GetAll()
+        {
+            var query = _repository.GetAllAsNotracking()
+                .Include(x => x.Product)
+                .Include(x => x.Product.Kind)
+                .Include(x => x.BalanceEntries);
+
+            return query;
+        }
     }
 }

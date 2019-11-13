@@ -15,7 +15,7 @@
           </el-form-item>
 
           <el-form-item label="Категория">
-            <el-select v-model="product.categoryId" placeholder="Выбирите категорию" value-key="id">
+            <el-select v-model="product.categoryId" placeholder="Выберите категорию" value-key="id">
               <el-option
                 v-for="item in categories"
                 :key="item.id"
@@ -26,8 +26,13 @@
           </el-form-item>
 
           <el-form-item label="Вид">
-            <el-select v-model="product.kindId" placeholder="Выбирите вид" value-key="id">
-              <el-option v-for="item in kinds" :key="item.id" :label="item.title" :value="item.id" />
+            <el-select v-model="product.kindId" placeholder="Выберите вид" value-key="id">
+              <el-option
+                v-for="item in kinds"
+                :key="item.id"
+                :label="item.title"
+                :value="item.id"
+              />
             </el-select>
           </el-form-item>
 
@@ -115,12 +120,12 @@ export default {
       product: {
         id: 0,
         title: '',
-        categoryId: 1,
+        categoryId: 0,
         desctiption: '',
         price: 0,
         file: null,
         fileID: 0,
-        kindId: 1,
+        kindId: 0,
         images: []
       },
       mainImage: [],
@@ -139,28 +144,28 @@ export default {
       }
     }
   },
-  created() {
-    this.loadCategories()
-    this.loadKinds()
-  },
   methods: {
     clear() {
        this.product = {
           id: 0,
           title: '',
-          categoryId: 1,
+          categoryId: 0,
           desctiption: '',
           price: 0,
           file: null,
           fileID: 0,
-          kindId: 1,
+          kindId: 0,
           images: []
         }
+
+        this.categories = []
+        this.kinds = []
 
         this.images = this.images.splice()
         this.mainImage = this.mainImage.splice()
     },
     async loadProduct() {
+      this.clear()
       this.loading = true
       this.mainImage = []
       this.images = []
@@ -189,17 +194,25 @@ export default {
       } else {
         this.clear()
       }
+
+      await this.loadCategories()
+      await this.loadKinds()
+
       this.loading = false
     },
     async loadCategories() {
       const res = await getCategories()
       this.categories = res.data
-      this.product.categoryId = this.categories[0].id
+      if (this.product.id === 0) {
+        this.product.categoryId = this.categories[0].id
+      }
     },
     async loadKinds() {
       const res = await getKinds()
       this.kinds = res.data
-      this.product.kindId = this.kinds[0].id
+      if (this.product.id === 0) {
+        this.product.kindId = this.kinds[0].id
+      }
     },
     handleClose() {
       this.$emit('onProductDialogClose')
@@ -207,6 +220,9 @@ export default {
     onSubmit() {
       this.loading = true
       const formData = new FormData()
+
+      this.product.kind = null
+      this.product.category = null
 
       formData.append('Model', JSON.stringify(this.product))
 
