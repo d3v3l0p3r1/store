@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <UserList @current-change="handleCurrentChange" />    
+    <UserList @current-change="handleCurrentChange" />
   </div>
 </template>
 
@@ -11,13 +11,13 @@ export default {
     name: 'Users',
     components: { UserList },
     data() {
-        return {            
-            
+        return {
+
         }
     },
     methods: {
         handleCurrentChange(val) {
-        }      
+        }
     }
 }
 </script>

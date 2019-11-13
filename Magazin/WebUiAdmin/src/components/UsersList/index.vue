@@ -1,16 +1,16 @@
 <template>
-<div>
+  <div>
     <div v-if="enableEdit==true">
-        <div class="filter-container">
+      <div class="filter-container">
         <el-button class="filter-item el-button el-button--success" @click="handleCreate">
-            <span>Создать</span>
+          <span>Создать</span>
         </el-button>
         <el-button class="filter-item el-button el-button--warning" @click="handleEdit">
-            <span>Изменить</span>
+          <span>Изменить</span>
         </el-button>
-        </div>
+      </div>
     </div>
-<el-table
+    <el-table
       v-loading="listLoading"
       :data="entities"
       border
@@ -57,8 +57,8 @@
           <span>{{ scope.row.email }}</span>
         </template>
       </el-table-column>
-      
-      <el-table-column label="Операции" v-if="enableEdit==true">
+
+      <el-table-column v-if="enableEdit==true" label="Операции">
         <template slot-scope="scope">
           <el-tooltip content="Редактировать" placement="top-start" :open-delay="500">
             <el-button type="primary" icon="el-icon-edit" circle @click="handleEditClick(scope.row)" />
@@ -69,7 +69,7 @@
     </el-table>
     <pagination v-show="pagination.total>0" :total="pagination.total" :page.sync="pagination.page" :limit.sync="pagination.limit" @pagination="loadEntities" />
     <EditDialog :dialog-visible.sync="dialogVisible" :entity-id.sync="selectedId" append-to-body @onEditDialogClose="onEditDialogClose" />
-</div>
+  </div>
 </template>
 
 <script>
@@ -140,9 +140,8 @@ export default {
           this.dialogVisible = false
           this.selectedId = 0
           this.loadEntities()
-        },
+        }
     }
 }
 </script>
-
 

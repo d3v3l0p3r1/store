@@ -44,7 +44,7 @@
       <el-button @click="onCancel">Отмена</el-button>
     </footer>
 
-    <CompanySelect :dialog-visible.sync="serachCompanyVisible" @on-select="handleCompanySelect"/>
+    <CompanySelect :dialog-visible.sync="serachCompanyVisible" @on-select="handleCompanySelect" />
 
   </el-dialog>
 </template>
@@ -67,15 +67,6 @@ export default {
         type: Boolean
       }
   },
-  computed: {
-    authorTitle: function() {
-      if (this.entity.recipient != null) {
-        return this.entity.recipient.fullName + ' ' + this.entity.recipient.userName
-      } else {
-        return ''
-      }
-    }
-  },
   data() {
     return {
       entity: {
@@ -96,6 +87,15 @@ export default {
       entry: {
         product: null,
         count: 0
+      }
+    }
+  },
+  computed: {
+    authorTitle: function() {
+      if (this.entity.recipient != null) {
+        return this.entity.recipient.fullName + ' ' + this.entity.recipient.userName
+      } else {
+        return ''
       }
     }
   },
@@ -133,7 +133,6 @@ export default {
       }
     },
     async onSubmit() {
-      
       if (this.entity.id === 0) {
         var res = await create(this.entity)
         this.entityId = res.id

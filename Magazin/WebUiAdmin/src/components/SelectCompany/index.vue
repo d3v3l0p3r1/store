@@ -1,20 +1,21 @@
 <template>
-<div>
+  <div>
     <el-dialog
-    title="Компания"
-    :visible.sync="dialogVisible"
-    :before-close="handleClose"
-    draggable
-    modal
-    width="80%"
-    append-to-body >
-        <UserList :userType=10 :enableEdit="false" @current-change="handleCurrentChange"/>
-        <footer slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="onSubmit">Выбрать</el-button>
-            <el-button @click="handleClose">Отмена</el-button>
-        </footer>
+      title="Компания"
+      :visible.sync="dialogVisible"
+      :before-close="handleClose"
+      draggable
+      modal
+      width="80%"
+      append-to-body
+    >
+      <UserList :user-type="10" :enable-edit="false" @current-change="handleCurrentChange" />
+      <footer slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="onSubmit">Выбрать</el-button>
+        <el-button @click="handleClose">Отмена</el-button>
+      </footer>
     </el-dialog>
-</div>
+  </div>
 
 </template>
 
