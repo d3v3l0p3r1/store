@@ -77,7 +77,7 @@ namespace WebUiAdmin.Controllers
             var products = await all.OrderByDescending(x => x.Id).Skip(skip).Take(take).Select(x => new ProductDto
             {
                 Id = x.Id,
-                Price = x.Price,
+                Price = -100,
                 Description = x.Description,
                 Title = x.Title,
                 Kind = x.Kind.Title,

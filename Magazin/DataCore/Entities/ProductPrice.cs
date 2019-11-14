@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataCore.Entities
 {
-    public class PriceRegister : BaseEntity
+    public class ProductPrice : BaseEntity
     {
         /// <summary>
         /// Цена

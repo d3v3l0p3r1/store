@@ -47,12 +47,6 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Цена">
-        <template slot-scope="scope">
-          <span>{{ scope.row.price }}</span>
-        </template>
-      </el-table-column>
-
       <el-table-column label="Вид">
         <template slot-scope="scope">
           <span>{{ scope.row.kind }}</span>

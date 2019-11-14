@@ -187,6 +187,19 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/productPrice',
+    roles: ['admin'],
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/productPrice/list'),
+        name: 'ProductPriceGrid',
+        meta: { title: 'Цены', icon: 'money-eyes-on-square-face' }
+      }
+    ]
+  },
+  {
     path: '/users',
     roles: ['admin'],
     component: Layout,

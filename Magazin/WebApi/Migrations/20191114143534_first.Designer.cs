@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20191112083400_first")]
+    [Migration("20191114143534_first")]
     partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -204,6 +204,9 @@ namespace WebApi.Migrations
 
                     b.Property<long?>("OutcomingDocumentId")
                         .HasColumnType("bigint");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
@@ -496,9 +499,6 @@ namespace WebApi.Migrations
                     b.Property<long?>("KindId")
                         .HasColumnType("bigint");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("character varying(50)")
@@ -577,6 +577,32 @@ namespace WebApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductKinds");
+                });
+
+            modelBuilder.Entity("DataCore.Entities.ProductPrice", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("Hidden")
+                        .HasColumnType("boolean");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductPrices");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.Client", b =>
@@ -1205,7 +1231,7 @@ namespace WebApi.Migrations
                         .WithMany()
                         .HasForeignKey("IncomingDocumentId");
 
-                    b.HasOne("DataCore.Entities.Documents.OutComingDocument", "GetOutComingDocument")
+                    b.HasOne("DataCore.Entities.Documents.OutComingDocument", "OutComingDocument")
                         .WithMany()
                         .HasForeignKey("OutcomingDocumentId");
                 });
@@ -1322,6 +1348,15 @@ namespace WebApi.Migrations
 
                     b.HasOne("DataCore.Entities.Product", "Product")
                         .WithMany("Images")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DataCore.Entities.ProductPrice", b =>
+                {
+                    b.HasOne("DataCore.Entities.Product", "Product")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

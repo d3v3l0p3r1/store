@@ -673,7 +673,6 @@ namespace WebApi.Migrations
                     Title = table.Column<string>(maxLength: 50, nullable: false),
                     Description = table.Column<string>(nullable: true),
                     FileID = table.Column<long>(nullable: true),
-                    Price = table.Column<decimal>(nullable: false),
                     CategoryId = table.Column<long>(nullable: false),
                     KindId = table.Column<long>(nullable: true)
                 },
@@ -835,6 +834,28 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProductPrices",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Hidden = table.Column<bool>(nullable: false),
+                    Price = table.Column<decimal>(nullable: false),
+                    ProductId = table.Column<long>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductPrices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductPrices_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BalanceEntry",
                 columns: table => new
                 {
@@ -843,6 +864,7 @@ namespace WebApi.Migrations
                     Hidden = table.Column<bool>(nullable: false),
                     BalanceId = table.Column<long>(nullable: false),
                     Count = table.Column<int>(nullable: false),
+                    Price = table.Column<decimal>(nullable: false),
                     IncomingDocumentId = table.Column<long>(nullable: true),
                     OutcomingDocumentId = table.Column<long>(nullable: true)
                 },
@@ -1073,6 +1095,11 @@ namespace WebApi.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductPrices_ProductId",
+                table: "ProductPrices",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
@@ -1161,6 +1188,9 @@ namespace WebApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductImages");
+
+            migrationBuilder.DropTable(
+                name: "ProductPrices");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -131,7 +131,6 @@ namespace WebUiAdminTest
             var product = new Product()
             {
                 Category = category,
-                Price = 100,
                 Title = "Test product 1",
             };
 
