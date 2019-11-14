@@ -28,7 +28,7 @@
 
       <el-table-column label="Название">
         <template slot-scope="scope">
-          <span>{{ scope.row.title }}</span>
+          <span>{{ scope.row.product.title }}</span>
         </template>
       </el-table-column>
 
