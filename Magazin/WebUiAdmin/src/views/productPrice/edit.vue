@@ -10,7 +10,7 @@
   >
 
     <el-form :model="entity" label-position="top">
-      
+
       <el-form-item label="Продукт">
         <el-input v-model="productTitle" placeholder="Выбирете продукт" readonly>
           <el-button slot="append" icon="el-icon-search" @click="searchProduct" />
@@ -20,7 +20,7 @@
       <el-form-item label="Цена">
         <el-input-number v-model="entity.price" />
       </el-form-item>
-      
+
     </el-form>
 
     <footer slot="footer" class="dialog-footer">
