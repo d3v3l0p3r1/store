@@ -116,7 +116,10 @@ namespace WebUiAdmin
 
             services.AddDbContext<DataContext>(options =>
             {
-                options.UseNpgsql(connectionString, builder => builder.MigrationsAssembly("WebApi"));
+                options.UseNpgsql(connectionString, builder =>
+                {
+                    builder.MigrationsAssembly("WebApi");
+                });
             });
         }
     }

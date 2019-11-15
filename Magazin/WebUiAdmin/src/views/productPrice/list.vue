@@ -14,15 +14,42 @@
       border
       fit
       highlight-current-row
-      row-key="id"
+      row-key="productId"
       style="width: 100%;"
       empty-text="Нет данных"
-      @current-change="handleCurrentChange"
-    >
-
-      <el-table-column label="Идентификатор">
+      @current-change="handleCurrentChange" >
+      
+      <el-table-column type="expand">
         <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
+          <el-table :data="scope.row.Prices" border>
+
+            <el-table-column label="Цена">
+              <template slot-scope="childScope">                
+                <span>{{ childScope.row.price }}</span>
+              </template>
+            </el-table-column>
+
+            <el-table-column label="Дата">
+              <template slot-scope="childScope">
+                <span>{{ childScope.row.date }}</span>
+              </template>
+            </el-table-column>
+
+            <el-table-column label="Операции">
+              <template slot-scope="scope">
+
+                <el-tooltip content="Редактировать" placement="top-start" :open-delay="500">
+                  <el-button type="primary" icon="el-icon-edit" circle @click="handleEditClick(scope.row)" />
+                </el-tooltip>
+
+                <el-tooltip content="Удалить" placement="top-start" :open-delay="500">
+                  <el-button type="danger" icon="el-icon-delete" circle @click="handleRemoveClick(scope.row)" />
+                </el-tooltip>
+
+              </template>
+          </el-table-column>
+
+          </el-table>
         </template>
       </el-table-column>
 
@@ -30,22 +57,7 @@
         <template slot-scope="scope">
           <span>{{ scope.row.product.title }}</span>
         </template>
-      </el-table-column>
-
-      <el-table-column label="Операции">
-        <template slot-scope="scope">
-
-          <el-tooltip content="Редактировать" placement="top-start" :open-delay="500">
-            <el-button type="primary" icon="el-icon-edit" circle @click="handleEditClick(scope.row)" />
-          </el-tooltip>
-
-          <el-tooltip content="Удалить" placement="top-start" :open-delay="500">
-            <el-button type="danger" icon="el-icon-delete" circle @click="handleRemoveClick(scope.row)" />
-          </el-tooltip>
-
-        </template>
-      </el-table-column>
-
+      </el-table-column>  
     </el-table>
     <pagination v-show="pagination.total>0" :total="pagination.total" :page.sync="pagination.page" :limit.sync="pagination.limit" @pagination="loadEntities" />
     <EditDialog :dialog-visible.sync="dialogVisible" :entity-id.sync="selectedId" append-to-body @onEditDialogClose="onEditDialogClose" />
