@@ -17,14 +17,15 @@
       row-key="productId"
       style="width: 100%;"
       empty-text="Нет данных"
-      @current-change="handleCurrentChange" >
-      
+      @current-change="handleCurrentChange"
+    >
+
       <el-table-column type="expand">
         <template slot-scope="scope">
           <el-table :data="scope.row.Prices" border>
 
             <el-table-column label="Цена">
-              <template slot-scope="childScope">                
+              <template slot-scope="childScope">
                 <span>{{ childScope.row.price }}</span>
               </template>
             </el-table-column>
@@ -47,7 +48,7 @@
                 </el-tooltip>
 
               </template>
-          </el-table-column>
+            </el-table-column>
 
           </el-table>
         </template>
@@ -57,7 +58,7 @@
         <template slot-scope="scope">
           <span>{{ scope.row.product.title }}</span>
         </template>
-      </el-table-column>  
+      </el-table-column>
     </el-table>
     <pagination v-show="pagination.total>0" :total="pagination.total" :page.sync="pagination.page" :limit.sync="pagination.limit" @pagination="loadEntities" />
     <EditDialog :dialog-visible.sync="dialogVisible" :entity-id.sync="selectedId" append-to-body @onEditDialogClose="onEditDialogClose" />
