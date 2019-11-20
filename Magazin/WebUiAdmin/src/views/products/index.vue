@@ -52,7 +52,7 @@
 
       <el-table-column label="Изображение" width="120px">
         <template slot-scope="scope">
-          <img :src="scope.row.fileUrl" width="60px">
+          <img :src=getFileUrl(scope.row.file.id) width="60px">
         </template>
       </el-table-column>
 
@@ -89,6 +89,7 @@
 </template>
 
 <script>
+import { getFileUrl } from '@/api/upload'
 import { getProducts, getCategories, remove } from '@/api/products'
 import Pagination from '@/components/Pagination'
 import ProductEdit from '@/views/products/productEdit'
@@ -162,6 +163,9 @@ export default {
         async handleRemoveClick(row) {
           await remove(row.id)
           this.getProducts()
+        },
+        getFileUrl(id) {
+          return getFileUrl(id)
         }
     }
 }

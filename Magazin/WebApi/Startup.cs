@@ -19,6 +19,7 @@ using WebApi.Extensions;
 using AutoMapper;
 using WebApi.Mappings.Documents;
 using System.Reflection;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace WebUiAdmin
 {
@@ -90,6 +91,11 @@ namespace WebUiAdmin
                 ServeUnknownFileTypes = true,
                 DefaultContentType = "image/png",
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
+            });
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
             app.UseRouting();
