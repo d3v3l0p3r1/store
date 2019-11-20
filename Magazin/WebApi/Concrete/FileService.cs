@@ -11,7 +11,7 @@ namespace WebUiAdmin.Concrete
 {
     public class FileService : BaseService<FileData>, IFileService
     {
-        private readonly string fileDir = @"Files\";
+        private readonly string fileDir = @"Files";
         private readonly string dir;
 
         public FileService(IRepository<FileData> repository) : base(repository)
@@ -27,7 +27,7 @@ namespace WebUiAdmin.Concrete
         {
             var fileID = Guid.NewGuid();
 
-            using (var fs = new FileStream(dir + fileID, FileMode.CreateNew))
+            using (var fs = new FileStream(Path.Combine(dir, fileID.ToString()), FileMode.CreateNew))
             {
                 await stream.CopyToAsync(fs);
             }
@@ -59,7 +59,9 @@ namespace WebUiAdmin.Concrete
                 return null;
             }
 
-            return $@"\{fileDir}{fileData.FileID.ToString()}";
+            return Path.Combine(fileDir, fileData.FileID.ToString());
+
+            //return $@"\{fileDir}{fileData.FileID.ToString()}";
         }
     }
 }
