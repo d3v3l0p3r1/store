@@ -43,7 +43,7 @@
 
       <el-table-column label="Изображение" width="120px">
         <template slot-scope="scope">
-          <img :src=getFileUrl(scope.row.file.id) width="60px">
+          <img :src="getFileUrl(scope.row.file.id)" width="60px">
         </template>
       </el-table-column>
 
