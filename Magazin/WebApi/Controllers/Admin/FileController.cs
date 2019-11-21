@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
 
@@ -24,14 +25,16 @@ namespace WebUiAdmin.Controllers
     public class FileController : Controller
     {
         private readonly IFileService _fileService;
+        private readonly ILogger<FileController> _logger;
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="fileService"></param>
-        public FileController(IFileService fileService)
+        public FileController(IFileService fileService, ILogger<FileController> logger)
         {
             _fileService = fileService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -96,14 +99,20 @@ namespace WebUiAdmin.Controllers
                 return NoContent();
             }
 
-            var path = await _fileService.GetVirtualPath(id);
-
-            if (path == null)
+            try
             {
+                var path = await _fileService.GetVirtualPath(id);
+                if (path == null)
+                {
+                    return NotFound();
+                }
+                return File(path, "image/png");
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e, $"GetFileError: {id}");
                 return NotFound();
             }
-
-            return File(path, "image/png");
         }
     }
 }

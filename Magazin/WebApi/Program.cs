@@ -28,7 +28,10 @@ namespace WebUiAdmin
 
         private static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseUrls("http://localhost:51145")
+                .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
 

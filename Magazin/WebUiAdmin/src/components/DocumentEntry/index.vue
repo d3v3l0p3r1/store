@@ -32,12 +32,6 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Цена">
-        <template slot-scope="scope">
-          <span>{{ scope.row.product.price }}</span>
-        </template>
-      </el-table-column>
-
       <el-table-column label="Количество">
         <template slot-scope="scope">
           <span>{{ scope.row.count }}</span>

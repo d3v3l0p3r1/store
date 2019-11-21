@@ -18,7 +18,8 @@ namespace WebUiAdmin.Controllers
     [Authorize(Roles = "admin")]
     [Route("[controller]")]
     [ApiExplorerSettings(GroupName = "admin")]
-    public abstract class BaseController<T> : Controller where T : IBaseEntity, new()
+    [ApiController]
+    public abstract class BaseController<T> : ControllerBase where T : IBaseEntity, new()
     {
         private readonly IBaseService<T> _baseService;
 
@@ -30,14 +31,33 @@ namespace WebUiAdmin.Controllers
         {
             _baseService = baseService;
         }
+
+
+        /// <summary>
+        /// Получить сущность
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public virtual async Task<ActionResult<T>> Get(long id)
+        {
+            try
+            {
+                var entity = await _baseService.GetAsync(id);
+                return Ok(entity);
+            }
+            catch(Exception error)
+            {
+                return BadRequest(error.GetBaseException().Message);
+            }
+        }
         
         /// <summary>
         /// Создать сущность
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Route("[action]")]
-        public virtual async Task<IActionResult> Create([FromBody]T entity)
+        public virtual async Task<ActionResult<T>> Create(T entity)
         {
             try
             {
@@ -56,8 +76,7 @@ namespace WebUiAdmin.Controllers
         /// <param name="entity"></param>
         /// <returns></returns>
         [HttpPatch]
-        [Route("[action]")]
-        public virtual async Task<IActionResult> Update([FromBody]T entity)
+        public virtual async Task<ActionResult<T>> Update([FromBody]T entity)
         {
             try
             {
@@ -77,7 +96,6 @@ namespace WebUiAdmin.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        [Route("[action]")]
         public virtual async Task<IActionResult> Delete(int id)
         {
             await _baseService.DeleteAsync(id);

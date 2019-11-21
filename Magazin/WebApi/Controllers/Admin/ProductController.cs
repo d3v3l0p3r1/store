@@ -72,16 +72,14 @@ namespace WebUiAdmin.Controllers
                 all = all.Where(x => x.CategoryId == catID.Value);
             }
 
-            var url = $"{Request.Scheme}://{Request.Host}/File/GetFile?id=";
-
             var products = await all.OrderByDescending(x => x.Id).Skip(skip).Take(take).Select(x => new ProductDto
             {
                 Id = x.Id,
-                Price = x.Price,
+                Price = -100,
                 Description = x.Description,
                 Title = x.Title,
                 Kind = x.Kind.Title,
-                FileUrl = x.FileID != null ? url + x.FileID : url + 1,
+                File = x.File
             }).ToListAsync();
 
             var total = await all.CountAsync();
@@ -149,6 +147,24 @@ namespace WebUiAdmin.Controllers
             await _productService.UpdateAsync(product, body.MainImage, body.Images);
 
             return Ok();
+        }
+
+        /// <summary>
+        /// Удалить продукт
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete]
+        public async Task<IActionResult> Remove(long id)
+        {
+            try
+            {
+                await _productService.DeleteAsync(id);
+                return Ok();
+            }
+            catch(Exception error)
+            {
+                return BadRequest(error.GetBaseException().Message);
+            }
         }
     }
 }

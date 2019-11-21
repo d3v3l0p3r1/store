@@ -6,6 +6,7 @@ using DataCore.Entities;
 using DataCore.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebApi.Models;
 
 namespace WebUiAdmin.Controllers
 {
@@ -16,66 +17,48 @@ namespace WebUiAdmin.Controllers
     {
         private readonly IKindService _kindService;
 
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="kindService"></param>
         public KindController(IKindService kindService) : base(kindService)
         {
             _kindService = kindService;
         }
-        
+
+        /// <summary>
+        /// Полусить список
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("[action]")]
-        public async Task<IActionResult> GetAll()
+        [ProducesResponseType(typeof(ListRespone<ProductKind>), 200)]
+        public async Task<IActionResult> GetAll(int take = 10, int page = 1)
         {
+            if (take < 1)
+            {
+                take = 10;
+            }
+
+            if (page < 1)
+            {
+                page = 1;
+            }
+
+            var skip = (page - 1) * take;
+
             var all = _kindService.GetAllAsNotracking();
 
             var total = await all.CountAsync();
-            var cats = await all.Select(x => new
+            var cats = await all.Skip(skip).Take(take).ToListAsync();
+
+            var res = new ListRespone<ProductKind>()
             {
-                x.Id,
-                x.Title,
-            }).ToListAsync();
+                Total = total,
+                Data = cats
+            };
 
-            return new JsonResult(new
-            {
-                Data = cats,
-                Total = total
-            });
-
-
+            return Ok(res);
         }
-
-        //public IActionResult Edit(int id)
-        //{
-        //    var cat = _kindService.Find(id);
-        //    return View(cat);
-        //}
-
-        //[HttpPost]
-        //public IActionResult Edit(ProductKind kind)
-        //{
-        //    try
-        //    {
-        //        _kindService.Update(kind);
-        //        return View("Index");
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return BadRequest(e.Message);
-        //    }
-        //}
-
-        //public IActionResult Create()
-        //{
-        //    var kind = new ProductKind();
-
-        //    return View("Edit", kind);
-        //}
-
-        //[HttpPost]
-        //public IActionResult Create(ProductKind kind)
-        //{
-        //    _kindService.Update(kind);
-        //    return View("Index");
-        //}
-
     }
 }

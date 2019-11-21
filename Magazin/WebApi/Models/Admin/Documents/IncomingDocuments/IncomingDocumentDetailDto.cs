@@ -10,6 +10,7 @@ namespace WebApi.Models.Admin.Documents.IncomingDocuments
     /// </summary>
     public class IncomingDocumentDetailDto : BaseDocumentDto
     {
+
         /// <summary>
         /// Табличная часть
         /// </summary>

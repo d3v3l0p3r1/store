@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WebApi.Models;
 using WebApi.Models.Admin.Documents;
 using WebApi.Models.Admin.Documents.IncomingDocuments;
+using WebApi.Models.Admin.Documents.OutcomingDocuments;
 
 namespace WebApi.Mappings.Documents
 {
@@ -20,13 +21,18 @@ namespace WebApi.Mappings.Documents
         public DocumentMappings()
         {
             CreateMap<IncomingDocument, IncomingDocumentDetailDto>()
-                .ForMember(x=> x.Entries, cfg=> cfg.MapFrom(z=>z.Entries.Select(x=> new DocumentEntryDto 
-                { 
+                .ForMember(x => x.Author, cfg => cfg.MapFrom(z => new Lookup()
+                {
+                    Id = z.Author.Id,
+                    Title = z.Author.FullName
+                }))
+                .ForMember(x => x.Entries, cfg => cfg.MapFrom(z => z.Entries.Select(x => new DocumentEntryDto
+                {
                     Id = x.Id,
                     ProductId = x.ProductId,
                     Count = x.Count,
                     DocumentId = x.DocumentId,
-                    Product = new Lookup 
+                    Product = new Lookup
                     {
                         Id = x.Product.Id,
                         Title = x.Product.Title
@@ -34,7 +40,7 @@ namespace WebApi.Mappings.Documents
                 })));
 
             CreateMap<IncomingDocumentDetailDto, IncomingDocument>()
-                .ForMember(x => x.Entries, cfg => cfg.MapFrom(z => z.Entries.Select(x => new IncomingDocumentEntry 
+                .ForMember(x => x.Entries, cfg => cfg.MapFrom(z => z.Entries.Select(x => new IncomingDocumentEntry
                 {
                     Id = x.Id,
                     ProductId = x.ProductId,
@@ -42,7 +48,55 @@ namespace WebApi.Mappings.Documents
                     DocumentId = x.DocumentId,
                 })));
 
-            CreateMap<IncomingDocument, IncomingDocumentListDto>();
+            CreateMap<IncomingDocument, IncomingDocumentListDto>()
+                .ForMember(x => x.Author, cfg => cfg.MapFrom(z => new Lookup()
+                {
+                    Id = z.Author.Id,
+                    Title = z.Author.FullName
+                }))
+                .ForMember(x => x.Author, cfg => cfg.MapFrom(z => new Lookup()
+                {
+                    Id = z.Author.Id,
+                    Title = z.Author.FullName
+                }));
+
+            CreateMap<OutComingDocument, OutcomingDocumentDetailDto>()
+                .ForMember(x => x.Author, cfg => cfg.MapFrom(z => new Lookup()
+                {
+                    Id = z.Author.Id,
+                    Title = z.Author.FullName
+                }))
+                .ForMember(x => x.Entries, cfg => cfg.MapFrom(z => z.Entries.Select(x => new DocumentEntryDto
+                {
+                    Id = x.Id,
+                    ProductId = x.ProductId,
+                    Count = x.Count,
+                    DocumentId = x.DocumentId,
+                    Product = new Lookup
+                    {
+                        Id = x.Product.Id,
+                        Title = x.Product.Title
+                    }
+                })));
+
+            CreateMap<OutcomingDocumentDetailDto, OutComingDocument>()
+                .ForMember(x => x.Author, cfg => cfg.Ignore())
+                .ForMember(x => x.Recipient, cfg => cfg.Ignore())
+                .ForMember(x => x.Entries, cfg => cfg.MapFrom(z => z.Entries.Select(x => new OutComingDocumentEntry
+                {
+                    Id = x.Id,
+                    ProductId = x.ProductId,
+                    Count = x.Count,
+                    DocumentId = x.DocumentId,
+                })));
+
+            CreateMap<OutComingDocument, OutcomingDocumentListDto>()
+                .ForMember(x => x.Author, cfg => cfg.MapFrom(z => new Lookup()
+                {
+                    Id = z.Author.Id,
+                    Title = z.Author.FullName
+                }));
+
         }
     }
 }

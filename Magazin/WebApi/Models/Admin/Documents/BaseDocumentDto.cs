@@ -40,5 +40,15 @@ namespace WebApi.Models.Admin.Documents
         /// Статус
         /// </summary>
         public DocumentStatus DocumentStatus { get; set; }
+
+        /// <summary>
+        /// Идентификатор автора
+        /// </summary>
+        public long? AuthorId { get; set; }
+
+        /// <summary>
+        /// Автор документа
+        /// </summary>
+        public Lookup Author { get; set; }
     }
 }

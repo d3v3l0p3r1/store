@@ -43,13 +43,7 @@
 
       <el-table-column label="Изображение" width="120px">
         <template slot-scope="scope">
-          <img :src="scope.row.fileUrl" width="60px">
-        </template>
-      </el-table-column>
-
-      <el-table-column label="Цена">
-        <template slot-scope="scope">
-          <span>{{ scope.row.price }}</span>
+          <img :src="getFileUrl(scope.row.file.id)" width="60px">
         </template>
       </el-table-column>
 
@@ -65,6 +59,7 @@
 </template>
 
 <script>
+import { getFileUrl } from '@/api/upload'
 import { getProducts, getCategories } from '@/api/products'
 import Pagination from '@/components/Pagination'
 
@@ -112,6 +107,9 @@ export default {
         handleSelectProduct(val) {
           this.$emit('selectedProductChange', val)
           this.selectedProduct = val
+        },
+        getFileUrl(id) {
+          return getFileUrl(id)
         }
     }
 

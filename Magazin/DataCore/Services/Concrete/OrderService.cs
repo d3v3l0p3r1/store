@@ -52,7 +52,6 @@ namespace DataCore.Services.Concrete
                     new
                     {
                         p.Id,
-                        p.Price,
                         m.Count,
 
                     });
@@ -65,7 +64,6 @@ namespace DataCore.Services.Concrete
                 {
                     ProductID = product.Id,
                     Count = product.Count,
-                    Price = product.Price
                 };
 
                 order.Products.Add(orderProduct);

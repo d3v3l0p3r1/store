@@ -1,4 +1,5 @@
-﻿using DataCore.Entities;
+﻿using BaseCore.Entities;
+using DataCore.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,9 +28,9 @@ namespace WebApi.Models.Api.Product
         public string Description { get; set; }
 
         /// <summary>
-        /// Путь к файлу
+        /// File data
         /// </summary>
-        public string FileUrl { get; set; }
+        public FileData File { get; set; }
 
         /// <summary>
         /// Цена

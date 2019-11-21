@@ -101,6 +101,7 @@ export const asyncRoutes = [
   {
     path: '/documents',
     component: Layout,
+    roles: ['admin'],
     meta: {
       title: 'Документы',
       icon: 'documentation'
@@ -114,14 +115,41 @@ export const asyncRoutes = [
       },
       {
         path: 'outcomingDocuments',
-        component: () => import('@/views/documents/incoming/list'),
+        component: () => import('@/views/documents/outcoming/list'),
         name: 'OutcomingDocuments',
         meta: { title: 'Документы расхода', icon: 'document-with-minus-sign' }
       }
     ]
   },
   {
+    path: '/categories',
+    roles: ['admin'],
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/categories/list'),
+        name: 'CategoryGrid',
+        meta: { title: 'Категории продуктов', icon: 'theme' }
+      }
+    ]
+  },
+  {
+    path: '/kinds',
+    roles: ['admin'],
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/kinds/list'),
+        name: 'KindGrid',
+        meta: { title: 'Виды продуктов', icon: 'theme' }
+      }
+    ]
+  },
+  {
     path: '/products',
+    roles: ['admin'],
     component: Layout,
     children: [
       {
@@ -129,6 +157,71 @@ export const asyncRoutes = [
         component: () => import('@/views/products/index'),
         name: 'ProductGrid',
         meta: { title: 'Продукты', icon: 'theme' }
+      }
+    ]
+  },
+  {
+    path: '/balance',
+    roles: ['admin'],
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/balanceRegister/list'),
+        name: 'BalanceGrid',
+        meta: { title: 'Остатки', icon: 'calculator' }
+      }
+    ]
+  },
+  {
+    path: '/moves',
+    roles: ['admin'],
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/balanceRegister/moves'),
+        name: 'MovesGrid',
+        meta: { title: 'Движения', icon: 'money-eyes-on-square-face' }
+      }
+    ]
+  },
+  {
+    path: '/productPrice',
+    roles: ['admin'],
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/productPrice/list'),
+        name: 'ProductPriceGrid',
+        meta: { title: 'Цены', icon: 'money-eyes-on-square-face' }
+      }
+    ]
+  },
+  {
+    path: '/users',
+    roles: ['admin'],
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/users/list'),
+        name: 'UsersGrid',
+        meta: { title: 'Пользователи', icon: 'black-male-user-symbol' }
+      }
+    ]
+  },
+  {
+    path: '/companies',
+    roles: ['admin'],
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/companies/list'),
+        name: 'CompaniesGrid',
+        meta: { title: 'Компании', icon: 'planet-earth' }
       }
     ]
   },

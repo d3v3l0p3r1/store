@@ -1,11 +1,15 @@
 ﻿using BackendTest.Services.Concrete;
+using BaseCore.Security.Entities;
 using DataCore.DAL;
 using DataCore.Entities;
 using DataCore.Entities.Documents;
 using DataCore.Repositories.Concrete;
 using DataCore.Services.Concrete;
 using DataCore.Services.Concrete.Documents;
+using IdentityServer4.EntityFramework.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -16,6 +20,8 @@ namespace WebUiAdminTest
 {
     public abstract class BaseTest
     {
+        public IServiceCollection ServiceCollections;
+
         protected DataContext DataContext;
         protected BalanceService BalanceService;
         protected BalanceRepository BalanceRepository;
@@ -31,6 +37,7 @@ namespace WebUiAdminTest
         protected Repository<IncomingDocument> IncomingDocumentRepository;
         protected IncomingDocumentService IncomingDocumentService;
 
+        protected Repository<OutComingDocumentEntry> OutcomingDocumentEntryRepository;
         protected Repository<OutComingDocument> OutcomingDocumentRepository;
         protected OutcomingDocumentService OutcomingDocumentService;
 
@@ -46,11 +53,21 @@ namespace WebUiAdminTest
 
         public void InitScope(string dbName)
         {
-            var builder = new DbContextOptionsBuilder<DataContext>();
+            ServiceCollections = new ServiceCollection();
 
-            builder.UseInMemoryDatabase(dbName);
+            ServiceCollections.AddDbContext<DataContext>(config =>
+            {
+                config.UseInMemoryDatabase(dbName);
+            });
+            
+            ServiceCollections.AddIdentityServer()
+               .AddInMemoryClients(IdentityConfig.GetClients())
+               .AddInMemoryApiResources(IdentityConfig.GetApis());
 
-            DataContext = new DataContext(builder.Options, null);
+            ;
+
+            var serviceProvider = ServiceCollections.BuildServiceProvider();
+            DataContext = serviceProvider.GetService<DataContext>();
 
             BalanceRepository = new BalanceRepository(DataContext);
             ProductRepository = new Repository<Product>(DataContext);
@@ -67,11 +84,38 @@ namespace WebUiAdminTest
             IncomingDocumentRepository = new Repository<IncomingDocument>(DataContext);
             IncomingDocumentService = new IncomingDocumentService(IncomingDocumentRepository, BalanceService, IncomingDocumentEntryRepository);
 
+            OutcomingDocumentEntryRepository = new Repository<OutComingDocumentEntry>(DataContext);
             OutcomingDocumentRepository = new Repository<OutComingDocument>(DataContext);
-            OutcomingDocumentService = new OutcomingDocumentService(OutcomingDocumentRepository, BalanceService);
+            OutcomingDocumentService = new OutcomingDocumentService(OutcomingDocumentRepository, BalanceService, OutcomingDocumentEntryRepository);
 
             ProductKingRepository = new Repository<ProductKind>(DataContext);
             ProductKindService = new KindService(ProductKingRepository);
+        }
+
+        public static class IdentityConfig
+        {
+
+            public static IEnumerable<IdentityServer4.Models.ApiResource> GetApis()
+            {
+                return new List<IdentityServer4.Models.ApiResource>
+            {
+                new IdentityServer4.Models.ApiResource("API1", "Api1")
+            };
+            }
+
+            public static IEnumerable<IdentityServer4.Models.Client> GetClients()
+            {
+                return new List<IdentityServer4.Models.Client>
+            {
+                new IdentityServer4.Models.Client
+                {
+                    ClientId = "js",
+                    ClientName = "Js client",
+
+                }
+            };
+            }
+
         }
 
         [SetUp]
@@ -87,7 +131,6 @@ namespace WebUiAdminTest
             var product = new Product()
             {
                 Category = category,
-                Price = 100,
                 Title = "Test product 1",
             };
 
@@ -120,7 +163,7 @@ namespace WebUiAdminTest
         {
             var outcomingDocument = new OutComingDocument()
             {
-                Entry = new List<OutComingDocumentEntry>()
+                Entries = new List<OutComingDocumentEntry>()
                 {
                     {
                         new OutComingDocumentEntry()

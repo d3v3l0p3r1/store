@@ -50,7 +50,14 @@ export function updateProduct(data) {
 
 export function getKinds() {
     return request({
-        url: 'kind/getAll',
+        url: 'kind/getAll?take=100',
         method: 'get'
+    })
+}
+
+export function remove(id) {
+    return request({
+        url: '/product?id=' + id,
+        method: 'delete'
     })
 }

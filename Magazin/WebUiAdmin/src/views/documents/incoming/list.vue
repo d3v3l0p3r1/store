@@ -50,6 +50,12 @@
         </template>
       </el-table-column>
 
+      <el-table-column label="Автор">
+        <template slot-scope="scope">
+          <span>{{ scope.row.author.title }}</span>
+        </template>
+      </el-table-column>
+
       <el-table-column label="Статус">
         <template slot-scope="scope">
           <span>

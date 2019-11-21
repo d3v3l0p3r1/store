@@ -34,7 +34,7 @@ namespace WebUiAdmin.Controllers.Api
             var res = all.Select(x => new
             {
                 x.Id,
-                x.Price,
+                Price = -100,
                 x.Description,
                 x.Title,
                 x.KindId,
