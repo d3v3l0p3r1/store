@@ -22,7 +22,7 @@
 
       <el-table-column type="expand">
         <template slot-scope="scope">
-          <el-table :data="scope.row.Prices" border>
+          <el-table :data="scope.row.prices" border>
 
             <el-table-column label="Цена">
               <template slot-scope="childScope">

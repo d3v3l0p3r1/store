@@ -49,16 +49,27 @@ namespace WebApi.Controllers.Admin
 
             var skip = (page - 1) * take;
 
-            var all = _service.GetQuery().Select(x => x.ProductId).Distinct();
+            var all = _service.GetQuery()
+                .Select(x => x.ProductId)
+                .Distinct();
+
             var total = await all.CountAsync();
-            var productIds = await all.OrderByDescending(x => x).Skip(skip).Take(take).ToListAsync();
+            var productIds = await all.OrderByDescending(x => x)
+                .Skip(skip)
+                .Take(take)
+                .ToListAsync();
 
-            var priceList = await _service.GetQuery().Include(x => x.Product).Where(x => productIds.Contains(x.ProductId)).ToListAsync();
+            var priceList = await _service.GetQuery()
+                .Include(x => x.Product)
+                .Where(x => productIds.Contains(x.ProductId))
+                .OrderByDescending(x => x.Date)
+                .ToListAsync();
 
-            var list = priceList.GroupBy(x => x.ProductId)
+            var list = priceList.GroupBy(x => x.Product)
                 .Select(x => new ProductPriceModel
                 {
-                    ProductId = x.Key,
+                    ProductId = x.Key.Id,
+                    Product = x.Key,
                     Prices = x.Select(z => new ProductPriceModelItem
                     {
                         Id = z.Id,

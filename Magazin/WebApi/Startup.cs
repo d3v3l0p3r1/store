@@ -20,6 +20,7 @@ using AutoMapper;
 using WebApi.Mappings.Documents;
 using System.Reflection;
 using Microsoft.AspNetCore.HttpOverrides;
+using Newtonsoft.Json.Converters;
 
 namespace WebUiAdmin
 {
@@ -45,6 +46,8 @@ namespace WebUiAdmin
                 .AddNewtonsoftJson(config =>
                 {
                     config.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    config.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
+                    config.SerializerSettings.DateFormatString = "dd.MM.yyyy HH:mm:ss";
                 });
 
 

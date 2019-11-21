@@ -40,10 +40,6 @@
             <el-input v-model="product.description" type="textarea" />
           </el-form-item>
 
-          <el-form-item label="Цена">
-            <el-input v-model="product.price" type="number" />
-          </el-form-item>
-
           <el-form-item label="Главное изображение">
             <el-upload
               action
