@@ -31,6 +31,7 @@ namespace DataCore.DAL
         public DbSet<PersistedGrant> PersistedGrants { get; set; }
         public DbSet<DeviceFlowCodes> DeviceFlowCodes { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<ProductPrice> ProductPrices { get; set; }
 
         private readonly IOptions<OperationalStoreOptions> _operationalStoreOptions;
 
@@ -64,6 +65,8 @@ namespace DataCore.DAL
             builder.Entity<OutComingDocument>().HasMany(x => x.Entries).WithOne(x => x.Document);
 
             builder.Entity<Balance>().HasMany(x => x.BalanceEntries).WithOne(x => x.Balance);
+
+            builder.Entity<ProductPrice>().HasOne(x => x.Product);
 
             if (_operationalStoreOptions != null)
             {

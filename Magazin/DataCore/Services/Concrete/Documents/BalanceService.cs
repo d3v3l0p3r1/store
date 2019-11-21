@@ -122,7 +122,7 @@ namespace DataCore.Services.Concrete.Documents
                 KindId = x.Product.KindId,
                 Id = x.ProductId,
                 KingTitle = x.Product.Kind.Title,
-                Price = x.Product.Price,
+                Price = 0,
                 Title = x.Product.Title
             });
 

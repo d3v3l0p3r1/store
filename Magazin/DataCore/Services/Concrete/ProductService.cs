@@ -113,7 +113,7 @@ namespace DataCore.Services.Concrete
                         File = product.FileID != null ? url + product.FileID : url + 1,
                         KindId = product.KindId,
                         KingTitle = product.Kind.Title,
-                        Price = product.Price,
+                        Price = -100,
                         Count = balance.BalanceEntries.Sum(z => z.Count)
                     };
 

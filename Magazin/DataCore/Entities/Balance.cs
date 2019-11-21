@@ -24,6 +24,8 @@ namespace DataCore.Entities
 
         public int Count { get; set; }
 
+        public decimal Price { get; set; }
+
         public long? IncomingDocumentId { get; set; }
         public IncomingDocument IncomingDocument { get; set; }
 

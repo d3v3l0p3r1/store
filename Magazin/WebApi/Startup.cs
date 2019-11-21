@@ -19,6 +19,8 @@ using WebApi.Extensions;
 using AutoMapper;
 using WebApi.Mappings.Documents;
 using System.Reflection;
+using Microsoft.AspNetCore.HttpOverrides;
+using Newtonsoft.Json.Converters;
 
 namespace WebUiAdmin
 {
@@ -44,6 +46,8 @@ namespace WebUiAdmin
                 .AddNewtonsoftJson(config =>
                 {
                     config.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    config.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
+                    config.SerializerSettings.DateFormatString = "dd.MM.yyyy HH:mm:ss";
                 });
 
 
@@ -92,6 +96,11 @@ namespace WebUiAdmin
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
             });
 
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
@@ -116,7 +125,10 @@ namespace WebUiAdmin
 
             services.AddDbContext<DataContext>(options =>
             {
-                options.UseNpgsql(connectionString, builder => builder.MigrationsAssembly("WebApi"));
+                options.UseNpgsql(connectionString, builder =>
+                {
+                    builder.MigrationsAssembly("WebApi");
+                });
             });
         }
     }
