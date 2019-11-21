@@ -93,7 +93,7 @@ export default {
   computed: {
     authorTitle: function() {
       if (this.entity.recipient != null) {
-        return this.entity.recipient.fullName + ' ' + this.entity.recipient.userName
+        return this.entity.recipient.name
       } else {
         return ''
       }

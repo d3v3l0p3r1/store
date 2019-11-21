@@ -219,9 +219,9 @@ export const asyncRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/companies/list'),
+        component: () => import('@/views/contractors/list'),
         name: 'CompaniesGrid',
-        meta: { title: 'Компании', icon: 'planet-earth' }
+        meta: { title: 'Контрагенты', icon: 'planet-earth' }
       }
     ]
   },

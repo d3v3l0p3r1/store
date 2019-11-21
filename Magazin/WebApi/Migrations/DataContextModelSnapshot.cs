@@ -16,7 +16,7 @@ namespace WebApi.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
-                .HasAnnotation("ProductVersion", "3.0.0")
+                .HasAnnotation("ProductVersion", "3.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("BaseCore.Entities.FileData", b =>
@@ -215,6 +215,41 @@ namespace WebApi.Migrations
                     b.HasIndex("OutcomingDocumentId");
 
                     b.ToTable("BalanceEntry");
+                });
+
+            modelBuilder.Entity("DataCore.Entities.Contractor", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Hidden")
+                        .HasColumnType("boolean");
+
+                    b.Property<long>("ImageId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
+
+                    b.ToTable("Contractors");
                 });
 
             modelBuilder.Entity("DataCore.Entities.Documents.IncomingDocument", b =>
@@ -1232,6 +1267,15 @@ namespace WebApi.Migrations
                     b.HasOne("DataCore.Entities.Documents.OutComingDocument", "OutComingDocument")
                         .WithMany()
                         .HasForeignKey("OutcomingDocumentId");
+                });
+
+            modelBuilder.Entity("DataCore.Entities.Contractor", b =>
+                {
+                    b.HasOne("BaseCore.Entities.FileData", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DataCore.Entities.Documents.IncomingDocument", b =>

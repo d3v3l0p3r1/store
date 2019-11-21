@@ -31,13 +31,13 @@ namespace BaseCore.Security.Entities
     public enum UserType
     {
         /// <summary>
-        /// Физическое лицо
+        /// Пользователь админки
         /// </summary>
         User = 0,
 
         /// <summary>
-        /// Компания
+        /// Пользователь магазина
         /// </summary>
-        Company = 10
+        PublicUser = 10,
     }
 }
