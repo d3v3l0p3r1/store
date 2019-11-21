@@ -32,7 +32,7 @@
             <el-input v-model="entity.address" />
           </el-form-item>
 
-           <el-form-item label="Главное изображение">
+          <el-form-item label="Главное изображение">
             <el-upload
               action
               accept=".jpg, .jpeg, .png, .jfif"
@@ -84,7 +84,7 @@ export default {
   data() {
     return {
       entity: {
-        id: 0,        
+        id: 0,
         name: '',
         imageId: 0,
         image: null,
@@ -112,7 +112,7 @@ export default {
   methods: {
     reset() {
       this.entity = {
-        id: 0,        
+        id: 0,
         name: '',
         imageId: 0,
         image: null,
@@ -142,7 +142,7 @@ export default {
       this.$emit('onEditDialogClose')
     },
     async loadEntity() {
-      var res = await get(this.entityId)      
+      var res = await get(this.entityId)
       this.entity = res
       if (this.entity.image != null) {
           this.mainImage = this.mainImage.splice()

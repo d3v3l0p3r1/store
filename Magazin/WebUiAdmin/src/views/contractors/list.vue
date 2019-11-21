@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <ContractorList :enable-edit=true />
+    <ContractorList :enable-edit="true" />
   </div>
 </template>
 

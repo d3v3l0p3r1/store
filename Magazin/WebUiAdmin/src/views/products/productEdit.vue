@@ -217,7 +217,7 @@ export default {
       this.loading = true
       this.product.kind = null
       this.product.category = null
-      
+
       const formData = new FormData()
       formData.append('Model', JSON.stringify(this.product))
 
