@@ -79,7 +79,7 @@ namespace WebUiAdmin.Controllers
                 Description = x.Description,
                 Title = x.Title,
                 Kind = x.Kind.Title,
-                File = x.File
+                FileId = x.FileID
             }).ToListAsync();
 
             var total = await all.CountAsync();

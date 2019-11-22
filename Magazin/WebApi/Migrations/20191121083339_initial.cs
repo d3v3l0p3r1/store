@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace WebApi.Migrations
 {
-    public partial class first : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -598,6 +598,31 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Contractors",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Hidden = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    ImageId = table.Column<long>(nullable: false),
+                    Address = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Phone = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contractors", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Contractors_Files_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "Files",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "News",
                 columns: table => new
                 {
@@ -994,6 +1019,11 @@ namespace WebApi.Migrations
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Contractors_ImageId",
+                table: "Contractors",
+                column: "ImageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DeviceCodes_DeviceCode",
                 table: "DeviceCodes",
                 column: "DeviceCode",
@@ -1161,6 +1191,9 @@ namespace WebApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "ClientSecret");
+
+            migrationBuilder.DropTable(
+                name: "Contractors");
 
             migrationBuilder.DropTable(
                 name: "DeviceCodes");
