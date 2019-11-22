@@ -32,6 +32,7 @@ namespace DataCore.DAL
         public DbSet<DeviceFlowCodes> DeviceFlowCodes { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ProductPrice> ProductPrices { get; set; }
+        public DbSet<Contractor> Contractors { get; set; }
 
         private readonly IOptions<OperationalStoreOptions> _operationalStoreOptions;
 
@@ -57,16 +58,26 @@ namespace DataCore.DAL
             builder.Entity<Product>().HasOne(x => x.Category);
             builder.Entity<Product>().HasOne(x => x.Kind);
 
-            builder.Entity<Order>().HasMany(x => x.Products).WithOne(x => x.Order);
-            builder.Entity<OrderProduct>().HasOne(x => x.Product);
+            builder.Entity<Order>()
+                .HasMany(x => x.Products).WithOne(x => x.Order);
 
-            builder.Entity<IncomingDocument>().HasMany(x => x.Entries).WithOne(x => x.Document);
+            builder.Entity<OrderProduct>()
+                .HasOne(x => x.Product);
 
-            builder.Entity<OutComingDocument>().HasMany(x => x.Entries).WithOne(x => x.Document);
+            builder.Entity<IncomingDocument>()
+                .HasMany(x => x.Entries).WithOne(x => x.Document);
 
-            builder.Entity<Balance>().HasMany(x => x.BalanceEntries).WithOne(x => x.Balance);
+            builder.Entity<OutComingDocument>()
+                .HasMany(x => x.Entries).WithOne(x => x.Document);
 
-            builder.Entity<ProductPrice>().HasOne(x => x.Product);
+            builder.Entity<Balance>()
+                .HasMany(x => x.BalanceEntries).WithOne(x => x.Balance);
+
+            builder.Entity<ProductPrice>()
+                .HasOne(x => x.Product);
+
+            builder.Entity<Contractor>()
+                .HasOne(x => x.Image);
 
             if (_operationalStoreOptions != null)
             {

@@ -1,12 +1,14 @@
 <template>
-  <div class="app-container">
-    <div class="filter-container">
-      <el-button class="filter-item el-button el-button--success" @click="handleCreate">
-        <span>Создать</span>
-      </el-button>
-      <el-button class="filter-item el-button el-button--warning" @click="handleEdit">
-        <span>Изменить</span>
-      </el-button>
+  <div>
+    <div v-if="enableEdit==true">
+      <div class="filter-container">
+        <el-button class="filter-item el-button el-button--success" @click="handleCreate">
+          <span>Создать</span>
+        </el-button>
+        <el-button class="filter-item el-button el-button--warning" @click="handleEdit">
+          <span>Изменить</span>
+        </el-button>
+      </div>
     </div>
     <el-table
       v-loading="listLoading"
@@ -19,7 +21,6 @@
       empty-text="Нет данных"
       @current-change="handleCurrentChange"
     >
-
       <el-table-column label="Идентификатор">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
@@ -28,7 +29,13 @@
 
       <el-table-column label="Название">
         <template slot-scope="scope">
-          <span>{{ scope.row.fullName }}</span>
+          <span>{{ scope.row.name }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="Изображение" width="120px">
+        <template slot-scope="scope">
+          <img :src="getFileUrl(scope.row.imageId)" width="60px">
         </template>
       </el-table-column>
 
@@ -55,6 +62,10 @@
           <el-tooltip content="Редактировать" placement="top-start" :open-delay="500">
             <el-button type="primary" icon="el-icon-edit" circle @click="handleEditClick(scope.row)" />
           </el-tooltip>
+          <el-tooltip content="Удалить" placement="top-start" :open-delay="500">
+            <el-button type="danger" icon="el-icon-delete" circle @click="handleRemoveClick(scope.row)" />
+          </el-tooltip>
+
         </template>
       </el-table-column>
 
@@ -65,13 +76,21 @@
 </template>
 
 <script>
+import EditDialog from '@/views/contractors/edit'
 import Pagination from '@/components/Pagination'
-import { getUsers } from '@/api/user'
-import EditDialog from '@/views/companies/edit'
+import { getAll, remove } from '@/api/contractor'
+import { getFileUrl } from '@/api/upload'
 
 export default {
     name: 'Users',
-    components: { Pagination, EditDialog },
+    components: { EditDialog, Pagination },
+    props: {
+        enableEdit: {
+            type: Boolean,
+            required: false,
+            default: true
+        }
+    },
     data() {
         return {
             entities: null,
@@ -86,23 +105,36 @@ export default {
         }
     },
     created() {
-      this.loadEntities()
+        this.loadEntities()
     },
     methods: {
         async loadEntities() {
             this.listLoading = true
-            const res = await getUsers(this.pagination.page, this.pagination.limit, 10)
+            const res = await getAll(this.pagination.page, this.pagination.limit)
             this.entities = res.data
             this.pagination.total = res.total
             this.listLoading = false
+        },
+        handleCreate() {
+          this.selectedId = 0
+          this.dialogVisible = true
         },
         handleEdit() {
           if (this.selectedId !== 0) {
             this.dialogVisible = true
           }
         },
+        handleEditClick(row) {
+            this.handleCurrentChange(row)
+            this.handleEdit()
+        },
+        async handleRemoveClick(row) {
+          await remove(row.id)
+          this.loadEntities()
+        },
         handleCurrentChange(val) {
           if (val != null) {
+            this.$emit('current-change', val)
             this.selectedId = val.id
           } else {
             this.selectedId = 0
@@ -113,13 +145,10 @@ export default {
           this.selectedId = 0
           this.loadEntities()
         },
-        handleEditClick(row) {
-          this.handleCurrentChange(row)
-          this.dialogVisible = true
-        },
-        handleCreate() {
-          this.dialogVisible = true
+         getFileUrl(id) {
+          return getFileUrl(id)
         }
     }
 }
 </script>
+

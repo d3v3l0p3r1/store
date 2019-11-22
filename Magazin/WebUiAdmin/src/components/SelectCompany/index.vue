@@ -9,7 +9,7 @@
       width="80%"
       append-to-body
     >
-      <UserList :user-type="10" :enable-edit="false" @current-change="handleCurrentChange" />
+      <ContractorList :enable-edit="false" @current-change="handleCurrentChange" />
       <footer slot="footer" class="dialog-footer">
         <el-button type="primary" @click="onSubmit">Выбрать</el-button>
         <el-button @click="handleClose">Отмена</el-button>
@@ -20,10 +20,10 @@
 </template>
 
 <script>
-import UserList from '@/components/UsersList'
+import ContractorList from '@/components/ContractorList/index'
 export default {
     name: 'SelectCompany',
-    components: { UserList },
+    components: { ContractorList },
     props: {
         dialogVisible: {
             type: Boolean,

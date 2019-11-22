@@ -215,11 +215,10 @@ export default {
     },
     onSubmit() {
       this.loading = true
-      const formData = new FormData()
-
       this.product.kind = null
       this.product.category = null
 
+      const formData = new FormData()
       formData.append('Model', JSON.stringify(this.product))
 
       if (this.mainImage.length === 0) {

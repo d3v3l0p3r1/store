@@ -30,7 +30,7 @@ namespace WebApi.Models.Api.Product
         /// <summary>
         /// File data
         /// </summary>
-        public FileData File { get; set; }
+        public long? FileId { get; set; }
 
         /// <summary>
         /// Цена
