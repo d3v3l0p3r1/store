@@ -25,9 +25,15 @@ namespace WebUiAdmin.Controllers.Api
 
         [HttpGet]
         [Route("GetAll")]
-        public IActionResult GetAll(int cat = 1)
+        public IActionResult GetAll(int take = 20, int page = 1, int? catID = null)
         {
-            var all = _productService.GetAllAsNotracking().Where(x => x.CategoryId == cat);
+            var skip = (page - 1) * take;
+            var all = _productService.GetAllAsNotracking().Skip(skip).Take(take); 
+
+            if(catID != null)
+            {
+                all = all.Where(x => x.CategoryId == catID);
+            }
 
             var url = $"{Request.Scheme}://{Request.Host}/File/GetFile/";
 
