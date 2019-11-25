@@ -29,7 +29,7 @@ const routes = [
         component: () => import('@/pages/About'),
         meta: { title: 'О нас', icon: '' }
       }
-    ]    
+    ]
   }
 ]
 
