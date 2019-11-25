@@ -9,12 +9,12 @@ const routes = [
     path: '/',
     name: 'home',
     component: Layout,
+    hidden: true,
     children: [
       {
         path: 'home',
         component: () => import('@/views/Home'),
         meta: { title: 'Магазин', icon: '' }
-
       }
     ]
 
