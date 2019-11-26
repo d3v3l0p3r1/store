@@ -1,32 +1,32 @@
-<template>            
-    <div fluid>
-        <div class="row h-100">
-            <div class="col-md-2">
-                <b-nav vertical>
-                    <b-nav-item v-for="c in categories" :key="c.id"  @click="handleCategoryClick(c)" >
-                        {{c.title}}
-                    </b-nav-item>
-                </b-nav>
-            </div>
-            <div class="col-md-10">
-                <b-card-group deck class="product-grid h-100">
-                    <b-card v-for="p in products" :key="p.id" >
-                        <b-card-title :title="p.title"></b-card-title>
-                        <b-card-img :src="getFileUrl(p.fileId)" :width=140 :height=140 :left=true />
-                        <b-card-text>{{p.description}}</b-card-text>
-                    </b-card>
-                </b-card-group>
-                <b-pagination :per-page=pagination.limit :total-rows=pagination.total v-model="pagination.page"/>
-            </div>
-        </div>
+<template>
+  <div fluid>
+    <div class="row h-100">
+      <div class="col-md-2">
+        <b-nav vertical>
+          <b-nav-item v-for="c in categories" :key="c.id" @click="handleCategoryClick(c)">
+            {{ c.title }}
+          </b-nav-item>
+        </b-nav>
+      </div>
+      <div class="col-md-10">
+        <b-card-group deck class="product-grid h-100">
+          <b-card v-for="p in products" :key="p.id">
+            <b-card-title :title="p.title" />
+            <b-card-img :src="getFileUrl(p.fileId)" :width="140" :height="140" :left="true" />
+            <b-card-text>{{ p.description }}</b-card-text>
+          </b-card>
+        </b-card-group>
+        <b-pagination v-if="pagination.total > pagination.limit" v-model="pagination.page" :per-page="pagination.limit" :total-rows="pagination.total" />
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
 import { getAll } from '@/api/product'
 import { getAll as categoryGetAll } from '@/api/category'
 import { getFileUrl } from '@/api/file'
- 
+
 export default {
     name: 'ProductList',
     props: {
@@ -40,7 +40,7 @@ export default {
             pagination: {
                 page: 1,
                 limit: 20,
-                total: 0,
+                total: 0
             }
         }
     },
@@ -75,7 +75,7 @@ export default {
             this.getAll()
         }
     }
-    
+
 }
 </script>
 

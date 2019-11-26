@@ -7,7 +7,7 @@
 <script>
 import ProductList from '@/components/ProductList'
 export default {
-  name: 'home',
+  name: 'Home',
   components: {
     ProductList
   }
