@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using DataCore.Services.Abstract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WebApi.Models;
 
 namespace WebUiAdmin.Controllers.Api
 {
@@ -21,20 +23,31 @@ namespace WebUiAdmin.Controllers.Api
             _categoryService = categoryService;
         }
 
+        /// <summary>
+        /// Получить все категории
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetAll")]
-        public IActionResult GetAll()
+        [ProducesResponseType(typeof(ListRespone<Lookup>), 200)]
+        public async Task<IActionResult> GetAll()
         {
             var all = _categoryService.GetAllAsNotracking();
 
-            var res = all.Select(x => new
+            var res = await all.Select(x => new Lookup()
             {
-                x.Id,                
-                x.Title,
-                x.SortOrder
-            }).OrderBy(x => x.SortOrder).ToList();
+                Id = x.Id,
+                Title = x.Title,
+            }).ToListAsync();
 
-            return Ok(res);
+            var listResponse = new ListRespone<Lookup>() 
+            {
+                Data = res,
+                Total = res.Count
+            };
+
+
+            return Ok(listResponse);
         }
     }
 }

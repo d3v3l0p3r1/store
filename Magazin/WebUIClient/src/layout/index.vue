@@ -1,14 +1,16 @@
 <template>        
   <div>
-    <NavBar class="site-header"/>
-    <AppMain />    
+    <Header/>
+    <NavBar/>
+    <AppMain />
+    <Footer />
   </div>
 </template>
 
 <script>
-import { NavBar, AppMain } from './components'
+import { NavBar, AppMain, Footer, Header } from './components'
 export default {
     name: 'Layout',
-    components: { NavBar, AppMain }
+    components: { NavBar, AppMain, Footer, Header}
 }
 </script>

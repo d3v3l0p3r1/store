@@ -1,13 +1,10 @@
 <template>    
     <b-navbar class="main-menu" toggleable="lg" type="dark">
-        <b-navbar-brand href="/">
-        </b-navbar-brand>
-
         <b-navbar-toggle target="nav-collapse">          
         </b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
-            <b-navbar-nav>
+            <b-navbar-nav align="left" class="main-nav">
                 <b-nav-item href="/">Главная</b-nav-item>
                 <b-nav-item href="/products">Продукция</b-nav-item>
                 <b-nav-item href="/news">Новости</b-nav-item>
@@ -37,4 +34,9 @@ export default {
     :hover.main-menu > li {
         background-color: #344433;
     }
+
+.main-nav {
+    width: 100%;
+    padding-left: 20%;
+}
 </style>
