@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using DataCore.Services.Abstract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WebApi.Models;
+using WebApi.Models.Api.Product;
 
 namespace WebUiAdmin.Controllers.Api
 {
@@ -18,38 +21,55 @@ namespace WebUiAdmin.Controllers.Api
 
         private readonly IProductService _productService;
 
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="productService"></param>
         public ProductController(IProductService productService)
         {
             _productService = productService;
         }
 
+        /// <summary>
+        /// Get all products
+        /// </summary>
+        /// <param name="take"></param>
+        /// <param name="page"></param>
+        /// <param name="catID"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetAll")]
-        public IActionResult GetAll(int take = 20, int page = 1, int? catID = null)
+        [ProducesResponseType(typeof(ListRespone<ProductDto>), 200)]
+        public async Task<IActionResult> GetAll(int take = 20, int page = 1, int? catID = null)
         {
             var skip = (page - 1) * take;
-            var all = _productService.GetAllAsNotracking().Skip(skip).Take(take); 
+            var all = _productService.GetAllAsNotracking();
 
             if(catID != null)
             {
                 all = all.Where(x => x.CategoryId == catID);
             }
 
-            var url = $"{Request.Scheme}://{Request.Host}/File/GetFile/";
+            var total = await all.CountAsync();
 
-            var res = all.Select(x => new
+            all = all.Skip(skip).Take(take);
+
+            var res = all.Select(x => new ProductDto
             {
-                x.Id,
-                Price = -100,
-                x.Description,
-                x.Title,
-                x.KindId,
-                x.CategoryId,
-                KindTitle = x.Kind.Title,
-                File = x.FileID != null ? url + x.FileID : url + 1
+                Id = x.Id,
+                Description = x.Description,
+                Title = x.Title,
+                Kind = x.Kind.Title,
+                FileId = x.FileID
             });
 
-            return Ok(res);
+            var listResponse = new ListRespone<ProductDto>() 
+            {
+                Data = await res.ToListAsync(),
+                Total = total
+            };
+
+            return Ok(listResponse);
         }
 
 

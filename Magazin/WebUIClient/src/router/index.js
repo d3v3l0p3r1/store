@@ -30,7 +30,32 @@ const routes = [
         meta: { title: 'О нас', icon: '' }
       }
     ]
+  },
+  {
+    path: '/products',
+    name: 'products',
+    component: Layout,
+    children: [
+      {
+        path: '/products',
+        component: () => import('@/pages/products/index'),
+        meta: { title: 'Продукция', icon: '' }
+      }
+    ]
+  },
+  {
+    path: '/news',
+    name: 'news',
+    component: Layout,
+    children: [
+      {
+        path: '/news',
+        component: () => import('@/pages/news/index'),
+        meta: { title: 'Новости', icon: '' }
+      }
+    ]
   }
+
 ]
 
 const router = new VueRouter({

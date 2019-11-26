@@ -9,3 +9,10 @@ export default {
   name: 'App'
 }
 </script>
+
+<style lang="scss" scoped>
+#app {
+  min-height: 100%;
+}
+
+</style>

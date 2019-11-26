@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
@@ -43,12 +42,7 @@ service.interceptors.response.use(
 
         // if the custom code is not 20000, it is judged as an error.
         if (httpStatus !== 200) {
-            Message({
-                message: res || 'Error',
-                type: 'error',
-                duration: 5 * 1000
-            })
-
+           // Todo throw error
             // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
             if (res.code === 500 || res.code === 502 || res.code === 504) {
                 // ToDo:  fix error
