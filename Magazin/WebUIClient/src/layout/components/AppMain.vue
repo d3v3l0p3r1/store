@@ -1,6 +1,8 @@
 <template>
-  <v-content>
-        <router-view />
+  <v-content>    
+    <v-container class="pa-12" fluid>
+      <router-view />
+    </v-container>    
   </v-content>
 </template>
 

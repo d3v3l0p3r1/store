@@ -1,19 +1,38 @@
 <template>
-  <v-container fluid grid-list-xl>
-    <v-layout wrap justify-space-around>
-    <v-flex v-for="p in products" :key="p.id">
-      <v-card width="240px">
-        <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title>{{p.title}}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-img :src="getFileUrl(p.fileId)" :width="140" :height="140" :left="true" />
-        <v-card-text>{{ p.description }}</v-card-text>
-      </v-card>
-    </v-flex>
-    <v-pagination v-if="pagination.total > pagination.limit" v-model="pagination.page" :per-page="pagination.limit" :total-rows="pagination.total" />
-    </v-layout>
+  <v-container class="px-12">
+    <v-row no-gutters>
+      <v-col sm="2">
+
+        <v-container class="px-12">
+          <v-list-item-group>
+            <v-list-item v-for="c in categories" :key="c.id" v-on:click="handleCategoryClick(c)">
+              <v-list-item-content>{{c.title}}</v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </v-container>
+      </v-col>
+
+      <v-col sm="10">
+
+        <v-container fluid grid-list-xl>
+          <v-layout wrap justify-space-around>
+          <v-flex v-for="p in products" :key="p.id">
+            <v-card width="240px">
+              <v-list-item>
+                <v-list-item-content>
+                  <v-list-item-title>{{p.title}}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-img :src="getFileUrl(p.fileId)" :width="140" :height="140" :left="true" />
+              <v-card-text>{{ p.description }}</v-card-text>
+            </v-card>
+          </v-flex>
+          <v-pagination v-if="pagination.total > pagination.limit" v-model="pagination.page" :per-page="pagination.limit" :length="pagination.total" />
+          </v-layout>
+        </v-container>
+
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -34,7 +53,7 @@ export default {
             selectedCategory: null,
             pagination: {
                 page: 1,
-                limit: 20,
+                limit: 10,
                 total: 0
             }
         }
