@@ -1,25 +1,20 @@
 <template>
-  <div fluid>
-    <div class="row h-100">
-      <div class="col-md-2">
-        <b-nav vertical>
-          <b-nav-item v-for="c in categories" :key="c.id" @click="handleCategoryClick(c)">
-            {{ c.title }}
-          </b-nav-item>
-        </b-nav>
-      </div>
-      <div class="col-md-10">
-        <b-card-group deck class="product-grid h-100">
-          <b-card v-for="p in products" :key="p.id">
-            <b-card-title :title="p.title" />
-            <b-card-img :src="getFileUrl(p.fileId)" :width="140" :height="140" :left="true" />
-            <b-card-text>{{ p.description }}</b-card-text>
-          </b-card>
-        </b-card-group>
-        <b-pagination v-if="pagination.total > pagination.limit" v-model="pagination.page" :per-page="pagination.limit" :total-rows="pagination.total" />
-      </div>
-    </div>
-  </div>
+  <v-container fluid grid-list-xl>
+    <v-layout wrap justify-space-around>
+    <v-flex v-for="p in products" :key="p.id">
+      <v-card width="240px">
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>{{p.title}}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-img :src="getFileUrl(p.fileId)" :width="140" :height="140" :left="true" />
+        <v-card-text>{{ p.description }}</v-card-text>
+      </v-card>
+    </v-flex>
+    <v-pagination v-if="pagination.total > pagination.limit" v-model="pagination.page" :per-page="pagination.limit" :total-rows="pagination.total" />
+    </v-layout>
+  </v-container>
 </template>
 
 <script>

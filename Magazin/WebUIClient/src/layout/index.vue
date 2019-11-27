@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <NavBar />
+  <v-app>    
+    <NavBar />    
     <AppMain />
     <Footer />
   </v-app>

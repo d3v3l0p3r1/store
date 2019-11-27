@@ -1,14 +1,14 @@
 <template>
 <div>
-  <v-app-bar app class="main-menu" extended>
+  <v-app-bar extended class="main-menu" app color="#560082" height="240px">
     <v-spacer />
     <template v-slot:extension>
-    <v-toolbar-items >
-      <v-btn flat to="/">Главная</v-btn>
-      <v-btn to="/products">Продукция</v-btn>
-      <v-btn to="/news">Новости</v-btn>
-      <v-btn to="/about">О нас</v-btn>
-    </v-toolbar-items>
+    <v-tabs centered dark class="main-menu--tab" background-color="#002e4f">
+      <v-tab to="/">Главная</v-tab>
+      <v-tab to="/products">Продукция</v-tab>
+      <v-tab to="/news">Новости</v-tab>
+      <v-tab to="/about">О нас</v-tab>
+    </v-tabs>
     </template>
   </v-app-bar>
 </div>
@@ -25,17 +25,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .main-menu {
-
-    color: #fff;
+  background-color: #560082;
 }
-    :hover.main-menu > li {
-        background-color: #344433;
-    }
 
-.main-nav {
-    width: 100%;
-    padding-left: 20%;
+.main-menu--tab {
+  background-color: #002e4f !important;
 }
 </style>
