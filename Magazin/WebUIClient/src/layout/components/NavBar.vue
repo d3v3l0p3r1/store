@@ -1,16 +1,17 @@
 <template>
-  <b-navbar class="main-menu" toggleable="lg" type="dark">
-    <b-navbar-toggle target="nav-collapse" />
-
-    <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav align="left" class="main-nav">
-        <b-nav-item href="/">Главная</b-nav-item>
-        <b-nav-item href="/products">Продукция</b-nav-item>
-        <b-nav-item href="/news">Новости</b-nav-item>
-        <b-nav-item href="/about">О нас</b-nav-item>
-      </b-navbar-nav>
-    </b-collapse>
-  </b-navbar>
+<div>
+  <v-app-bar app class="main-menu" extended>
+    <v-spacer />
+    <template v-slot:extension>
+    <v-toolbar-items >
+      <v-btn flat to="/">Главная</v-btn>
+      <v-btn to="/products">Продукция</v-btn>
+      <v-btn to="/news">Новости</v-btn>
+      <v-btn to="/about">О нас</v-btn>
+    </v-toolbar-items>
+    </template>
+  </v-app-bar>
+</div>
 </template>
 
 <script>

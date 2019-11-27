@@ -1,8 +1,8 @@
 <template>
-  <footer class="footer">
+  <v-footer class="footer" app>
     <h1>Footer</h1>
     <span>footer content here</span>
-  </footer>
+  </v-footer>
 </template>
 
 <script>

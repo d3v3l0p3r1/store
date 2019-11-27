@@ -1,20 +1,8 @@
 <template>
   <v-app>
-    <v-navigation-drawer app>
-      <Header />
-    </v-navigation-drawer>
-
-    <v-app-bar app>
-      <NavBar />
-    </v-app-bar>
-
-    <v-content>
-      <AppMain />
-    </v-content>
-
-    <v-footer app>
-      <Footer />
-    </v-footer>
+    <NavBar />
+    <AppMain />
+    <Footer />
   </v-app>
 </template>
 

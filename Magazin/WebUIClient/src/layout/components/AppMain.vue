@@ -1,18 +1,9 @@
 <template>
-  <div class="main-content">
-    <div class="row">
-      <div class="col-md-2" />
-      <div class="col-md-8">
+  <v-content class="main-content">
         <router-view />
-      </div>
-      <div class="col-md-2" />
-    </div>
-  </div>
+  </v-content>
 </template>
 
 <style lang="scss" scoped>
-.main-content {
-    padding-top: 2%;
-    height: 750px;
-}
+
 </style>

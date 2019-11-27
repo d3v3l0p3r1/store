@@ -45,7 +45,7 @@ namespace WebUiAdmin.Controllers.Api
             var skip = (page - 1) * take;
             var all = _productService.GetAllAsNotracking();
 
-            if(catID != null)
+            if (catID != null)
             {
                 all = all.Where(x => x.CategoryId == catID);
             }
@@ -63,7 +63,7 @@ namespace WebUiAdmin.Controllers.Api
                 FileId = x.FileID
             });
 
-            var listResponse = new ListRespone<ProductDto>() 
+            var listResponse = new ListRespone<ProductDto>()
             {
                 Data = await res.ToListAsync(),
                 Total = total
