@@ -1,8 +1,13 @@
 import request from '@/utils/request'
 
-export function getAll(page, limit) {
+export function getAll(id) {
+    var url = '/Category/GetAll'
+    if (id != null) {
+        url += '?parentId=' + id
+    }
+
     return request({
-        url: '/Category/GetAll?page=' + page + '&take=' + limit,
+        url: url,
         method: 'get'
     })
 }

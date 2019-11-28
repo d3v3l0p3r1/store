@@ -189,11 +189,19 @@ namespace WebApi.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Hidden = table.Column<bool>(nullable: false),
                     Title = table.Column<string>(nullable: true),
-                    SortOrder = table.Column<decimal>(nullable: false)
+                    SortOrder = table.Column<decimal>(nullable: false),
+                    ParentId = table.Column<long>(nullable: true),
+                    Mask = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductCategories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductCategories_ProductCategories_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "ProductCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -317,38 +325,6 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "IncomingDocuments",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Hidden = table.Column<bool>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false),
-                    ProcessDate = table.Column<DateTime>(nullable: true),
-                    DocumentStatus = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    AuthorId = table.Column<long>(nullable: false),
-                    SenderId = table.Column<long>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_IncomingDocuments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_IncomingDocuments_AspNetUsers_AuthorId",
-                        column: x => x.AuthorId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_IncomingDocuments_AspNetUsers_SenderId",
-                        column: x => x.SenderId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -392,7 +368,7 @@ namespace WebApi.Migrations
                     Title = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     AuthorId = table.Column<long>(nullable: false),
-                    RecipientId = table.Column<long>(nullable: false)
+                    OutComingDocumentType = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -400,12 +376,6 @@ namespace WebApi.Migrations
                     table.ForeignKey(
                         name: "FK_OutComingDocument_AspNetUsers_AuthorId",
                         column: x => x.AuthorId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OutComingDocument_AspNetUsers_RecipientId",
-                        column: x => x.RecipientId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -598,6 +568,28 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Brands",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Hidden = table.Column<bool>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    FileId = table.Column<long>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Brands", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Brands_Files_FileId",
+                        column: x => x.FileId,
+                        principalTable: "Files",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Contractors",
                 columns: table => new
                 {
@@ -699,11 +691,18 @@ namespace WebApi.Migrations
                     Description = table.Column<string>(nullable: true),
                     FileID = table.Column<long>(nullable: true),
                     CategoryId = table.Column<long>(nullable: false),
-                    KindId = table.Column<long>(nullable: true)
+                    KindId = table.Column<long>(nullable: true),
+                    BrandId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_Brands_BrandId",
+                        column: x => x.BrandId,
+                        principalTable: "Brands",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Products_ProductCategories_CategoryId",
                         column: x => x.CategoryId,
@@ -725,6 +724,38 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "IncomingDocuments",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Hidden = table.Column<bool>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    ProcessDate = table.Column<DateTime>(nullable: true),
+                    DocumentStatus = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    AuthorId = table.Column<long>(nullable: false),
+                    ShipperId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IncomingDocuments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_IncomingDocuments_AspNetUsers_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_IncomingDocuments_Contractors_ShipperId",
+                        column: x => x.ShipperId,
+                        principalTable: "Contractors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Balance",
                 columns: table => new
                 {
@@ -739,34 +770,6 @@ namespace WebApi.Migrations
                     table.PrimaryKey("PK_Balance", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Balance_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "IncomingDocumentEntry",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Hidden = table.Column<bool>(nullable: false),
-                    DocumentId = table.Column<long>(nullable: false),
-                    ProductId = table.Column<long>(nullable: false),
-                    Count = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_IncomingDocumentEntry", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_IncomingDocumentEntry_IncomingDocuments_DocumentId",
-                        column: x => x.DocumentId,
-                        principalTable: "IncomingDocuments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_IncomingDocumentEntry_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -881,6 +884,35 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "IncomingDocumentEntry",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Hidden = table.Column<bool>(nullable: false),
+                    DocumentId = table.Column<long>(nullable: false),
+                    ProductId = table.Column<long>(nullable: false),
+                    Count = table.Column<int>(nullable: false),
+                    Price = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IncomingDocumentEntry", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_IncomingDocumentEntry_IncomingDocuments_DocumentId",
+                        column: x => x.DocumentId,
+                        principalTable: "IncomingDocuments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_IncomingDocumentEntry_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BalanceEntry",
                 columns: table => new
                 {
@@ -974,6 +1006,11 @@ namespace WebApi.Migrations
                 column: "OutcomingDocumentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Brands_FileId",
+                table: "Brands",
+                column: "FileId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ClientClaim_ClientId",
                 table: "ClientClaim",
                 column: "ClientId");
@@ -1060,9 +1097,9 @@ namespace WebApi.Migrations
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IncomingDocuments_SenderId",
+                name: "IX_IncomingDocuments_ShipperId",
                 table: "IncomingDocuments",
-                column: "SenderId");
+                column: "ShipperId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_News_ImageId",
@@ -1090,11 +1127,6 @@ namespace WebApi.Migrations
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OutComingDocument_RecipientId",
-                table: "OutComingDocument",
-                column: "RecipientId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_OutComingDocumentEntry_DocumentId",
                 table: "OutComingDocumentEntry",
                 column: "DocumentId");
@@ -1115,6 +1147,11 @@ namespace WebApi.Migrations
                 columns: new[] { "SubjectId", "ClientId", "Type" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductCategories_ParentId",
+                table: "ProductCategories",
+                column: "ParentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductImages_FileId",
                 table: "ProductImages",
                 column: "FileId");
@@ -1128,6 +1165,11 @@ namespace WebApi.Migrations
                 name: "IX_ProductPrices_ProductId",
                 table: "ProductPrices",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_BrandId",
+                table: "Products",
+                column: "BrandId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
@@ -1193,9 +1235,6 @@ namespace WebApi.Migrations
                 name: "ClientSecret");
 
             migrationBuilder.DropTable(
-                name: "Contractors");
-
-            migrationBuilder.DropTable(
                 name: "DeviceCodes");
 
             migrationBuilder.DropTable(
@@ -1250,16 +1289,22 @@ namespace WebApi.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
+                name: "Contractors");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Brands");
 
             migrationBuilder.DropTable(
                 name: "ProductCategories");
 
             migrationBuilder.DropTable(
-                name: "Files");
+                name: "ProductKinds");
 
             migrationBuilder.DropTable(
-                name: "ProductKinds");
+                name: "Files");
         }
     }
 }

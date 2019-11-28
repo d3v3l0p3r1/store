@@ -32,6 +32,9 @@ namespace DataCore.Entities
 
         public List<ProductImage> Images { get; set; }
 
+        public long BrandId { get; set; }
+        public Brand Brand { get; set; }
+
     }
 
     public class ProductImage : BaseEntity

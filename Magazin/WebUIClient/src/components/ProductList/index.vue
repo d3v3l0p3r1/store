@@ -15,15 +15,24 @@
       <v-col sm="10">
 
         <v-container fluid grid-list-xl>
-          <v-layout wrap justify-space-around>
-          <v-flex v-for="p in products" :key="p.id">
-            <v-card width="240px">
+          <v-layout wrap>
+          <v-flex v-for="p in products" :key="p.id" xl4>
+            <v-card class="px-2">
               <v-list-item>
                 <v-list-item-content>
                   <v-list-item-title>{{p.title}}</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-img :src="getFileUrl(p.fileId)" :width="140" :height="140" :left="true" />
+              <v-img :aspect-ratio="4/4" :src="getFileUrl(p.fileId)" :width="140" :height="140" :left="true" class="px-12">
+                 <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center" >
+                      <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                    </v-row>
+                </template>
+              </v-img>
               <v-card-text>{{ p.description }}</v-card-text>
             </v-card>
           </v-flex>

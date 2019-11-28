@@ -12,9 +12,13 @@ export function getProducts(category, page, limit) {
     })
 }
 
-export function getCategories() {
+export function getCategories(id) {
+    var url = 'Category/getall'
+    if (id != null) {
+        url += '?parentId=' + id
+    }
     return request({
-        url: 'Category/getall',
+        url: url,
         method: 'GET'
     })
 }

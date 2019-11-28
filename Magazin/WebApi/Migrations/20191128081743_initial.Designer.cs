@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20191121083339_initial")]
+    [Migration("20191128081743_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -219,6 +219,32 @@ namespace WebApi.Migrations
                     b.ToTable("BalanceEntry");
                 });
 
+            modelBuilder.Entity("DataCore.Entities.Brand", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<long?>("FileId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hidden")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FileId");
+
+                    b.ToTable("Brands");
+                });
+
             modelBuilder.Entity("DataCore.Entities.Contractor", b =>
                 {
                     b.Property<long>("Id")
@@ -279,7 +305,7 @@ namespace WebApi.Migrations
                     b.Property<DateTime?>("ProcessDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<long?>("SenderId")
+                    b.Property<long>("ShipperId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Title")
@@ -289,7 +315,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.HasIndex("SenderId");
+                    b.HasIndex("ShipperId");
 
                     b.ToTable("IncomingDocuments");
                 });
@@ -309,6 +335,9 @@ namespace WebApi.Migrations
 
                     b.Property<bool>("Hidden")
                         .HasColumnType("boolean");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
 
                     b.Property<long>("ProductId")
                         .HasColumnType("bigint");
@@ -344,11 +373,11 @@ namespace WebApi.Migrations
                     b.Property<bool>("Hidden")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("OutComingDocumentType")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("ProcessDate")
                         .HasColumnType("timestamp without time zone");
-
-                    b.Property<long>("RecipientId")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("Title")
                         .HasColumnType("text");
@@ -356,8 +385,6 @@ namespace WebApi.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
-
-                    b.HasIndex("RecipientId");
 
                     b.ToTable("OutComingDocument");
                 });
@@ -519,6 +546,9 @@ namespace WebApi.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<long>("BrandId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("CategoryId")
                         .HasColumnType("bigint");
 
@@ -541,6 +571,8 @@ namespace WebApi.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BrandId");
+
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("FileID");
@@ -560,6 +592,12 @@ namespace WebApi.Migrations
                     b.Property<bool>("Hidden")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("Mask")
+                        .HasColumnType("text");
+
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
                     b.Property<decimal>("SortOrder")
                         .HasColumnType("numeric");
 
@@ -567,6 +605,8 @@ namespace WebApi.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
 
                     b.ToTable("ProductCategories");
                 });
@@ -1271,6 +1311,13 @@ namespace WebApi.Migrations
                         .HasForeignKey("OutcomingDocumentId");
                 });
 
+            modelBuilder.Entity("DataCore.Entities.Brand", b =>
+                {
+                    b.HasOne("BaseCore.Entities.FileData", "File")
+                        .WithMany()
+                        .HasForeignKey("FileId");
+                });
+
             modelBuilder.Entity("DataCore.Entities.Contractor", b =>
                 {
                     b.HasOne("BaseCore.Entities.FileData", "Image")
@@ -1288,9 +1335,11 @@ namespace WebApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BaseCore.Security.Entities.User", "Sender")
+                    b.HasOne("DataCore.Entities.Contractor", "Shipper")
                         .WithMany()
-                        .HasForeignKey("SenderId");
+                        .HasForeignKey("ShipperId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DataCore.Entities.Documents.IncomingDocumentEntry", b =>
@@ -1313,12 +1362,6 @@ namespace WebApi.Migrations
                     b.HasOne("BaseCore.Security.Entities.User", "Author")
                         .WithMany()
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BaseCore.Security.Entities.User", "Recipient")
-                        .WithMany()
-                        .HasForeignKey("RecipientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1367,6 +1410,12 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("DataCore.Entities.Product", b =>
                 {
+                    b.HasOne("DataCore.Entities.Brand", "Brand")
+                        .WithMany()
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DataCore.Entities.ProductCategory", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
@@ -1380,6 +1429,13 @@ namespace WebApi.Migrations
                     b.HasOne("DataCore.Entities.ProductKind", "Kind")
                         .WithMany()
                         .HasForeignKey("KindId");
+                });
+
+            modelBuilder.Entity("DataCore.Entities.ProductCategory", b =>
+                {
+                    b.HasOne("DataCore.Entities.ProductCategory", "Parent")
+                        .WithMany("Childs")
+                        .HasForeignKey("ParentId");
                 });
 
             modelBuilder.Entity("DataCore.Entities.ProductImage", b =>

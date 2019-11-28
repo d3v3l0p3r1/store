@@ -8,82 +8,62 @@
         <span>Изменить</span>
       </el-button>
     </div>
-    <el-table
+    <el-tree
       v-loading="listLoading"
-      :data="entities"
-      border
-      fit
       highlight-current-row
-      row-key="id"
+      lazy
+      :load="load"
       style="width: 100%;"
       empty-text="Нет данных"
+      node-key="id"
+      :props="treeProps"
       @current-change="handleCurrentChange"
     >
-
-      <el-table-column label="Идентификатор">
-        <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column label="Название">
-        <template slot-scope="scope">
-          <span>{{ scope.row.title }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column label="Операции">
-        <template slot-scope="scope">
+      <span slot-scope="{ node, data }" class="custom-tree-node">
+        <span>{{ node.label }}</span>
+        <span>
+          <el-tooltip content="Добавить" placement="top-start" :open-delay="500">
+            <el-button type="success" size="mini" icon="el-icon-circle-plus-outline" circle @click="handleCreate(data, node)" />
+          </el-tooltip>
 
           <el-tooltip content="Редактировать" placement="top-start" :open-delay="500">
-            <el-button type="primary" icon="el-icon-edit" circle @click="handleEditClick(scope.row)" />
+            <el-button type="primary" size="mini" icon="el-icon-edit" circle @click="handleEditClick(data, node)" />
           </el-tooltip>
 
           <el-tooltip content="Удалить" placement="top-start" :open-delay="500">
-            <el-button type="danger" icon="el-icon-delete" circle @click="handleRemoveClick(scope.row)" />
+            <el-button type="danger" size="mini" icon="el-icon-delete" circle @click="handleRemoveClick(data, node)" />
           </el-tooltip>
+        </span>
+      </span>
 
-        </template>
-      </el-table-column>
-
-    </el-table>
-    <pagination v-show="pagination.total>0" :total="pagination.total" :page.sync="pagination.page" :limit.sync="pagination.limit" @pagination="loadEntities" />
-    <EditDialog :dialog-visible.sync="dialogVisible" :entity-id.sync="selectedId" append-to-body @onEditDialogClose="onEditDialogClose" />
+    </el-tree>
+    <EditDialog :dialog-visible.sync="dialogVisible" :entity-id.sync="selectedId" append-to-body :entity-parent-id.sync="parentId" @onEditDialogClose="onEditDialogClose" />
   </div>
 </template>
 
 <script>
-import Pagination from '@/components/Pagination'
 import { getAll, remove } from '@/api/categories'
 import EditDialog from '@/views/categories/edit'
 
 export default {
     name: 'Users',
-    components: { Pagination, EditDialog },
+    components: { EditDialog },
     data() {
         return {
             entities: null,
             listLoading: true,
             dialogVisible: false,
             selectedId: 0,
-            pagination: {
-                total: 0,
-                page: 1,
-                limit: 10
+            parentId: 0,
+            treeProps: {
+              children: 'childs',
+              label: 'title'
             }
         }
     },
     created() {
-      this.loadEntities()
     },
     methods: {
-        async loadEntities() {
-            this.listLoading = true
-            const res = await getAll(this.pagination.page, this.pagination.limit)
-            this.entities = res.data
-            this.pagination.total = res.total
-            this.listLoading = false
-        },
         handleEdit() {
           if (this.selectedId !== 0) {
             this.dialogVisible = true
@@ -99,20 +79,50 @@ export default {
         onEditDialogClose() {
           this.dialogVisible = false
           this.selectedId = 0
-          this.loadEntities()
+          this.$nextTick(() => {})
         },
-        handleEditClick(row) {
+        handleEditClick(row, node) {
           this.handleCurrentChange(row)
           this.dialogVisible = true
+          this.tree.selectedNode = node
         },
-        handleCreate() {
+        handleCreate(data) {
+          if (data != null) {
+            this.parentId = data.id
+          } else {
+            this.parentId = null
+          }
+
           this.selectedId = 0
           this.dialogVisible = true
         },
         async handleRemoveClick(row) {
           await remove(row.id)
-          this.loadEntities()
+          this.load()
+        },
+        async load(node, resolve) {
+          if (node.data) {
+            const res = await getAll(node.data.id)
+            resolve(res.data)
+            this.listLoading = false
+          } else {
+            const res = await getAll()
+            resolve(res.data)
+            this.listLoading = false
+          }
         }
+
     }
 }
 </script>
+
+<style scoped>
+.custom-tree-node {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 24px;
+
+}
+</style>

@@ -29,5 +29,10 @@
         /// Количество
         /// </summary>
         public int Count { get; set; }
+        
+        /// <summary>
+        /// Цена
+        /// </summary>
+        public decimal Price { get; set; }
     }
 }

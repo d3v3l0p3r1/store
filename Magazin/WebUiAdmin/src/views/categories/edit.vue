@@ -13,6 +13,10 @@
       <el-form-item label="Имя">
         <el-input v-model="entity.title" />
       </el-form-item>
+
+      <el-form-item hidden>
+        <el-input v-model="entity.parentId" />
+      </el-form-item>
     </el-form>
 
     <footer slot="footer" class="dialog-footer">
@@ -39,13 +43,19 @@ export default {
       dialogVisible: {
         required: true,
         type: Boolean
+      },
+      entityParentId: {
+        required: false,
+        type: Number,
+        default: null
       }
   },
   data() {
     return {
       entity: {
         id: 0,
-        title: ''
+        title: '',
+        parentId: this.entityParentId
       }
     }
   },
@@ -66,7 +76,8 @@ export default {
     reset() {
       this.entity = {
         id: 0,
-        title: ''
+        title: '',
+        parentId: this.entityParentId
       }
     },
     async onSubmit() {

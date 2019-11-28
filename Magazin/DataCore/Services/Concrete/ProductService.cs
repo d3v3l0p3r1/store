@@ -85,7 +85,7 @@ namespace DataCore.Services.Concrete
 
         public override Task<Product> GetAsync(long id)
         {
-            return _repository.GetDbSet()
+            return _repository.GetAll()
                 .Include(x => x.Category)
                 .Include(x => x.File)
                 .Include(x => x.Kind)
