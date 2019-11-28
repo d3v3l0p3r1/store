@@ -1,6 +1,6 @@
 <template>
   <el-container class="app-container">
-    <div width="330px" style="border 1px solid">
+    <el-aside class="product-categories--tree">
       <el-tree
         v-loading="listLoading"
         :data="categories"
@@ -16,7 +16,7 @@
           <span>{{ node.label }}</span>
         </span>
       </el-tree>
-    </div>
+    </el-aside>
     <el-container>
       <el-header class="filter-container">
         <el-button class="filter-item el-button el-button--success" @click="handleCreateProduct">
@@ -90,8 +90,11 @@
           </el-table-column>
 
         </el-table>
-        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getProducts" />
+
       </el-main>
+      <el-footer>
+        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getProducts" />
+      </el-footer>
       <ProductEdit :dialog-visible.sync="dialog.visible" :entity-id.sync="selectedProductId" @onProductDialogClose="onProductDialogClose" />
     </el-container>
   </el-container>
@@ -198,3 +201,11 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.product-categories--tree {
+  background-color: transparent;
+  padding: 0;
+  height: 100%;
+}
+</style>

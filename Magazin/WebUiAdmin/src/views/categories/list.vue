@@ -12,12 +12,13 @@
       v-loading="listLoading"
       highlight-current-row
       lazy
-      :load="load"
+      :data="entities"
       style="width: 100%;"
       empty-text="Нет данных"
       node-key="id"
       :props="treeProps"
       @current-change="handleCurrentChange"
+      @node-expand="onNodeExpand"
     >
       <span slot-scope="{ node, data }" class="custom-tree-node">
         <span>{{ node.label }}</span>
@@ -62,6 +63,7 @@ export default {
         }
     },
     created() {
+      this.loadEntites()
     },
     methods: {
         handleEdit() {
@@ -79,7 +81,7 @@ export default {
         onEditDialogClose() {
           this.dialogVisible = false
           this.selectedId = 0
-          this.$nextTick(() => {})
+          this.loadEntites()
         },
         handleEditClick(row, node) {
           this.handleCurrentChange(row)
@@ -98,18 +100,22 @@ export default {
         },
         async handleRemoveClick(row) {
           await remove(row.id)
-          this.load()
+          this.loadEntites()
         },
-        async load(node, resolve) {
-          if (node.data) {
-            const res = await getAll(node.data.id)
-            resolve(res.data)
-            this.listLoading = false
-          } else {
-            const res = await getAll()
-            resolve(res.data)
-            this.listLoading = false
-          }
+        async loadEntites() {
+          this.listLoading = true
+          const res = await getAll()
+          this.entities = res.data
+          this.listLoading = false
+        },
+        onNodeExpand(data, node) {
+          this.getChild(data)
+        },
+        async getChild(node) {
+          this.listLoading = true
+          const res = await getAll(node.id)
+          node.childs = res.data
+          this.listLoading = false
         }
 
     }
