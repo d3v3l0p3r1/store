@@ -33,7 +33,7 @@
 import { create, get, update } from '@/api/categories'
 
 export default {
-    name: 'Edit',
+    name: 'EditCategory',
     props: {
       entityId: {
         required: false,
