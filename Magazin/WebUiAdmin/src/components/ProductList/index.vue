@@ -184,8 +184,7 @@ export default {
           this.categories = res.data
         },
         onNodeExpand(data, node) {
-          if(node.childNodes)
-            node.childNodes.splice(0, node.childNodes.length)
+          if (node.childNodes) { node.childNodes.splice(0, node.childNodes.length) }
           this.getChild(data)
         },
         async getChild(node) {
