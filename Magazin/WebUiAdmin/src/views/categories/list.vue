@@ -109,9 +109,14 @@ export default {
           this.listLoading = false
         },
         onNodeExpand(data, node) {
+          if(node.childNodes)
+            node.childNodes.splice(0, node.childNodes.length)
           this.getChild(data)
         },
         async getChild(node) {
+          if (node.childs) {
+            node.childs.splice(0, node.childs.length)
+          }
           this.listLoading = true
           const res = await getAll(node.id)
           node.childs = res.data

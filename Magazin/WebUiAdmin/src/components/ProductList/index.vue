@@ -184,19 +184,16 @@ export default {
           this.categories = res.data
         },
         onNodeExpand(data, node) {
+          if(node.childNodes)
+            node.childNodes.splice(0, node.childNodes.length)
           this.getChild(data)
         },
         async getChild(node) {
-          var data = []
-          if (node.id !== 0) {
-            const res = await getCategories(node.id)
-            data = res.data
-          } else {
-            const res = await getCategories()
-            data = res.data
+          if (node.childs) {
+            node.childs.splice(0, node.childs.length)
           }
-
-          node.childs = data
+          const res = await getCategories(node.id)
+          node.childs = res.data
         }
     }
 }
