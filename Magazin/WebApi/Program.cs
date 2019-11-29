@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace WebUiAdmin
@@ -36,17 +37,23 @@ namespace WebUiAdmin
                 .Build();
 
         private static async Task InitUsers(IWebHost host)
-      {
+        {
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
             var dataContext = services.GetService<DataContext>();
             var userManager = services.GetRequiredService<UserManager>();
             var roleManager = services.GetRequiredService<RoleManager>();
 
-            //await dataContext.Database.EnsureCreatedAsync();
             dataContext.Database.Migrate();
+
             await DbMigrationsConfiguration.InitializeAsync(userManager, roleManager);
-            DbMigrationsConfiguration.Seed(dataContext);
+
+            var config = services.GetService<IWebHostEnvironment>();
+
+            if (!config.IsProduction())
+            {
+                DbMigrationsConfiguration.Seed(dataContext);
+            }
         }
     }
 }

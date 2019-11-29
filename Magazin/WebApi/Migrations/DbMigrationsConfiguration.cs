@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BaseCore.Security.Entities;
 using BaseCore.Security.Services.Concrete;
+using Bogus;
 using DataCore.Entities;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Identity;
@@ -50,6 +51,55 @@ namespace DataCore.DAL
             {
                 WriteKind("ECO товары", dataContext);
             }
+
+            if (!dataContext.Brands.Any())
+            {
+                WriteBrands(dataContext);
+            }
+
+            if (!dataContext.Products.Any())
+            {
+                WriteProducts(dataContext);
+            }
+        }
+
+        private static void WriteBrands(DataContext dataContext)
+        {
+            var fake = new Faker(locale:"ru");
+
+            for (var i = 0; i < 100; i++)
+            {
+                var brand = new Brand()
+                {
+                    Title = fake.Company.CompanyName(),
+                    Description = fake.Lorem.Text()
+                };
+
+                dataContext.Brands.Add(brand);
+            }
+
+            dataContext.SaveChanges();
+        }
+
+        private static void WriteProducts(DataContext dataContext)
+        {
+            var fake = new Faker(locale: "ru");
+            var random = new Random();
+
+            for (var i = 0; i < 1000; i++)
+            {
+                var product = new Product()
+                {
+                    Title = fake.Commerce.ProductName(),
+                    BrandId = random.Next(1, 100),
+                    CategoryId = random.Next(1, 17),
+                    Description = fake.Lorem.Text()
+                };
+
+                dataContext.Add(product);
+            }
+
+            dataContext.SaveChanges();
         }
 
         private static ProductCategory WriteCategory(string name, decimal sortOrder, DataContext context)
@@ -63,7 +113,7 @@ namespace DataCore.DAL
             context.ProductCategories.Add(category);
             context.SaveChanges();
 
-            category.Mask = $"{category.Id};";
+            category.Mask = $";{category.Id};";
             context.ProductCategories.Update(category);
             context.SaveChanges();
 

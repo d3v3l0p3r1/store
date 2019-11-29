@@ -36,6 +36,11 @@ namespace BackendTest.Services.Concrete
             throw new NotImplementedException();
         }
 
+        public string GetImageNotFound()
+        {
+            throw new NotImplementedException();
+        }
+
         public IQueryable<FileData> GetQuery()
         {
             throw new NotImplementedException();

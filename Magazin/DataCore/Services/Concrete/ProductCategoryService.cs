@@ -23,11 +23,11 @@ namespace DataCore.Services.Concrete
             if (entity.ParentId != null)
             {
                 var parent = await GetAsync(entity.ParentId.Value);
-                entity.Mask = $"{parent.Mask}{entity.Id}";
+                entity.Mask = $"{parent.Mask}{entity.Id};";
             }
             else
             {
-                entity.Mask = $"{entity.Id};";
+                entity.Mask = $";{entity.Id};";
             }
 
             await base.UpdateAsync(entity);

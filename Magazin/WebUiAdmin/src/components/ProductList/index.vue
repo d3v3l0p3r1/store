@@ -18,13 +18,15 @@
       </el-tree>
     </el-aside>
     <el-container>
-      <el-header class="filter-container">
-        <el-button class="filter-item el-button el-button--success" @click="handleCreateProduct">
-          <span>Создать</span>
-        </el-button>
-        <el-button class="filter-item el-button el-button--warning" @click="handleEditProduct">
-          <span>Изменить</span>
-        </el-button>
+      <el-header class="filter-container" v-if="enableEdit"> 
+        <div>
+          <el-button class="filter-item el-button el-button--success" @click="handleCreateProduct">
+            <span>Создать</span>
+          </el-button>
+          <el-button class="filter-item el-button el-button--warning" @click="handleEditProduct">
+            <span>Изменить</span>
+          </el-button>
+        </div>
       </el-header>
       <el-main>
         <el-table
@@ -75,7 +77,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="Операции">
+          <el-table-column label="Операции" v-if="enableEdit">
             <template slot-scope="scope">
 
               <el-tooltip content="Редактировать" placement="top-start" :open-delay="500">
@@ -90,11 +92,8 @@
           </el-table-column>
 
         </el-table>
-
-      </el-main>
-      <el-footer>
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getProducts" />
-      </el-footer>
+      </el-main>
       <ProductEdit :dialog-visible.sync="dialog.visible" :entity-id.sync="selectedProductId" @onProductDialogClose="onProductDialogClose" />
     </el-container>
   </el-container>
@@ -109,6 +108,13 @@ import ProductEdit from '@/views/products/productEdit'
 export default {
     name: 'Products',
     components: { Pagination, ProductEdit },
+    props: {
+      enableEdit: {
+        required: false,
+        type: Boolean,
+        default: true
+      }
+    },
     data() {
         return {
             products: null,
@@ -124,7 +130,7 @@ export default {
             },
             listQuery: {
                 page: 1,
-                limit: 20
+                limit: 10
             },
             treeOptions: {
               label: 'title',
@@ -148,11 +154,16 @@ export default {
             this.total = res.total
             this.listLoading = false
         },
-        handelSelectCategory() {
+        handelSelectCategory(node) {
+          console.log(node)
+          if (node) {
+            this.selectedCategory = node
             this.getProducts()
+          }
         },
         handleSelectProduct(val) {
             this.selectedProduct = val
+            this.$emit('selectedProductChange', this.selectedProduct)
         },
         handleCreateProduct() {
             this.dialog.visible = true

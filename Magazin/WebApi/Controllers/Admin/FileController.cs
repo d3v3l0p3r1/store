@@ -108,7 +108,7 @@ namespace WebUiAdmin.Controllers
                 }
                 return File(path, "image/png");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogError(e, $"GetFileError: {id}");
                 return NotFound();
