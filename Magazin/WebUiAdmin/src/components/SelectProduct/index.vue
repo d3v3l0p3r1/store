@@ -8,7 +8,7 @@
     width="80%"
     append-to-body
   >
-    <ProductList @selectedProductChange="onSelectedProductChange" :enableEdit=false />
+    <ProductList :enable-edit="false" @selectedProductChange="onSelectedProductChange" />
 
     <footer slot="footer" class="dialog-footer">
       <el-button type="primary" @click="onSubmit">Выбрать</el-button>

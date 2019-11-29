@@ -18,7 +18,7 @@
       </el-tree>
     </el-aside>
     <el-container>
-      <el-header class="filter-container" v-if="enableEdit"> 
+      <el-header v-if="enableEdit" class="filter-container">
         <div>
           <el-button class="filter-item el-button el-button--success" @click="handleCreateProduct">
             <span>Создать</span>
@@ -77,7 +77,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="Операции" v-if="enableEdit">
+          <el-table-column v-if="enableEdit" label="Операции">
             <template slot-scope="scope">
 
               <el-tooltip content="Редактировать" placement="top-start" :open-delay="500">
