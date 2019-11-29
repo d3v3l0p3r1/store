@@ -76,7 +76,7 @@ export default {
         count: 0
       }
     }
-  },  
+  },
    watch: {
     dialogVisible: function(newVisible, oldVisible) {
       if (newVisible === true) {

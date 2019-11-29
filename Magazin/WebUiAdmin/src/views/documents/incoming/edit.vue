@@ -87,6 +87,15 @@ export default {
       }
     }
   },
+  computed: {
+    authorTitle: function() {
+      if (this.entity.shipper != null) {
+        return this.entity.shipper.name
+      } else {
+        return ''
+      }
+    }
+  },
    watch: {
     dialogVisible: function(newVisible, oldVisible) {
       if (newVisible === true) {
@@ -97,15 +106,6 @@ export default {
         }
       } else {
         this.reset()
-      }
-    }
-  },
-  computed: {
-    authorTitle: function() {
-      if (this.entity.shipper != null) {
-        return this.entity.shipper.name
-      } else {
-        return ''
       }
     }
   },
