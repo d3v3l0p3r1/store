@@ -21,6 +21,12 @@
             <el-input v-model="entity.description" />
           </el-form-item>
 
+          <el-form-item label="Отправитель">
+            <el-input v-model="authorTitle" placeholder="Выбирете Отправителя" readonly>
+              <el-button slot="append" icon="el-icon-search" @click="searchCompany" />
+            </el-input>
+          </el-form-item>
+
         </el-tab-pane>
 
         <el-tab-pane label="Позиции">
@@ -38,15 +44,18 @@
       <el-button @click="onCancel">Отмена</el-button>
     </footer>
 
+    <CompanySelect :dialog-visible.sync="serachCompanyVisible" @on-select="handleCompanySelect" />
+
   </el-dialog>
 </template>
 <script>
 import DocumentEntry from '@/components/DocumentEntry'
+import CompanySelect from '@/components/SelectCompany'
 import { create, get, update } from '@/api/incmoingDocuments'
 
 export default {
     name: 'Edit',
-    components: { DocumentEntry },
+    components: { DocumentEntry, CompanySelect },
     props: {
       entityId: {
         required: false,
@@ -67,9 +76,11 @@ export default {
         documentStatus: 0,
         title: '',
         description: '',
+        shipper: null,
+        shipperId: 0,
         entries: []
       },
-      nestedDialogVisible: false,
+      serachCompanyVisible: false,
       entry: {
         product: null,
         count: 0
@@ -89,6 +100,15 @@ export default {
       }
     }
   },
+  computed: {
+    authorTitle: function() {
+      if (this.entity.shipper != null) {
+        return this.entity.shipper.name
+      } else {
+        return ''
+      }
+    }
+  },
   methods: {
     reset() {
       this.entity = {
@@ -98,6 +118,8 @@ export default {
         documentStatus: 0,
         title: '',
         description: '',
+        shipper: null,
+        shipperId: 0,
         entries: []
       }
       this.entry = {
@@ -122,6 +144,14 @@ export default {
     async loadDocument() {
       var res = await get(this.entityId)
       this.entity = res
+    },
+    searchCompany() {
+      this.serachCompanyVisible = true
+    },
+    handleCompanySelect(val) {
+      this.entity.shipper = val
+      this.entity.shipperId = val.id
+      this.serachCompanyVisible = false
     }
   }
 }

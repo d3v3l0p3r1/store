@@ -21,12 +21,6 @@
             <el-input v-model="entity.description" />
           </el-form-item>
 
-          <el-form-item label="Получатель">
-            <el-input v-model="authorTitle" placeholder="Выбирете получателя" readonly>
-              <el-button slot="append" icon="el-icon-search" @click="searchCompany" />
-            </el-input>
-          </el-form-item>
-
         </el-tab-pane>
 
         <el-tab-pane label="Позиции">
@@ -44,18 +38,15 @@
       <el-button @click="onCancel">Отмена</el-button>
     </footer>
 
-    <CompanySelect :dialog-visible.sync="serachCompanyVisible" @on-select="handleCompanySelect" />
-
   </el-dialog>
 </template>
 <script>
 import DocumentEntry from '@/components/DocumentEntry'
-import CompanySelect from '@/components/SelectCompany'
 import { create, get, update } from '@/api/outcomingDocument'
 
 export default {
     name: 'Edit',
-    components: { DocumentEntry, CompanySelect },
+    components: { DocumentEntry },
     props: {
       entityId: {
         required: false,
@@ -78,27 +69,14 @@ export default {
         description: '',
         author: null,
         authorId: 0,
-        recipient: null,
-        recipientId: 0,
         entries: []
       },
-      nestedDialogVisible: false,
-      serachCompanyVisible: false,
       entry: {
         product: null,
         count: 0
       }
     }
-  },
-  computed: {
-    authorTitle: function() {
-      if (this.entity.recipient != null) {
-        return this.entity.recipient.name
-      } else {
-        return ''
-      }
-    }
-  },
+  },  
    watch: {
     dialogVisible: function(newVisible, oldVisible) {
       if (newVisible === true) {
@@ -149,14 +127,6 @@ export default {
     async loadDocument() {
       var res = await get(this.entityId)
       this.entity = res
-    },
-    searchCompany() {
-      this.serachCompanyVisible = true
-    },
-    handleCompanySelect(val) {
-      this.entity.recipient = val
-      this.entity.recipientId = val.id
-      this.serachCompanyVisible = false
     }
   }
 }

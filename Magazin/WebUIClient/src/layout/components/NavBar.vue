@@ -1,9 +1,8 @@
 <template>
 <div>
-  <v-app-bar extended class="main-menu" app color="#560082" height="240px">
-    <v-spacer />
+  <v-app-bar extended class="main-menu" app color="#560082" height="90px" hide-on-scroll>
     <template v-slot:extension>
-    <v-tabs centered dark class="main-menu--tab" background-color="#002e4f">
+    <v-tabs centered dark class="main-menu--tab" background-color="#002e4f" height="42px;" elevate-on-scroll>
       <v-tab to="/">Главная</v-tab>
       <v-tab to="/products">Продукция</v-tab>
       <v-tab to="/news">Новости</v-tab>
