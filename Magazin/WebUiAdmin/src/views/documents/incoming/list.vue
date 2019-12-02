@@ -58,7 +58,7 @@
 
       <el-table-column label="Сумма">
         <template slot-scope="scope">
-          <span>{{scope.row.total}}</span>
+          <span>{{ scope.row.total }}</span>
         </template>
       </el-table-column>
 
