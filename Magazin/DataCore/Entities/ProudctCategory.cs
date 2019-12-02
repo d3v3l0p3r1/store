@@ -19,5 +19,11 @@ namespace DataCore.Entities
         /// Маска категории
         /// </summary>
         public string Mask { get; set; }
+
+        /// <summary>
+        /// Имя маршрута
+        /// </summary>
+        public string RouteName { get; set; }
+
     }
 }

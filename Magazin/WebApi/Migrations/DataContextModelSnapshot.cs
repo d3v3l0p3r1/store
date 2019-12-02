@@ -599,6 +599,9 @@ namespace WebApi.Migrations
                     b.Property<long?>("ParentId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("RouteName")
+                        .HasColumnType("text");
+
                     b.Property<decimal>("SortOrder")
                         .HasColumnType("numeric");
 

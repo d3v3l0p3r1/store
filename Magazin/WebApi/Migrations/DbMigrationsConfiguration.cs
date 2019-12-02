@@ -23,28 +23,28 @@ namespace DataCore.DAL
             if (!dataContext.ProductCategories.Any())
             {
 
-                var makeup = WriteCategory("Макияж", 1, dataContext);
-                makeup.WriteChildCategory("Для лица", 0, dataContext)
-                .WriteChildCategory("Для глаз", 1, dataContext)
-                .WriteChildCategory("Для ногтей", 2, dataContext)
-                .WriteChildCategory("Для бровей", 3, dataContext)
-                .WriteChildCategory("Для губ", 4, dataContext)
-                .WriteChildCategory("Аксассуары", 5, dataContext);
+                var makeup = WriteCategory("Макияж", 1,"makeup" , dataContext);
+                makeup.WriteChildCategory("Для лица", 0,"forface" ,dataContext)
+                .WriteChildCategory("Для глаз", 1,"foreyes", dataContext)
+                .WriteChildCategory("Для ногтей", 2,"dlyanogtey", dataContext)
+                .WriteChildCategory("Для бровей", 3,"dlyabrovey", dataContext)
+                .WriteChildCategory("Для губ", 4,"dlyagub", dataContext)
+                .WriteChildCategory("Аксассуары", 5,"aksesuarudlyalica", dataContext);
 
-                var safe = WriteCategory("Уход", 2, dataContext);
-                safe.WriteChildWithCildCategory("Уход за лицом", 0, dataContext)
-                    .WriteChildCategory("Очищение", 0, dataContext)
-                    .WriteChildCategory("Спреи", 1, dataContext)
-                    .WriteChildCategory("Маски", 2, dataContext);
+                var safe = WriteCategory("Уход", 2,"uhod", dataContext);
+                safe.WriteChildWithCildCategory("Уход за лицом",0, "yxodzalicom",dataContext)
+                    .WriteChildCategory("Очищение", 0,"clear", dataContext)
+                    .WriteChildCategory("Спреи", 1,"sprey", dataContext)
+                    .WriteChildCategory("Маски", 2,"maski", dataContext);
 
-                safe.WriteChildCategory("Уход за телом", 1, dataContext);
+                safe.WriteChildCategory("Уход за телом", 1,"yxodzatelom", dataContext);
 
-                safe.WriteChildCategory("Уход за руками", 2, dataContext)
-                .WriteChildCategory("Уход за ногами", 3, dataContext);
+                safe.WriteChildCategory("Уход за руками", 2,"yxodzarukami", dataContext)
+                .WriteChildCategory("Уход за ногами", 3,"yxodzanogami",dataContext);
 
 
-                WriteCategory("Парфюмерия", 2, dataContext);
-                WriteCategory("Акксессуары", 4, dataContext);
+                WriteCategory("Парфюмерия", 2, "parfum", dataContext);
+                WriteCategory("Аксессуары", 4, "access",dataContext);
             }
 
             if (!dataContext.ProductKinds.Any())
@@ -65,7 +65,7 @@ namespace DataCore.DAL
 
         private static void WriteBrands(DataContext dataContext)
         {
-            var fake = new Faker(locale:"ru");
+            var fake = new Faker(locale: "ru");
 
             for (var i = 0; i < 100; i++)
             {
@@ -86,28 +86,34 @@ namespace DataCore.DAL
             var fake = new Faker(locale: "ru");
             var random = new Random();
 
-            for (var i = 0; i < 1000; i++)
+            var categories = dataContext.ProductCategories.ToList();
+
+            foreach (var productCategory in categories)
             {
-                var product = new Product()
+                for (var i = 0; i < 50; i++)
                 {
-                    Title = fake.Commerce.ProductName(),
-                    BrandId = random.Next(1, 100),
-                    CategoryId = random.Next(1, 17),
-                    Description = fake.Lorem.Text()
-                };
+                    var product = new Product()
+                    {
+                        Title = fake.Commerce.ProductName(),
+                        BrandId = random.Next(1, 100),
+                        CategoryId = productCategory.Id,
+                        Description = fake.Lorem.Text()
+                    };
 
-                dataContext.Add(product);
+                    dataContext.Add(product);
+                }
+
+                dataContext.SaveChanges();
             }
-
-            dataContext.SaveChanges();
         }
 
-        private static ProductCategory WriteCategory(string name, decimal sortOrder, DataContext context)
+        private static ProductCategory WriteCategory(string name, decimal sortOrder,string routeName, DataContext context)
         {
             var category = new ProductCategory
             {
                 Title = name,
                 SortOrder = sortOrder,
+                RouteName = routeName
             };
 
             context.ProductCategories.Add(category);
@@ -120,13 +126,14 @@ namespace DataCore.DAL
             return category;
         }
 
-        public static ProductCategory WriteChildCategory(this ProductCategory parentCategory, string name, decimal sortOrder, DataContext context)
+        public static ProductCategory WriteChildCategory(this ProductCategory parentCategory, string name, decimal sortOrder, string routeName, DataContext context)
         {
             var category = new ProductCategory()
             {
                 Title = name,
                 SortOrder = sortOrder,
-                ParentId = parentCategory.Id
+                ParentId = parentCategory.Id,
+                RouteName = routeName
             };
 
             context.ProductCategories.Add(category);
@@ -139,13 +146,14 @@ namespace DataCore.DAL
             return parentCategory;
         }
 
-        public static ProductCategory WriteChildWithCildCategory(this ProductCategory parentCategory, string name, decimal sortOrder, DataContext context)
+        public static ProductCategory WriteChildWithCildCategory(this ProductCategory parentCategory, string name, decimal sortOrder, string routeName, DataContext context)
         {
             var category = new ProductCategory()
             {
                 Title = name,
                 SortOrder = sortOrder,
-                ParentId = parentCategory.Id
+                ParentId = parentCategory.Id,
+                RouteName = routeName
             };
 
             context.ProductCategories.Add(category);

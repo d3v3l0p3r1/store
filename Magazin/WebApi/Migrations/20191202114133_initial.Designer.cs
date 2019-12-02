@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20191128081743_initial")]
+    [Migration("20191202114133_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -311,6 +311,9 @@ namespace WebApi.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
+                    b.Property<decimal>("Total")
+                        .HasColumnType("numeric");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
@@ -597,6 +600,9 @@ namespace WebApi.Migrations
 
                     b.Property<long?>("ParentId")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("RouteName")
+                        .HasColumnType("text");
 
                     b.Property<decimal>("SortOrder")
                         .HasColumnType("numeric");

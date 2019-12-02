@@ -10,8 +10,11 @@
             item-text="title"
             item-children="childs"
             activatable
-            :load-children="loadChildCategories"            
+            open-on-click
             :hoverable=true>
+            <template slot="label" slot-scope="{ item }" >
+              <div @click="handleCategoryClick(item)">{{item.title}}</div>
+            </template>
           </v-treeview>
         </v-container>
       </v-col>
@@ -38,7 +41,7 @@
               <v-card-text class="product-text">{{ p.description }}</v-card-text>
             </v-card>
           </v-flex>
-          <v-pagination v-if="pagination.total > pagination.limit" v-model="pagination.page" :per-page="pagination.limit" :length="totalPages"/>
+          <v-pagination v-if="pagination.total > pagination.limit" v-model="pagination.page" :per-page="pagination.limit" :length="totalPages" />
           </v-layout>
         </v-container>
 
@@ -56,6 +59,12 @@ export default {
     name: 'ProductList',
     props: {
     },
+    watch: {
+      $route: function(to, from) {
+        debugger
+        console.log(to)
+      }
+    },
     data() {
         return {
             products: [],
@@ -65,7 +74,7 @@ export default {
             pagination: {
                 page: 1,
                 limit: 40,
-                total: 0
+                total: 0,
             }
         }
     },
@@ -83,10 +92,9 @@ export default {
     },
     computed: {
       totalPages() {
-        if (this.products.length > 0) {
-          return this.pagination.total / this.pagination.limit
+        if (this.pagination.total > 0) {
+          return Math.trunc(this.pagination.total / this.pagination.limit)
         }
-
         return 0
       }
     },
@@ -105,13 +113,8 @@ export default {
             return getFileUrl(id)
         },
         handleCategoryClick(val) {
-            this.selectedCategory = val
-            this.getAll()
-        },
-        async loadChildCategories(node) {
-          console.log(node)
-          const res = await categoryGetAll(node.id)
-          node.childs = res.data
+          this.selectedCategory = val
+          this.getAll()
         }
     }
 

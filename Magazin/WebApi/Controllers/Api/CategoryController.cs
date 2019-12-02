@@ -35,28 +35,28 @@ namespace WebUiAdmin.Controllers.Api
         /// <returns></returns>
         [HttpGet]
         [Route("GetAll")]
-        [ProducesResponseType(typeof(ListRespone<CategoryDto>), 200)]
+        [ProducesResponseType(typeof(ListRespone<ProductCategory>), 200)]
         public async Task<IActionResult> GetAll(long? parentId = null)
         {
-            var all = _categoryService.GetAllAsNotracking();
-
-            all = parentId != null
-                ? all.Where(x => x.ParentId == parentId.Value)
-                : all.Where(x => x.ParentId == null);
-
-            var res = await all
+            var all = _categoryService.GetQuery()
                 .OrderBy(x => x.SortOrder)
-                .Select(x => new CategoryDto
-                {
-                    Id = x.Id,
-                    Title = x.Title,
-                    SortOrder = x.SortOrder
-                }).ToListAsync();
+                .Include(x => x.Childs)
+                .ThenInclude(x => x.Childs)
+                .ThenInclude(x => x.Childs)
+                .ThenInclude(x => x.Childs)
+                .ThenInclude(x => x.Childs)
+                .ThenInclude(x => x.Childs)
+                .ThenInclude(x => x.Childs)
+                .ThenInclude(x => x.Childs)
+                .AsNoTracking();
 
-            var listResponse = new ListRespone<CategoryDto>
+
+            var list = await all.Where(x => x.ParentId == null).ToListAsync();
+
+            var listResponse = new ListRespone<ProductCategory>
             {
-                Data = res,
-                Total = res.Count
+                Data = list,
+                Total = 0
             };
 
             return Ok(listResponse);

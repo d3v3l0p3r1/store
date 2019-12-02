@@ -4,7 +4,9 @@
     <template v-slot:extension>
     <v-tabs centered dark class="main-menu--tab" background-color="#002e4f" height="42px;" elevate-on-scroll>
       <v-tab to="/">Главная</v-tab>
-      <v-tab to="/products">Продукция</v-tab>
+      <v-tab to="/catalog">Продукция</v-tab>
+      <v-tab to="/brands">Бренды</v-tab>
+      <v-tab to="/catalog/uhod">Уход</v-tab>
       <v-tab to="/news">Новости</v-tab>
       <v-tab to="/about">О нас</v-tab>
     </v-tabs>

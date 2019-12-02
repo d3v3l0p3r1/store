@@ -12,16 +12,28 @@ const routes = [
     meta: { title: 'Магазин', icon: '' }
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import('@/pages/About'),
-    meta: { title: 'О нас', icon: '' }
+    path: '/catalog/',
+    name: 'catalog',
+    component: () => import('@/pages/products/index'),
+    meta: { title: 'Каталог', icon: '' }
   },
   {
-    path: '/products',
-    name: 'products',
+    path: '/catalog/:subcatalog',
+    name: 'subcatalog',
     component: () => import('@/pages/products/index'),
-    meta: { title: 'Продукция', icon: '' }
+    meta: { title: 'Каталог', icon: '' }
+  },
+  {
+    path: '/catalog/:subcatalog/:subsubcatalog',
+    name: 'subsubcatalog',
+    component: () => import('@/pages/products/index'),
+    meta: { title: 'Каталог', icon: '' }
+  },
+  {
+    path: '/brands',
+    name: 'brands',
+    component: () => import('@/pages/brands/index'),
+    meta: { title: 'Бренды' }
   },
   {
     path: '/news',
@@ -29,7 +41,6 @@ const routes = [
     component: () => import('@/pages/news/index'),
     meta: { title: 'Новости', icon: '' }
   }
-
 ]
 
 const router = new VueRouter({

@@ -191,7 +191,8 @@ namespace WebApi.Migrations
                     Title = table.Column<string>(nullable: true),
                     SortOrder = table.Column<decimal>(nullable: false),
                     ParentId = table.Column<long>(nullable: true),
-                    Mask = table.Column<string>(nullable: true)
+                    Mask = table.Column<string>(nullable: true),
+                    RouteName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -736,7 +737,8 @@ namespace WebApi.Migrations
                     Title = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     AuthorId = table.Column<long>(nullable: false),
-                    ShipperId = table.Column<long>(nullable: false)
+                    ShipperId = table.Column<long>(nullable: false),
+                    Total = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
