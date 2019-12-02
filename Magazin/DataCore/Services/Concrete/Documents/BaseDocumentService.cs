@@ -57,9 +57,8 @@ namespace DataCore.Services.Concrete.Documents
 
             entity.DocumentStatus = DocumentStatus.New;
             entity.Date = DateTime.Now;
-
-            entity.Title = $"Документ от {entity.Date.ToString("g")}";
-
+            entity.Title = $"Документ от {entity.Date:g}";
+            
             return base.CreateAsync(entity);
         }
 

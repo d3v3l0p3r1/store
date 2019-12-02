@@ -30,6 +30,20 @@ namespace DataCore.Services.Concrete.Documents
                .FirstOrDefaultAsync();
         }
 
+        public override Task<IncomingDocument> CreateAsync(IncomingDocument entity)
+        {
+            entity.Total = entity.Entries.Sum(x => x.Price * x.Count);
+
+            return base.CreateAsync(entity);
+        }
+
+        public override Task<IncomingDocument> UpdateAsync(IncomingDocument entity)
+        {
+            entity.Total = entity.Entries.Sum(x => x.Price * x.Count);
+
+            return base.UpdateAsync(entity);
+        }
+
         public override async Task Apply(long id)
         {
             var original = await GetAsync(id);

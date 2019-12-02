@@ -56,12 +56,7 @@ namespace WebApi.Mappings.Documents
                 .ForMember(x => x.Author, cfg => cfg.MapFrom(z => new Lookup()
                 {
                     Id = z.Author.Id,
-                    Title = z.Author.FullName
-                }))
-                .ForMember(x => x.Author, cfg => cfg.MapFrom(z => new Lookup()
-                {
-                    Id = z.Author.Id,
-                    Title = z.Author.FullName
+                    Title = $"{z.Author.FullName} {z.Author.UserName}"
                 }));
 
             CreateMap<OutComingDocument, OutcomingDocumentDetailDto>()
