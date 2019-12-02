@@ -19,6 +19,17 @@ namespace DataCore.Services.Concrete.Documents
             _balanceService = balanceService;
         }
 
+        public override Task<IncomingDocument> GetAsync(long id)
+        {
+            return GetQuery()
+               .Where(x => x.Id == id)
+               .Include(x => x.Author)
+               .Include(x => x.Shipper)
+               .Include(x => x.Entries)
+               .ThenInclude(x => x.Product)
+               .FirstOrDefaultAsync();
+        }
+
         public override async Task Apply(long id)
         {
             var original = await GetAsync(id);

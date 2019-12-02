@@ -17,6 +17,8 @@
       row-key="id"
       style="width: 100%;"
       empty-text="Нет данных"
+      show-summary
+      :summary-method="getSummary"
       @current-change="handleSelectEntry"
     >
 
@@ -38,6 +40,18 @@
         </template>
       </el-table-column>
 
+      <el-table-column label="Цена">
+        <template slot-scope="scope">
+          <span>{{ scope.row.price }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="Подитог">
+        <template slot-scope="scope">
+          <span>{{ scope.row.price * scope.row.count }}</span>
+        </template>
+      </el-table-column>
+
       <el-table-column label="Операции">
         <template slot-scope="scope">
 
@@ -51,6 +65,7 @@
 
         </template>
       </el-table-column>
+
     </el-table>
     <EntryEdit :entry="entry" :dialog-visible.sync="editDialogVisible" @onSubmit="onEntryEditComplete" />
   </div>
@@ -120,6 +135,19 @@ export default {
         if (index !== -1) {
           this.entries.splice(index, 1)
         }
+      },
+      getSummary(param) {
+        const summs = ['Итог', null, null, null, 0]
+        const { columns } = param
+        const reducer = (a, c) => { return a + (c.price * c.count) }
+
+        if (columns.length === 0 || this.entries.length === 0) {
+          return summs
+        }
+
+        var summ = this.entries.reduce(reducer, 0)
+        summs[4] = summ
+        return summs
       }
   }
 }

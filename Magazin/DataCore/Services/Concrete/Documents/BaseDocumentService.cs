@@ -27,7 +27,7 @@ namespace DataCore.Services.Concrete.Documents
         public override Task<T> GetAsync(long id)
         {
             return _repository.GetAll()
-                .Include(x => x.Author)
+               .Include(x => x.Author)
                .Include(x => x.Entries)
                .ThenInclude(x => x.Product)
                .FirstOrDefaultAsync(x => x.Id == id);
