@@ -4,11 +4,15 @@
       <v-col sm="2">
 
         <v-container class="px-12">
-          <v-list-item-group>
-            <v-list-item v-for="c in categories" :key="c.id" v-on:click="handleCategoryClick(c)">
-              <v-list-item-content>{{c.title}}</v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
+          <v-treeview 
+            :items="categories"
+            item-key="id"
+            item-text="title"
+            item-children="childs"
+            activatable
+            :load-children="loadChildCategories"            
+            :hoverable=true>
+          </v-treeview>
         </v-container>
       </v-col>
 
@@ -34,7 +38,7 @@
               <v-card-text class="product-text">{{ p.description }}</v-card-text>
             </v-card>
           </v-flex>
-          <v-pagination v-if="pagination.total > pagination.limit" v-model="pagination.page" :per-page="pagination.limit" :length="pagination.total" />
+          <v-pagination v-if="pagination.total > pagination.limit" v-model="pagination.page" :per-page="pagination.limit" :length="totalPages"/>
           </v-layout>
         </v-container>
 
@@ -77,6 +81,15 @@ export default {
         this.getAllCategory()
         this.getAll()
     },
+    computed: {
+      totalPages() {
+        if (this.products.length > 0) {
+          return this.pagination.total / this.pagination.limit
+        }
+
+        return 0
+      }
+    },
     methods: {
         async getAll() {
             var catID = this.selectedCategory != null ? this.selectedCategory.id : null
@@ -94,6 +107,11 @@ export default {
         handleCategoryClick(val) {
             this.selectedCategory = val
             this.getAll()
+        },
+        async loadChildCategories(node) {
+          console.log(node)
+          const res = await categoryGetAll(node.id)
+          node.childs = res.data
         }
     }
 
