@@ -13,6 +13,11 @@ namespace DataCore.Entities.Documents
         /// Поставщик
         /// </summary>
         public Contractor Shipper { get; set; }
+
+        /// <summary>
+        /// Сумма документа
+        /// </summary>
+        public decimal Total { get; set; }
     }
 
 
