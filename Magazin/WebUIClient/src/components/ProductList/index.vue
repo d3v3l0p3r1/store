@@ -14,16 +14,11 @@
 
       <v-col sm="10">
 
-        <v-container fluid grid-list-xl>
-          <v-layout wrap>
-          <v-flex v-for="p in products" :key="p.id" xl4>
-            <v-card class="px-2">
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title>{{p.title}}</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-img :aspect-ratio="4/4" :src="getFileUrl(p.fileId)" :width="140" :height="140" :left="true" class="px-12">
+        <v-container grid-list>
+          <v-layout wrap row>
+          <v-flex v-for="p in products" :key="p.id" class="product-flex">
+            <v-card class="product-card">
+              <v-img :aspect-ratio="1" :src="getFileUrl(p.fileId)" :width="200" :height="200">
                  <template v-slot:placeholder>
                     <v-row
                       class="fill-height ma-0"
@@ -33,7 +28,10 @@
                     </v-row>
                 </template>
               </v-img>
-              <v-card-text>{{ p.description }}</v-card-text>
+              <v-card-title class="product-title">
+                <a>{{p.title}}</a>
+              </v-card-title>    
+              <v-card-text class="product-text">{{ p.description }}</v-card-text>
             </v-card>
           </v-flex>
           <v-pagination v-if="pagination.total > pagination.limit" v-model="pagination.page" :per-page="pagination.limit" :length="pagination.total" />
@@ -62,7 +60,7 @@ export default {
             selectedCategory: null,
             pagination: {
                 page: 1,
-                limit: 10,
+                limit: 40,
                 total: 0
             }
         }
@@ -113,5 +111,26 @@ export default {
  }
  .product-grid > div {
      margin: 1%;
+ }
+
+ .product-title {
+   display: block;
+   overflow: hidden;
+   font-weight: 600;
+   font-size: 14px;
+ }
+
+ .product-text {
+   overflow: hidden;
+   font-size: 12px;
+ }
+
+.product-flex {
+  width: 20%;
+  padding: 1px;
+}
+ .product-card {
+  width: 100%;
+  height: 100%;
  }
 </style>
