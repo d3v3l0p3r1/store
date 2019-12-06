@@ -15,18 +15,7 @@ const routes = [
     path: '/catalog/',
     name: 'catalog',
     component: () => import('@/pages/products/index'),
-    meta: { title: 'Каталог', icon: '' }
-  },
-  {
-    path: '/catalog/:subcatalog',
-    name: 'subcatalog',
-    component: () => import('@/pages/products/index'),
-    meta: { title: 'Каталог', icon: '' }
-  },
-  {
-    path: '/catalog/:subcatalog/:subsubcatalog',
-    name: 'subsubcatalog',
-    component: () => import('@/pages/products/index'),
+    props: { name: 'categoryId' },
     meta: { title: 'Каталог', icon: '' }
   },
   {

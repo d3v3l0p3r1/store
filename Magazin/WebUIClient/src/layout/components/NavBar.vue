@@ -6,7 +6,7 @@
       <v-tab to="/">Главная</v-tab>
       <v-tab to="/catalog">Продукция</v-tab>
       <v-tab to="/brands">Бренды</v-tab>
-      <v-tab to="/catalog/uhod">Уход</v-tab>
+      <v-tab to="/catalog?categoryId=4">Уход</v-tab>
       <v-tab to="/news">Новости</v-tab>
       <v-tab to="/about">О нас</v-tab>
     </v-tabs>
