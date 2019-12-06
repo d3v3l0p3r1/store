@@ -25,7 +25,7 @@
           <v-layout wrap row>
           <v-flex v-for="p in products" :key="p.id" class="product-flex">
             <v-card class="product-card">
-              <v-img :aspect-ratio="1" :src="getFileUrl(p.fileId)" :width="200" :height="200">
+              <v-img :aspect-ratio="1" v-if="p.fileId != null" :src="getFileUrl(p.fileId)" :width="200" :height="200">
                  <template v-slot:placeholder>
                     <v-row
                       class="fill-height ma-0"
@@ -34,6 +34,9 @@
                       <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                     </v-row>
                 </template>
+              </v-img>
+              <v-img :aspect-ratio="1" v-else src="@/assets/no-image.png" :width="200" :height="200">
+
               </v-img>
               <v-card-title class="product-title">
                 <a>{{p.title}}</a>
