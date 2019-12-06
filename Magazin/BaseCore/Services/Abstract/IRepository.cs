@@ -14,7 +14,7 @@ namespace BaseCore.Services.Abstract
         Task DeleteAsync(IEnumerable<T> entities);
         Task<T> UpdateAsync(T entity);
         Task<T> GetAsync(long id);
-        IQueryable<T> GetAllAsNotracking();
-        DbSet<T> GetDbSet();
+        IQueryable<T> GetAllAsNotracking(bool hidden = false);
+        IQueryable<T> GetAll(bool hidden = false);
     }
 }

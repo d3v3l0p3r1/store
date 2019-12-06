@@ -33,25 +33,26 @@ namespace DataCore.DAL
         }
 
 
-        public virtual IQueryable<T> GetAllAsNotracking()
+        public virtual IQueryable<T> GetAllAsNotracking(bool hidden = false)
         {
-            var dbSet = _dataContext.Set<T>().AsNoTracking();
+            var dbSet = _dataContext.Set<T>().Where(x=> x.Hidden == hidden).AsNoTracking();
             return dbSet;
         }
 
-        public virtual DbSet<T> GetDbSet()
+        public virtual IQueryable<T> GetAll(bool hidden = false)
         {
-            return _dataContext.Set<T>();
+            return _dataContext.Set<T>().Where(x=>x.Hidden == hidden);
         }
 
         public virtual Task DeleteAsync(T entity)
         {
-            _dataContext.Set<T>().Remove(entity);
+            entity.Hidden = true;
+            _dataContext.Set<T>().Update(entity);
             return _dataContext.SaveChangesAsync();
         }
 
         public Task DeleteAsync(IEnumerable<T> entities)
-        {
+        {            
             _dataContext.Set<T>().RemoveRange(entities);
             return _dataContext.SaveChangesAsync();
         }

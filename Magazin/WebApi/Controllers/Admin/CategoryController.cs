@@ -31,24 +31,21 @@ namespace WebUiAdmin.Controllers
         [HttpGet]
         [Route("[action]")]
         [ProducesResponseType(typeof(ListRespone<ProductCategory>), 200)]
-        public async Task<IActionResult> GetAll(int take = 10, int page = 1)
+        public async Task<IActionResult> GetAll(long? parentId = null)
         {
-            if (take < 1)
-            {
-                take = 10;
-            }
-
-            if (page < 1)
-            {
-                page = 1;
-            }
-
-            var skip = (page - 1) * take;
-
             var all = _productCategoryService.GetAllAsNotracking();
 
+            if (parentId != null)
+            {
+                all = all.Where(x => x.ParentId == parentId.Value);
+            }
+            else
+            {
+                all = all.Where(x => x.ParentId == null);
+            }
+
             var total = await all.CountAsync();
-            var cats = await all.Skip(skip).Take(take).ToListAsync();
+            var cats = await all.ToListAsync();
 
             var result = new ListRespone<ProductCategory>()
             {

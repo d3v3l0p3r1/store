@@ -27,7 +27,6 @@
           <span>{{ scope.row.title }}</span>
         </template>
       </el-table-column>
-
       <el-table-column label="Цена">
         <template slot-scope="scope">
           <span>{{ scope.row.price }}</span>

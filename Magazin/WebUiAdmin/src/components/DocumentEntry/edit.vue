@@ -9,7 +9,7 @@
     width="40%"
   >
 
-    <el-form v-model="entry">
+    <el-form v-model="entry" label-position="top">
       <el-form-item label="Продукт">
         <el-input v-model="productTitle" placeholder="Выбирете продукт" readonly>
           <el-button slot="append" icon="el-icon-search" @click="searchProduct" />
@@ -18,6 +18,10 @@
 
       <el-form-item v-model="entry.count" label="Количество">
         <el-input-number v-model="entry.count" />
+      </el-form-item>
+
+      <el-form-item label="Цена">
+        <el-input-number v-model="entry.price" />
       </el-form-item>
     </el-form>
 
@@ -86,6 +90,14 @@ export default {
                 this.$notify.error({
                     title: 'Ошибка',
                     message: 'Количество должно быть больше 0'
+                })
+                return
+            }
+
+            if (this.entry.price <= 0) {
+                this.$notify.error({
+                    title: 'Ошибка',
+                    message: 'Цена не можеть быть меньше 1'
                 })
                 return
             }

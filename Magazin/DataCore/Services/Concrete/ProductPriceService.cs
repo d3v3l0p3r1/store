@@ -20,7 +20,7 @@ namespace DataCore.Services.Concrete
 
         public override Task<ProductPrice> GetAsync(long id)
         {
-            var all = _repository.GetDbSet()
+            var all = _repository.GetAll()
                 .Include(x => x.Product);
 
             return all.FirstOrDefaultAsync();

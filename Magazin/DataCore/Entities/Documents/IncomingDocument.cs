@@ -7,21 +7,25 @@ namespace DataCore.Entities.Documents
 {
     public class IncomingDocument : BaseDocument<IncomingDocumentEntry>
     {
-        /// <summary>
-        /// Отправитель
-        /// </summary>
-        public long? SenderId { get; set; }
+        public long ShipperId { get; set; }
 
         /// <summary>
-        /// От кого полученно
+        /// Поставщик
         /// </summary>
-        public User Sender { get; set; }
+        public Contractor Shipper { get; set; }
+
+        /// <summary>
+        /// Сумма документа
+        /// </summary>
+        public decimal Total { get; set; }
     }
 
 
 
-    public class IncomingDocumentEntry: BaseDocumentEntry
+    public class IncomingDocumentEntry : BaseDocumentEntry
     {
         public IncomingDocument Document { get; set; }
+
+        public decimal Price { get; set; }
     }
 }
