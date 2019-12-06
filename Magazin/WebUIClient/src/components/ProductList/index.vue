@@ -21,7 +21,8 @@
 
       <v-col sm="10">
         <v-container grid-list>
-          <v-layout wrap row>
+          <v-skeleton-loader :loading="listLoading" v-if="listLoading"></v-skeleton-loader>
+          <v-layout wrap row v-else>
             <v-flex v-for="p in products" :key="p.id" class="product-flex">
               <v-card class="product-card" hover>
                 <v-img
@@ -60,7 +61,7 @@
               :per-page="pagination.limit"
               :length="totalPages"
             />
-          </v-layout>
+          </v-layout>          
         </v-container>
       </v-col>
     </v-row>
@@ -74,16 +75,14 @@ import { getFileUrl } from "@/api/file";
 
 export default {
   name: "ProductList",
-  props: {},
-  watch: {
-    $route: function(to, from) {}
-  },
+  props: {},  
   data() {
     return {
       products: [],
       categories: [],
       selectedProduct: null,
       selectedCategory: null,
+      listLoading: false,
       pagination: {
         page: 1,
         limit: 40,
@@ -97,6 +96,9 @@ export default {
         this.getAll();
       },
       deep: true
+    },
+    $route: function(to, from) {
+      this.getAll()
     }
   },
   created() {
@@ -116,8 +118,8 @@ export default {
   },
   methods: {
     async getAll() {
-      var catID =
-        this.selectedCategory != null ? this.selectedCategory.id : null;
+      this.listLoading = true
+      var catID = this.$route.query.categoryId
       const res = await getAll(
         this.pagination.page,
         this.pagination.limit,
@@ -125,6 +127,7 @@ export default {
       );
       this.products = res.data;
       this.pagination.total = res.total;
+      this.listLoading = false
     },
     async getAllCategory() {
       const res = await categoryGetAll();
@@ -136,7 +139,7 @@ export default {
         )[0];
 
         if (!this.selectedCategory) {
-          this.categories.forEach(x => {
+          this.selectedCategory = this.categories.forEach(x => {
             if (this.findCategory(x)) {
               return x;
             }
@@ -150,8 +153,7 @@ export default {
       return getFileUrl(id);
     },
     handleCategoryClick(val) {
-      this.selectedCategory = val;
-      this.getAll();
+      this.$router.push({path : '/catalog', query: {categoryId : val.id}})
     },
     findCategory(category) {
       var res = category.childs.filter(
