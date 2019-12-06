@@ -65,11 +65,14 @@ namespace WebUiAdmin.Controllers
 
             var skip = (page - 1) * take;
 
-            var all = _productService.GetQuery().Include(x => x.Kind).AsNoTracking();
+            var all = _productService.GetQuery()
+                .Include(x => x.Category)
+                .Include(x => x.Kind)
+                .AsNoTracking();
 
             if (catID != null)
             {
-                all = all.Where(x => x.CategoryId == catID.Value);
+                all = all.Where(x => x.Category.Mask.Contains($";{catID.Value};"));
             }
 
             var products = await all.OrderByDescending(x => x.Id).Skip(skip).Take(take).Select(x => new ProductDto
@@ -161,7 +164,7 @@ namespace WebUiAdmin.Controllers
                 await _productService.DeleteAsync(id);
                 return Ok();
             }
-            catch(Exception error)
+            catch (Exception error)
             {
                 return BadRequest(error.GetBaseException().Message);
             }

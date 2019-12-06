@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataCore.Entities;
 using DataCore.Services.Abstract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WebApi.Models;
+using WebApi.Models.Api.Category;
 
 namespace WebUiAdmin.Controllers.Api
 {
@@ -16,25 +20,46 @@ namespace WebUiAdmin.Controllers.Api
     {
         private readonly IProductCategoryService _categoryService;
 
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="categoryService"></param>
         public CategoryController(IProductCategoryService categoryService)
         {
             _categoryService = categoryService;
         }
 
+        /// <summary>
+        /// Получить все категории
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetAll")]
-        public IActionResult GetAll()
+        [ProducesResponseType(typeof(ListRespone<ProductCategory>), 200)]
+        public async Task<IActionResult> GetAll(long? parentId = null)
         {
-            var all = _categoryService.GetAllAsNotracking();
+            var all = _categoryService.GetQuery()
+                .OrderBy(x => x.SortOrder)
+                .Include(x => x.Childs)
+                .ThenInclude(x => x.Childs)
+                .ThenInclude(x => x.Childs)
+                .ThenInclude(x => x.Childs)
+                .ThenInclude(x => x.Childs)
+                .ThenInclude(x => x.Childs)
+                .ThenInclude(x => x.Childs)
+                .ThenInclude(x => x.Childs)
+                .AsNoTracking();
 
-            var res = all.Select(x => new
+
+            var list = await all.Where(x => x.ParentId == null).ToListAsync();
+
+            var listResponse = new ListRespone<ProductCategory>
             {
-                x.Id,                
-                x.Title,
-                x.SortOrder
-            }).OrderBy(x => x.SortOrder).ToList();
+                Data = list,
+                Total = 0
+            };
 
-            return Ok(res);
+            return Ok(listResponse);
         }
     }
 }

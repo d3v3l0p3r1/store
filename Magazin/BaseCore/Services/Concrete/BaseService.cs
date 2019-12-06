@@ -17,13 +17,13 @@ namespace BaseCore.Services.Concrete
 
         public virtual IQueryable<T> GetQuery()
         {
-            return _repository.GetDbSet();
+            return _repository.GetAll();
         }
 
         public virtual IQueryable<T> GetAllAsNotracking()
         {
             var all = _repository.GetAllAsNotracking();
-            return all.Where(x => !x.Hidden);
+            return all.Where(x => x.Hidden == false);
         }
 
         public virtual async Task<T> UpdateAsync(T entity)

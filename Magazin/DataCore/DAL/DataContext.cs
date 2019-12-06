@@ -33,6 +33,7 @@ namespace DataCore.DAL
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ProductPrice> ProductPrices { get; set; }
         public DbSet<Contractor> Contractors { get; set; }
+        public DbSet<Brand> Brands { get; set; }
 
         private readonly IOptions<OperationalStoreOptions> _operationalStoreOptions;
 
@@ -57,6 +58,7 @@ namespace DataCore.DAL
 
             builder.Entity<Product>().HasOne(x => x.Category);
             builder.Entity<Product>().HasOne(x => x.Kind);
+            builder.Entity<Product>().HasOne(x => x.Brand);
 
             builder.Entity<Order>()
                 .HasMany(x => x.Products).WithOne(x => x.Order);

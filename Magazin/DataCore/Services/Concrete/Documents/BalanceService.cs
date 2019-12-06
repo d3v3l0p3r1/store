@@ -39,7 +39,7 @@ namespace DataCore.Services.Concrete.Documents
 
         public async Task RemoveFrombalance<T>(T entry) where T : BaseDocumentEntry
         {
-            var balance = await _repository.GetDbSet()
+            var balance = await _repository.GetAll()
                 .Include(x => x.BalanceEntries)
                 .FirstOrDefaultAsync(x => x.ProductId == entry.ProductId && x.ZeroDate == null);
             if (balance == null)
@@ -90,7 +90,7 @@ namespace DataCore.Services.Concrete.Documents
 
         public IQueryable<Balance> GetDbSet()
         {
-            return _repository.GetDbSet();
+            return _repository.GetAll();
         }
 
         public IQueryable<Balance> GetAllAsNoTracking()

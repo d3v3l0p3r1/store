@@ -15,15 +15,5 @@ namespace WebApi.Models.Admin.Documents.OutcomingDocuments
         /// Табличная часть
         /// </summary>
         public List<DocumentEntryDto> Entries { get; set; }
-
-        /// <summary>
-        /// Идентификатор получателя
-        /// </summary>
-        public long RecipientId { get; set; }
-
-        /// <summary>
-        /// Получатель
-        /// </summary>
-        public User Recipient { get; set; }
     }
 }

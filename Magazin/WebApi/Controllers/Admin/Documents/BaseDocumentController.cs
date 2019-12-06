@@ -59,7 +59,7 @@ namespace WebApi.Controllers.Admin.Documents
         {
             var entity = await _service.GetAsync(id);
             var result = _mapper.Map<TDetail>(entity);
-            return Ok(entity);
+            return Ok(result);
         }
 
         /// <summary>

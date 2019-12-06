@@ -56,6 +56,12 @@
         </template>
       </el-table-column>
 
+      <el-table-column label="Сумма">
+        <template slot-scope="scope">
+          <span>{{ scope.row.total }}</span>
+        </template>
+      </el-table-column>
+
       <el-table-column label="Статус">
         <template slot-scope="scope">
           <span>

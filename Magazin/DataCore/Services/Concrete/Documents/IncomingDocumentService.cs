@@ -19,6 +19,31 @@ namespace DataCore.Services.Concrete.Documents
             _balanceService = balanceService;
         }
 
+        public override Task<IncomingDocument> GetAsync(long id)
+        {
+            return GetQuery()
+               .Where(x => x.Id == id)
+               .Include(x => x.Author)
+               .Include(x => x.Shipper)
+               .Include(x => x.Entries)
+               .ThenInclude(x => x.Product)
+               .FirstOrDefaultAsync();
+        }
+
+        public override Task<IncomingDocument> CreateAsync(IncomingDocument entity)
+        {
+            entity.Total = entity.Entries.Sum(x => x.Price * x.Count);
+
+            return base.CreateAsync(entity);
+        }
+
+        public override Task<IncomingDocument> UpdateAsync(IncomingDocument entity)
+        {
+            entity.Total = entity.Entries.Sum(x => x.Price * x.Count);
+
+            return base.UpdateAsync(entity);
+        }
+
         public override async Task Apply(long id)
         {
             var original = await GetAsync(id);
