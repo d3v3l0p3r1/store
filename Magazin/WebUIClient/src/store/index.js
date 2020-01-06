@@ -14,7 +14,7 @@ export default new Vuex.Store({
         index.count++
       } else {
         state.products.push(bascetItem)
-      }      
+      }
     }
   },
   actions: {

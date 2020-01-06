@@ -10,13 +10,18 @@
       <v-tab to="/news">Новости</v-tab>
       <v-tab to="/about">О нас</v-tab>
     </v-tabs>
-    </template>
+    <BascetIcon/>
+    </template>    
   </v-app-bar>
 </div>
 </template>
 
 <script>
+
+import BascetIcon from '@/components/BascetIcon/index'
+
 export default {
+  components: { BascetIcon },
     computed: {
         styling() {
 
