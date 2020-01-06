@@ -49,7 +49,7 @@
 
                 <v-card-actions class="product-actions">
                   <v-spacer></v-spacer>
-                  <v-btn icon>
+                  <v-btn icon @click="addToBascetHandle(p)">
                     <v-icon>mdi-cart</v-icon>
                   </v-btn>
                 </v-card-actions>
@@ -72,6 +72,7 @@
 import { getAll } from "@/api/product";
 import { getAll as categoryGetAll } from "@/api/category";
 import { getFileUrl } from "@/api/file";
+import { mapMutations } from 'vuex';
 
 export default {
   name: "ProductList",
@@ -164,7 +165,13 @@ export default {
           this.findCategory(x);
         });
       }
-    }
+    },
+    addToBascetHandle(product) {
+      this.addToBascet({product: product, count: 1} )
+    },
+    ...mapMutations([
+      'addToBascet'
+    ])
   }
 };
 </script>
