@@ -1,5 +1,5 @@
 <template>
-  <v-card hover>
+  <v-card hover outlined class="product-card">
     <v-img
       v-if="product.fileId != null"
       :aspect-ratio="1"
@@ -19,13 +19,16 @@
         </v-row>
       </template>
     </v-img>
-    <v-card-title class="product-title">{{product.title}}</v-card-title>
-    <v-card-text class="product-text">{{ product.description }}</v-card-text>
+    <v-card-title class="product-title">
+      <span class>{{ product.title }}</span>
+    </v-card-title>
+    <v-card-text class="product-text">{{ product.price }} руб</v-card-text>
 
     <v-card-actions class="product-actions">
       <v-spacer />
-      <v-btn icon @click="addToBascetHandle(product)">
+      <v-btn @click="addToBascetHandle(product)" class="bascet-button">
         <v-icon>mdi-cart</v-icon>
+        <span>В корзину</span>
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -55,6 +58,9 @@ export default {
 </script>
 
 <style scoped>
+.product-card {
+  height: 100%;
+}
 .product-image {
   max-width: 100%;
   height: 50%;
@@ -63,19 +69,33 @@ export default {
 
 .product-title {
   display: block;
-  overflow: hidden;
-  text-overflow: initial;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 14px;
-  height: 10%;
+  width: 100%;
+  height: 55px;
+  word-wrap: break-word !important;
+  line-height: 1rem;
+  word-break: break-word;
 }
 
 .product-text {
-  font-size: 12px;
-  height: 30%;
+  color: #2e2e2e !important;
+  font-weight: 800 !important;
+  margin-top: 20px;
+  font-size: 16px;
 }
 
 .product-actions {
   color: blue;
+}
+
+.bascet-button {
+  width: 100%;
+  border-radius: 0%;
+  background-color: #4c1e8b !important;
+  color: #fff;
+}
+.bascet-button:hover {
+  background-color: #fac62c !important;
 }
 </style>
