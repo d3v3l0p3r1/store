@@ -1,8 +1,8 @@
 <template>
-  <v-container class="px-12">
+  <v-container class="pa-10">
     <v-row no-gutters>
-      <v-col sm="2">
-        <v-container class="px-12">
+      <v-col class="col-md-3 col-xs-12 col-left">
+        <v-container>
           <v-treeview
             :items="categories"
             item-key="id"
@@ -19,9 +19,14 @@
         </v-container>
       </v-col>
 
-      <v-col sm="10">
+      <v-col class="col-md-9 col-xs-12 col-right">
         <div style="display: flex; flex-wrap: wrap;">
-          <ProductCard v-for="p in products" :key="p.id" :product="p" />
+          <ProductCard
+            v-for="p in products"
+            :key="p.id"
+            :product="p"
+            class="col-lg-3 col-md-4 col-sm-6 col-sms-6 col-smb-12"
+          />
           <v-pagination
             v-if="pagination.total > pagination.limit"
             v-model="pagination.page"

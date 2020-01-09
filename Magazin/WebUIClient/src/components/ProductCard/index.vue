@@ -1,5 +1,5 @@
 <template>
-  <v-card hover class="product-card">
+  <v-card hover>
     <v-img
       v-if="product.fileId != null"
       :aspect-ratio="1"
@@ -55,9 +55,6 @@ export default {
 </script>
 
 <style scoped>
-.product-card {
-  width: 245px;
-}
 .product-image {
   max-width: 100%;
   height: 50%;
