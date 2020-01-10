@@ -53,7 +53,7 @@ module.exports = {
 
     config.module
       .rule('images')
-      .test(/\.(png|jpe?g|gif)(\?.*)?$/)
+      .test(/\.(png|svg|jpg|gif)$/)
       .include.add(resolve('src/assets'))
       .end()
       .use('url-loader')

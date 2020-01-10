@@ -1,7 +1,7 @@
 <template>
   <v-app-bar app>
     <!-- Main toolbar -->
-    <v-img src="@/assets/logo.png" width="200" />
+    <v-img src="/images/a.png" width="200" />
     <v-toolbar-title>Наш магазин</v-toolbar-title>
     <v-toolbar-items class="hidden-sm-and-down">
       <v-btn v-for="route in Routes" :key="route.link" text :to="route.link"> {{ route.title }}</v-btn>
@@ -10,11 +10,9 @@
 </template>
 
 <script>
-import BascetIcon from '@/components/BascetIcon/index'
 import Routes from '@/settings/routes'
 
-export default {
-  components: { BascetIcon },
+export default {  
   data() {
     return {
       Routes: Routes

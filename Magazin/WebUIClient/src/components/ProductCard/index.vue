@@ -12,7 +12,7 @@
         </v-row>
       </template>
     </v-img>
-    <v-img :aspect-ratio="1" v-else src="@/assets/no-image.png" class="product-image">
+    <v-img :aspect-ratio="1" v-else src="/images/no-image.png" class="product-image">
       <template v-slot:placeholder>
         <v-row class="fill-height ma-0" align="center" justify="center">
           <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
