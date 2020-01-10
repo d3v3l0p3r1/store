@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <SystemBar />
     <NavBar />
     <AppMain />
     <Footer />
@@ -8,9 +7,9 @@
 </template>
 
 <script>
-import { NavBar, AppMain, Footer, Header, SystemBar } from "./components";
+import { NavBar, AppMain, Footer } from './components';
 export default {
-  name: "Layout",
-  components: { NavBar, AppMain, Footer, Header, SystemBar }
+  name: 'Layout',
+  components: { NavBar, AppMain, Footer }
 };
 </script>

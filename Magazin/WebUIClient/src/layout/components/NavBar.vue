@@ -1,40 +1,39 @@
 <template>
-  <div>
-    <v-app-bar extended class="main-menu" app color="#560082" height="90px" hide-on-scroll>
-      <template v-slot:extension>
-        <v-tabs
-          centered
-          dark
-          class="main-menu--tab"
-          background-color="#002e4f"
-          height="42px;"
-          elevate-on-scroll
-        >
-          <v-tab to="/">Главная</v-tab>
-          <v-tab to="/catalog">Продукция</v-tab>
-          <v-tab to="/brands">Бренды</v-tab>
-          <v-tab to="/catalog?categoryId=4">Уход</v-tab>
-          <v-tab to="/news">Новости</v-tab>
-          <v-tab to="/about">О нас</v-tab>
-        </v-tabs>
-        <BascetIcon />
-      </template>
-    </v-app-bar>
-  </div>
+  <v-app-bar app>
+    <!-- Main toolbar -->
+    <v-img src="@/assets/logo.png" width="200" />
+    <v-toolbar-title>Наш магазин</v-toolbar-title>
+    <v-toolbar-items class="hidden-sm-and-down">
+      <v-btn v-for="route in Routes" :key="route.link" text :to="route.link"> {{ route.title }}</v-btn>
+    </v-toolbar-items>
+  </v-app-bar>
 </template>
 
 <script>
-import BascetIcon from "@/components/BascetIcon/index";
+import BascetIcon from '@/components/BascetIcon/index'
+import Routes from '@/settings/routes'
 
 export default {
   components: { BascetIcon },
+  data() {
+    return {
+      Routes: Routes
+    }
+  },
   computed: {
-    styling() {}
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
+.header-main {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 400;
+  background-color: #fafafa;
+  color: #2e2e2e;
+}
 .main-menu {
   background-color: #560082;
 }
