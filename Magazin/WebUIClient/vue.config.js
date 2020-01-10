@@ -58,7 +58,6 @@ module.exports = {
       .end()
       .use('url-loader')
       .loader('url-loader')
-      .options({ limit: 8192 })
       .end()
 
     // set svg-sprite-loader
