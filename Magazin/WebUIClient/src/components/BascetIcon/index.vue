@@ -1,23 +1,29 @@
 <template>
-<div>
-    <span>{{itemInBascet}}</span>
-    <v-icon color="red">mdi-cart</v-icon>
-</div>
+  <div>
+    <v-badge :content="itemInBascet" :value="itemInBascet" color="#fafafa" overlap>
+      <v-icon large>mdi-cart</v-icon>
+    </v-badge>
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'bascetIcon',
+    name: 'BascetIcon',
     props: {},
     data() {
-        return {}
+        return {
+        }
     },
     computed: {
         itemInBascet() {
-            const count = this.$store.state.products.length;
-            return count;
+            const count = this.$store.state.products.length
+            return count
         }
     }
 
 }
 </script>
+
+<style scoped>
+
+</style>
