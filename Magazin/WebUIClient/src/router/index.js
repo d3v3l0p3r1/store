@@ -29,6 +29,12 @@ const routes = [
     name: 'news',
     component: () => import('@/pages/news/index'),
     meta: { title: 'Новости', icon: '' }
+  },
+  {
+    path: '/bascet',
+    name: 'bascet',
+    component: () => import('@/pages/bascet/index'),
+    meta: { title: 'Корзина' }
   }
 ]
 
