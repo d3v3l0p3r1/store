@@ -1,7 +1,7 @@
 <template>
-  <v-simple-table>
+  <v-simple-table light>
     <thead>
-      <th>Товар</th>
+      <th colspan="2">Товар</th>
       <th>Цена</th>
       <th>Количество</th>
       <th>Итого</th>
@@ -10,32 +10,35 @@
     <tbody>
       <tr v-for="item in Items" :key="item.product.id">
         <td>
-          <div>
-            <v-img
-              v-if="item.product.fileId != null"
-              :aspect-ratio="1"
-              :src="getFileUrl(item.product.fileId)"
-              class="product-image"
-            >
-              <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular indeterminate color="grey lighten-5" />
-                </v-row>
-              </template>
-            </v-img>
-            <v-img v-else :aspect-ratio="1" src="/images/no-image.png" class="product-image">
-              <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular indeterminate color="grey lighten-5" />
-                </v-row>
-              </template>
-            </v-img>
-          </div>
-          <div>
-            {{ item.product.title }}
-          </div>
+          <v-img
+            v-if="item.product.fileId != null"
+            :aspect-ratio="1"
+            :src="getFileUrl(item.product.fileId)"
+            class="product-image"
+          >
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular indeterminate color="grey lighten-5" />
+              </v-row>
+            </template>
+          </v-img>
+          <v-img v-else :aspect-ratio="1" src="/images/no-image.png" class="product-image">
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular indeterminate color="grey lighten-5" />
+              </v-row>
+            </template>
+          </v-img>
         </td>
-        <td />
+        <td>{{ item.product.title }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.count }}</td>
+        <td>{{ item.count * item.price }} </td>
+        <td>
+          <v-btn icon>
+            <v-icon>mdi-delete</v-icon>
+          </v-btn>
+        </td>
       </tr>
     </tbody>
   </v-simple-table>
