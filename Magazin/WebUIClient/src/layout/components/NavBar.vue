@@ -3,23 +3,25 @@
     <v-img src="/images/a.png" width="50px" max-height="50px" max-width="100px" />
     <v-spacer />
     <BascetIcon />
-    <template slot="extension">      
-      <v-spacer />
+    <template slot="extension">
       <!-- Main toolbar -->
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn v-for="route in Routes" :key="route.link" text :to="route.link" class="main-navigation--button"> {{ route.title }}</v-btn>
       </v-toolbar-items>
       <!-- end main toolbar -->
-      <v-menu class="hidden-sm-and-up">
-        <template v-slot:activator="{ on }">
-          <v-app-bar-nav-icon v-on="on" />
-        </template>
-        
+      <div class="hidden-md-and-up">
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+        <span>Меню</span>
+      </div>
+      <v-navigation-drawer v-model="drawer" app right light absolute class="hidden-md-and-up">
         <v-list>
-          <v-list-item v-for="route in Routes" :key="route.link" :to="route.link"> {{ route.title }} </v-list-item>
+          <v-list-item v-for="route in Routes" :key="route.link" link :to="route.link">
+            <v-list-item-content>
+              <v-list-item-title>{{ route.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </v-list>
-      </v-menu>
-      <v-spacer />
+      </v-navigation-drawer>
     </template>
   </v-app-bar>
 </template>
@@ -32,7 +34,8 @@ export default {
   components: { BascetIcon },
   data() {
     return {
-      Routes: Routes
+      Routes: Routes,
+      drawer: false
     }
   },
   computed: {

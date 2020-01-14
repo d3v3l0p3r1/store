@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-badge :content="itemInBascet" :value="itemInBascet" color="#fafafa" overlap>
+    <v-badge :content="itemInBascet" overlap :value="itemInBascet != 0">
       <v-icon large>mdi-cart</v-icon>
     </v-badge>
   </div>
@@ -17,6 +17,7 @@ export default {
     computed: {
         itemInBascet() {
             const count = this.$store.state.products.length
+            console.log('Count:', count)
             return count
         }
     }

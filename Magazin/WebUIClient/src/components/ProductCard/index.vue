@@ -12,10 +12,10 @@
         </v-row>
       </template>
     </v-img>
-    <v-img :aspect-ratio="1" v-else src="/images/no-image.png" class="product-image">
+    <v-img v-else :aspect-ratio="1" src="/images/no-image.png" class="product-image">
       <template v-slot:placeholder>
         <v-row class="fill-height ma-0" align="center" justify="center">
-          <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+          <v-progress-circular indeterminate color="grey lighten-5" />
         </v-row>
       </template>
     </v-img>
@@ -26,7 +26,7 @@
 
     <v-card-actions class="product-actions">
       <v-spacer />
-      <v-btn @click="addToBascetHandle(product)" class="bascet-button">
+      <v-btn class="bascet-button" @click="addToBascetHandle(product)">
         <v-icon>mdi-cart</v-icon>
         <span>В корзину</span>
       </v-btn>
@@ -35,10 +35,10 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
-
+import { mapMutations } from 'vuex'
+import { getFileUrl } from '@/api/file'
 export default {
-  name: "ProductCard",
+  name: 'ProductCard',
   props: {
     product: {
       type: Object,
@@ -46,15 +46,18 @@ export default {
     }
   },
   data() {
-    return {};
+    return {}
   },
   methods: {
-    addToBascetHandle(product) {
-      this.addToBascet({ product: product, count: 1 });
+    getFileUrl(id) {
+      return getFileUrl(id)
     },
-    ...mapMutations(["addToBascet"])
+    addToBascetHandle(product) {
+      this.addToBascet({ product: product, count: 1 })
+    },
+    ...mapMutations(['addToBascet'])
   }
-};
+}
 </script>
 
 <style scoped>
