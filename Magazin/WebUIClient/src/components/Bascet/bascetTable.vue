@@ -31,9 +31,13 @@
           </v-img>
         </td>
         <td>{{ item.product.title }}</td>
-        <td>{{ item.price }}</td>
-        <td>{{ item.count }}</td>
-        <td>{{ item.count * item.price }} </td>
+        <td>{{ item.product.price }}</td>
+        <td>
+          <div class="bascet-quntity-buttons">
+            <v-text-field v-model="item.count" type="number" append="+" prepend="-" />
+          </div>
+        </td>
+        <td>{{ item.count * item.product.price }} </td>
         <td>
           <v-btn icon>
             <v-icon>mdi-delete</v-icon>
@@ -68,5 +72,10 @@ export default {
   max-width: 100%;
   height: 50%;
   padding: 2px;
+}
+
+.bascet-quntity-buttons {
+  display: inline-block;
+  vertical-align: middle;
 }
 </style>

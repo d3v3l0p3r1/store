@@ -59,7 +59,7 @@ export default {
       listLoading: false,
       pagination: {
         page: 1,
-        limit: 40,
+        limit: 42,
         total: 0
       }
     }
@@ -109,7 +109,7 @@ export default {
 
       if (this.$route.query.categoryId) {
         this.selectedCategory = this.categories.filter(
-          x => x.id == this.$route.query.categoryId
+          x => x.id === this.$route.query.categoryId
         )[0]
 
         if (!this.selectedCategory) {
