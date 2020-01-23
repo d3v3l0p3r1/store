@@ -1,14 +1,20 @@
 <template>
-  <v-app-bar app extended class="main-menu" dark height="90px">
-    <v-img src="/images/a.png" width="50px" max-height="50px" max-width="100px" />
-    <v-spacer />
-    <BascetIcon />
-    <template slot="extension">
-      <!-- Main toolbar -->
+  <div>
+    <v-system-bar app dark class="system-bar">
+      <v-spacer />
+      <v-btn to="/login">Login</v-btn>
+    </v-system-bar>
+    <v-app-bar app class="main-menu" light height="90px">      
+      <a href="/" class="main-link">Indigo</a>
+      <v-spacer />
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn v-for="route in Routes" :key="route.link" text :to="route.link" class="main-navigation--button"> {{ route.title }}</v-btn>
+        <v-btn v-for="route in Routes" :key="route.link" text :to="route.link" class="main-navigation--button">
+          <span class="main-toolbar--link">
+            {{ route.title }}
+          </span>
+        </v-btn>
       </v-toolbar-items>
-      <!-- end main toolbar -->
+      <!--Mobile toolbar-->
       <div class="hidden-md-and-up">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
         <span>Меню</span>
@@ -17,13 +23,20 @@
         <v-list>
           <v-list-item v-for="route in Routes" :key="route.link" link :to="route.link">
             <v-list-item-content>
-              <v-list-item-title>{{ route.title }}</v-list-item-title>
+              <v-list-item-title>
+                <span class="main-link">
+                  {{ route.title }}
+                </span>
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
       </v-navigation-drawer>
-    </template>
-  </v-app-bar>
+      <!--END Mobile toolbar-->
+      <v-spacer />
+      <BascetIcon />
+    </v-app-bar>
+  </div>
 </template>
 
 <script>
@@ -53,15 +66,32 @@ export default {
   color: #2e2e2e;
 }
 .main-menu {
-  background-color: #560082 !important;
+  background-color: #ffffff !important;
 }
 
 .main-menu--tab {
-  background-color: #002e4f !important;
+  background-color: #ffffff !important;
 }
 
 .main-navigation--button {
-  color: #fafafa;
+  color: #000000;
+}
+
+.system-bar {
+  background-color: #000000;
+}
+
+.main-link {
+  font-family: "TuesdayNight" !important;
+  font-size: 52px;;
+  font-weight: 400;
+  text-decoration: none;
+  color: indigo;
+  padding-left: 40px;
+}
+
+.main-toolbar--link {
+  font-family: "Lato,sans-serif"
 }
 
 </style>

@@ -1,6 +1,23 @@
 <template>
   <v-container class="pa-10">
     <v-row no-gutters>
+      <v-col class="col-md-9 col-xs-12 col-right">
+        <div class="product-wrap">
+          <ProductCard
+            v-for="p in products"
+            :key="p.id"
+            :product="p"
+            class="col-lg-3 ma-4"
+          />
+          <v-pagination
+            v-if="pagination.total > pagination.limit"
+            v-model="pagination.page"
+            :per-page="pagination.limit"
+            :length="totalPages"
+          />
+        </div>
+      </v-col>
+
       <v-col class="col-md-3 col-xs-12 col-left">
         <v-container>
           <v-treeview
@@ -13,40 +30,24 @@
             :hoverable="true"
           >
             <template slot="label" slot-scope="{ item }">
-              <div @click="handleCategoryClick(item)">{{item.title}}</div>
+              <div @click="handleCategoryClick(item)">{{ item.title }}</div>
             </template>
           </v-treeview>
         </v-container>
       </v-col>
 
-      <v-col class="col-md-9 col-xs-12 col-right">
-        <div style="display: flex; flex-wrap: wrap;">
-          <ProductCard
-            v-for="p in products"
-            :key="p.id"
-            :product="p"
-            class="col-lg-3 col-md-4 col-sm-6 col-sms-6 col-smb-12"
-          />
-          <v-pagination
-            v-if="pagination.total > pagination.limit"
-            v-model="pagination.page"
-            :per-page="pagination.limit"
-            :length="totalPages"
-          />
-        </div>
-      </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import { getAll } from "@/api/product";
-import { getAll as categoryGetAll } from "@/api/category";
-import { getFileUrl } from "@/api/file";
-import ProductCard from "@/components/ProductCard/index";
+import { getAll } from '@/api/product'
+import { getAll as categoryGetAll } from '@/api/category'
+import { getFileUrl } from '@/api/file'
+import ProductCard from '@/components/ProductCard/index'
 
 export default {
-  name: "ProductList",
+  name: 'ProductList',
   components: { ProductCard },
   props: {},
   data() {
@@ -61,86 +62,91 @@ export default {
         limit: 40,
         total: 0
       }
-    };
-  },
-  watch: {
-    pagination: {
-      handler(n, o) {
-        this.getAll();
-      },
-      deep: true
-    },
-    $route: function(to, from) {
-      this.getAll();
     }
-  },
-  created() {
-    this.getAllCategory();
   },
   computed: {
     totalPages() {
       if (this.pagination.total > 0) {
-        var res = Math.trunc(this.pagination.total / this.pagination.limit);
+        var res = Math.trunc(this.pagination.total / this.pagination.limit)
         if (this.pagination.total % this.pagination.limit) {
-          res++;
+          res++
         }
-        return res;
+        return res
       }
-      return 0;
+      return 0
     }
+  },
+  watch: {
+    pagination: {
+      handler(n, o) {
+        this.getAll()
+      },
+      deep: true
+    },
+    $route: function(to, from) {
+      this.getAll()
+    }
+  },
+  created() {
+    this.getAllCategory()
   },
   methods: {
     async getAll() {
-      this.listLoading = true;
-      var catID = this.$route.query.categoryId;
+      this.listLoading = true
+      var catID = this.$route.query.categoryId
       const res = await getAll(
         this.pagination.page,
         this.pagination.limit,
         catID
-      );
-      this.products = res.data;
-      this.pagination.total = res.total;
-      this.listLoading = false;
+      )
+      this.products = res.data
+      this.pagination.total = res.total
+      this.listLoading = false
     },
     async getAllCategory() {
-      const res = await categoryGetAll();
-      this.categories = res.data;
+      const res = await categoryGetAll()
+      this.categories = res.data
 
       if (this.$route.query.categoryId) {
         this.selectedCategory = this.categories.filter(
           x => x.id == this.$route.query.categoryId
-        )[0];
+        )[0]
 
         if (!this.selectedCategory) {
           this.selectedCategory = this.categories.forEach(x => {
             if (this.findCategory(x)) {
-              return x;
+              return x
             }
-          });
+          })
         }
       }
 
-      this.getAll();
+      this.getAll()
     },
     getFileUrl(id) {
-      return getFileUrl(id);
+      return getFileUrl(id)
     },
     handleCategoryClick(val) {
-      this.$router.push({ path: "/catalog", query: { categoryId: val.id } });
+      this.$router.push({ path: '/catalog', query: { categoryId: val.id }})
     },
     findCategory(category) {
       var res = category.childs.filter(
         x => x.id == this.$route.query.categoryId
-      );
+      )
       if (res.length === 0) {
         category.childs.forEach(x => {
-          this.findCategory(x);
-        });
+          this.findCategory(x)
+        })
       }
     }
   }
-};
+}
 </script>
 
 <style scoped>
+.product-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+}
 </style>

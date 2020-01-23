@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app light :style="{ background: '#ffffff'}">
     <NavBar />
     <AppMain />
     <Footer />
@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import { NavBar, AppMain, Footer } from './components';
+import { NavBar, AppMain, Footer } from './components'
 export default {
   name: 'Layout',
   components: { NavBar, AppMain, Footer }
-};
+}
 </script>

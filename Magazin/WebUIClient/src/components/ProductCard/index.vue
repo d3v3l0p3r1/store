@@ -1,5 +1,5 @@
 <template>
-  <v-card hover outlined class="product-card">
+  <v-card class="product-card">
     <v-img
       v-if="product.fileId != null"
       :aspect-ratio="1"
