@@ -67,7 +67,7 @@ namespace DataCore.DAL
         {
             var fake = new Faker(locale: "ru");
 
-            for (var i = 0; i < 100; i++)
+            for (var i = 0; i < 20; i++)
             {
                 var brand = new Brand()
                 {
@@ -95,9 +95,10 @@ namespace DataCore.DAL
                     var product = new Product()
                     {
                         Title = fake.Commerce.ProductName(),
-                        BrandId = random.Next(1, 100),
+                        BrandId = random.Next(1, 20),
                         CategoryId = productCategory.Id,
-                        Description = fake.Lorem.Text()
+                        Description = fake.Lorem.Text(),
+                        Price = random.Next(100, 10999)
                     };
 
                     dataContext.Add(product);

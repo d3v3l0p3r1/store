@@ -32,7 +32,7 @@ namespace DataCore.Services.Concrete
             using var ms = mainFile.OpenReadStream();
             var mainImage = await _fileService.SaveFile(mainFile.FileName, ms);
 
-            product.FileID = mainImage.Id;
+            product.FileId = mainImage.Id;
 
             await CreateAsync(product);
 
@@ -58,7 +58,7 @@ namespace DataCore.Services.Concrete
                 using var ms = mainImage.OpenReadStream();
                 var mainFd = await _fileService.SaveFile(mainImage.FileName, ms);
 
-                product.FileID = mainFd.Id;
+                product.FileId = mainFd.Id;
             }
 
             var currentImageIds = product.Images.Select(x => x.Id);
@@ -110,7 +110,7 @@ namespace DataCore.Services.Concrete
                         CateogryId = product.Category.Id,
                         Title = product.Title,
                         Description = product.Description,
-                        File = product.FileID != null ? url + product.FileID : url + 1,
+                        File = product.FileId != null ? url + product.FileId : url + 1,
                         KindId = product.KindId,
                         KingTitle = product.Kind.Title,
                         Price = -100,
