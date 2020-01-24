@@ -34,7 +34,18 @@
         <td>{{ item.product.price }}</td>
         <td>
           <div class="bascet-quntity-buttons">
-            <v-text-field v-model="item.count" type="number" append="+" prepend="-" />
+            <v-text-field v-model="item.count" dense solo type="number" class="inputCount" hide-details single-line>
+              <template slot="prepend-inner">
+                <v-btn icon>
+                  <v-icon>mdi-minus</v-icon>                  
+                </v-btn>
+              </template>
+              <template slot="append">
+                <v-btn icon>
+                  <v-icon>mdi-plus</v-icon>
+                </v-btn>
+              </template>
+            </v-text-field>
           </div>
         </td>
         <td>{{ item.count * item.product.price }} </td>
@@ -78,4 +89,13 @@ export default {
   display: inline-block;
   vertical-align: middle;
 }
+
+.inputCount input[type='number'] {
+    -moz-appearance:textfield;
+}
+.inputCount input::-webkit-outer-spin-button,
+.inputCount input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
 </style>
