@@ -34,17 +34,13 @@
         <td>{{ item.product.price }}</td>
         <td>
           <div class="bascet-quntity-buttons">
-            <v-text-field v-model="item.count" dense solo type="number" class="inputCount" hide-details single-line>
-              <template slot="prepend-inner">
-                <v-btn icon>
-                  <v-icon>mdi-minus</v-icon>                  
-                </v-btn>
-              </template>
-              <template slot="append">
-                <v-btn icon>
-                  <v-icon>mdi-plus</v-icon>
-                </v-btn>
-              </template>
+            <v-text-field v-model="item.count" dense solo flat class="inputCount" hide-details single-line type="number">
+              <v-btn slot="prepend-inner" icon>
+                <v-icon @click="handleMinusClick(item)">mdi-minus</v-icon>
+              </v-btn>
+              <v-btn slot="append" icon>
+                <v-icon @click="handlePlusClick(item)">mdi-plus</v-icon>
+              </v-btn>
             </v-text-field>
           </div>
         </td>
@@ -73,6 +69,12 @@ export default {
     methods: {
         getFileUrl(id) {
             return getFileUrl(id)
+        },
+        handleMinusClick(item) {
+          if (item.count >= 0) { item.count-- }
+        },
+        handlePlusClick(item) {
+          item.count++
         }
     }
 }
