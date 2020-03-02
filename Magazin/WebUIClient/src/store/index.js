@@ -16,6 +16,15 @@ export default new Vuex.Store({
       } else {
         state.products.push(bascetItem)
       }
+    },
+    incrementBascetItem(state, bascetItem) {
+      bascetItem.count++
+    },
+    decrementBascetItem(Store, bascetItem) {      
+      if (bascetItem.count >= 0) { bascetItem.count-- }
+    },
+    removeFromBascet(state, item) {
+      state.products = state.products.filter(x => x.product !== item.product)
     }
   },
   actions: {

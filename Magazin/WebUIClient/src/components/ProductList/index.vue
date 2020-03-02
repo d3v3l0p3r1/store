@@ -131,7 +131,7 @@ export default {
     },
     findCategory(category) {
       var res = category.childs.filter(
-        x => x.id == this.$route.query.categoryId
+        x => x.id === this.$route.query.categoryId
       )
       if (res.length === 0) {
         category.childs.forEach(x => {

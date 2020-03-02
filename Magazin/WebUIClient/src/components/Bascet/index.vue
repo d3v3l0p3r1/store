@@ -3,7 +3,6 @@
     <v-tabs centered>
       <v-tab key="bascet" href="#bascet">Корзина</v-tab>
       <v-tab key="order" href="#order">Заказ</v-tab>
-
       <v-tab-item value="bascet">
         <BascetTable />
       </v-tab-item>
