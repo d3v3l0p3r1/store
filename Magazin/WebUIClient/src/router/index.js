@@ -35,6 +35,11 @@ const routes = [
     name: 'bascet',
     component: () => import('@/pages/bascet/index'),
     meta: { title: 'Корзина' }
+  },
+  {
+    path: '/createOrder',
+    name: 'createOrder',
+    component: () => import('@/views/CreateOrderView/CreateOrder')
   }
 ]
 

@@ -64,7 +64,7 @@
           </tr>
         </tbody>
       </v-simple-table>
-      <v-btn block>Перейти к оформлению ></v-btn>
+      <v-btn dark tile large to="/createOrder">Перейти к оформлению</v-btn>
     </div>
   </div>
 </template>

@@ -1,15 +1,9 @@
 <template>
   <div>
-    <v-tabs centered>
-      <v-tab key="bascet" href="#bascet">Корзина</v-tab>
-      <v-tab key="order" href="#order">Заказ</v-tab>
-      <v-tab-item value="bascet">
-        <BascetTable />
-      </v-tab-item>
-      <v-tab-item value="order">
-        <div>Заказ</div>
-      </v-tab-item>
-    </v-tabs>
+    <v-container class="pa-12">
+      <h2>Корзина</h2>
+      <BascetTable />
+    </v-container>
   </div>
 </template>
 
@@ -19,8 +13,7 @@ import BascetTable from './bascetTable'
 export default {
     components: { BascetTable },
     data() {
-        return {
-            tabs: null
+        return {            
         }
     },
     computed: {        

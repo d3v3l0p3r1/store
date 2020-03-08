@@ -26,7 +26,7 @@
 
     <v-card-actions class="product-actions">
       <v-spacer />
-      <v-btn class="bascet-button" @click="addToBascetHandle(product)">
+      <v-btn block dark tile large @click="addToBascetHandle(product)">
         <v-icon>mdi-cart</v-icon>
         <span>В корзину</span>
       </v-btn>
