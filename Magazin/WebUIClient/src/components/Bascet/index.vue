@@ -13,10 +13,10 @@ import BascetTable from './bascetTable'
 export default {
     components: { BascetTable },
     data() {
-        return {            
+        return {
         }
     },
-    computed: {        
+    computed: {
     }
 
 }
