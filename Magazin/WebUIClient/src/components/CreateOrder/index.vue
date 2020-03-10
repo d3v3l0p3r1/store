@@ -1,18 +1,23 @@
 <template>
 <v-container class="pa-12">
-    <div class="row">
-
-        <div class="sm-6">
-            <h3>Информация о заказе</h3>
-        </div>
+    <h3>Информация о заказе</h3>     
+    <div>
         <div>
-            <v-text-field label="Имя"></v-text-field>
-            <v-text-field label="Фамилия"></v-text-field>
-        </div>
+        <span>Имя</span>
+        <v-text-field solo></v-text-field>
 
-        <div class="sm-6">
+        <span>Фамилия</span>
+        <v-text-field solo ></v-text-field>
         </div>
+        
     </div>
+    <div>
+        <v-text-field full-width label="Адрес доставки"></v-text-field>
+    </div>
+    <div>
+        <v-text-field full-width label="Телефон" type="phone"></v-text-field>
+    </div>
+    
 </v-container>
     
 </template>
