@@ -35,7 +35,7 @@
     </div>
 
     <div>
-      <v-btn @click="sumbitOrder()">Подтвердить заказ</v-btn>
+      <v-btn :loading="isLoading" @click="sumbitOrder()">Подтвердить заказ</v-btn>
     </div>
 
   </v-container>
@@ -56,7 +56,8 @@ export default {
                 address: null,
                 phone: null,
                 comment: null
-            }
+            },
+            isLoading: false
         }
     },
     computed: {
@@ -70,16 +71,11 @@ export default {
                 phone: this.orderInfo.phone,
                 products: this.$store.state.products
             }
-
-            try {
-                const res = await createOrder(orderModel)
-                console.log(res)
-                this.addOrder(res)
-                this.$router.push({ path: '/orders' })
-                
-            } catch (error) {
-
-            }
+            this.isLoading = true
+            const res = await createOrder(orderModel)
+            this.isLoading = false
+            this.addOrder(res)
+            this.$router.push({ path: '/orders' })
         },
         ...mapMutations(['addOrder'])
     }
