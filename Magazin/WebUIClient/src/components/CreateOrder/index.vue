@@ -71,14 +71,17 @@ export default {
                 phone: this.orderInfo.phone,
                 products: this.$store.state.products
             }
+            try {
             this.isLoading = true
             const res = await createOrder(orderModel)
             this.isLoading = false
             this.addOrder(res)
             this.$router.push({ path: '/orders' })
+            } finally {
+              this.isLoading = false
+            }
         },
         ...mapMutations(['addOrder'])
     }
-
 }
 </script>
