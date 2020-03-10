@@ -25,6 +25,16 @@
     </div>
 
     <div>
+      <table>
+        <tbody>
+          <tr>
+            <td />
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
       <v-btn @click="sumbitOrder()">Подтвердить заказ</v-btn>
     </div>
 
@@ -34,6 +44,7 @@
 
 <script>
 import { createOrder } from '@/api/order'
+import { mapMutations } from 'vuex'
 
 export default {
     name: 'CreateOrder',
@@ -48,18 +59,29 @@ export default {
             }
         }
     },
+    computed: {
+    },
     methods: {
-        sumbitOrder() {
+        async sumbitOrder() {
             const orderModel = {
                 address: this.orderInfo.address,
                 comment: this.orderInfo.comment,
                 name: this.orderInfo.lastName + ' ' + this.orderInfo.firstName,
                 phone: this.orderInfo.phone,
-                products: []
+                products: this.$store.state.products
             }
 
-            createOrder(orderModel)
-        }
+            try {
+                const res = await createOrder(orderModel)
+                console.log(res)
+                this.addOrder(res)
+                this.$router.push({ path: '/orders' })
+                
+            } catch (error) {
+
+            }
+        },
+        ...mapMutations(['addOrder'])
     }
 
 }

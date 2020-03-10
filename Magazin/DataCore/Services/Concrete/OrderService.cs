@@ -30,15 +30,10 @@ namespace DataCore.Services.Concrete
             {
                 UserID = userID,
                 Date = DateTime.Now,
-                DeliveryTime = model.DeliveryTime,
-                DeliveryType = model.DeliveryType,
                 Address = model.Address,
                 Phone = model.Phone,
                 Comment = model.Comment,
-                Change = model.Change,
-                PersonCount = model.PersonCount,
                 UserName = model.Name,
-
                 Products = new List<OrderProduct>()
             };
 

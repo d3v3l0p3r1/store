@@ -39,7 +39,12 @@ const routes = [
   {
     path: '/createOrder',
     name: 'createOrder',
-    component: () => import('@/views/CreateOrderView/CreateOrder')
+    component: () => import('@/views/CreateOrderView/index')
+  },
+  {
+    path: '/orders',
+    name: 'orders',
+    component: () => import('@/views/Orders/index')
   }
 ]
 

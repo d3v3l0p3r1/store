@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    products: [] // { product, count }
+    products: [], // { product, count }
+    orders: [] // orders
   },
   mutations: {
     initialiseStore(state) {
@@ -14,14 +15,13 @@ export default new Vuex.Store({
       }
     },
     addToBascet(state, bascetItem) {
-      console.log(bascetItem)
       var index = state.products.find(x => x.product.id === bascetItem.product.id)
       if (index != null) {
         index.count++
       } else {
         state.products.push(bascetItem)
       }
-    },
+    },    
     incrementBascetItem(state, bascetItem) {
       bascetItem.count++
     },
@@ -30,6 +30,9 @@ export default new Vuex.Store({
     },
     removeFromBascet(state, item) {
       state.products = state.products.filter(x => x.product !== item.product)
+    },
+    addOrder(state, order) {
+      state.orders.push(order)
     }
   },
   actions: {
