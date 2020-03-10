@@ -35,7 +35,7 @@
     </div>
 
     <div>
-      <v-btn :loading="isLoading" @click="sumbitOrder()">Подтвердить заказ</v-btn>
+      <v-btn :loading="isLoading" dark @click="sumbitOrder()">Подтвердить заказ</v-btn>
     </div>
 
   </v-container>
