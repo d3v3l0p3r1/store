@@ -25,6 +25,10 @@
     </div>
 
     <div>
+      <span>Способ оплаты</span>
+    </div>
+
+    <div>
       <table>
         <tbody>
           <tr>
@@ -45,6 +49,7 @@
 <script>
 import { createOrder } from '@/api/order'
 import { mapMutations } from 'vuex'
+import { cache, card } from "@/utils/paymentType"
 
 export default {
     name: 'CreateOrder',
