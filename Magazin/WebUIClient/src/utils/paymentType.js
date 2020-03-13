@@ -1,4 +1,4 @@
 export default {
-    Cache: 0,
-    Card: 1
+    cache: 0,
+    card: 1
 }

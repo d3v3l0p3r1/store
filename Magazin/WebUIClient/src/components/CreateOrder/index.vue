@@ -26,6 +26,7 @@
 
     <div>
       <span>Способ оплаты</span>
+      <v-select v-model="orderInfo.paymentType" :items="paymentTypes" solo />
     </div>
 
     <div>
@@ -49,7 +50,7 @@
 <script>
 import { createOrder } from '@/api/order'
 import { mapMutations } from 'vuex'
-import { cache, card } from "@/utils/paymentType"
+import paymentType from '@/utils/paymentType'
 
 export default {
     name: 'CreateOrder',
@@ -60,12 +61,19 @@ export default {
                 lastName: null,
                 address: null,
                 phone: null,
-                comment: null
+                comment: null,
+                paymentType: null
             },
             isLoading: false
         }
     },
     computed: {
+      paymentTypes() {
+        return [
+          { text: 'Наличными курьеру', value: paymentType.cache },
+          { text: 'Картой', value: paymentType.card }
+        ]
+      }
     },
     methods: {
         async sumbitOrder() {
