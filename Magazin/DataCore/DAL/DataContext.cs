@@ -31,7 +31,6 @@ namespace DataCore.DAL
         public DbSet<PersistedGrant> PersistedGrants { get; set; }
         public DbSet<DeviceFlowCodes> DeviceFlowCodes { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
-        public DbSet<ProductPrice> ProductPrices { get; set; }
         public DbSet<Contractor> Contractors { get; set; }
         public DbSet<Brand> Brands { get; set; }
 
@@ -74,9 +73,6 @@ namespace DataCore.DAL
 
             builder.Entity<Balance>()
                 .HasMany(x => x.BalanceEntries).WithOne(x => x.Balance);
-
-            builder.Entity<ProductPrice>()
-                .HasOne(x => x.Product);
 
             builder.Entity<Contractor>()
                 .HasOne(x => x.Image);

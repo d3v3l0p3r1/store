@@ -34,6 +34,7 @@ namespace DataCore.Services.Concrete
                 Phone = model.Phone,
                 Comment = model.Comment,
                 UserName = model.Name,
+                State = OrderState.New,
                 Products = new List<OrderProduct>()
             };
 
@@ -48,7 +49,7 @@ namespace DataCore.Services.Concrete
                     {
                         p.Id,
                         m.Count,
-
+                        p.Price
                     });
 
 
@@ -59,13 +60,13 @@ namespace DataCore.Services.Concrete
                 {
                     ProductID = product.Id,
                     Count = product.Count,
+                    Price = product.Price
                 };
 
                 order.Products.Add(orderProduct);
             }
 
             RecalculateTotalAmount(order);
-
 
             order = await CreateAsync(order);
 

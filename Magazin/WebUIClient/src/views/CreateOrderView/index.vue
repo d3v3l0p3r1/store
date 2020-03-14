@@ -1,10 +1,10 @@
 <template>
-    <CreateOrder />
+  <CreateOrder />
 </template>
 
 <script>
 
-import CreateOrder from "@/components/CreateOrder/index"
+import CreateOrder from '@/components/CreateOrder/index'
 export default {
     components: { CreateOrder }
 }

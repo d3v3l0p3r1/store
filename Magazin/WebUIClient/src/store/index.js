@@ -21,7 +21,7 @@ export default new Vuex.Store({
       } else {
         state.products.push(bascetItem)
       }
-    },    
+    },
     incrementBascetItem(state, bascetItem) {
       bascetItem.count++
     },
@@ -33,6 +33,7 @@ export default new Vuex.Store({
     },
     addOrder(state, order) {
       state.orders.push(order)
+      state.products = []
     }
   },
   actions: {
