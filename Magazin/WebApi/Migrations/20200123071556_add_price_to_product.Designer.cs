@@ -3,15 +3,17 @@ using System;
 using DataCore.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200123071556_add_price_to_product")]
+    partial class add_price_to_product
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -556,7 +558,7 @@ namespace WebApi.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<long?>("FileId")
+                    b.Property<long?>("FileID")
                         .HasColumnType("bigint");
 
                     b.Property<bool>("Hidden")
@@ -579,7 +581,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("FileId");
+                    b.HasIndex("FileID");
 
                     b.HasIndex("KindId");
 
@@ -1431,7 +1433,7 @@ namespace WebApi.Migrations
 
                     b.HasOne("BaseCore.Entities.FileData", "File")
                         .WithMany()
-                        .HasForeignKey("FileId");
+                        .HasForeignKey("FileID");
 
                     b.HasOne("DataCore.Entities.ProductKind", "Kind")
                         .WithMany()

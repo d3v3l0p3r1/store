@@ -60,7 +60,8 @@ namespace WebUiAdmin.Controllers.Api
                 Description = x.Description,
                 Title = x.Title,
                 Kind = x.Kind.Title,
-                FileId = x.FileID
+                FileId = x.FileId,
+                Price = x.Price
             });
 
             var listResponse = new ListRespone<ProductDto>()

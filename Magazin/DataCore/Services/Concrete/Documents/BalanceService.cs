@@ -118,7 +118,7 @@ namespace DataCore.Services.Concrete.Documents
                 Count = x.BalanceEntries.Sum(z => z.Count),
                 CateogryId = x.Product.CategoryId,
                 Description = x.Product.Description,
-                File = x.Product.FileID != null ? url + x.Product.FileID : url + 1,
+                File = x.Product.FileId != null ? url + x.Product.FileId : url + 1,
                 KindId = x.Product.KindId,
                 Id = x.ProductId,
                 KingTitle = x.Product.Kind.Title,

@@ -17,7 +17,7 @@ namespace DataCore.Entities
         [Display(Name = "Описание")]
         public string Description { get; set; }
 
-        public long? FileID { get; set; }
+        public long? FileId { get; set; }
         [Display(Name = "Файл")]
         public FileData File { get; set; }
 
@@ -35,6 +35,8 @@ namespace DataCore.Entities
         public long BrandId { get; set; }
         public Brand Brand { get; set; }
 
+        [DisplayName("Цена")]
+        public decimal Price { get; set; }
     }
 
     public class ProductImage : BaseEntity

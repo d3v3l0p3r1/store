@@ -1,15 +1,15 @@
 <template>
-  <v-app>    
-    <NavBar />    
+  <v-app light :style="{ background: '#ffffff'}">
+    <NavBar />
     <AppMain />
     <Footer />
   </v-app>
 </template>
 
 <script>
-import { NavBar, AppMain, Footer, Header } from './components'
+import { NavBar, AppMain, Footer } from './components'
 export default {
-    name: 'Layout',
-    components: { NavBar, AppMain, Footer, Header }
+  name: 'Layout',
+  components: { NavBar, AppMain, Footer }
 }
 </script>

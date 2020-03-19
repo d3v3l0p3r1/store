@@ -36,7 +36,6 @@ namespace WebUiAdmin
             services.AddScoped<IBalanceService, BalanceService>();
             services.AddScoped<IIncomingDocumentService, IncomingDocumentService>();
             services.AddScoped<IOutcomingDocumentService, OutcomingDocumentService>();
-            services.AddScoped<IProductPriceService, ProductPriceService>();
             services.AddScoped<IContractorService, ContractorService>();
 
             services.AddScoped<IRepository<Product>, Repository<Product>>();
@@ -51,7 +50,6 @@ namespace WebUiAdmin
             services.AddScoped<IRepository<IncomingDocumentEntry>, Repository<IncomingDocumentEntry>>();
             services.AddScoped<IRepository<OutComingDocument>, Repository<OutComingDocument>>();
             services.AddScoped<IRepository<OutComingDocumentEntry>, Repository<OutComingDocumentEntry>>();
-            services.AddScoped<IRepository<ProductPrice>, Repository<ProductPrice>>();
             services.AddScoped<IRepository<Contractor>, Repository<Contractor>>();
 
             services.AddScoped<IFileService, FileService>();

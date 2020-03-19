@@ -7,9 +7,16 @@ import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
 
-new Vue({  
+store.subscribe((muration, state) => {  
+  localStorage.setItem('store', JSON.stringify(state))
+})
+
+new Vue({
   router,
   store,
+  beforeCreate() {
+		this.$store.commit('initialiseStore')
+	},
   vuetify,
   render: h => h(App)
 }).$mount('#app')
