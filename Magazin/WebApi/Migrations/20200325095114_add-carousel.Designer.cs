@@ -3,15 +3,17 @@ using System;
 using DataCore.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200325095114_add-carousel")]
+    partial class addcarousel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -250,6 +252,24 @@ namespace WebApi.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<bool>("Hidden")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Carousels");
+                });
+
+            modelBuilder.Entity("DataCore.Entities.CarouselItem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<long>("CarouselId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
@@ -262,25 +282,21 @@ namespace WebApi.Migrations
                     b.Property<bool>("Hidden")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Href")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("integer");
 
                     b.Property<long?>("ProductId1")
                         .HasColumnType("bigint");
 
-                    b.Property<bool>("Show")
-                        .HasColumnType("boolean");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("CarouselId");
 
                     b.HasIndex("FileId");
 
                     b.HasIndex("ProductId1");
 
-                    b.ToTable("Carousels");
+                    b.ToTable("CarouselItem");
                 });
 
             modelBuilder.Entity("DataCore.Entities.Contractor", b =>
@@ -1339,8 +1355,14 @@ namespace WebApi.Migrations
                         .HasForeignKey("FileId");
                 });
 
-            modelBuilder.Entity("DataCore.Entities.Carousel", b =>
+            modelBuilder.Entity("DataCore.Entities.CarouselItem", b =>
                 {
+                    b.HasOne("DataCore.Entities.Carousel", "Carousel")
+                        .WithMany("Items")
+                        .HasForeignKey("CarouselId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BaseCore.Entities.FileData", "File")
                         .WithMany()
                         .HasForeignKey("FileId")

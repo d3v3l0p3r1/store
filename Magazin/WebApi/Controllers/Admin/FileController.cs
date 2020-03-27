@@ -44,31 +44,13 @@ namespace WebUiAdmin.Controllers
         [HttpPost]
         [Route("[action]")]
         [ProducesResponseType(typeof(FileData), 200)]
-        public async Task<IActionResult> SaveFile()
+        public async Task<IActionResult> SaveFile(IFormFile formFile)
         {
-            var reader = new MultipartReader(Request.GetMultipartBoundary(), HttpContext.Request.Body);
-            FileMultipartSection filePart;
-            bool isFileSection = false;
-
-            do
+            using (var stream = formFile.OpenReadStream())
             {
-                var section = await reader.ReadNextSectionAsync();
-                if (section == null)
-                {
-                    throw new Exception();
-                }
-
-                filePart = section.AsFileSection();
-
-                if (filePart != null)
-                {
-                    isFileSection = true;
-                }
-
-            } while (isFileSection == false);
-
-            var fileData = await _fileService.SaveFile(filePart.FileName, filePart.FileStream);
-            return new JsonResult(fileData);
+                var fileData = await _fileService.SaveFile(formFile.FileName, stream);
+                return new JsonResult(fileData);
+            }
         }
 
         /// <summary>

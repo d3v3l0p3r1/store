@@ -34,6 +34,7 @@ namespace DataCore.DAL
         public DbSet<Contractor> Contractors { get; set; }
         public DbSet<Brand> Brands { get; set; }
 
+        public DbSet<Carousel> Carousels { get; set; }
         private readonly IOptions<OperationalStoreOptions> _operationalStoreOptions;
 
         public DataContext()
