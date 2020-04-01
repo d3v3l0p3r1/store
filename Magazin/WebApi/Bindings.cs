@@ -1,24 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BaseCore.Entities;
+﻿using BaseCore.Catalogues.Services.Abstract;
+using BaseCore.Catalogues.Services.Concrete;
+using BaseCore.DAL.Abstractions.Repositories;
+using BaseCore.DAL.Implementations;
+using BaseCore.DAL.Implementations.Entities;
+using BaseCore.DAL.Implementations.Entities.Documents;
+using BaseCore.Documents.Abstractions.Services;
+using BaseCore.Documents.Implementations.Repositories.Abstractions;
+using BaseCore.Documents.Implementations.Repositories.Implementations;
+using BaseCore.Documents.Implementations.Services;
+using BaseCore.Documents.Implementations.Services.Abstractions;
+using BaseCore.File;
+using BaseCore.News.Services.Abstractions;
+using BaseCore.News.Services.Implementations;
+using BaseCore.Products.Abstractions.Services;
+using BaseCore.Products.Implementations.Services;
 using BaseCore.Security.Services.Abstract;
 using BaseCore.Security.Services.Concrete;
-using BaseCore.Services.Abstract;
-using DataCore.DAL;
-using DataCore.Entities;
-using DataCore.Entities.Documents;
-using DataCore.Repositories.Abstract;
-using DataCore.Repositories.Concrete;
-using DataCore.Services.Abstract;
-using DataCore.Services.Abstract.Documents;
-using DataCore.Services.Concrete;
-using DataCore.Services.Concrete.Documents;
 using Microsoft.Extensions.DependencyInjection;
-using WebUiAdmin.Concrete;
+using OneAssIntegration.Services.Abstractions;
+using OneAssIntegration.Services.Implementations;
+using WebApi.Concrete;
 
-namespace WebUiAdmin
+namespace WebApi
 {
     public static class Bindings
     {
@@ -38,7 +41,11 @@ namespace WebUiAdmin
             services.AddScoped<IOutcomingDocumentService, OutcomingDocumentService>();
             services.AddScoped<IContractorService, ContractorService>();
             services.AddScoped<ICarouselService, CarouselService>();
+            services.AddScoped<IBrandService, BrandService>();
 
+            #region Repositories
+
+            services.AddScoped<IRepository<Brand>, Repository<Brand>>();
             services.AddScoped<IRepository<Product>, Repository<Product>>();
             services.AddScoped<IRepository<ProductCategory>, Repository<ProductCategory>>();
             services.AddScoped<IRepository<FileData>, Repository<FileData>>();
@@ -54,6 +61,16 @@ namespace WebUiAdmin
             services.AddScoped<IRepository<Contractor>, Repository<Contractor>>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IRepository<Carousel>, Repository<Carousel>>();
+            #endregion
+
+            #region OneAss
+
+            services.AddScoped<IRepository<OneAssSync>, Repository<OneAssSync>>();
+            services.AddScoped<IProductFetcher, ProductFetcher>();
+
+            #endregion
+
+
 
         }
     }

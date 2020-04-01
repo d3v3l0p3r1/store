@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using DataCore.Entities;
-using DataCore.Services.Abstract;
-using Microsoft.AspNetCore.Http;
+using BaseCore.DAL.Implementations.Entities;
+using BaseCore.Products.Abstractions.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
-using WebApi.Models.Api.Category;
 
-namespace WebUiAdmin.Controllers.Api
+namespace WebApi.Controllers.Api
 {
     /// <summary>
     /// Категории продукта

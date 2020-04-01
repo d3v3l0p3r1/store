@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using DataCore.Entities;
-using DataCore.Services.Abstract;
+using BaseCore.DAL.Implementations.Entities;
+using BaseCore.Documents.Implementations.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebUiAdmin.Models.Api.Order;
 
-namespace WebUiAdmin.Controllers
+namespace WebApi.Controllers.Admin
 {
     /// <summary>
     /// Заказы
     /// </summary>
-    public class OrderController : BaseController<Order>
+    public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
 
-        public OrderController(IOrderService orderService) : base(orderService)
+        public OrderController(IOrderService orderService)
         {
             _orderService = orderService;
         }

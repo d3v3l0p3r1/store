@@ -1,20 +1,15 @@
 ﻿using BackendTest.Services.Concrete;
-using BaseCore.Security.Entities;
-using DataCore.DAL;
-using DataCore.Entities;
-using DataCore.Entities.Documents;
-using DataCore.Repositories.Concrete;
-using DataCore.Services.Concrete;
-using DataCore.Services.Concrete.Documents;
-using IdentityServer4.EntityFramework.Entities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using BaseCore.DAL.Implementations;
+using BaseCore.DAL.Implementations.Entities;
+using BaseCore.DAL.Implementations.Entities.Documents;
+using BaseCore.Documents.Implementations.Repositories.Implementations;
+using BaseCore.Documents.Implementations.Services;
+using BaseCore.Products.Implementations.Services;
 
 namespace WebUiAdminTest
 {

@@ -1,16 +1,7 @@
-﻿using DataCore.DAL;
-using DataCore.Entities;
-using DataCore.Entities.Documents;
-using DataCore.Exceptions.Balance;
-using DataCore.Repositories.Concrete;
-using DataCore.Services.Concrete;
-using DataCore.Services.Concrete.Documents;
-using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using NUnit.Framework;
 using System.Threading.Tasks;
+using BaseCore.DAL.Implementations.Entities;
+using BaseCore.DAL.Implementations.Exceptions.Balance;
 
 namespace WebUiAdminTest
 {

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BaseCore.Entities;
+﻿using BaseCore.DAL.Abstractions;
 
-namespace DataCore.Entities
+namespace BaseCore.DAL.Implementations.Entities
 {
     public class Carousel : BaseEntity
     {

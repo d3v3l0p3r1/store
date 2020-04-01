@@ -1,19 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using BaseCore.DAL.Implementations.Entities.Documents;
+using BaseCore.Documents.Implementations.Services.Abstractions;
 using BaseCore.Security.Services.Concrete;
-using DataCore.Entities.Documents;
-using DataCore.Services.Abstract.Documents;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebApi.Controllers.Admin.Documents;
-using WebApi.Models;
-using WebApi.Models.Admin.Documents;
 using WebApi.Models.Admin.Documents.IncomingDocuments;
 
-namespace WebUiAdmin.Controllers
+namespace WebApi.Controllers.Admin.Documents
 {
     /// <summary>
     /// Документы прихода

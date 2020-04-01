@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace WebUiAdmin.Models.Api.Account
+﻿namespace WebApi.Models.Api.Account
 {
     public class RegisterModel
     {

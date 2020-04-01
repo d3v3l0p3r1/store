@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using DataCore.Models;
-using DataCore.Services.Abstract;
+using BaseCore.DAL.Implementations.Models;
+using BaseCore.Documents.Implementations.Services.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebUiAdmin.Controllers.Api
+namespace WebApi.Controllers.Api
 {
     /// <summary>
     /// Заказы

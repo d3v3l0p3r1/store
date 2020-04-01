@@ -1,9 +1,6 @@
-﻿using BaseCore.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BaseCore.DAL.Abstractions;
 
-namespace DataCore.Entities
+namespace BaseCore.DAL.Implementations.Entities
 {
     /// <summary>
     /// Brand
@@ -29,5 +26,10 @@ namespace DataCore.Entities
         /// File
         /// </summary>
         public FileData File { get; set; }
+
+        /// <summary>
+        /// Внешний идентификатор
+        /// </summary>
+        public string ExternalId { get; set; }
     }
 }

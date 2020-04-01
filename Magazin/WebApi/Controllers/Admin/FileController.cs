@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
-using BaseCore.Entities;
-using BaseCore.Services.Abstract;
+using BaseCore.DAL.Implementations.Entities;
+using BaseCore.File;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
-using Microsoft.Net.Http.Headers;
 
-namespace WebUiAdmin.Controllers
+namespace WebApi.Controllers.Admin
 {
     /// <summary>
     /// Зашрузка изображений

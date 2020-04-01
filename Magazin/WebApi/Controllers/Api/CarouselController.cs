@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DataCore.Entities;
-using DataCore.Services.Abstract;
+﻿using System.Threading.Tasks;
+using BaseCore.News.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebApi.Models;
 
 namespace WebApi.Controllers.Api
 {
@@ -42,6 +36,6 @@ namespace WebApi.Controllers.Api
         }
 
 
-        
+
     }
 }

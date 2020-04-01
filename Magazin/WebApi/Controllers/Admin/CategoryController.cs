@@ -1,25 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using DataCore.DAL;
-using DataCore.Entities;
-using DataCore.Services.Abstract;
+using BaseCore.DAL.Implementations.Entities;
+using BaseCore.Products.Abstractions.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
 
-namespace WebUiAdmin.Controllers
+namespace WebApi.Controllers.Admin
 {
     /// <summary>
     /// Категории продукта
     /// </summary>
     [ApiExplorerSettings(GroupName = "admin")]
-    public class CategoryController : BaseController<ProductCategory>
+    [ApiController]
+    public class CategoryController : ControllerBase
     {
         private readonly IProductCategoryService _productCategoryService;
 
-        public CategoryController(IProductCategoryService productCategoryService) : base(productCategoryService)
+        public CategoryController(IProductCategoryService productCategoryService)
         {
             _productCategoryService = productCategoryService;
         }

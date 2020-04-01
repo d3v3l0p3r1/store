@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
-using BaseCore.Entities;
+using BaseCore.DAL.Abstractions;
 
-namespace DataCore.Entities
+namespace BaseCore.DAL.Implementations.Entities
 {
     public class Product : BaseEntity
     {
@@ -37,6 +35,16 @@ namespace DataCore.Entities
 
         [DisplayName("Цена")]
         public decimal Price { get; set; }
+
+        /// <summary>
+        /// Артикул
+        /// </summary>
+        public string VenderCode { get; set; }
+
+        /// <summary>
+        /// Единица измерений
+        /// </summary>
+        public string MeasureUnit { get; set; }
     }
 
     public class ProductImage : BaseEntity

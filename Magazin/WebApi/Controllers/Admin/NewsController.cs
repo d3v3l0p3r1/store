@@ -1,25 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using DataCore.Entities;
-using DataCore.Services.Abstract;
+using BaseCore.DAL.Implementations.Entities;
+using BaseCore.News.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace WebUiAdmin.Controllers
+namespace WebApi.Controllers.Admin
 {
     /// <summary>
     /// Новости
     /// </summary>
-    public class NewsController : BaseController<News>
+    public class NewsController : ControllerBase
     {
         private readonly INewsService _newsService;
 
-        public NewsController(INewsService newsService) : base(newsService)
+        public NewsController(INewsService newsService) 
         {
             _newsService = newsService;
         }

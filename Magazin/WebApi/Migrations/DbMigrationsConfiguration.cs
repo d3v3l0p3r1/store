@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using BaseCore.DAL.Implementations;
+using BaseCore.DAL.Implementations.Entities;
 using BaseCore.Security.Entities;
 using BaseCore.Security.Services.Concrete;
 using Bogus;
-using DataCore.Entities;
-using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using WebApi.Extensions;
 
-namespace DataCore.DAL
+namespace WebApi.Migrations
 {
     public static class DbMigrationsConfiguration
     {
@@ -20,7 +16,7 @@ namespace DataCore.DAL
 
         public static void Seed(DataContext dataContext)
         {
-            if (!dataContext.ProductCategories.Any())
+            if (!dataContext.Set<ProductCategory>().Any())
             {
 
                 var makeup = WriteCategory("Макияж", 1,"makeup" , dataContext);
@@ -47,17 +43,17 @@ namespace DataCore.DAL
                 WriteCategory("Аксессуары", 4, "access",dataContext);
             }
 
-            if (!dataContext.ProductKinds.Any())
+            if (!dataContext.Set<ProductKind>().Any())
             {
                 WriteKind("ECO товары", dataContext);
             }
 
-            if (!dataContext.Brands.Any())
+            if (!dataContext.Set<Brand>().Any())
             {
                 WriteBrands(dataContext);
             }
 
-            if (!dataContext.Products.Any())
+            if (!dataContext.Set<Product>().Any())
             {
                 WriteProducts(dataContext);
             }
@@ -75,7 +71,7 @@ namespace DataCore.DAL
                     Description = fake.Lorem.Text()
                 };
 
-                dataContext.Brands.Add(brand);
+                dataContext.Set<Brand>().Add(brand);
             }
 
             dataContext.SaveChanges();
@@ -86,7 +82,7 @@ namespace DataCore.DAL
             var fake = new Faker(locale: "ru");
             var random = new Random();
 
-            var categories = dataContext.ProductCategories.ToList();
+            var categories = dataContext.Set<ProductCategory>().ToList();
 
             foreach (var productCategory in categories)
             {
@@ -117,11 +113,11 @@ namespace DataCore.DAL
                 RouteName = routeName
             };
 
-            context.ProductCategories.Add(category);
+            context.Set<ProductCategory>().Add(category);
             context.SaveChanges();
 
             category.Mask = $";{category.Id};";
-            context.ProductCategories.Update(category);
+            context.Set<ProductCategory>().Update(category);
             context.SaveChanges();
 
             return category;
@@ -137,11 +133,11 @@ namespace DataCore.DAL
                 RouteName = routeName
             };
 
-            context.ProductCategories.Add(category);
+            context.Set<ProductCategory>().Add(category);
             context.SaveChanges();
 
             category.Mask = $"{parentCategory.Mask}{category.Id};";
-            context.ProductCategories.Update(category);
+            context.Set<ProductCategory>().Update(category);
             context.SaveChanges();
 
             return parentCategory;
@@ -157,11 +153,11 @@ namespace DataCore.DAL
                 RouteName = routeName
             };
 
-            context.ProductCategories.Add(category);
+            context.Set<ProductCategory>().Add(category);
             context.SaveChanges();
 
             category.Mask = $"{parentCategory.Mask}{category.Id};";
-            context.ProductCategories.Update(category);
+            context.Set<ProductCategory>().Update(category);
             context.SaveChanges();
 
             return category;
@@ -174,10 +170,16 @@ namespace DataCore.DAL
                 Title = name
             };
 
-            context.ProductKinds.Add(kind);
+            context.Set<ProductKind>().Add(kind);
             context.SaveChanges();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="roleManager"></param>
+        /// <returns></returns>
         public static async Task InitializeAsync(UserManager<User> userManager, RoleManager roleManager)
         {
             var adminEmail = "zhan_chip@mail.ru";
@@ -215,6 +217,14 @@ namespace DataCore.DAL
                 });
             }
 
+            if (await roleManager.FindByNameAsync("exchange") == null)
+            {
+                await roleManager.CreateAsync(new Role
+                {
+                    Name = "exchange",
+                });
+            }
+
             if (await userManager.FindByEmailAsync(adminEmail) == null)
             {
                 var admin = new User
@@ -225,10 +235,21 @@ namespace DataCore.DAL
 
 
                 var result = await userManager.CreateAsync(admin, password);
-
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(admin, "admin");
+                }
+
+
+                var exchangeUser = new User
+                {
+                    UserName = "exchange",
+                };
+
+                result = await userManager.CreateAsync(exchangeUser, ".6g:KQ3rG");
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(exchangeUser, "exchange");
                 }
             }
         }

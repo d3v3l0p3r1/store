@@ -1,29 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DataCore.Entities;
-using DataCore.Services.Abstract;
-using Microsoft.AspNetCore.Http;
+using BaseCore.DAL.Implementations.Entities;
+using BaseCore.News.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using WebApi.Models;
-using WebApi.Models.Admin.Carousel;
-using WebUiAdmin.Controllers;
 
 namespace WebApi.Controllers.Admin
 {
     [Route("[controller]")]
     [ApiController]
-    public class CarouselController : BaseController<Carousel>
+    public class CarouselController : ControllerBase
     {
         private readonly ICarouselService _carouselService;
 
         /// <summary>
         /// ctor
         /// </summary>
-        public CarouselController(ICarouselService carouselService) : base(carouselService)
+        public CarouselController(ICarouselService carouselService)
         {
             _carouselService = carouselService;
         }
@@ -40,7 +35,7 @@ namespace WebApi.Controllers.Admin
                 return BadRequest();
             }
 
-            await base.Create(model);
+            await _carouselService.Create(model);
 
             return Ok(model);
         }
@@ -78,6 +73,58 @@ namespace WebApi.Controllers.Admin
             };
 
             return Ok(res);
+        }
+
+        /// <summary>
+        /// Получить сущность
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public virtual async Task<ActionResult<Carousel>> Get(long id)
+        {
+            try
+            {
+                var entity = await _carouselService.GetAsync(id);
+                return Ok(entity);
+            }
+            catch (Exception error)
+            {
+                return BadRequest(error.GetBaseException().Message);
+            }
+        }
+
+
+        /// <summary>
+        /// Обновить сущность
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        [HttpPatch]
+        public virtual async Task<ActionResult<Carousel>> Update(Carousel entity)
+        {
+            try
+            {
+                await _carouselService.UpdateAsync(entity);
+                return Ok(entity);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// Удалить сущность
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        public virtual async Task<IActionResult> Delete(int id)
+        {
+            await _carouselService.DeleteAsync(id);
+            return Ok();
         }
     }
 }

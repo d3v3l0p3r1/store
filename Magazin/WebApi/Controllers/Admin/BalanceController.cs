@@ -1,13 +1,11 @@
-﻿using DataCore.Entities;
-using DataCore.Models;
-using DataCore.Services.Abstract.Documents;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using BaseCore.DAL.Implementations.Entities;
+using BaseCore.DAL.Implementations.Models;
+using BaseCore.Documents.Implementations.Services.Abstractions;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
 
 namespace WebApi.Controllers.Admin

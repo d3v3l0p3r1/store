@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using DataCore.Entities;
+using BaseCore.DAL.Implementations.Entities;
 
-namespace DataCore.Models
+namespace BaseCore.DAL.Implementations.Models
 {
     public class OrderModel
     {

@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using DataCore.Entities;
-using DataCore.Services.Abstract;
+using BaseCore.DAL.Implementations.Entities;
+using BaseCore.Products.Abstractions.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
 
-namespace WebUiAdmin.Controllers
+namespace WebApi.Controllers.Admin
 {
     /// <summary>
     /// Вид продукта
     /// </summary>
-    public class KindController : BaseController<ProductKind>
+    public class KindController : ControllerBase
     {
         private readonly IKindService _kindService;
 
@@ -21,7 +19,7 @@ namespace WebUiAdmin.Controllers
         /// ctor
         /// </summary>
         /// <param name="kindService"></param>
-        public KindController(IKindService kindService) : base(kindService)
+        public KindController(IKindService kindService)
         {
             _kindService = kindService;
         }

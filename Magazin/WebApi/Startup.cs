@@ -1,28 +1,20 @@
-﻿using System.IO;
-using BaseCore.Security.Entities;
-using DataCore.DAL;
+﻿using System;
+using System.IO;
+using System.Reflection;
+using AutoMapper;
+using BaseCore.DAL.Implementations;
+using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.StaticFiles.Infrastructure;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Serialization;
-using Microsoft.AspNetCore.SpaServices;
-using WebUiAdmin.Models;
-using System;
 using WebApi.Extensions;
-using AutoMapper;
-using WebApi.Mappings.Documents;
-using System.Reflection;
-using Microsoft.AspNetCore.HttpOverrides;
-using Newtonsoft.Json.Converters;
 
-namespace WebUiAdmin
+namespace WebApi
 {
     public class Startup
     {
@@ -36,6 +28,8 @@ namespace WebUiAdmin
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigOptions(Configuration);
+
             InitDbContext(services);
 
             Bindings.Bind(services);
@@ -47,9 +41,8 @@ namespace WebUiAdmin
                 {
                     config.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                     config.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
-                    config.SerializerSettings.DateFormatString = "dd.MM.yyyy HH:mm:ss";
+                    //config.SerializerSettings.DateFormatString = "dd.MM.yyyy HH:mm:ss";
                 });
-
 
             services.AddSingleton<IFileProvider>(
                 new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
@@ -77,6 +70,11 @@ namespace WebUiAdmin
             });
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            services.AddHangfire(cfg =>
+            {
+                
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -125,6 +123,7 @@ namespace WebUiAdmin
 
             services.AddDbContext<DataContext>(options =>
             {
+                
                 options.UseNpgsql(connectionString, builder =>
                 {
                     builder.MigrationsAssembly("WebApi");

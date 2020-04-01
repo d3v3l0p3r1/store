@@ -1,5 +1,5 @@
 ﻿
-using BaseCore.Entities;
+using BaseCore.DAL.Abstractions;
 using Microsoft.AspNetCore.Identity;
 
 namespace BaseCore.Security.Entities

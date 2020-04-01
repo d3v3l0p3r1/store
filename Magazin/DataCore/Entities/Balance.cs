@@ -1,10 +1,9 @@
-﻿using BaseCore.Entities;
-using DataCore.Entities.Documents;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using BaseCore.DAL.Abstractions;
+using BaseCore.DAL.Implementations.Entities.Documents;
 
-namespace DataCore.Entities
+namespace BaseCore.DAL.Implementations.Entities
 {
     public class Balance : BaseEntity
     {
