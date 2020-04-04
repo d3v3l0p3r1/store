@@ -17,6 +17,7 @@ namespace WebApi.Controllers.Exchange
     [ApiController]
     [Authorize(Roles = "exchange,admin")]
     [ApiExplorerSettings(GroupName = "exchange")]
+    [DisableRequestSizeLimit]
     public class FileInputController : ControllerBase
     {
         private readonly IProductFetcher _productFetcher;
@@ -49,6 +50,18 @@ namespace WebApi.Controllers.Exchange
         public async Task<IActionResult> UpdatePictures()
         {
             var result = await _productFetcher.UpdateProductPictures();
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Обновить цены
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<IActionResult> UpdatePrices()
+        {
+            var result = await _productFetcher.UpdateProductPrices();
             return Ok(result);
         }
     }

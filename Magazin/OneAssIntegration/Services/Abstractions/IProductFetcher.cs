@@ -8,5 +8,6 @@ namespace OneAssIntegration.Services.Abstractions
     {
         Task<Dictionary<string, FileImportResult>> ImportFile(Stream ms);
         Task<FileImportResult> UpdateProductPictures();
+        Task<FileImportResult> UpdateProductPrices();
     }
 }

@@ -12,5 +12,8 @@ namespace OneAssIntegration.Models
 
         [XmlElement("Каталог")]
         public Catalogue Cataglogue { get; set; }
+
+        [XmlElement("ПакетПредложений")]
+        public WarehouseRoot WarehouseRoot { get; set; }
     }
 }

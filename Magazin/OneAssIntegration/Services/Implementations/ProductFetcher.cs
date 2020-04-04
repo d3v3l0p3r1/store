@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Server.IIS.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using OneAss.Services;
 using OneAssIntegration.Models;
 using OneAssIntegration.Options;
@@ -37,7 +38,7 @@ namespace OneAssIntegration.Services.Implementations
 
         public ProductFetcher(IRepository repository,
             IOptions<OneAssOptions> options,
-            ILogger<ProductFetcher> logger, 
+            ILogger<ProductFetcher> logger,
             IFileService fileService)
         {
             _repository = repository;
@@ -356,9 +357,9 @@ namespace OneAssIntegration.Services.Implementations
 
                         result.Success++;
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
-                        _logger.LogError("Load image for product.",e);
+                        _logger.LogError("Load image for product.", e);
                         result.Failed++;
                     }
                 }
@@ -367,6 +368,36 @@ namespace OneAssIntegration.Services.Implementations
             }
 
             await _client.CloseAsync();
+
+            return result;
+        }
+
+        public async Task<FileImportResult> UpdateProductPrices(Stream ms)
+        {
+            var result = new FileImportResult();
+            var xDocument = await XDocument.LoadAsync(ms, LoadOptions.None, CancellationToken.None);
+            if (xDocument.Root == null)
+            {
+                throw new Exception("Invalid XML");
+            }
+
+            var serializer = new XmlSerializer(typeof(Root));
+
+            var root = (Root)serializer.Deserialize(xDocument.CreateReader());
+
+            foreach (var item in root.WarehouseRoot.Items)
+            {
+                result.Total++;
+                try
+                {
+                    
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError($"Set price error: {item.Id}.", e);
+                }
+
+            }
 
             return result;
         }
