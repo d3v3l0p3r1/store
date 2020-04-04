@@ -30,6 +30,7 @@ namespace WebApi
                 .UseKestrel(config =>
                 {
                     config.ListenAnyIP(51145);
+                    config.Limits.MaxRequestBodySize = long.MaxValue;
                 })
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseUrls("http://localhost:51145")
