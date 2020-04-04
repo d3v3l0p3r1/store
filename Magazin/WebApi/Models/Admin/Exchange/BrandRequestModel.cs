@@ -1,9 +1,9 @@
 ﻿namespace WebApi.Models.Admin.Exchange
 {
     /// <summary>
-    /// Модель создания категории
+    /// Модель создания бренда
     /// </summary>
-    public class CreateCategoryModel
+    public class BrandRequestModel
     {
         /// <summary>
         /// Идентификатор
@@ -16,8 +16,10 @@
         public string Title { get; set; }
 
         /// <summary>
-        /// Идентификатор родительской категории
+        /// Описание
         /// </summary>
-        public string ParentId { get; set; }
+        public string Description { get; set; }
+
+
     }
 }

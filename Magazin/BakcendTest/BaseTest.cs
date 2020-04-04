@@ -70,7 +70,8 @@ namespace WebUiAdminTest
 
             DummyFileService = new DummyFileService();
             BalanceService = new BalanceService(BalanceRepository);
-            ProductService = new ProductService(ProductRepository, BalanceService, DummyFileService, ProductImageRepository);
+            //BrandService = new BrandService();
+           // ProductService = new ProductService(ProductRepository, BalanceService, DummyFileService, ProductImageRepository, new BrandService(), );
 
             ProductCategoryRepository = new Repository<ProductCategory>(DataContext);
             ProductCategoryService = new ProductCategoryService(ProductCategoryRepository);

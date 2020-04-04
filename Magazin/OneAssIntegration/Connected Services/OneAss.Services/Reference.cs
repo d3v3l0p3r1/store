@@ -12,11 +12,11 @@ namespace OneAss.Services
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="http://www.1c.ru/ExchangeWithSites", ConfigurationName="OneAss.Services.SiteExchangePortType")]
-    public interface SiteExchangePortType
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://www.1c.ru/ExchangeWithSites2", ConfigurationName="OneAss.Services.SiteExchange2PortType")]
+    public interface SiteExchange2PortType
     {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.1c.ru/ExchangeWithSites#SiteExchange:GetAmountAndPrices", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.1c.ru/ExchangeWithSites2#SiteExchange2:GetAmountAndPrices", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Контакт[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(РасчетныйСчет[]))]
@@ -36,7 +36,7 @@ namespace OneAss.Services
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ДопРасход[]))]
         System.Threading.Tasks.Task<OneAss.Services.GetAmountAndPricesResponse> GetAmountAndPricesAsync(OneAss.Services.GetAmountAndPricesRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.1c.ru/ExchangeWithSites#SiteExchange:GetItems", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.1c.ru/ExchangeWithSites2#SiteExchange2:GetItems", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Контакт[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(РасчетныйСчет[]))]
@@ -56,7 +56,7 @@ namespace OneAss.Services
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ДопРасход[]))]
         System.Threading.Tasks.Task<OneAss.Services.GetItemsResponse> GetItemsAsync(OneAss.Services.GetItemsRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.1c.ru/ExchangeWithSites#SiteExchange:GetOrders", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.1c.ru/ExchangeWithSites2#SiteExchange2:GetOrders", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Контакт[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(РасчетныйСчет[]))]
@@ -76,7 +76,7 @@ namespace OneAss.Services
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ДопРасход[]))]
         System.Threading.Tasks.Task<OneAss.Services.GetOrdersResponse> GetOrdersAsync(OneAss.Services.GetOrdersRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.1c.ru/ExchangeWithSites#SiteExchange:GetPicture", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.1c.ru/ExchangeWithSites2#SiteExchange2:GetPicture", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Контакт[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(РасчетныйСчет[]))]
@@ -96,7 +96,7 @@ namespace OneAss.Services
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ДопРасход[]))]
         System.Threading.Tasks.Task<OneAss.Services.GetPictureResponse> GetPictureAsync(OneAss.Services.GetPictureRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.1c.ru/ExchangeWithSites#SiteExchange:LoadOrders", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.1c.ru/ExchangeWithSites2#SiteExchange2:LoadOrders", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Контакт[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(РасчетныйСчет[]))]
@@ -5070,47 +5070,52 @@ namespace OneAss.Services
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetAmountAndPrices", WrapperNamespace="http://www.1c.ru/ExchangeWithSites", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetAmountAndPrices", WrapperNamespace="http://www.1c.ru/ExchangeWithSites2", IsWrapped=true)]
     public partial class GetAmountAndPricesRequest
     {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites2", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
         public System.Nullable<System.DateTime> ModificationDate;
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites", Order=1)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites2", Order=1)]
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
         public string GroupCode;
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites", Order=2)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites2", Order=2)]
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
         public string WarehouseCode;
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites", Order=3)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites2", Order=3)]
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
         public string OrganizationCode;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites2", Order=4)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string SettingsExchangeCode;
         
         public GetAmountAndPricesRequest()
         {
         }
         
-        public GetAmountAndPricesRequest(System.Nullable<System.DateTime> ModificationDate, string GroupCode, string WarehouseCode, string OrganizationCode)
+        public GetAmountAndPricesRequest(System.Nullable<System.DateTime> ModificationDate, string GroupCode, string WarehouseCode, string OrganizationCode, string SettingsExchangeCode)
         {
             this.ModificationDate = ModificationDate;
             this.GroupCode = GroupCode;
             this.WarehouseCode = WarehouseCode;
             this.OrganizationCode = OrganizationCode;
+            this.SettingsExchangeCode = SettingsExchangeCode;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetAmountAndPricesResponse", WrapperNamespace="http://www.1c.ru/ExchangeWithSites", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetAmountAndPricesResponse", WrapperNamespace="http://www.1c.ru/ExchangeWithSites2", IsWrapped=true)]
     public partial class GetAmountAndPricesResponse
     {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites2", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
         public OneAss.Services.КоммерческаяИнформация @return;
         
@@ -5127,37 +5132,42 @@ namespace OneAss.Services
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetItems", WrapperNamespace="http://www.1c.ru/ExchangeWithSites", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetItems", WrapperNamespace="http://www.1c.ru/ExchangeWithSites2", IsWrapped=true)]
     public partial class GetItemsRequest
     {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites2", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
         public System.Nullable<System.DateTime> ModificationDate;
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites", Order=1)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites2", Order=1)]
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
         public string GroupCode;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites2", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string SettingsExchangeCode;
         
         public GetItemsRequest()
         {
         }
         
-        public GetItemsRequest(System.Nullable<System.DateTime> ModificationDate, string GroupCode)
+        public GetItemsRequest(System.Nullable<System.DateTime> ModificationDate, string GroupCode, string SettingsExchangeCode)
         {
             this.ModificationDate = ModificationDate;
             this.GroupCode = GroupCode;
+            this.SettingsExchangeCode = SettingsExchangeCode;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetItemsResponse", WrapperNamespace="http://www.1c.ru/ExchangeWithSites", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetItemsResponse", WrapperNamespace="http://www.1c.ru/ExchangeWithSites2", IsWrapped=true)]
     public partial class GetItemsResponse
     {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites2", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
         public OneAss.Services.КоммерческаяИнформация @return;
         
@@ -5174,32 +5184,37 @@ namespace OneAss.Services
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetOrders", WrapperNamespace="http://www.1c.ru/ExchangeWithSites", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetOrders", WrapperNamespace="http://www.1c.ru/ExchangeWithSites2", IsWrapped=true)]
     public partial class GetOrdersRequest
     {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites2", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
         public System.Nullable<System.DateTime> ModificationDate;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites2", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string SettingsExchangeCode;
         
         public GetOrdersRequest()
         {
         }
         
-        public GetOrdersRequest(System.Nullable<System.DateTime> ModificationDate)
+        public GetOrdersRequest(System.Nullable<System.DateTime> ModificationDate, string SettingsExchangeCode)
         {
             this.ModificationDate = ModificationDate;
+            this.SettingsExchangeCode = SettingsExchangeCode;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetOrdersResponse", WrapperNamespace="http://www.1c.ru/ExchangeWithSites", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetOrdersResponse", WrapperNamespace="http://www.1c.ru/ExchangeWithSites2", IsWrapped=true)]
     public partial class GetOrdersResponse
     {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites2", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
         public OneAss.Services.КоммерческаяИнформация @return;
         
@@ -5216,32 +5231,37 @@ namespace OneAss.Services
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetPicture", WrapperNamespace="http://www.1c.ru/ExchangeWithSites", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetPicture", WrapperNamespace="http://www.1c.ru/ExchangeWithSites2", IsWrapped=true)]
     public partial class GetPictureRequest
     {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites2", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
         public string ItemID;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites2", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string SettingsExchangeCode;
         
         public GetPictureRequest()
         {
         }
         
-        public GetPictureRequest(string ItemID)
+        public GetPictureRequest(string ItemID, string SettingsExchangeCode)
         {
             this.ItemID = ItemID;
+            this.SettingsExchangeCode = SettingsExchangeCode;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetPictureResponse", WrapperNamespace="http://www.1c.ru/ExchangeWithSites", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetPictureResponse", WrapperNamespace="http://www.1c.ru/ExchangeWithSites2", IsWrapped=true)]
     public partial class GetPictureResponse
     {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites2", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary", IsNullable=true)]
         public byte[] @return;
         
@@ -5258,52 +5278,57 @@ namespace OneAss.Services
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="LoadOrders", WrapperNamespace="http://www.1c.ru/ExchangeWithSites", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="LoadOrders", WrapperNamespace="http://www.1c.ru/ExchangeWithSites2", IsWrapped=true)]
     public partial class LoadOrdersRequest
     {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites2", Order=0)]
         public OneAss.Services.КоммерческаяИнформация OrdersData;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites2", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string SettingsExchangeCode;
         
         public LoadOrdersRequest()
         {
         }
         
-        public LoadOrdersRequest(OneAss.Services.КоммерческаяИнформация OrdersData)
+        public LoadOrdersRequest(OneAss.Services.КоммерческаяИнформация OrdersData, string SettingsExchangeCode)
         {
             this.OrdersData = OrdersData;
+            this.SettingsExchangeCode = SettingsExchangeCode;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="LoadOrdersResponse", WrapperNamespace="http://www.1c.ru/ExchangeWithSites", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="LoadOrdersResponse", WrapperNamespace="http://www.1c.ru/ExchangeWithSites2", IsWrapped=true)]
     public partial class LoadOrdersResponse
     {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.1c.ru/ExchangeWithSites2", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<bool> @return;
+        public string @return;
         
         public LoadOrdersResponse()
         {
         }
         
-        public LoadOrdersResponse(System.Nullable<bool> @return)
+        public LoadOrdersResponse(string @return)
         {
             this.@return = @return;
         }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    public interface SiteExchangePortTypeChannel : OneAss.Services.SiteExchangePortType, System.ServiceModel.IClientChannel
+    public interface SiteExchange2PortTypeChannel : OneAss.Services.SiteExchange2PortType, System.ServiceModel.IClientChannel
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    public partial class SiteExchangePortTypeClient : System.ServiceModel.ClientBase<OneAss.Services.SiteExchangePortType>, OneAss.Services.SiteExchangePortType
+    public partial class SiteExchange2PortTypeClient : System.ServiceModel.ClientBase<OneAss.Services.SiteExchange2PortType>, OneAss.Services.SiteExchange2PortType
     {
         
         /// <summary>
@@ -5313,99 +5338,104 @@ namespace OneAss.Services
         /// <param name="clientCredentials">Учетные данные клиента.</param>
         static partial void ConfigureEndpoint(System.ServiceModel.Description.ServiceEndpoint serviceEndpoint, System.ServiceModel.Description.ClientCredentials clientCredentials);
         
-        public SiteExchangePortTypeClient(EndpointConfiguration endpointConfiguration) : 
-                base(SiteExchangePortTypeClient.GetBindingForEndpoint(endpointConfiguration), SiteExchangePortTypeClient.GetEndpointAddress(endpointConfiguration))
+        public SiteExchange2PortTypeClient(EndpointConfiguration endpointConfiguration) : 
+                base(SiteExchange2PortTypeClient.GetBindingForEndpoint(endpointConfiguration), SiteExchange2PortTypeClient.GetEndpointAddress(endpointConfiguration))
         {
             this.Endpoint.Name = endpointConfiguration.ToString();
             ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
         }
         
-        public SiteExchangePortTypeClient(EndpointConfiguration endpointConfiguration, string remoteAddress) : 
-                base(SiteExchangePortTypeClient.GetBindingForEndpoint(endpointConfiguration), new System.ServiceModel.EndpointAddress(remoteAddress))
+        public SiteExchange2PortTypeClient(EndpointConfiguration endpointConfiguration, string remoteAddress) : 
+                base(SiteExchange2PortTypeClient.GetBindingForEndpoint(endpointConfiguration), new System.ServiceModel.EndpointAddress(remoteAddress))
         {
             this.Endpoint.Name = endpointConfiguration.ToString();
             ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
         }
         
-        public SiteExchangePortTypeClient(EndpointConfiguration endpointConfiguration, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(SiteExchangePortTypeClient.GetBindingForEndpoint(endpointConfiguration), remoteAddress)
+        public SiteExchange2PortTypeClient(EndpointConfiguration endpointConfiguration, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(SiteExchange2PortTypeClient.GetBindingForEndpoint(endpointConfiguration), remoteAddress)
         {
             this.Endpoint.Name = endpointConfiguration.ToString();
             ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
         }
         
-        public SiteExchangePortTypeClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public SiteExchange2PortTypeClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress)
         {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<OneAss.Services.GetAmountAndPricesResponse> OneAss.Services.SiteExchangePortType.GetAmountAndPricesAsync(OneAss.Services.GetAmountAndPricesRequest request)
+        System.Threading.Tasks.Task<OneAss.Services.GetAmountAndPricesResponse> OneAss.Services.SiteExchange2PortType.GetAmountAndPricesAsync(OneAss.Services.GetAmountAndPricesRequest request)
         {
             return base.Channel.GetAmountAndPricesAsync(request);
         }
         
-        public System.Threading.Tasks.Task<OneAss.Services.GetAmountAndPricesResponse> GetAmountAndPricesAsync(System.Nullable<System.DateTime> ModificationDate, string GroupCode, string WarehouseCode, string OrganizationCode)
+        public System.Threading.Tasks.Task<OneAss.Services.GetAmountAndPricesResponse> GetAmountAndPricesAsync(System.Nullable<System.DateTime> ModificationDate, string GroupCode, string WarehouseCode, string OrganizationCode, string SettingsExchangeCode)
         {
             OneAss.Services.GetAmountAndPricesRequest inValue = new OneAss.Services.GetAmountAndPricesRequest();
             inValue.ModificationDate = ModificationDate;
             inValue.GroupCode = GroupCode;
             inValue.WarehouseCode = WarehouseCode;
             inValue.OrganizationCode = OrganizationCode;
-            return ((OneAss.Services.SiteExchangePortType)(this)).GetAmountAndPricesAsync(inValue);
+            inValue.SettingsExchangeCode = SettingsExchangeCode;
+            return ((OneAss.Services.SiteExchange2PortType)(this)).GetAmountAndPricesAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<OneAss.Services.GetItemsResponse> OneAss.Services.SiteExchangePortType.GetItemsAsync(OneAss.Services.GetItemsRequest request)
+        System.Threading.Tasks.Task<OneAss.Services.GetItemsResponse> OneAss.Services.SiteExchange2PortType.GetItemsAsync(OneAss.Services.GetItemsRequest request)
         {
             return base.Channel.GetItemsAsync(request);
         }
         
-        public System.Threading.Tasks.Task<OneAss.Services.GetItemsResponse> GetItemsAsync(System.Nullable<System.DateTime> ModificationDate, string GroupCode)
+        public System.Threading.Tasks.Task<OneAss.Services.GetItemsResponse> GetItemsAsync(System.Nullable<System.DateTime> ModificationDate, string GroupCode, string SettingsExchangeCode)
         {
             OneAss.Services.GetItemsRequest inValue = new OneAss.Services.GetItemsRequest();
             inValue.ModificationDate = ModificationDate;
             inValue.GroupCode = GroupCode;
-            return ((OneAss.Services.SiteExchangePortType)(this)).GetItemsAsync(inValue);
+            inValue.SettingsExchangeCode = SettingsExchangeCode;
+            return ((OneAss.Services.SiteExchange2PortType)(this)).GetItemsAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<OneAss.Services.GetOrdersResponse> OneAss.Services.SiteExchangePortType.GetOrdersAsync(OneAss.Services.GetOrdersRequest request)
+        System.Threading.Tasks.Task<OneAss.Services.GetOrdersResponse> OneAss.Services.SiteExchange2PortType.GetOrdersAsync(OneAss.Services.GetOrdersRequest request)
         {
             return base.Channel.GetOrdersAsync(request);
         }
         
-        public System.Threading.Tasks.Task<OneAss.Services.GetOrdersResponse> GetOrdersAsync(System.Nullable<System.DateTime> ModificationDate)
+        public System.Threading.Tasks.Task<OneAss.Services.GetOrdersResponse> GetOrdersAsync(System.Nullable<System.DateTime> ModificationDate, string SettingsExchangeCode)
         {
             OneAss.Services.GetOrdersRequest inValue = new OneAss.Services.GetOrdersRequest();
             inValue.ModificationDate = ModificationDate;
-            return ((OneAss.Services.SiteExchangePortType)(this)).GetOrdersAsync(inValue);
+            inValue.SettingsExchangeCode = SettingsExchangeCode;
+            return ((OneAss.Services.SiteExchange2PortType)(this)).GetOrdersAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<OneAss.Services.GetPictureResponse> OneAss.Services.SiteExchangePortType.GetPictureAsync(OneAss.Services.GetPictureRequest request)
+        System.Threading.Tasks.Task<OneAss.Services.GetPictureResponse> OneAss.Services.SiteExchange2PortType.GetPictureAsync(OneAss.Services.GetPictureRequest request)
         {
             return base.Channel.GetPictureAsync(request);
         }
         
-        public System.Threading.Tasks.Task<OneAss.Services.GetPictureResponse> GetPictureAsync(string ItemID)
+        public System.Threading.Tasks.Task<OneAss.Services.GetPictureResponse> GetPictureAsync(string ItemID, string SettingsExchangeCode)
         {
             OneAss.Services.GetPictureRequest inValue = new OneAss.Services.GetPictureRequest();
             inValue.ItemID = ItemID;
-            return ((OneAss.Services.SiteExchangePortType)(this)).GetPictureAsync(inValue);
+            inValue.SettingsExchangeCode = SettingsExchangeCode;
+            return ((OneAss.Services.SiteExchange2PortType)(this)).GetPictureAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<OneAss.Services.LoadOrdersResponse> OneAss.Services.SiteExchangePortType.LoadOrdersAsync(OneAss.Services.LoadOrdersRequest request)
+        System.Threading.Tasks.Task<OneAss.Services.LoadOrdersResponse> OneAss.Services.SiteExchange2PortType.LoadOrdersAsync(OneAss.Services.LoadOrdersRequest request)
         {
             return base.Channel.LoadOrdersAsync(request);
         }
         
-        public System.Threading.Tasks.Task<OneAss.Services.LoadOrdersResponse> LoadOrdersAsync(OneAss.Services.КоммерческаяИнформация OrdersData)
+        public System.Threading.Tasks.Task<OneAss.Services.LoadOrdersResponse> LoadOrdersAsync(OneAss.Services.КоммерческаяИнформация OrdersData, string SettingsExchangeCode)
         {
             OneAss.Services.LoadOrdersRequest inValue = new OneAss.Services.LoadOrdersRequest();
             inValue.OrdersData = OrdersData;
-            return ((OneAss.Services.SiteExchangePortType)(this)).LoadOrdersAsync(inValue);
+            inValue.SettingsExchangeCode = SettingsExchangeCode;
+            return ((OneAss.Services.SiteExchange2PortType)(this)).LoadOrdersAsync(inValue);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()
@@ -5420,7 +5450,7 @@ namespace OneAss.Services
         
         private static System.ServiceModel.Channels.Binding GetBindingForEndpoint(EndpointConfiguration endpointConfiguration)
         {
-            if ((endpointConfiguration == EndpointConfiguration.SiteExchangeSoap))
+            if ((endpointConfiguration == EndpointConfiguration.SiteExchange2Soap))
             {
                 System.ServiceModel.BasicHttpBinding result = new System.ServiceModel.BasicHttpBinding();
                 result.MaxBufferSize = int.MaxValue;
@@ -5430,7 +5460,7 @@ namespace OneAss.Services
                 result.Security.Mode = System.ServiceModel.BasicHttpSecurityMode.Transport;
                 return result;
             }
-            if ((endpointConfiguration == EndpointConfiguration.SiteExchangeSoap12))
+            if ((endpointConfiguration == EndpointConfiguration.SiteExchange2Soap12))
             {
                 System.ServiceModel.Channels.CustomBinding result = new System.ServiceModel.Channels.CustomBinding();
                 System.ServiceModel.Channels.TextMessageEncodingBindingElement textBindingElement = new System.ServiceModel.Channels.TextMessageEncodingBindingElement();
@@ -5448,15 +5478,15 @@ namespace OneAss.Services
         
         private static System.ServiceModel.EndpointAddress GetEndpointAddress(EndpointConfiguration endpointConfiguration)
         {
-            if ((endpointConfiguration == EndpointConfiguration.SiteExchangeSoap))
+            if ((endpointConfiguration == EndpointConfiguration.SiteExchange2Soap))
             {
-                return new System.ServiceModel.EndpointAddress("https://app185611.1capp.net/1SUpravleniye-nashey-firmoy-8/ws/ExchangeWithSites.1c" +
-                        "ws");
+                return new System.ServiceModel.EndpointAddress("https://app185611.1capp.net/1SUpravleniye-nashey-firmoy-8/ws/ExchangeWithSites2.1" +
+                        "cws");
             }
-            if ((endpointConfiguration == EndpointConfiguration.SiteExchangeSoap12))
+            if ((endpointConfiguration == EndpointConfiguration.SiteExchange2Soap12))
             {
-                return new System.ServiceModel.EndpointAddress("https://app185611.1capp.net/1SUpravleniye-nashey-firmoy-8/ws/ExchangeWithSites.1c" +
-                        "ws");
+                return new System.ServiceModel.EndpointAddress("https://app185611.1capp.net/1SUpravleniye-nashey-firmoy-8/ws/ExchangeWithSites2.1" +
+                        "cws");
             }
             throw new System.InvalidOperationException(string.Format("Не удалось найти конечную точку с именем \"{0}\".", endpointConfiguration));
         }
@@ -5464,9 +5494,9 @@ namespace OneAss.Services
         public enum EndpointConfiguration
         {
             
-            SiteExchangeSoap,
+            SiteExchange2Soap,
             
-            SiteExchangeSoap12,
+            SiteExchange2Soap12,
         }
     }
 }

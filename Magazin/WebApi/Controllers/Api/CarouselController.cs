@@ -9,6 +9,7 @@ namespace WebApi.Controllers.Api
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    [ApiExplorerSettings(GroupName = "public")]
     public class PublicController : ControllerBase
     {
         private readonly ICarouselService _carouselService;

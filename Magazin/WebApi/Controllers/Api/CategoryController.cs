@@ -12,6 +12,7 @@ namespace WebApi.Controllers.Api
     /// Категории продукта
     /// </summary>
     [Route("api/[controller]")]
+    [ApiExplorerSettings(GroupName = "public")]
     public class CategoryController : Controller
     {
         private readonly IProductCategoryService _categoryService;

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BaseCore.DAL.Implementations.Entities;
 using BaseCore.Documents.Implementations.Services.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,10 @@ namespace WebApi.Controllers.Admin
     /// <summary>
     /// Заказы
     /// </summary>
+    [ApiController]
+    [Authorize(Roles = "admin")]
+    [Route("[controller]")]
+    [ApiExplorerSettings(GroupName = "admin")]
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;

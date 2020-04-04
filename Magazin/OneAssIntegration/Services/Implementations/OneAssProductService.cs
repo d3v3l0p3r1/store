@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BaseCore.DAL.Abstractions.Repositories;
 using BaseCore.DAL.Implementations.Entities;
+using BaseCore.Products.Abstractions.Models;
 using BaseCore.Products.Abstractions.Services;
 using Microsoft.AspNetCore.Http;
 
@@ -41,6 +42,21 @@ namespace OneAssIntegration.Services.Implementations
         public Task DeleteAsync(long id)
         {
             throw new NotSupportedException("При использовании 1С операция запрещена");
+        }
+
+        public Task CreateAsync(ProductRequestModel requestModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(ProductRequestModel requestModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Product> GetByExternalId(string id)
+        {
+            throw new NotImplementedException();
         }
 
         public Task CreateAsync(Product entity)

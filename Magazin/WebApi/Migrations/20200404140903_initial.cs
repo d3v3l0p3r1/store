@@ -104,6 +104,21 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Package",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Hidden = table.Column<bool>(nullable: false),
+                    ExternalId = table.Column<string>(nullable: true),
+                    Value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Package", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PersistedGrants",
                 columns: table => new
                 {
@@ -131,7 +146,10 @@ namespace WebApi.Migrations
                     SortOrder = table.Column<decimal>(nullable: false),
                     ParentId = table.Column<long>(nullable: true),
                     Mask = table.Column<string>(nullable: true),
-                    RouteName = table.Column<string>(nullable: true)
+                    RouteName = table.Column<string>(nullable: true),
+                    ExternalId = table.Column<string>(nullable: true),
+                    UpdateTime = table.Column<DateTimeOffset>(nullable: false),
+                    CreateTime = table.Column<DateTimeOffset>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -299,7 +317,10 @@ namespace WebApi.Migrations
                     Hidden = table.Column<bool>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    FileId = table.Column<long>(nullable: true)
+                    FileId = table.Column<long>(nullable: true),
+                    ExternalId = table.Column<string>(nullable: true),
+                    UpdateTime = table.Column<DateTimeOffset>(nullable: false),
+                    CreateTime = table.Column<DateTimeOffset>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -344,13 +365,19 @@ namespace WebApi.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Hidden = table.Column<bool>(nullable: false),
-                    Title = table.Column<string>(maxLength: 50, nullable: false),
+                    Title = table.Column<string>(maxLength: 250, nullable: false),
                     Description = table.Column<string>(nullable: true),
                     FileId = table.Column<long>(nullable: true),
                     CategoryId = table.Column<long>(nullable: false),
                     KindId = table.Column<long>(nullable: true),
                     BrandId = table.Column<long>(nullable: false),
-                    Price = table.Column<decimal>(nullable: false)
+                    Price = table.Column<decimal>(nullable: false),
+                    VenderCode = table.Column<string>(nullable: true),
+                    MeasureUnit = table.Column<string>(nullable: true),
+                    ExternalId = table.Column<string>(nullable: true),
+                    UpdateTime = table.Column<DateTimeOffset>(nullable: false),
+                    CreateTime = table.Column<DateTimeOffset>(nullable: false),
+                    PackageId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -377,6 +404,12 @@ namespace WebApi.Migrations
                         name: "FK_Product_ProductKind_KindId",
                         column: x => x.KindId,
                         principalTable: "ProductKind",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Product_Package_PackageId",
+                        column: x => x.PackageId,
+                        principalTable: "Package",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -699,6 +732,11 @@ namespace WebApi.Migrations
                 column: "KindId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Product_PackageId",
+                table: "Product",
+                column: "PackageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductCategory_ParentId",
                 table: "ProductCategory",
                 column: "ParentId");
@@ -781,6 +819,9 @@ namespace WebApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductKind");
+
+            migrationBuilder.DropTable(
+                name: "Package");
 
             migrationBuilder.DropTable(
                 name: "FileData");

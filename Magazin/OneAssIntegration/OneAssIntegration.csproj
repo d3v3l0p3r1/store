@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BaseCore.File\BaseCore.File.csproj" />
     <ProjectReference Include="..\BaseCore.Products.Abstractions\BaseCore.Products.Abstractions.csproj" />
     <ProjectReference Include="..\DataCore\BaseCore.DAL.Implementations.csproj" />
   </ItemGroup>
@@ -14,6 +15,8 @@
     <PackageReference Include="System.ServiceModel.Http" Version="4.7.0" />
     <PackageReference Include="System.ServiceModel.NetTcp" Version="4.7.0" />
     <PackageReference Include="System.ServiceModel.Security" Version="4.7.0" />
+    <PackageReference Include="System.Xml.XPath" Version="4.3.0" />
+    <PackageReference Include="System.Xml.XPath.XmlDocument" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>

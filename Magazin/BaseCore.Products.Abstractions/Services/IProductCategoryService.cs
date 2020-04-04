@@ -15,7 +15,18 @@ namespace BaseCore.Products.Abstractions.Services
         /// <returns></returns>
         Task CreateAsync(string title, string id, string parentId);
 
+        /// <summary>
+        /// Update
+        /// </summary>
+        /// <param name="requestModelTitle"></param>
+        /// <param name="requestModelId"></param>
+        /// <param name="requestModelParentId"></param>
+        /// <returns></returns>
+        Task UpdateAsync(string requestModelTitle, string requestModelId, string requestModelParentId);
+
         IQueryable<ProductCategory> GetAllAsNotracking();
         IQueryable<ProductCategory> GetQuery();
+        Task<ProductCategory> GetByExternalIdAsync(string externalId);
+        
     }
 }

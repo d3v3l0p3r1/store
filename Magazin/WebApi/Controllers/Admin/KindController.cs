@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BaseCore.DAL.Implementations.Entities;
 using BaseCore.Products.Abstractions.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
@@ -11,6 +12,10 @@ namespace WebApi.Controllers.Admin
     /// <summary>
     /// Вид продукта
     /// </summary>
+    [ApiController]
+    [Authorize(Roles = "admin")]
+    [Route("[controller]")]
+    [ApiExplorerSettings(GroupName = "admin")]
     public class KindController : ControllerBase
     {
         private readonly IKindService _kindService;

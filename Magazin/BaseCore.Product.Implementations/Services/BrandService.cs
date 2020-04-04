@@ -27,5 +27,27 @@ namespace BaseCore.Products.Implementations.Services
 
             return entity;
         }
+
+        public Task<Brand> GetByExternalIdAsync(string externalId)
+        {
+            return _repository.GetAll().FirstOrDefaultAsync(x => x.ExternalId == externalId);
+        }
+
+        public async Task<Brand> UpdateAsync(Brand brand)
+        {
+            var original = await _repository.GetAll().FirstOrDefaultAsync(x => x.ExternalId == brand.ExternalId);
+            if (original == null)
+            {
+                throw new Exception("Бренд не найден");
+            }
+
+            original.Title = brand.Title;
+            original.Description = brand.Description;
+            original.UpdateTime = DateTimeOffset.UtcNow;
+
+            await _repository.UpdateAsync(original);
+
+            return original;
+        }
     }
 }

@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
-using WebApi.Models.Admin;
 using WebApi.Models.Admin.Users;
 
 namespace WebApi.Controllers.Admin

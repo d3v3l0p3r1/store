@@ -7,6 +7,7 @@ using BaseCore.DAL.Implementations.Entities;
 using BaseCore.DAL.Implementations.Models;
 using BaseCore.Documents.Implementations.Services.Abstractions;
 using BaseCore.File;
+using BaseCore.Products.Abstractions.Models;
 using BaseCore.Products.Abstractions.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -19,12 +20,21 @@ namespace BaseCore.Products.Implementations.Services
         private readonly IFileService _fileService;
         private readonly IRepository<ProductImage> _productImageRepository;
         private readonly IRepository<Product> _repository;
+        private readonly IBrandService _brandService;
+        private readonly IProductCategoryService _categoryService;
 
-        public ProductService(IRepository<Product> repository, IBalanceService balanceService, IFileService fileService, IRepository<ProductImage> productImageRepository)
+        public ProductService(IRepository<Product> repository, 
+            IBalanceService balanceService, 
+            IFileService fileService, 
+            IRepository<ProductImage> productImageRepository, 
+            IBrandService brandService, 
+            IProductCategoryService categoryService)
         {
             _balanceService = balanceService;
             _fileService = fileService;
             _productImageRepository = productImageRepository;
+            _brandService = brandService;
+            _categoryService = categoryService;
             _repository = repository;
         }
 
@@ -106,6 +116,46 @@ namespace BaseCore.Products.Implementations.Services
             await _repository.DeleteAsync(entity);
         }
 
+        public async Task CreateAsync(ProductRequestModel requestModel)
+        {
+            var brand = await _brandService.GetByExternalIdAsync(requestModel.BrandId);
+            var category = await _categoryService.GetByExternalIdAsync(requestModel.CategoryId);
+
+            var entity = new Product
+            {
+                BrandId = brand.Id,
+                CategoryId = category.Id,
+                Title = requestModel.Title,
+                Description = requestModel.Description,
+                MeasureUnit = requestModel.MeasureUnit,
+                VenderCode = requestModel.VenderCode,
+                Price = requestModel.Price,
+                ExternalId = requestModel.Id,
+                CreateTime = DateTimeOffset.UtcNow,
+                UpdateTime = DateTimeOffset.UtcNow
+            };
+
+            await _repository.CreateAsync(entity);
+        }
+
+        public async Task UpdateAsync(ProductRequestModel requestModel)
+        {
+            var brand = await _brandService.GetByExternalIdAsync(requestModel.BrandId);
+            var category = await _categoryService.GetByExternalIdAsync(requestModel.CategoryId);
+            var entity = await GetByExternalId(requestModel.Id);
+
+            entity.BrandId = brand.Id;
+            entity.CategoryId = category.Id;
+            entity.Title = requestModel.Title;
+            entity.Description = requestModel.Description;
+            entity.MeasureUnit = requestModel.MeasureUnit;
+            entity.VenderCode = requestModel.VenderCode;
+            entity.Price = requestModel.Price;
+            entity.UpdateTime = DateTimeOffset.UtcNow;
+
+            await _repository.CreateAsync(entity);
+        }
+
         public async Task<List<BalancedProductModel>> GetWithBalance(long cat, string schema, string host)
         {
             var productsQuery = _repository.GetAllAsNotracking().Where(x => x.CategoryId == cat);
@@ -140,6 +190,11 @@ namespace BaseCore.Products.Implementations.Services
         public IQueryable<Product> GetQuery()
         {
             return _repository.GetAll();
+        }
+
+        public Task<Product> GetByExternalId(string id)
+        {
+            return _repository.GetAll().FirstOrDefaultAsync(x => x.ExternalId == id);
         }
     }
 }

@@ -3,7 +3,7 @@
     /// <summary>
     /// Создание продукта
     /// </summary>
-    public class CreateProductModel
+    public class ProductRequestModel
     {
         /// <summary>
         /// Внешний ключ

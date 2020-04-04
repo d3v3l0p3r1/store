@@ -12,6 +12,8 @@ namespace WebApi.Controllers.Admin
     [ApiController]
     [ResponseCache(Duration = 1600)]
     [ProducesResponseType(typeof(Dictionary<int, string>), 200)]
+    [ApiExplorerSettings(GroupName = "admin")]
+
     public class EnumsController : ControllerBase
     {
         /// <summary>

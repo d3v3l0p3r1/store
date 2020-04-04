@@ -13,6 +13,7 @@ namespace WebApi.Controllers.Api
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    [ApiExplorerSettings(GroupName = "public")]
     public class BalanceController : ControllerBase
     {
         private readonly IBalanceService _balanceService;

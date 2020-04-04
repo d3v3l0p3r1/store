@@ -45,6 +45,8 @@ namespace WebApi
 
             #region Repositories
 
+            services.AddScoped<IRepository, Repository>();
+
             services.AddScoped<IRepository<Brand>, Repository<Brand>>();
             services.AddScoped<IRepository<Product>, Repository<Product>>();
             services.AddScoped<IRepository<ProductCategory>, Repository<ProductCategory>>();

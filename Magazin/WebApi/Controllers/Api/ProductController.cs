@@ -13,6 +13,7 @@ namespace WebApi.Controllers.Api
     /// </summary>
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [ApiExplorerSettings(GroupName = "public")]
     public class ProductController : Controller
     {
 

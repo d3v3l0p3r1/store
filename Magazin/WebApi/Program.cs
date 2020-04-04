@@ -27,10 +27,12 @@ namespace WebApi
 
         private static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseKestrel()
+                .UseKestrel(config =>
+                {
+                    config.ListenAnyIP(51145);
+                })
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseUrls("http://localhost:51145")
-                .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
 
@@ -53,7 +55,7 @@ namespace WebApi
             {
                 if (options.Value.UseOneAssIntegration)
                 {
-                    await services.GetService<IProductFetcher>().LoadProducts();
+                    //await services.GetService<IProductFetcher>().LoadProducts();
                 }
                 else
                 {

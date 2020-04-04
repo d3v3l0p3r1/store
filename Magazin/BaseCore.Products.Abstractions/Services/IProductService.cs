@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using BaseCore.DAL.Implementations.Entities;
+using BaseCore.Products.Abstractions.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace BaseCore.Products.Abstractions.Services
@@ -14,5 +15,8 @@ namespace BaseCore.Products.Abstractions.Services
         IQueryable<Product> GetQuery();
         Task<Product> GetAsync(long id);
         Task DeleteAsync(long id);
+        Task CreateAsync(ProductRequestModel requestModel);
+        Task UpdateAsync(ProductRequestModel requestModel);
+        Task<Product> GetByExternalId(string id);
     }
 }

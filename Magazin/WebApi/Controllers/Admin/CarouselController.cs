@@ -11,6 +11,7 @@ namespace WebApi.Controllers.Admin
 {
     [Route("[controller]")]
     [ApiController]
+    [ApiExplorerSettings(GroupName = "admin")]
     public class CarouselController : ControllerBase
     {
         private readonly ICarouselService _carouselService;

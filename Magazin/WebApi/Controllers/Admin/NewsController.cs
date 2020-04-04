@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using BaseCore.DAL.Implementations.Entities;
 using BaseCore.News.Services.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +12,10 @@ namespace WebApi.Controllers.Admin
     /// <summary>
     /// Новости
     /// </summary>
+    [ApiController]
+    [Authorize(Roles = "admin")]
+    [Route("[controller]")]
+    [ApiExplorerSettings(GroupName = "admin")]
     public class NewsController : ControllerBase
     {
         private readonly INewsService _newsService;

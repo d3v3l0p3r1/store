@@ -47,7 +47,9 @@ namespace BaseCore.Products.Implementations.Services
             cat = new ProductCategory
             {
                 Title = title,
-                ExternalId = id
+                ExternalId = id,
+                CreateTime = DateTimeOffset.UtcNow,
+                UpdateTime = DateTimeOffset.UtcNow
             };
 
             if (!string.IsNullOrEmpty(parentId))
@@ -64,6 +66,31 @@ namespace BaseCore.Products.Implementations.Services
             await CreateAsync(cat);
         }
 
+        public async Task UpdateAsync(string title, string id, string parentId)
+        {
+            var cat = await _repository.GetAll().FirstOrDefaultAsync(x => x.ExternalId == id);
+            if (cat == null)
+            {
+                throw new Exception("Запись не существует");
+            }
+
+            if (!string.IsNullOrEmpty(parentId))
+            {
+                var parentCat = await _repository.GetAll().FirstOrDefaultAsync(x => x.ExternalId == parentId);
+                if (parentCat == null)
+                {
+                    throw new Exception($"Не удалось найти категорию {parentId}");
+                }
+
+                cat.ParentId = parentCat.Id;
+            }
+
+            cat.Title = title;
+            cat.UpdateTime = DateTimeOffset.UtcNow;
+
+            await _repository.UpdateAsync(cat);
+        }
+
         public IQueryable<ProductCategory> GetAllAsNotracking()
         {
             return _repository.GetAllAsNotracking();
@@ -72,6 +99,11 @@ namespace BaseCore.Products.Implementations.Services
         public IQueryable<ProductCategory> GetQuery()
         {
             return _repository.GetAll();
+        }
+
+        public Task<ProductCategory> GetByExternalIdAsync(string externalId)
+        {
+            return _repository.GetAll().FirstOrDefaultAsync(x => x.ExternalId == externalId);
         }
     }
 }
