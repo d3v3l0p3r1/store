@@ -156,32 +156,7 @@ namespace BaseCore.Products.Implementations.Services
             await _repository.CreateAsync(entity);
         }
 
-        public async Task<List<BalancedProductModel>> GetWithBalance(long cat, string schema, string host)
-        {
-            var productsQuery = _repository.GetAllAsNotracking().Where(x => x.CategoryId == cat);
-            var balanceQuery = _balanceService.GetAllAsNoTracking().Include(x => x.BalanceEntries);
-
-            var url = $"{schema}://{host}/File/GetFile/";
-
-            var t = from product in productsQuery
-                    join balance in balanceQuery on product.Id equals balance.ProductId
-                    where balance.ZeroDate == null && balance.BalanceEntries.Sum(z => z.Count) > 0
-                    select new BalancedProductModel()
-                    {
-                        Id = product.Id,
-                        CateogryId = product.Category.Id,
-                        Title = product.Title,
-                        Description = product.Description,
-                        File = product.FileId != null ? url + product.FileId : url + 1,
-                        KindId = product.KindId,
-                        KingTitle = product.Kind.Title,
-                        Price = -100,
-                        Count = balance.BalanceEntries.Sum(z => z.Count)
-                    };
-
-            return await t.ToListAsync();
-        }
-
+        
         public IQueryable<Product> GetAllAsNotracking()
         {
             return _repository.GetAllAsNotracking();

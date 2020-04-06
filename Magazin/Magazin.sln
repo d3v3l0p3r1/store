@@ -25,13 +25,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseCore.Products.Implement
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseCore.Documents.Implementations", "BaseCore.Documents.Implementations\BaseCore.Documents.Implementations.csproj", "{49E7202B-7A41-4D52-A561-C9A1CCADC9F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseCore.News", "BaseCore.News\BaseCore.News.csproj", "{9B9C3C34-8F31-48F6-B9EA-78BADF09AFCB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseCore.News", "BaseCore.News\BaseCore.News.csproj", "{9B9C3C34-8F31-48F6-B9EA-78BADF09AFCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseCore.Catalogues", "BaseCore.Catalogues\BaseCore.Catalogues.csproj", "{5FAB718E-F07C-4EC6-ABE5-7A19C2159CEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseCore.Catalogues", "BaseCore.Catalogues\BaseCore.Catalogues.csproj", "{5FAB718E-F07C-4EC6-ABE5-7A19C2159CEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseCore.Documents.Abstractions", "BaseCore.Documents.Abstractions\BaseCore.Documents.Abstractions.csproj", "{668DF861-712F-4B5E-8DF1-60CAD7F81970}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseCore.Documents.Abstractions", "BaseCore.Documents.Abstractions\BaseCore.Documents.Abstractions.csproj", "{668DF861-712F-4B5E-8DF1-60CAD7F81970}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseCore.Products.Abstractions", "BaseCore.Products.Abstractions\BaseCore.Products.Abstractions.csproj", "{BFEBD6EB-3682-4587-9C98-FBF031BC958C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseCore.Products.Abstractions", "BaseCore.Products.Abstractions\BaseCore.Products.Abstractions.csproj", "{BFEBD6EB-3682-4587-9C98-FBF031BC958C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

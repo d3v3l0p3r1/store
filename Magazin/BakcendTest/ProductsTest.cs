@@ -2,6 +2,9 @@
 using NUnit.Framework;
 using System.Threading.Tasks;
 using BaseCore.DAL.Implementations.Entities;
+using BaseCore.Products.Abstractions.Services;
+using BaseCore.Products.Implementations.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace WebUiAdminTest
 {
@@ -11,11 +14,12 @@ namespace WebUiAdminTest
         [Test(Description = "Получиение списка продуктов с учетом баланса")]
         public async Task GetProductsWithBalanceTest()
         {
+
             var kind = new ProductKind();
-            await ProductKindService.CreateAsync(kind);
+            await Repository.CreateAsync(kind);
 
             var cateogry = new ProductCategory();
-            await ProductCategoryService.CreateAsync(cateogry);
+            await Repository.CreateAsync(cateogry);
 
             var product = new Product()
             {
@@ -23,7 +27,7 @@ namespace WebUiAdminTest
                 KindId = kind.Id
             };
 
-            await ProductService.CreateAsync(product);
+            await Repository.CreateAsync(product);
 
             await CreateIncomingDocument(product, 100);
 
@@ -32,12 +36,13 @@ namespace WebUiAdminTest
                 CategoryId = cateogry.Id,
                 KindId = kind.Id
             };
-            await ProductService.CreateAsync(product2);
+            await Repository.CreateAsync(product2);
 
             await CreateIncomingDocument(product2, 100);
             await CreateOutcomingDocument(product2, 100);
 
-            var list = BalanceService.GetProductBalance(cateogry.Id, "http", "localhost");
+            var balanceService = ServiceProvider.GetService<IBalanceService>();
+            var list = balanceService.GetWithBalance(cateogry.Id);
 
             Assert.IsTrue(list.Any());
             Assert.IsFalse(list.Any(x => x.Id == product2.Id));

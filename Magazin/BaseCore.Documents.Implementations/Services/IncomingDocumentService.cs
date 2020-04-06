@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using BaseCore.DAL.Abstractions.Repositories;
 using BaseCore.DAL.Implementations.Entities.Documents;
 using BaseCore.Documents.Implementations.Services.Abstractions;
+using BaseCore.Products.Abstractions.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace BaseCore.Documents.Implementations.Services
@@ -54,7 +55,7 @@ namespace BaseCore.Documents.Implementations.Services
 
             foreach (var entry in original.Entries)
             {
-                await _balanceService.AddToBalance(entry);
+                await _balanceService.AddToBalance(entry.ProductId, entry.Count);
             }
 
             original.DocumentStatus = DocumentStatus.Processed;
@@ -72,7 +73,7 @@ namespace BaseCore.Documents.Implementations.Services
                 foreach (var entry in original.Entries)
                 {
                     entry.Count = -entry.Count;
-                    await _balanceService.AddToBalance(entry);
+                    await _balanceService.AddToBalance(entry.ProductId, entry.Count);
                 }
             }
 

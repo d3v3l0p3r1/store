@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -59,10 +55,14 @@ namespace WebApi.Controllers.Exchange
         /// <returns></returns>
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> UpdatePrices()
+        public async Task<IActionResult> UpdatePrices(IFormFile file)
         {
-            var result = await _productFetcher.UpdateProductPrices();
-            return Ok(result);
+            using (var ms = file.OpenReadStream())
+            {
+                var result = await _productFetcher.UpdateProductPrices(ms);
+                return Ok(result);
+            }
+            
         }
     }
 }

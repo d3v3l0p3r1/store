@@ -54,7 +54,6 @@ namespace WebApi
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IRepository<News>, Repository<News>>();
             services.AddScoped<IRepository<ProductKind>, Repository<ProductKind>>();
-            services.AddScoped<IBalanceRepository, BalanceRepository>();
             services.AddScoped<IRepository<IncomingDocument>, Repository<IncomingDocument>>();
             services.AddScoped<IRepository<ProductImage>, Repository<ProductImage>>();
             services.AddScoped<IRepository<IncomingDocumentEntry>, Repository<IncomingDocumentEntry>>();

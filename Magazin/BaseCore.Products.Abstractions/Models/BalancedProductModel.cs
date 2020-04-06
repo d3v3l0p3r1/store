@@ -1,4 +1,4 @@
-﻿namespace BaseCore.DAL.Implementations.Models
+﻿namespace BaseCore.Products.Abstractions.Models
 {
     public class BalancedProductModel
     {
@@ -10,6 +10,6 @@
         public string KingTitle { get; set; }
         public long CateogryId { get; set; }
         public int Count { get; set; }
-        public string File { get; set; }
+        public long? FileId { get; set; }
     }
 }

@@ -21,6 +21,7 @@
     <ProjectReference Include="..\BaseCore.Product.Implementations\BaseCore.Products.Implementations.csproj" />
     <ProjectReference Include="..\BaseCore.Security\BaseCore.Security.csproj" />
     <ProjectReference Include="..\DataCore\BaseCore.DAL.Implementations.csproj" />
+    <ProjectReference Include="..\WebApi\WebApi.csproj" />
   </ItemGroup>
 
 </Project>

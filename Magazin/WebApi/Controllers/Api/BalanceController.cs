@@ -1,7 +1,8 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using BaseCore.DAL.Implementations.Models;
-using BaseCore.Documents.Implementations.Services.Abstractions;
+using BaseCore.Products.Abstractions.Models;
+using BaseCore.Products.Abstractions.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
@@ -21,7 +22,6 @@ namespace WebApi.Controllers.Api
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="balanceService"></param>
         public BalanceController(IBalanceService balanceService)
         {
             _balanceService = balanceService;
@@ -48,7 +48,7 @@ namespace WebApi.Controllers.Api
             }
             var skip = (page - 1) * take;
 
-            var all = _balanceService.GetProductBalance(cat, Request.Scheme, Request.Host.ToString());
+            var all = _balanceService.GetWithBalance(cat);
             var total = await all.CountAsync();
 
             all = all.Skip(skip).Take(take);

@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using OneAssIntegration.Services.Abstractions;
 using WebApi.Migrations;
 using WebApi.Options;
 

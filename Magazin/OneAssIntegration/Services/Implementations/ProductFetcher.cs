@@ -14,6 +14,7 @@ using System.Xml.Serialization;
 using BaseCore.DAL.Abstractions.Repositories;
 using BaseCore.DAL.Implementations.Entities;
 using BaseCore.File;
+using BaseCore.Products.Abstractions.Services;
 using Microsoft.AspNetCore.Server.IIS.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -35,15 +36,18 @@ namespace OneAssIntegration.Services.Implementations
         private readonly OneAssOptions _options;
         private readonly ILogger<ProductFetcher> _logger;
         private readonly IFileService _fileService;
+        private readonly IBalanceService _balanceService;
 
         public ProductFetcher(IRepository repository,
             IOptions<OneAssOptions> options,
             ILogger<ProductFetcher> logger,
-            IFileService fileService)
+            IFileService fileService, 
+            IBalanceService balanceService)
         {
             _repository = repository;
             _logger = logger;
             _fileService = fileService;
+            _balanceService = balanceService;
             _options = options.Value;
 
             _client = new SiteExchange2PortTypeClient(GetBindings(), new EndpointAddress(_options.Url));
@@ -390,18 +394,26 @@ namespace OneAssIntegration.Services.Implementations
                 result.Total++;
                 try
                 {
-                    
+                    var product = _repository.GetAll<Product>().First(x => x.ExternalId == item.Id);
+                    await _balanceService.SetBalance(product.Id, item.Amount);
+
+
+                    var price = item.Prices.First();
+                    product.Price = price.Value;
+                    await _repository.UpdateAsync(product);
+
+                    result.Success++;
                 }
                 catch (Exception e)
                 {
                     _logger.LogError($"Set price error: {item.Id}.", e);
+                    result.Failed++;
                 }
 
             }
 
             return result;
         }
-
 
     }
 }

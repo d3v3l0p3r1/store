@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using BaseCore.DAL.Abstractions.Repositories;
 using BaseCore.DAL.Implementations.Entities.Documents;
 using BaseCore.Documents.Implementations.Services.Abstractions;
+using BaseCore.Products.Abstractions.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace BaseCore.Documents.Implementations.Services

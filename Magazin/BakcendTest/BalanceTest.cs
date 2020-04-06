@@ -1,7 +1,11 @@
 ﻿using NUnit.Framework;
 using System.Threading.Tasks;
+using BaseCore.DAL.Abstractions.Repositories;
 using BaseCore.DAL.Implementations.Entities;
 using BaseCore.DAL.Implementations.Exceptions.Balance;
+using BaseCore.Products.Abstractions.Services;
+using BaseCore.Products.Implementations.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace WebUiAdminTest
 {
@@ -25,7 +29,8 @@ namespace WebUiAdminTest
                 Title = "Balance test category"
             };
 
-            await ProductCategoryService.CreateAsync(_productCategory);
+            var repository = ServiceProvider.GetService<IRepository>();
+            await repository.CreateAsync(_productCategory);
 
             _product = new Product()
             {
@@ -33,7 +38,7 @@ namespace WebUiAdminTest
                 Title = "Test balance product"
             };
 
-            await ProductService.CreateAsync(_product);
+            await repository.CreateAsync(_product);
         }
 
 
@@ -41,18 +46,22 @@ namespace WebUiAdminTest
         [Order(1)]
         public async Task RemoveFromBalanceTest()
         {
+            var repository = ServiceProvider.GetService<IRepository>();
+            var documentBalanceService = ServiceProvider.GetService<IBalanceService>();
+
             var product = new Product()
             {
                 Category = _productCategory,
                 Title = "Remove Title"
             };
-            await ProductService.CreateAsync(product);
+
+            await repository.CreateAsync(product);
 
             await CreateIncomingDocument(product, 100);
 
             await CreateOutcomingDocument(product, 100);
 
-            var count = await BalanceService.GetBalance(_product);
+            var count = await documentBalanceService.GetBalance(_product.Id);
             Assert.AreEqual(0, count);
         }
 
@@ -60,9 +69,10 @@ namespace WebUiAdminTest
         [Order(2)]
         public async Task AddToBalanceTest()
         {
+            var balanceService = ServiceProvider.GetService<IBalanceService>();
             await CreateIncomingDocument(_product, 100);
 
-            var count = await BalanceService.GetBalance(_product);
+            var count = await balanceService.GetBalance(_product.Id);
 
             Assert.AreEqual(100, count);
         }
@@ -71,15 +81,14 @@ namespace WebUiAdminTest
         [Order(3)]
         public async Task BelowZeroBalanceTest()
         {
+            var repository = ServiceProvider.GetService<IRepository>();
             var product = new Product()
             {
                 Category = _productCategory
             };
 
-            await ProductService.CreateAsync(product);
-
+            await repository.CreateAsync(product);
             await CreateIncomingDocument(product, 10);
-
 
             Assert.Throws<BalanceBelowZeroException>(() =>
             {
@@ -93,22 +102,24 @@ namespace WebUiAdminTest
         [Order(4)]
         public async Task CreateNewBalanceTest()
         {
+            var repository = ServiceProvider.GetService<IRepository>();
+            var balanceService = ServiceProvider.GetService<IBalanceService>();
             var product = new Product()
             {
                 Category = _productCategory,
             };
-            await ProductService.CreateAsync(product);
+            await repository.CreateAsync(product);
 
             await CreateIncomingDocument(product, 100);
 
-            var balanceBefore = await BalanceService.Get(product);
+            var balanceBefore = await balanceService.GetBalance(product.Id);
 
             await CreateOutcomingDocument(product, 100);
             await CreateIncomingDocument(product, 100);
 
-            var lastBalance = await BalanceService.Get(product);
+            var lastBalance = await balanceService.GetBalance(product.Id);
 
-            Assert.AreNotEqual(balanceBefore.Id, lastBalance.Id);
+            Assert.AreNotEqual(balanceBefore, lastBalance);
 
         }
 
