@@ -1,7 +1,7 @@
 ﻿using System;
-using BaseCore.Entities;
+using BaseCore.DAL.Abstractions;
 
-namespace DataCore.Entities
+namespace BaseCore.DAL.Implementations.Entities
 {
     public class News : BaseEntity
     {

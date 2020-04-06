@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BaseCore.DAL.Abstractions\BaseCore.DAL.Abstractions.csproj" />
+    <ProjectReference Include="..\BaseCore.Documents.Abstractions\BaseCore.Documents.Abstractions.csproj" />
+    <ProjectReference Include="..\BaseCore.Product.Implementations\BaseCore.Products.Implementations.csproj" />
+    <ProjectReference Include="..\BaseCore.Products.Abstractions\BaseCore.Products.Abstractions.csproj" />
+    <ProjectReference Include="..\DataCore\BaseCore.DAL.Implementations.csproj" />
+  </ItemGroup>
+
+</Project>

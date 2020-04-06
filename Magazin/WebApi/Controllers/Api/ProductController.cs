@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using DataCore.Services.Abstract;
-using Microsoft.AspNetCore.Http;
+using BaseCore.Products.Abstractions.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
 using WebApi.Models.Api.Product;
 
-namespace WebUiAdmin.Controllers.Api
+namespace WebApi.Controllers.Api
 {
     /// <summary>
     /// Продукты
     /// </summary>
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [ApiExplorerSettings(GroupName = "public")]
     public class ProductController : Controller
     {
 

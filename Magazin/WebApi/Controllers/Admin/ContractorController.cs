@@ -1,16 +1,14 @@
-﻿using DataCore.Entities;
-using DataCore.Services.Abstract;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BaseCore.Catalogues.Services.Abstract;
+using BaseCore.DAL.Implementations.Entities;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
 using WebApi.Models.Admin.Contractors;
-using WebUiAdmin.Controllers;
 
 namespace WebApi.Controllers.Admin
 {

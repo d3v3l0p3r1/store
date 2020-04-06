@@ -1,8 +1,5 @@
-﻿using DataCore.Entities.Documents;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using BaseCore.DAL.Implementations.Entities.Documents;
 using WebApi.Models;
 using WebApi.Models.Admin.Documents;
 using WebApi.Models.Admin.Documents.IncomingDocuments;

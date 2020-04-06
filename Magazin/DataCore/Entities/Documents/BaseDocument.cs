@@ -1,10 +1,9 @@
-﻿using BaseCore.Entities;
-using BaseCore.Security.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using BaseCore.DAL.Abstractions;
+using BaseCore.Security.Entities;
 
-namespace DataCore.Entities.Documents
+namespace BaseCore.DAL.Implementations.Entities.Documents
 {
     public abstract class BaseDocument<TEntry> : BaseEntity where TEntry: BaseDocumentEntry
     {

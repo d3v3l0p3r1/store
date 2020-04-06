@@ -1,10 +1,6 @@
-﻿using BaseCore.Security.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace DataCore.Entities.Documents
+namespace BaseCore.DAL.Implementations.Entities.Documents
 {
     /// <summary>
     /// Документ списания

@@ -1,11 +1,9 @@
-﻿using BaseCore.Entities;
-using BaseCore.Services.Abstract;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using BaseCore.DAL.Implementations.Entities;
+using BaseCore.File;
 
 namespace BackendTest.Services.Concrete
 {

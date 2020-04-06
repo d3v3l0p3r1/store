@@ -1,9 +1,6 @@
-﻿using BaseCore.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BaseCore.DAL.Abstractions;
 
-namespace DataCore.Entities.Documents
+namespace BaseCore.DAL.Implementations.Entities.Documents
 {
     public abstract class BaseDocumentEntry: BaseEntity
     {

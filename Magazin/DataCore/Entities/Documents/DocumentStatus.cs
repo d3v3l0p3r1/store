@@ -1,7 +1,6 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace DataCore.Entities.Documents
+namespace BaseCore.DAL.Implementations.Entities.Documents
 {
     /// <summary>
     /// Статус документа

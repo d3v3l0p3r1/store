@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BaseCore.Security.Entities;
 using BaseCore.Security.Services.Abstract;
-using DataCore.DAL;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
-using WebApi.Models.Admin;
 using WebApi.Models.Admin.Users;
-using WebUiAdmin.Models;
 
-namespace WebUiAdmin.Controllers
+namespace WebApi.Controllers.Admin
 {
     /// <summary>
     /// Пользователи

@@ -1,26 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
-using BaseCore.Entities;
-using BaseCore.Services.Abstract;
-using BaseCore.Services.Concrete;
+using BaseCore.DAL.Abstractions.Repositories;
+using BaseCore.DAL.Implementations.Entities;
+using BaseCore.File;
 
-namespace WebUiAdmin.Concrete
+namespace WebApi.Concrete
 {
-    public class FileService : BaseService<FileData>, IFileService
+    public class FileService : IFileService
     {
         private readonly string fileDir = @"Files";
         private readonly string dir;
+        private readonly IRepository<FileData> _repository;
 
-        public FileService(IRepository<FileData> repository) : base(repository)
+        public FileService(IRepository<FileData> repository)
         {
             dir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileDir);
             if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
             }
+
+            _repository = repository;
         }
 
         public async Task<FileData> SaveFile(string fileName, Stream stream)
@@ -45,14 +46,14 @@ namespace WebUiAdmin.Concrete
 
         public async Task<string> GetFilePath(int id)
         {
-            var fileData = await GetAsync(id);
+            var fileData = await _repository.GetAsync(id);
 
             return Path.Combine(dir, fileData.FileID.ToString());
         }
 
         public async Task<string> GetVirtualPath(int id)
         {
-            var fileData = await GetAsync(id);
+            var fileData = await _repository.GetAsync(id);
 
             if (fileData == null)
             {

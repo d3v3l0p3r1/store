@@ -226,6 +226,26 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/carousel',
+    roles: ['admin'],
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/carousel/list'),
+        name: 'CompaniesGrid',
+        meta: { title: 'Карусель', icon: 'planet-earth' }
+      },
+      {
+        path: 'create',
+        component: () => import('@/views/carousel/create'),
+        name: 'CreateCarousel',
+        meta: { title: 'Элемент карусели' },
+        hidden: true
+      }
+    ]
+  },
+  {
     path: '/icon',
     component: Layout,
     children: [

@@ -1,50 +1,29 @@
-﻿using BackendTest.Services.Concrete;
-using BaseCore.Security.Entities;
-using DataCore.DAL;
-using DataCore.Entities;
-using DataCore.Entities.Documents;
-using DataCore.Repositories.Concrete;
-using DataCore.Services.Concrete;
-using DataCore.Services.Concrete.Documents;
-using IdentityServer4.EntityFramework.Entities;
-using Microsoft.AspNetCore.Identity;
+﻿using System;
+using BackendTest.Services.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using BaseCore.DAL.Abstractions.Repositories;
+using BaseCore.DAL.Implementations;
+using BaseCore.DAL.Implementations.Entities;
+using BaseCore.DAL.Implementations.Entities.Documents;
+using BaseCore.Documents.Abstractions.Services;
+using BaseCore.Documents.Implementations.Repositories.Implementations;
+using BaseCore.Documents.Implementations.Services;
+using BaseCore.Documents.Implementations.Services.Abstractions;
+using BaseCore.File;
+using BaseCore.Products.Implementations.Services;
+using WebApi;
 
 namespace WebUiAdminTest
 {
     public abstract class BaseTest
     {
         public IServiceCollection ServiceCollections;
-
-        protected DataContext DataContext;
-        protected BalanceService BalanceService;
-        protected BalanceRepository BalanceRepository;
-
-        protected Repository<ProductImage> ProductImageRepository;
-        protected ProductService ProductService;
-        protected Repository<Product> ProductRepository;
-
-        protected Repository<ProductCategory> ProductCategoryRepository;
-        protected ProductCategoryService ProductCategoryService;
-
-        protected Repository<IncomingDocumentEntry> IncomingDocumentEntryRepository;
-        protected Repository<IncomingDocument> IncomingDocumentRepository;
-        protected IncomingDocumentService IncomingDocumentService;
-
-        protected Repository<OutComingDocumentEntry> OutcomingDocumentEntryRepository;
-        protected Repository<OutComingDocument> OutcomingDocumentRepository;
-        protected OutcomingDocumentService OutcomingDocumentService;
-
-        protected Repository<ProductKind> ProductKingRepository;
-        protected KindService ProductKindService;
-
-        protected DummyFileService DummyFileService;
+        public IServiceProvider ServiceProvider;
+        public IRepository Repository;
 
         public BaseTest()
         {
@@ -59,37 +38,18 @@ namespace WebUiAdminTest
             {
                 config.UseInMemoryDatabase(dbName);
             });
-            
+
             ServiceCollections.AddIdentityServer()
                .AddInMemoryClients(IdentityConfig.GetClients())
                .AddInMemoryApiResources(IdentityConfig.GetApis());
 
-            ;
+            Bindings.Bind(ServiceCollections);
 
-            var serviceProvider = ServiceCollections.BuildServiceProvider();
-            DataContext = serviceProvider.GetService<DataContext>();
+            ServiceCollections.AddScoped<IFileService, DummyFileService>();
 
-            BalanceRepository = new BalanceRepository(DataContext);
-            ProductRepository = new Repository<Product>(DataContext);
-            ProductImageRepository = new Repository<ProductImage>(DataContext);
+            ServiceProvider = ServiceCollections.BuildServiceProvider();
 
-            DummyFileService = new DummyFileService();
-            BalanceService = new BalanceService(BalanceRepository);
-            ProductService = new ProductService(ProductRepository, BalanceService, DummyFileService, ProductImageRepository);
-
-            ProductCategoryRepository = new Repository<ProductCategory>(DataContext);
-            ProductCategoryService = new ProductCategoryService(ProductCategoryRepository);
-
-            IncomingDocumentEntryRepository = new Repository<IncomingDocumentEntry>(DataContext);
-            IncomingDocumentRepository = new Repository<IncomingDocument>(DataContext);
-            IncomingDocumentService = new IncomingDocumentService(IncomingDocumentRepository, BalanceService, IncomingDocumentEntryRepository);
-
-            OutcomingDocumentEntryRepository = new Repository<OutComingDocumentEntry>(DataContext);
-            OutcomingDocumentRepository = new Repository<OutComingDocument>(DataContext);
-            OutcomingDocumentService = new OutcomingDocumentService(OutcomingDocumentRepository, BalanceService, OutcomingDocumentEntryRepository);
-
-            ProductKingRepository = new Repository<ProductKind>(DataContext);
-            ProductKindService = new KindService(ProductKingRepository);
+            Repository = ServiceProvider.GetService<IRepository>();
         }
 
         public static class IdentityConfig
@@ -125,8 +85,8 @@ namespace WebUiAdminTest
             {
                 Title = "Test Category 1"
             };
-
-            await ProductCategoryService.CreateAsync(category);
+            
+            await Repository.CreateAsync(category);
 
             var product = new Product()
             {
@@ -134,11 +94,12 @@ namespace WebUiAdminTest
                 Title = "Test product 1",
             };
 
-            await ProductService.CreateAsync(product);
+            await Repository.CreateAsync(product);
         }
 
         protected async Task<IncomingDocument> CreateIncomingDocument(Product product, int count)
         {
+            var incomingDocumentService = ServiceProvider.GetService<IIncomingDocumentService>();
             var incomingDocument = new IncomingDocument
             {
                 Entries = new List<IncomingDocumentEntry>
@@ -153,14 +114,15 @@ namespace WebUiAdminTest
                 }
             };
 
-            await IncomingDocumentService.CreateAsync(incomingDocument);
-            await IncomingDocumentService.Apply(incomingDocument.Id);
+            await incomingDocumentService.CreateAsync(incomingDocument);
+            await incomingDocumentService.Apply(incomingDocument.Id);
 
             return incomingDocument;
         }
 
         protected async Task<OutComingDocument> CreateOutcomingDocument(Product product, int count)
         {
+            var outcomingDocumentService = ServiceProvider.GetService<IOutcomingDocumentService>();
             var outcomingDocument = new OutComingDocument()
             {
                 Entries = new List<OutComingDocumentEntry>()
@@ -175,7 +137,7 @@ namespace WebUiAdminTest
                 }
             };
 
-            await OutcomingDocumentService.CreateAsync(outcomingDocument);
+            await outcomingDocumentService.CreateAsync(outcomingDocument);
 
             return outcomingDocument;
         }

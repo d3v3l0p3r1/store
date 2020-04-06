@@ -1,23 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using BaseCore.Security.Entities;
-using BaseCore.Security.Services.Abstract;
-using BaseCore.Security.Services.Concrete;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
-using WebUiAdmin.Models;
-using WebUiAdmin.Models.Api.Account;
+using WebApi.Models;
+using WebApi.Models.Api.Account;
 
-namespace WebUiAdmin.Controllers.Api
+namespace WebApi.Controllers
 {
     /// <summary>
     /// Account controller

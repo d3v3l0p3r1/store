@@ -1,19 +1,11 @@
 ﻿using BaseCore.Security.Entities;
-using DataCore.DAL;
-using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebUiAdmin.Models;
+using BaseCore.DAL.Implementations;
+using WebApi.Models;
 
 namespace WebApi.Extensions
 {

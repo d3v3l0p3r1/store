@@ -1,15 +1,13 @@
 ﻿using AutoMapper;
 using BaseCore.Security.Services.Concrete;
-using DataCore.Entities.Documents;
-using DataCore.Services.Abstract.Documents;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BaseCore.DAL.Implementations.Entities.Documents;
+using BaseCore.Documents.Implementations.Services.Abstractions;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
 
 namespace WebApi.Controllers.Admin.Documents

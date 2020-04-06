@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
-using BaseCore.Entities;
-using BaseCore.Services.Abstract;
+using BaseCore.DAL.Implementations.Entities;
+using BaseCore.File;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
-using Microsoft.Net.Http.Headers;
 
-namespace WebUiAdmin.Controllers
+namespace WebApi.Controllers.Admin
 {
     /// <summary>
     /// Зашрузка изображений
@@ -44,31 +37,13 @@ namespace WebUiAdmin.Controllers
         [HttpPost]
         [Route("[action]")]
         [ProducesResponseType(typeof(FileData), 200)]
-        public async Task<IActionResult> SaveFile()
+        public async Task<IActionResult> SaveFile(IFormFile formFile)
         {
-            var reader = new MultipartReader(Request.GetMultipartBoundary(), HttpContext.Request.Body);
-            FileMultipartSection filePart;
-            bool isFileSection = false;
-
-            do
+            using (var stream = formFile.OpenReadStream())
             {
-                var section = await reader.ReadNextSectionAsync();
-                if (section == null)
-                {
-                    throw new Exception();
-                }
-
-                filePart = section.AsFileSection();
-
-                if (filePart != null)
-                {
-                    isFileSection = true;
-                }
-
-            } while (isFileSection == false);
-
-            var fileData = await _fileService.SaveFile(filePart.FileName, filePart.FileStream);
-            return new JsonResult(fileData);
+                var fileData = await _fileService.SaveFile(formFile.FileName, stream);
+                return new JsonResult(fileData);
+            }
         }
 
         /// <summary>

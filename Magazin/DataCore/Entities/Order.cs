@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
-using BaseCore.Entities;
+using BaseCore.DAL.Abstractions;
 using BaseCore.Security.Entities;
 
-namespace DataCore.Entities
+namespace BaseCore.DAL.Implementations.Entities
 {
     public class Order : BaseEntity
     {

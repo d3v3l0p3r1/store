@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DataCore.Entities.Documents;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
+using BaseCore.DAL.Implementations.Entities.Documents;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Extensions;
 
@@ -16,6 +12,8 @@ namespace WebApi.Controllers.Admin
     [ApiController]
     [ResponseCache(Duration = 1600)]
     [ProducesResponseType(typeof(Dictionary<int, string>), 200)]
+    [ApiExplorerSettings(GroupName = "admin")]
+
     public class EnumsController : ControllerBase
     {
         /// <summary>

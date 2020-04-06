@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using BaseCore.DAL.Implementations.Entities.Documents;
+using BaseCore.Documents.Abstractions.Services;
 using BaseCore.Security.Services.Concrete;
-using DataCore.Entities.Documents;
-using DataCore.Services.Abstract.Documents;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using WebApi.Controllers.Admin.Documents;
 using WebApi.Models.Admin.Documents.OutcomingDocuments;
 
-namespace WebApi.Controllers.Admin
+namespace WebApi.Controllers.Admin.Documents
 {
     /// <summary>
     /// Для документов расхода

@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using BaseCore.Security.Entities;
 using BaseCore.Security.Services.Abstract;
-using BaseCore.Services;
-using BaseCore.Services.Abstract;
 using Microsoft.EntityFrameworkCore;
 
 namespace BaseCore.Security.Services.Concrete
@@ -87,10 +84,9 @@ namespace BaseCore.Security.Services.Concrete
             _userManager.UpdateAsync(user);
         }
 
-        public async Task<User> CreateAsync(User entity)
+        public async Task CreateAsync(User entity)
         {
             await _userManager.CreateAsync(entity);
-            return entity;
         }
 
         public async Task<User> CreateAsync(User user, string password, string role)
@@ -101,15 +97,6 @@ namespace BaseCore.Security.Services.Concrete
                 throw new Exception(String.Join(";", result.Errors.Select(x => x.Description)));
             }
             await _userManager.AddToRoleAsync(user, role);
-            return user;
-        }
-
-
-
-        public async Task<User> CreateWithPassword(User user, string password)
-        {
-            await _userManager.CreateAsync(user, password);
-
             return user;
         }
 
@@ -153,5 +140,6 @@ namespace BaseCore.Security.Services.Concrete
         {
             throw new NotImplementedException();
         }
+
     }
 }

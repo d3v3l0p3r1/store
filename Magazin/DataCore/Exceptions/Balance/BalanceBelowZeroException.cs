@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace DataCore.Exceptions.Balance
+namespace BaseCore.DAL.Implementations.Exceptions.Balance
 {
     public class BalanceBelowZeroException : Exception
     {

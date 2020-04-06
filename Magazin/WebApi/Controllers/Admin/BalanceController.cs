@@ -1,13 +1,12 @@
-﻿using DataCore.Entities;
-using DataCore.Models;
-using DataCore.Services.Abstract.Documents;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using BaseCore.DAL.Implementations.Entities;
+using BaseCore.DAL.Implementations.Models;
+using BaseCore.Products.Abstractions.Models;
+using BaseCore.Products.Abstractions.Services;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
 
 namespace WebApi.Controllers.Admin
@@ -54,7 +53,7 @@ namespace WebApi.Controllers.Admin
             }
             var skip = (page - 1) * take;
 
-            var all = _balanceService.GetProductBalance(cat, Request.Scheme, Request.Host.ToString());
+            var all = _balanceService.GetWithBalance(cat);
             var total = await all.CountAsync();
 
             all = all.Skip(skip).Take(take);
@@ -86,18 +85,18 @@ namespace WebApi.Controllers.Admin
             }
             var skip = (page - 1) * take;
 
-            var all = _balanceService.GetAll();
+            var all = _balanceService.GetAllAsNoTracking();
 
             if (cat != null)
             {
-                all = all.Where(x => x.Product.CategoryId == cat.Value);
+                //all = all.Where(x => x.Product.CategoryId == cat.Value);
             }
 
             var total = await all.CountAsync();
 
             all = all.Skip(skip).Take(take);
 
-            var result = new ListRespone<Balance>()
+            var result = new ListRespone<BalanceDto>()
             {
                 Total = total,
                 Data = await all.ToListAsync()

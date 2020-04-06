@@ -1,10 +1,8 @@
-﻿using BaseCore.Entities;
-using DataCore.Entities.Documents;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using BaseCore.DAL.Abstractions;
 
-namespace DataCore.Entities
+namespace BaseCore.DAL.Implementations.Entities
 {
     public class Balance : BaseEntity
     {
@@ -25,11 +23,5 @@ namespace DataCore.Entities
         public int Count { get; set; }
 
         public decimal Price { get; set; }
-
-        public long? IncomingDocumentId { get; set; }
-        public IncomingDocument IncomingDocument { get; set; }
-
-        public long? OutcomingDocumentId { get; set; }
-        public OutComingDocument OutComingDocument { get; set; }
     }
 }

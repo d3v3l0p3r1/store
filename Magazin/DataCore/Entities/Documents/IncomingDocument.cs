@@ -1,9 +1,4 @@
-﻿using BaseCore.Security.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DataCore.Entities.Documents
+﻿namespace BaseCore.DAL.Implementations.Entities.Documents
 {
     public class IncomingDocument : BaseDocument<IncomingDocumentEntry>
     {

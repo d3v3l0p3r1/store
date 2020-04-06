@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Threading.Tasks;
+using BaseCore.DAL.Implementations;
 using BaseCore.Security.Services.Concrete;
-using DataCore.DAL;
-using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using WebApi.Migrations;
+using WebApi.Options;
 
-namespace WebUiAdmin
+namespace WebApi
 {
     public class Program
     {
@@ -29,10 +26,13 @@ namespace WebUiAdmin
 
         private static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseKestrel()
+                .UseKestrel(config =>
+                {
+                    config.ListenAnyIP(51145);
+                    config.Limits.MaxRequestBodySize = long.MaxValue;
+                })
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseUrls("http://localhost:51145")
-                .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
 
@@ -49,10 +49,18 @@ namespace WebUiAdmin
             await DbMigrationsConfiguration.InitializeAsync(userManager, roleManager);
 
             var config = services.GetService<IWebHostEnvironment>();
+            var options = services.GetRequiredService<IOptions<MainOptions>>();
 
-            if (!config.IsProduction())
+            if (config.IsDevelopment())
             {
-                DbMigrationsConfiguration.Seed(dataContext);
+                if (options.Value.UseOneAssIntegration)
+                {
+                    //await services.GetService<IProductFetcher>().LoadProducts();
+                }
+                else
+                {
+                    DbMigrationsConfiguration.Seed(dataContext);
+                }
             }
         }
     }

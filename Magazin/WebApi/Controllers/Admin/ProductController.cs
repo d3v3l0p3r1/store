@@ -1,24 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BaseCore.Services.Abstract;
-using DataCore.DAL;
-using DataCore.Entities;
-using DataCore.Services.Abstract;
+using BaseCore.DAL.Implementations.Entities;
+using BaseCore.File;
+using BaseCore.Products.Abstractions.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using WebApi.Models;
 using WebApi.Models.Admin;
 using WebApi.Models.Api.Product;
 
-namespace WebUiAdmin.Controllers
+namespace WebApi.Controllers.Admin
 {
     /// <summary>
     /// Продукты
