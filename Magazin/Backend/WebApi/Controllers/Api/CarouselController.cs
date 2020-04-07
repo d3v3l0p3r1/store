@@ -31,9 +31,9 @@ namespace WebApi.Controllers.Api
         [HttpGet]
         public async Task<IActionResult> GetCarousel()
         {
-            //var carousel = await _carouselService.GetCarousel();
+            var carousel = await _carouselService.GetCarousel();
 
-            return Ok();
+            return Ok(carousel);
         }
 
 

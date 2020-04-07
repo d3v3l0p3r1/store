@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BaseCore.DAL.Abstractions.Repositories;
 using BaseCore.DAL.Implementations.Entities;
@@ -19,9 +20,12 @@ namespace BaseCore.News.Services.Implementations
             _repository = repository;
         }
 
-        public async Task<Carousel> GetCarousel()
+        public async Task<List<Carousel>> GetCarousel()
         {
-            var carousel = await _repository.GetAll().OrderByDescending(x => x.Id).FirstAsync();
+            var carousel = await _repository.GetAll()
+                .OrderByDescending(x => x.Id)
+                .Where(x=>x.Show)
+                .ToListAsync();
 
             return carousel;
         }
