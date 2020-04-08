@@ -3,6 +3,7 @@ using System;
 using BaseCore.DAL.Implementations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace WebApi.Migrations
@@ -57,22 +58,12 @@ namespace WebApi.Migrations
                     b.Property<bool>("Hidden")
                         .HasColumnType("boolean");
 
-                    b.Property<long?>("IncomingDocumentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("OutcomingDocumentId")
-                        .HasColumnType("bigint");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BalanceId");
-
-                    b.HasIndex("IncomingDocumentId");
-
-                    b.HasIndex("OutcomingDocumentId");
 
                     b.ToTable("BalanceEntry");
                 });
@@ -112,179 +103,44 @@ namespace WebApi.Migrations
                     b.ToTable("Brand");
                 });
 
-            modelBuilder.Entity("BaseCore.DAL.Implementations.Entities.Contractor", b =>
+            modelBuilder.Entity("BaseCore.DAL.Implementations.Entities.Carousel", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("text");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<string>("Email")
+                    b.Property<long>("FileId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Header")
                         .HasColumnType("text");
 
                     b.Property<bool>("Hidden")
                         .HasColumnType("boolean");
 
-                    b.Property<long>("ImageId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("Href")
                         .HasColumnType("text");
 
-                    b.Property<string>("Phone")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ImageId");
-
-                    b.ToTable("Contractor");
-                });
-
-            modelBuilder.Entity("BaseCore.DAL.Implementations.Entities.Documents.IncomingDocument", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<long>("AuthorId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<int>("DocumentStatus")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("Hidden")
+                    b.Property<long?>("ProductId1")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Show")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime?>("ProcessDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<long>("ShipperId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("numeric");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("AuthorId");
+                    b.HasIndex("FileId");
 
-                    b.HasIndex("ShipperId");
+                    b.HasIndex("ProductId1");
 
-                    b.ToTable("IncomingDocument");
-                });
-
-            modelBuilder.Entity("BaseCore.DAL.Implementations.Entities.Documents.IncomingDocumentEntry", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int>("Count")
-                        .HasColumnType("integer");
-
-                    b.Property<long>("DocumentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hidden")
-                        .HasColumnType("boolean");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DocumentId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("IncomingDocumentEntry");
-                });
-
-            modelBuilder.Entity("BaseCore.DAL.Implementations.Entities.Documents.OutComingDocument", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<long>("AuthorId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<int>("DocumentStatus")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("Hidden")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("OutComingDocumentType")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime?>("ProcessDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
-
-                    b.ToTable("OutComingDocument");
-                });
-
-            modelBuilder.Entity("BaseCore.DAL.Implementations.Entities.Documents.OutComingDocumentEntry", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int>("Count")
-                        .HasColumnType("integer");
-
-                    b.Property<long>("DocumentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hidden")
-                        .HasColumnType("boolean");
-
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DocumentId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OutComingDocumentEntry");
+                    b.ToTable("Carousel");
                 });
 
             modelBuilder.Entity("BaseCore.DAL.Implementations.Entities.FileData", b =>
@@ -818,14 +674,6 @@ namespace WebApi.Migrations
                         .HasForeignKey("BalanceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("BaseCore.DAL.Implementations.Entities.Documents.IncomingDocument", "IncomingDocument")
-                        .WithMany()
-                        .HasForeignKey("IncomingDocumentId");
-
-                    b.HasOne("BaseCore.DAL.Implementations.Entities.Documents.OutComingDocument", "OutComingDocument")
-                        .WithMany()
-                        .HasForeignKey("OutcomingDocumentId");
                 });
 
             modelBuilder.Entity("BaseCore.DAL.Implementations.Entities.Brand", b =>
@@ -835,67 +683,17 @@ namespace WebApi.Migrations
                         .HasForeignKey("FileId");
                 });
 
-            modelBuilder.Entity("BaseCore.DAL.Implementations.Entities.Contractor", b =>
+            modelBuilder.Entity("BaseCore.DAL.Implementations.Entities.Carousel", b =>
                 {
-                    b.HasOne("BaseCore.DAL.Implementations.Entities.FileData", "Image")
+                    b.HasOne("BaseCore.DAL.Implementations.Entities.FileData", "File")
                         .WithMany()
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BaseCore.DAL.Implementations.Entities.Documents.IncomingDocument", b =>
-                {
-                    b.HasOne("BaseCore.Security.Entities.User", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BaseCore.DAL.Implementations.Entities.Contractor", "Shipper")
-                        .WithMany()
-                        .HasForeignKey("ShipperId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BaseCore.DAL.Implementations.Entities.Documents.IncomingDocumentEntry", b =>
-                {
-                    b.HasOne("BaseCore.DAL.Implementations.Entities.Documents.IncomingDocument", "Document")
-                        .WithMany("Entries")
-                        .HasForeignKey("DocumentId")
+                        .HasForeignKey("FileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BaseCore.DAL.Implementations.Entities.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BaseCore.DAL.Implementations.Entities.Documents.OutComingDocument", b =>
-                {
-                    b.HasOne("BaseCore.Security.Entities.User", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BaseCore.DAL.Implementations.Entities.Documents.OutComingDocumentEntry", b =>
-                {
-                    b.HasOne("BaseCore.DAL.Implementations.Entities.Documents.OutComingDocument", "Document")
-                        .WithMany("Entries")
-                        .HasForeignKey("DocumentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BaseCore.DAL.Implementations.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId1");
                 });
 
             modelBuilder.Entity("BaseCore.DAL.Implementations.Entities.Product", b =>

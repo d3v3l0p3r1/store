@@ -233,13 +233,20 @@ export const asyncRoutes = [
       {
         path: 'index',
         component: () => import('@/views/carousel/list'),
-        name: 'CompaniesGrid',
+        name: 'CarouselGrid',
         meta: { title: 'Карусель', icon: 'planet-earth' }
       },
       {
         path: 'create',
         component: () => import('@/views/carousel/create'),
         name: 'CreateCarousel',
+        meta: { title: 'Элемент карусели' },
+        hidden: true
+      },
+      {
+        path: 'edit/:id',
+        component: () => import('@/views/carousel/create'),
+        name: 'EditCarousel',
         meta: { title: 'Элемент карусели' },
         hidden: true
       }

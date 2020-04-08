@@ -15,3 +15,18 @@ export function create(data) {
         data
     })
 }
+
+export function get(id) {
+    return request({
+        url: '/Carousel?id=' + id,
+        method: 'get'
+    })
+}
+
+export function update(data) {
+    return request({
+        url: '/Carousel',
+        method: 'patch',
+        data
+    })
+}

@@ -24,7 +24,7 @@ namespace BaseCore.News.Services.Implementations
         {
             var carousel = await _repository.GetAll()
                 .OrderByDescending(x => x.Id)
-                .Where(x=>x.Show)
+                .Where(x => x.Show)
                 .ToListAsync();
 
             return carousel;
@@ -42,7 +42,10 @@ namespace BaseCore.News.Services.Implementations
 
         public Task<Carousel> GetAsync(long id)
         {
-            return _repository.GetAsync(id);
+            return _repository.GetAll()
+                .Include(x => x.File)
+                .Include(x => x.Product)
+                .SingleOrDefaultAsync(x => x.Id == id);
         }
 
         public Task UpdateAsync(Carousel entity)

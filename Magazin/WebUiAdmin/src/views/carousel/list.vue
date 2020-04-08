@@ -19,6 +19,7 @@
       row-key="id"
       style="width: 100%;"
       empty-text="Нет данных"
+      @current-change="handleSelectRow"
     >
 
       <el-table-column label="Идентификатор">
@@ -27,26 +28,33 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Продукт">
+      <el-table-column label="Заголовок">
         <template slot-scope="scope">
-          <span>{{ scope.row.title }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Цена">
-        <template slot-scope="scope">
-          <span>{{ scope.row.price }}</span>
+          <span>{{ scope.row.header }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="Вид">
+      <el-table-column label="Показывать на слайдере">
         <template slot-scope="scope">
-          <span>{{ scope.row.kindTitle }}</span>
+          <el-switch v-model="scope.row.show" disabled />
         </template>
       </el-table-column>
 
-      <el-table-column label="Количество">
+      <el-table-column label="Описание">
         <template slot-scope="scope">
-          <span>{{ scope.row.count }}</span>
+          <span>{{ scope.row.description }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="Ссылка">
+        <template slot-scope="scope">
+          <span>{{ scope.row.href }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="Картинка">
+        <template slot-scope="scope">
+          <img :src="getFileUrl(scope.row.fileId)" width="60px">
         </template>
       </el-table-column>
 
@@ -56,6 +64,7 @@
 </template>
 
 <script>
+import { getFileUrl } from '@/api/upload'
 import { fetch } from '@/api/carousel'
 import Pagination from '@/components/Pagination'
 
@@ -72,7 +81,8 @@ export default {
                 total: 0,
                 page: 1,
                 limit: 10
-            }
+            },
+            selectedRow: null
         }
     },
     created() {
@@ -89,6 +99,21 @@ export default {
         },
         handelSelectCategory() {
           this.loadEntities()
+        },
+        handleCreate() {
+          this.$router.push('create')
+        },
+        handleEdit() {
+          if (this.selectedRow != null) {
+            var str = 'edit/' + this.selectedRow.id
+            this.$router.push(str)
+          }
+        },
+        handleSelectRow(row) {
+          this.selectedRow = row
+        },
+        getFileUrl(id) {
+          return getFileUrl(id)
         }
     }
 
