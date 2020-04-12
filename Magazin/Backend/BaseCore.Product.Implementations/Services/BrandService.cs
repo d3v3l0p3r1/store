@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BaseCore.DAL.Abstractions.Repositories;
 using BaseCore.DAL.Implementations.Entities;
+using BaseCore.Products.Abstractions.Models;
 using BaseCore.Products.Abstractions.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -48,6 +51,17 @@ namespace BaseCore.Products.Implementations.Services
             await _repository.UpdateAsync(original);
 
             return original;
+        }
+
+        public Task<List<BrandDto>> GetAllBrands()
+        {
+            return _repository.GetAllAsNotracking()
+                .Select(x => new BrandDto()
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    FileId = x.FileId
+                }).ToListAsync();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BaseCore.DAL.Implementations.Models;
 using BaseCore.Products.Abstractions.Models;
@@ -13,5 +14,6 @@ namespace BaseCore.Products.Abstractions.Services
         Task<int> GetBalance(long productId);
         IQueryable<BalanceDto> GetAllAsNoTracking();
         IQueryable<BalancedProductModel> GetWithBalance(long? cat);
+        Task<List<ProductDto>> GetLastProducts(int count);
     }
 }

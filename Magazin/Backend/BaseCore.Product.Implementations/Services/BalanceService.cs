@@ -48,8 +48,6 @@ namespace BaseCore.Products.Implementations.Services
             }
         }
 
-
-
         public async Task RemoveFromBalance(long productId, int amount)
         {
             var balanceEntity = await _repository.GetAll<DAL.Implementations.Entities.Balance>()
@@ -84,7 +82,7 @@ namespace BaseCore.Products.Implementations.Services
             {
                 await SetZeroBalance(productId);
             }
-            
+
             await AddToBalance(productId, amount);
         }
 
@@ -114,10 +112,10 @@ namespace BaseCore.Products.Implementations.Services
 
         public IQueryable<BalanceDto> GetAllAsNoTracking()
         {
-            return _repository.GetAll<DAL.Implementations.Entities.Balance>()
+            return _repository.GetAll<Balance>()
                 .Include(x => x.BalanceEntries)
                 .AsNoTracking()
-                .Select(x => new BalanceDto()
+                .Select(x => new BalanceDto
                 {
                     ProductId = x.ProductId,
                     ZeroDate = x.ZeroDate,
@@ -128,34 +126,71 @@ namespace BaseCore.Products.Implementations.Services
                 });
         }
 
-        public IQueryable<BalancedProductModel> GetWithBalance(long? cat)
+        private IQueryable<BalanceProduct> GetBalanceQuery()
         {
             var productsQuery = _repository.GetAllAsNotracking<Product>();
             var balanceQuery = _repository.GetAllAsNotracking<Balance>();
-
-            if (cat != null)
-            {
-                productsQuery = productsQuery.Where(x => x.CategoryId == cat.Value);
-            }
-
             var t = from product in productsQuery
-                join balance in balanceQuery on product.Id equals balance.ProductId
-                where balance.ZeroDate == null && balance.BalanceEntries.Sum(z => z.Count) > 0
-                select new BalancedProductModel()
-                {
-                    Id = product.Id,
-                    CateogryId = product.Category.Id,
-                    Title = product.Title,
-                    Description = product.Description,
-                    FileId = product.FileId,
-                    KindId = product.KindId,
-                    KingTitle = product.Kind.Title,
-                    Price = product.Price,
-                    Count = balance.BalanceEntries.Sum(z => z.Count)
-                };
+                    join balance in balanceQuery on product.Id equals balance.ProductId
+                    where balance.ZeroDate == null && balance.BalanceEntries.Sum(z => z.Count) > 0
+                    select new BalanceProduct()
+                    {
+                        Balance = balance,
+                        Product = product
+                    };
 
             return t;
         }
 
+        public IQueryable<BalancedProductModel> GetWithBalance(long? cat)
+        {
+            var query = GetBalanceQuery();
+
+            if (cat != null)
+            {
+                query = query.Where(x => x.Product.CategoryId == cat.Value);
+            }
+
+            var t = query.Select(x => new BalancedProductModel
+            {
+                Id = x.Product.Id,
+                CateogryId = x.Product.Category.Id,
+                Title = x.Product.Title,
+                Description = x.Product.Description,
+                FileId = x.Product.FileId,
+                KindId = x.Product.KindId,
+                KingTitle = x.Product.Kind.Title,
+                Price = x.Product.Price,
+                Count = x.Balance.BalanceEntries.Sum(z => z.Count),
+            });
+
+            return t;
+        }
+
+        public async Task<List<ProductDto>> GetLastProducts(int count)
+        {
+            var query = GetBalanceQuery();
+            var products = await query.OrderByDescending(x => x.Product.UpdateTime)
+                .Select(x => new ProductDto
+                {
+                    Id = x.Product.Id,
+                    Title = x.Product.Title,
+                    Description =  x.Product.Description,
+                    Price = x.Product.Price,
+                    Kind = x.Product.Kind.Title,
+                    Amount = x.Balance.BalanceEntries.Sum(z=>z.Count),
+                    FileId = x.Product.FileId
+                })
+                .Take(count)
+                .ToListAsync();
+
+            return products;
+        }
+
+        private class BalanceProduct
+        {
+            public Balance Balance { get; set; }
+            public Product Product { get; set; }
+        }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using BaseCore.Products.Abstractions.Models;
 using BaseCore.Products.Abstractions.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
-using WebApi.Models.Api.Product;
 
 namespace WebApi.Controllers.Api
 {

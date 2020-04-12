@@ -1,4 +1,4 @@
-﻿namespace WebApi.Models.Api.Product
+﻿namespace BaseCore.Products.Abstractions.Models
 {
     /// <summary>
     /// Product list model
@@ -34,5 +34,10 @@
         /// Вид
         /// </summary>
         public string Kind { get; set; }
+
+        /// <summary>
+        /// Количество
+        /// </summary>
+        public int Amount { get; set; }
     }
 }

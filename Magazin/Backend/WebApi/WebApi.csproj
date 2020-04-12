@@ -57,6 +57,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\Api\Product\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

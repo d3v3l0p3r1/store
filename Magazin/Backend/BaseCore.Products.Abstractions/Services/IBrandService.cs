@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using BaseCore.DAL.Implementations.Entities;
+using BaseCore.Products.Abstractions.Models;
 
 namespace BaseCore.Products.Abstractions.Services
 {
@@ -8,5 +10,6 @@ namespace BaseCore.Products.Abstractions.Services
         Task<Brand> CreateAsync(Brand entity);
         Task<Brand> GetByExternalIdAsync(string externalId);
         Task<Brand> UpdateAsync(Brand brand);
+        Task<List<BrandDto>> GetAllBrands();
     }
 }

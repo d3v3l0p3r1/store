@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BaseCore.DAL.Implementations.Entities;
 using BaseCore.File;
+using BaseCore.Products.Abstractions.Models;
 using BaseCore.Products.Abstractions.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using WebApi.Models;
 using WebApi.Models.Admin;
-using WebApi.Models.Api.Product;
 
 namespace WebApi.Controllers.Admin
 {
