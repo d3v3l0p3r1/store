@@ -1,0 +1,1102 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebApi</name>
+    </assembly>
+    <members>
+        <member name="T:WebApi.Controllers.AccountController">
+            <summary>
+            Account controller
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.AccountController.#ctor(Microsoft.AspNetCore.Identity.SignInManager{BaseCore.Security.Entities.User},Microsoft.AspNetCore.Identity.UserManager{BaseCore.Security.Entities.User})">
+            <summary>
+            Ctor
+            </summary>
+            <param name="signInManager"></param>
+            <param name="userManager"></param>
+        </member>
+        <member name="M:WebApi.Controllers.AccountController.Token(WebApi.Models.Api.Account.LoginModel)">
+            <summary>
+            Вход пользователя
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.AccountController.Register(WebApi.Models.Api.Account.RegisterModel)">
+            <summary>
+            Регистрация пользователя
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.AccountController.Info">
+            <summary>
+            Получить информацию пользователя
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WebApi.Controllers.Admin.BalanceController">
+            <summary>
+            Balance controller
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.BalanceController.#ctor(BaseCore.Products.Abstractions.Services.IBalanceService)">
+            <summary>
+            ctor
+            </summary>
+            <param name="balanceService"></param>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.BalanceController.GetProductBalance(System.Int32,System.Int32,System.Nullable{System.Int64})">
+            <summary>
+            Balance
+            </summary>
+            <param name="page"></param>
+            <param name="take"></param>
+            <param name="cat"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.BalanceController.GetAll(System.Int32,System.Int32,System.Nullable{System.Int64})">
+            <summary>
+            Получить движения
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.CarouselController.#ctor(BaseCore.News.Services.Abstractions.ICarouselService)">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.CarouselController.Create(BaseCore.DAL.Implementations.Entities.Carousel)">
+            <summary>
+            Создать карусель
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.CarouselController.GetAll(System.Int32,System.Int32)">
+            <summary>
+            Полусить список
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.CarouselController.Get(System.Int64)">
+            <summary>
+            Получить сущность
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.CarouselController.Update(BaseCore.DAL.Implementations.Entities.Carousel)">
+            <summary>
+            Обновить сущность
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.CarouselController.Delete(System.Int32)">
+            <summary>
+            Удалить сущность
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebApi.Controllers.Admin.CategoryController">
+            <summary>
+            Категории продукта
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.CategoryController.GetAll(System.Nullable{System.Int64})">
+            <summary>
+            Get all
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WebApi.Controllers.Admin.ContractorController">
+            <summary>
+            Контроллер для работы с контрагентами
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.ContractorController.#ctor(BaseCore.Catalogues.Services.Abstract.IContractorService)">
+            <summary>
+            ctor
+            </summary>
+            <param name="contractorService"></param>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.ContractorController.GetAll(System.Int32,System.Int32)">
+            <summary>
+            Получить список контрагентов
+            </summary>
+            <param name="take"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.ContractorController.Get(System.Int64)">
+            <summary>
+            Получить продукт для изменения
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.ContractorController.Create(WebApi.Models.Admin.Contractors.ContractorPostModel)">
+            <summary>
+            Создание продукта, принмает multipart
+            </summary>
+            <param name="body">body</param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.ContractorController.Update(WebApi.Models.Admin.Contractors.ContractorPostModel)">
+            <summary>
+            Update product
+            </summary>
+            <param name="body">body</param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.ContractorController.Remove(System.Int64)">
+            <summary>
+            Удалить продукт
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WebApi.Controllers.Admin.Documents.BaseDocumentController`5">
+            <summary>
+            Base oducment controller
+            </summary>
+            <typeparam name="TService">Сервис</typeparam>
+            <typeparam name="TEntity">Сущность</typeparam>
+            <typeparam name="TEntry">Табличная часть</typeparam>
+            <typeparam name="TDetail">Детальное представление</typeparam>
+            <typeparam name="TList">Лист</typeparam>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.Documents.BaseDocumentController`5.#ctor(`0,AutoMapper.IMapper,BaseCore.Security.Services.Concrete.UserManager)">
+            <summary>
+            Ctor
+            </summary>
+            <param name="service"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.Documents.BaseDocumentController`5.Get(System.Int64)">
+            <summary>
+            Получить документ прихода
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.Documents.BaseDocumentController`5.GetAll(System.Int32,System.Int32,System.Nullable{BaseCore.DAL.Implementations.Entities.Documents.DocumentStatus})">
+            <summary>
+            Получить список
+            </summary>
+            <param name="take"></param>
+            <param name="page"></param>
+            <param name="state"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.Documents.BaseDocumentController`5.Create(`3)">
+            <summary>
+            Создать документ
+            </summary>
+            <param name="document"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.Documents.BaseDocumentController`5.Update(`3)">
+            <summary>
+            Update
+            </summary>
+            <param name="document"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.Documents.BaseDocumentController`5.Delete(System.Int64)">
+            <summary>
+            Delete document
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.Documents.BaseDocumentController`5.Apply(System.Int64)">
+            <summary>
+            Провести документ
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.Documents.BaseDocumentController`5.Discard(System.Int64)">
+            <summary>
+            Отменить проводку
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WebApi.Controllers.Admin.Documents.IncomingDocumentController">
+            <summary>
+            Документы прихода
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.Documents.IncomingDocumentController.#ctor(BaseCore.Documents.Implementations.Services.Abstractions.IIncomingDocumentService,AutoMapper.IMapper,BaseCore.Security.Services.Concrete.UserManager)">
+            <summary>
+            ctor
+            </summary>
+            <param name="incomingDocumentService"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="T:WebApi.Controllers.Admin.Documents.OutcomingDocumentController">
+            <summary>
+            Для документов расхода
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.Documents.OutcomingDocumentController.#ctor(BaseCore.Documents.Abstractions.Services.IOutcomingDocumentService,AutoMapper.IMapper,BaseCore.Security.Services.Concrete.UserManager)">
+            <summary>
+            ctor
+            </summary>
+            <param name="outcomingDocumentService"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="T:WebApi.Controllers.Admin.EnumsController">
+            <summary>
+            Для работы с перечислениями
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.EnumsController.GetDocumentStatuses">
+            <summary>
+            Получить статусы документов
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WebApi.Controllers.Admin.FileController">
+            <summary>
+            Зашрузка изображений
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.FileController.#ctor(BaseCore.File.IFileService,Microsoft.Extensions.Logging.ILogger{WebApi.Controllers.Admin.FileController})">
+            <summary>
+            ctor
+            </summary>
+            <param name="fileService"></param>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.FileController.SaveFile(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Upload file
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.FileController.GetFilePath(System.Int32)">
+            <summary>
+            Get file path
+            </summary>
+            <param name="id"></param>
+            <returns>string</returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.FileController.GetFile(System.Int32)">
+            <summary>
+            Get fileinfo
+            </summary>
+            <param name="id">file id</param>
+            <returns>string</returns>
+        </member>
+        <member name="T:WebApi.Controllers.Admin.KindController">
+            <summary>
+            Вид продукта
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.KindController.#ctor(BaseCore.Products.Abstractions.Services.IKindService)">
+            <summary>
+            ctor
+            </summary>
+            <param name="kindService"></param>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.KindController.GetAll(System.Int32,System.Int32)">
+            <summary>
+            Полусить список
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WebApi.Controllers.Admin.NewsController">
+            <summary>
+            Новости
+            </summary>
+        </member>
+        <member name="T:WebApi.Controllers.Admin.OrderController">
+            <summary>
+            Заказы
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.OrderController.GetOrderProducts(System.Int64)">
+            <summary>
+            Получить список продуктов по заказу
+            </summary>
+            <param name="orderID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.OrderController.ToDelivery(System.Int64)">
+            <summary>
+            Отпраить заказ на доставку
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.OrderController.ToComplete(System.Int64)">
+            <summary>
+            Закрыть заказ
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebApi.Controllers.Admin.ProductController">
+            <summary>
+            Продукты
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.ProductController.GetAll(System.Int32,System.Int32,System.Nullable{System.Int32})">
+            <summary>
+            Получить список продуктов
+            </summary>
+            <param name="take"></param>
+            <param name="page"></param>
+            <param name="catID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.ProductController.Get(System.Int64)">
+            <summary>
+            Получить продукт для изменения
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.ProductController.Create(WebApi.Models.Admin.ProductPostModel)">
+            <summary>
+            Создание продукта, принмает multipart
+            </summary>
+            <param name="body">body</param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.ProductController.Update(WebApi.Models.Admin.ProductPostModel)">
+            <summary>
+            Update product
+            </summary>
+            <param name="body">body</param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.ProductController.Remove(System.Int64)">
+            <summary>
+            Удалить продукт
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WebApi.Controllers.Admin.UserController">
+            <summary>
+            Пользователи
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.UserController.#ctor(BaseCore.Security.Services.Abstract.IUserService,AutoMapper.IMapper)">
+            <summary>
+            ctor
+            </summary>
+            <param name="userService"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.UserController.GetAll(System.Int32,System.Int32,System.Nullable{BaseCore.Security.Entities.UserType})">
+            <summary>
+            Список пользователей
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.UserController.Get(System.Int64)">
+            <summary>
+            Получить инфу по пользователю
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.UserController.Patch(WebApi.Models.Admin.Users.UserDetailDto)">
+            <summary>
+            Обновить пользователя
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.UserController.Create(WebApi.Models.Admin.Users.UserDetailDto)">
+            <summary>
+            Обновить пользователя
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Admin.UserController.GetRoles">
+            <summary>
+            Все роли
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WebApi.Controllers.Api.BalanceController">
+            <summary>
+            Остатки
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Api.BalanceController.#ctor(BaseCore.Products.Abstractions.Services.IBalanceService)">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Api.BalanceController.GetProductBalance(System.Int32,System.Int32,System.Nullable{System.Int64})">
+            <summary>
+            Balance
+            </summary>
+            <param name="page"></param>
+            <param name="take"></param>
+            <param name="cat"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebApi.Controllers.Api.PublicController">
+            <summary>
+            Для главной страницы  
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Api.PublicController.#ctor(BaseCore.News.Services.Abstractions.ICarouselService)">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Api.PublicController.GetCarousel">
+            <summary>
+            Данные для карусели
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WebApi.Controllers.Api.CategoryController">
+            <summary>
+            Категории продукта
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Api.CategoryController.#ctor(BaseCore.Products.Abstractions.Services.IProductCategoryService)">
+            <summary>
+            ctor
+            </summary>
+            <param name="categoryService"></param>
+        </member>
+        <member name="M:WebApi.Controllers.Api.CategoryController.GetAll(System.Nullable{System.Int64})">
+            <summary>
+            Получить все категории
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WebApi.Controllers.Api.NewsController">
+            <summary>
+            Новости
+            </summary>
+        </member>
+        <member name="T:WebApi.Controllers.Api.OrderController">
+            <summary>
+            Заказы
+            </summary>
+        </member>
+        <member name="T:WebApi.Controllers.Api.ProductController">
+            <summary>
+            Продукты
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Api.ProductController.#ctor(BaseCore.Products.Abstractions.Services.IProductService)">
+            <summary>
+            ctor
+            </summary>
+            <param name="productService"></param>
+        </member>
+        <member name="M:WebApi.Controllers.Api.ProductController.GetAll(System.Int32,System.Int32,System.Nullable{System.Int32})">
+            <summary>
+            Get all products
+            </summary>
+            <param name="take"></param>
+            <param name="page"></param>
+            <param name="catID"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebApi.Controllers.Exchange.BrandController">
+            <summary>
+            Контроллер для обмена брендов
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Exchange.BrandController.#ctor(BaseCore.Products.Abstractions.Services.IBrandService)">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Exchange.BrandController.CreateBrand(WebApi.Models.Admin.Exchange.BrandRequestModel)">
+            <summary>
+            Создать бренд
+            </summary>
+        </member>
+        <member name="T:WebApi.Controllers.Exchange.CategoryController">
+            <summary>
+            Обмен категориями
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Exchange.CategoryController.#ctor(BaseCore.Products.Abstractions.Services.IProductCategoryService)">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Exchange.CategoryController.CreateCategory(WebApi.Models.Admin.Exchange.CategoryRequestModel)">
+            <summary>
+            Создать категорию
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WebApi.Controllers.Exchange.FileInputController">
+            <summary>
+            Импорт из файлов
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Exchange.FileInputController.#ctor(OneAssIntegration.Services.Abstractions.IProductFetcher)">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Exchange.FileInputController.UpdatePictures">
+            <summary>
+            Обновить картинки
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Exchange.FileInputController.UpdatePrices(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Обновить цены
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WebApi.Controllers.Exchange.ProductController">
+            <summary>
+            Обмен продуктами
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Exchange.ProductController.#ctor(BaseCore.Products.Abstractions.Services.IProductService)">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.Exchange.ProductController.CreateProduct(BaseCore.Products.Abstractions.Models.ProductRequestModel)">
+            <summary>
+            Создать продукт
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Controllers.Exchange.ProductController.UpdateProduct(BaseCore.Products.Abstractions.Models.ProductRequestModel)">
+            <summary>
+            Обновить
+            </summary>
+            <param name="requestModel"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebApi.Extensions.EnumExtensions">
+            <summary>
+            Расширения для ENUM
+            </summary>
+        </member>
+        <member name="M:WebApi.Extensions.EnumExtensions.GetEnumDesciption``1">
+            <summary>
+            Получить описание enum
+            </summary>
+            <param name="enum"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApi.Extensions.EnumExtensions.GetDisplayName(System.Enum)">
+            <summary>
+            Get display name
+            </summary>
+            <param name="enum"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebApi.Extensions.OptionsExtensions">
+            <summary>
+            Расширения для настроек
+            </summary>
+        </member>
+        <member name="M:WebApi.Extensions.OptionsExtensions.ConfigOptions(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Добавить настройки
+            </summary>
+        </member>
+        <member name="T:WebApi.Mappings.Documents.DocumentMappings">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:WebApi.Mappings.Documents.DocumentMappings.#ctor">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="M:WebApi.Migrations.DbMigrationsConfiguration.InitializeAsync(Microsoft.AspNetCore.Identity.UserManager{BaseCore.Security.Entities.User},BaseCore.Security.Services.Concrete.RoleManager)">
+            <summary>
+            
+            </summary>
+            <param name="userManager"></param>
+            <param name="roleManager"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebApi.Models.Admin.Carousel.CarouselPostModel">
+            <summary>
+            Модель создания карусели
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Carousel.CarouselPostModel.Model">
+            <summary>
+            Модель
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Carousel.CarouselPostModel.File">
+            <summary>
+            Картинка
+            </summary>
+        </member>
+        <member name="T:WebApi.Models.Admin.Contractors.ContractorPostModel">
+            <summary>
+            Модель создания/изменения контрагента
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Contractors.ContractorPostModel.Model">
+            <summary>
+            Object json
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Contractors.ContractorPostModel.Image">
+            <summary>
+            Аватар
+            </summary>
+        </member>
+        <member name="T:WebApi.Models.Admin.Documents.BaseDocumentDto">
+            <summary>
+            Базовое представление документа
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Documents.BaseDocumentDto.Id">
+            <summary>
+            Идентификатор
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Documents.BaseDocumentDto.Date">
+            <summary>
+            Дата создания
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Documents.BaseDocumentDto.ProcessDate">
+            <summary>
+            Дата проводки
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Documents.BaseDocumentDto.Title">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Documents.BaseDocumentDto.Description">
+            <summary>
+            Описание
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Documents.BaseDocumentDto.DocumentStatus">
+            <summary>
+            Статус
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Documents.BaseDocumentDto.AuthorId">
+            <summary>
+            Идентификатор автора
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Documents.BaseDocumentDto.Author">
+            <summary>
+            Автор документа
+            </summary>
+        </member>
+        <member name="T:WebApi.Models.Admin.Documents.DocumentEntryDto">
+            <summary>
+            Табличная часть документа
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Documents.DocumentEntryDto.Id">
+            <summary>
+            Идентификатор
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Documents.DocumentEntryDto.DocumentId">
+            <summary>
+            Идентификатор документа
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Documents.DocumentEntryDto.ProductId">
+            <summary>
+            Идентификатор продукта
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Documents.DocumentEntryDto.Product">
+            <summary>
+            Описание продукта
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Documents.DocumentEntryDto.Count">
+            <summary>
+            Количество
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Documents.DocumentEntryDto.Price">
+            <summary>
+            Цена
+            </summary>
+        </member>
+        <member name="T:WebApi.Models.Admin.Documents.IncomingDocuments.IncomingDocumentDetailDto">
+            <summary>
+            Модель для входящих документов
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Documents.IncomingDocuments.IncomingDocumentDetailDto.Entries">
+            <summary>
+            Табличная часть
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Documents.IncomingDocuments.IncomingDocumentDetailDto.ShipperId">
+            <summary>
+            Идентификатор поставщика
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Documents.IncomingDocuments.IncomingDocumentDetailDto.Shipper">
+            <summary>
+            Поставщик
+            </summary>
+        </member>
+        <member name="T:WebApi.Models.Admin.Documents.IncomingDocuments.IncomingDocumentListDto">
+            <summary>
+            Incoming document DTO
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Documents.IncomingDocuments.IncomingDocumentListDto.Total">
+            <summary>
+            Сумма
+            </summary>
+        </member>
+        <member name="T:WebApi.Models.Admin.Documents.OutcomingDocuments.OutcomingDocumentDetailDto">
+            <summary>
+            Детальное представление документа расхода
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Documents.OutcomingDocuments.OutcomingDocumentDetailDto.Entries">
+            <summary>
+            Табличная часть
+            </summary>
+        </member>
+        <member name="T:WebApi.Models.Admin.Documents.OutcomingDocuments.OutcomingDocumentListDto">
+            <summary>
+            Представления списка документов расхода
+            </summary>
+        </member>
+        <member name="T:WebApi.Models.Admin.Exchange.BrandRequestModel">
+            <summary>
+            Модель создания бренда
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Exchange.BrandRequestModel.Id">
+            <summary>
+            Идентификатор
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Exchange.BrandRequestModel.Title">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Exchange.BrandRequestModel.Description">
+            <summary>
+            Описание
+            </summary>
+        </member>
+        <member name="T:WebApi.Models.Admin.Exchange.CategoryRequestModel">
+            <summary>
+            Модель создания категории
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Exchange.CategoryRequestModel.Id">
+            <summary>
+            Идентификатор
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Exchange.CategoryRequestModel.Title">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Exchange.CategoryRequestModel.ParentId">
+            <summary>
+            Идентификатор родительской категории
+            </summary>
+        </member>
+        <member name="T:WebApi.Models.Admin.ProductPostModel">
+            <summary>
+            Multipart model
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.ProductPostModel.Model">
+            <summary>
+            Object json
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.ProductPostModel.MainImage">
+            <summary>
+            Main image
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.ProductPostModel.Images">
+            <summary>
+            Images
+            </summary>
+        </member>
+        <member name="T:WebApi.Models.Admin.ProductPrice.ProductPriceModel">
+            <summary>
+            Модель цены, цены сгруппированные по продукту
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.ProductPrice.ProductPriceModel.ProductId">
+            <summary>
+            Id product
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.ProductPrice.ProductPriceModel.Product">
+            <summary>
+            Product
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.ProductPrice.ProductPriceModel.Prices">
+            <summary>
+            Цены
+            </summary>
+        </member>
+        <member name="T:WebApi.Models.Admin.ProductPrice.ProductPriceModelItem">
+            <summary>
+            Цены
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.ProductPrice.ProductPriceModelItem.Id">
+            <summary>
+            Product price id
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.ProductPrice.ProductPriceModelItem.Price">
+            <summary>
+            Цена
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.ProductPrice.ProductPriceModelItem.Date">
+            <summary>
+            Дата цены
+            </summary>
+        </member>
+        <member name="T:WebApi.Models.Admin.Users.UserDetailDto">
+            <summary>
+            Детальная информация по пользователю
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Users.UserDetailDto.Id">
+            <summary>
+            ИДентификатор
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Users.UserDetailDto.UserName">
+            <summary>
+            Логин
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Users.UserDetailDto.FullName">
+            <summary>
+            ФИО пользователя
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Users.UserDetailDto.Address">
+            <summary>
+            Адрес
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Users.UserDetailDto.Type">
+            <summary>
+            Тип пользователя (полльзователь, компания)
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Users.UserDetailDto.PhoneNumber">
+            <summary>
+            Телефон
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Users.UserDetailDto.Email">
+            <summary>
+            Email
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Users.UserDetailDto.Password">
+            <summary>
+            Пароль
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Users.UserDetailDto.Role">
+            <summary>
+            Роль
+            </summary>
+        </member>
+        <member name="T:WebApi.Models.Admin.Users.UserListDto">
+            <summary>
+            Представление пользователя
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Users.UserListDto.Id">
+            <summary>
+            ИДентификатор
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Users.UserListDto.UserName">
+            <summary>
+            Логин
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Users.UserListDto.FullName">
+            <summary>
+            ФИО пользователя
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Users.UserListDto.Address">
+            <summary>
+            Адрес
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Users.UserListDto.Type">
+            <summary>
+            Тип пользователя (полльзователь, компания)
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Users.UserListDto.PhoneNumber">
+            <summary>
+            Телефон
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Admin.Users.UserListDto.Email">
+            <summary>
+            Email
+            </summary>
+        </member>
+        <member name="T:WebApi.Models.Api.Account.LoginModel">
+            <summary>
+            Модель входа пользователя
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Api.Account.LoginModel.Email">
+            <summary>
+            Email
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Api.Account.LoginModel.Password">
+            <summary>
+            Password
+            </summary>
+        </member>
+        <member name="T:WebApi.Models.Api.Category.CategoryDto">
+            <summary>
+            Категория
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Api.Category.CategoryDto.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Api.Category.CategoryDto.Title">
+            <summary>
+            Title
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Api.Category.CategoryDto.SortOrder">
+            <summary>
+            Sort order
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Api.Category.CategoryDto.Childs">
+            <summary>
+            Дочерние категории
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Api.Order.OrderProductDTO.Count">
+            <summary>
+            Количество
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Api.Order.OrderProductDTO.SelledPrice">
+            <summary>
+            Цена продажи
+            </summary>
+        </member>
+        <member name="T:WebApi.Models.Api.Product.ProductDto">
+            <summary>
+            Product list model
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Api.Product.ProductDto.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Api.Product.ProductDto.Title">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Api.Product.ProductDto.Description">
+            <summary>
+            Описание
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Api.Product.ProductDto.FileId">
+            <summary>
+            File data
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Api.Product.ProductDto.Price">
+            <summary>
+            Цена
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Api.Product.ProductDto.Kind">
+            <summary>
+            Вид
+            </summary>
+        </member>
+        <member name="T:WebApi.Models.ListRespone`1">
+            <summary>
+            Класс для запросов списка
+            </summary>
+            <typeparam name="T">Тип сущности</typeparam>
+        </member>
+        <member name="P:WebApi.Models.ListRespone`1.Data">
+            <summary>
+            Данные
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.ListRespone`1.Total">
+            <summary>
+            Всего данных
+            </summary>
+        </member>
+        <member name="T:WebApi.Models.Lookup">
+            <summary>
+            Кратское описание сущности
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Lookup.Id">
+            <summary>
+            Идентификатор
+            </summary>
+        </member>
+        <member name="P:WebApi.Models.Lookup.Title">
+            <summary>
+            Наименование
+            </summary>
+        </member>
+        <member name="T:WebApi.Options.MainOptions">
+            <summary>
+            Основные настройки
+            </summary>
+        </member>
+        <member name="P:WebApi.Options.MainOptions.UseOneAssIntegration">
+            <summary>
+            Использовать интеграцию с 1С
+            </summary>
+        </member>
+    </members>
+</doc>

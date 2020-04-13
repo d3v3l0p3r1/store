@@ -128,6 +128,7 @@ export default {
     },
     handleCategoryClick(val) {
       this.$router.push({ path: '/catalog', query: { categoryId: val.id }})
+      document.getElementById('app').scrollIntoView()
     },
     findCategory(category) {
       var res = category.childs.filter(

@@ -1,17 +1,11 @@
 <template>
   <div class="app-container">
     <el-form ref="ruleForm" :model="entity" :rules="rules">
-      <el-form-item label="Заголовок" prop="header">
-        <el-input v-model="entity.header" :minlength="1" />
+      <el-form-item label="Название" prop="title">
+        <el-input v-model="entity.title" :minlength="1" />
       </el-form-item>
       <el-form-item label="Описание" prop="description">
         <el-input v-model="entity.description" type="textarea" />
-      </el-form-item>
-      <el-form-item label="Ссылка" prop="href">
-        <el-input v-model="entity.href" :minlength="1" />
-      </el-form-item>
-      <el-form-item label="Показывать?">
-        <el-switch v-model="entity.show" />
       </el-form-item>
       <el-form-item label="Изображение">
         <el-upload
@@ -28,10 +22,7 @@
 
     </el-form>
     <footer slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="onSubmit">
-        <span v-if="entity.id===0">Создать</span>
-        <span v-else>Обновить</span>
-      </el-button>
+      <el-button type="primary" @click="onSubmit">Сохранить</el-button>
       <el-button @click="onCancel">Отмена</el-button>
     </footer>
   </div>
@@ -39,12 +30,12 @@
 </template>
 
 <script>
-import { create, get, update } from '@/api/carousel'
+import { create, get, update } from '@/api/brands'
 import { uploadImage, getFileUrl } from '@/api/upload'
 import { MessageBox } from 'element-ui'
 
 export default {
-    name: 'CarouselEdit',
+    name: 'BrandEdit',
 
     data() {
         return {
@@ -60,13 +51,10 @@ export default {
             fileList: [],
             rules: {
               header: [
-                { required: true, message: 'Введите заголовок', trigger: 'blur' }
+                { title: true, message: 'Введите название бренда', trigger: 'blur' }
               ],
               description: [
                 { required: true, message: 'Введите описание', trigger: 'blur' }
-              ],
-              href: [
-                { required: true, message: 'Введите ссылку', trigger: 'blur' }
               ]
             }
         }
@@ -104,11 +92,11 @@ export default {
           }
 
           if (res != null) {
-            this.$router.push('/carousel/index')
+            this.$router.push('/brands/index')
           }
         },
         onCancel() {
-          this.$router.push('/carousel/index')
+          this.$router.push('/brands/index')
         },
         async uploadImage(o) {
           const formData = new FormData()

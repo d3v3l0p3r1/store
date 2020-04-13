@@ -2,11 +2,8 @@
   <div class="app-container">
     <el-header class="filter-container">
       <div>
-        <el-button class="filter-item el-button el-button--success" @click="handleCreate">
-          <span>Создать</span>
-        </el-button>
         <el-button class="filter-item el-button el-button--warning" @click="handleEdit">
-          <span>Изменить</span>
+          <span>Редактировать</span>
         </el-button>
       </div>
     </el-header>
@@ -21,34 +18,15 @@
       empty-text="Нет данных"
       @current-change="handleSelectRow"
     >
-
       <el-table-column label="Идентификатор">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="Заголовок">
+      <el-table-column label="Название">
         <template slot-scope="scope">
-          <span>{{ scope.row.header }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column label="Показывать на слайдере">
-        <template slot-scope="scope">
-          <el-switch v-model="scope.row.show" disabled />
-        </template>
-      </el-table-column>
-
-      <el-table-column label="Описание">
-        <template slot-scope="scope">
-          <span>{{ scope.row.description }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column label="Ссылка">
-        <template slot-scope="scope">
-          <span>{{ scope.row.href }}</span>
+          <span>{{ scope.row.title }}</span>
         </template>
       </el-table-column>
 
@@ -57,31 +35,23 @@
           <img :src="getFileUrl(scope.row.fileId)" width="60px">
         </template>
       </el-table-column>
-
     </el-table>
-    <pagination v-show="pagination.total>0" :total="pagination.total" :page.sync="pagination.page" :limit.sync="pagination.limit" @pagination="loadEntities" />
   </div>
 </template>
 
 <script>
 import { getFileUrl } from '@/api/upload'
-import { fetch } from '@/api/carousel'
-import Pagination from '@/components/Pagination'
+import { fetch } from '@/api/brands'
 
 export default {
   name: 'Carousel',
-  components: { Pagination },
+  components: { },
   data() {
         return {
             entities: null,
             listLoading: true,
             dialogVisible: false,
             selectedId: 0,
-            pagination: {
-                total: 0,
-                page: 1,
-                limit: 10
-            },
             selectedRow: null
         }
     },
@@ -91,10 +61,9 @@ export default {
     methods: {
         async loadEntities() {
             this.listLoading = true
-            const res = await fetch(this.pagination.page, this.pagination.limit)
+            const res = await fetch()
 
-            this.entities = res.data
-            this.pagination.total = res.total
+            this.entities = res
             this.listLoading = false
         },
         handelSelectCategory() {
