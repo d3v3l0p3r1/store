@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using BaseCore.DAL.Abstractions.Repositories;
 using BaseCore.DAL.Implementations.Entities;
 using BaseCore.Products.Abstractions.Models;
 using BaseCore.Products.Abstractions.Services;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore;
 
 namespace BaseCore.Products.Implementations.Services
@@ -13,9 +15,12 @@ namespace BaseCore.Products.Implementations.Services
     public class BrandService : IBrandService
     {
         private readonly IRepository<Brand> _repository;
-        public BrandService(IRepository<Brand> repository)
+        private readonly IMapper _mapper;
+
+        public BrandService(IRepository<Brand> repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         public async Task<Brand> CreateAsync(Brand entity)
@@ -62,6 +67,28 @@ namespace BaseCore.Products.Implementations.Services
                     Title = x.Title,
                     FileId = x.FileId
                 }).ToListAsync();
+        }
+
+        public async Task UpdateAsync(BrandDetailDto model)
+        {
+            var entity = await _repository.GetAll().FirstOrDefaultAsync(x => x.Id == model.Id);
+            entity.UpdateTime = DateTimeOffset.Now;
+            entity.Title = model.Title;
+            entity.FileId = model.FileId;
+            entity.Description = model.Description;
+
+            await _repository.UpdateAsync(entity);
+        }
+
+        public async Task<BrandDetailDto> Get(long id)
+        {
+            var entity = await _repository.GetAll()
+                .Include(x=>x.File)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            var result = _mapper.Map<BrandDetailDto>(entity);
+
+            return result;
         }
     }
 }

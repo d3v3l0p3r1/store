@@ -135,6 +135,26 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/brands',
+    roles: ['admin'],
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/brands/list'),
+        name: 'BrandsGrid',
+        meta: { title: 'Список брендов', icon: 'planet-earth' }
+      },
+      {
+        path: 'edit/:id',
+        component: () => import('@/views/brands/edit'),
+        name: 'EditBrand',
+        meta: { title: 'Бренд' },
+        hidden: true
+      }
+    ]
+  },
+  {
     path: '/kinds',
     roles: ['admin'],
     component: Layout,

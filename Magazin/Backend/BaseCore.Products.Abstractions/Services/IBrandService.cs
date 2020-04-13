@@ -11,5 +11,7 @@ namespace BaseCore.Products.Abstractions.Services
         Task<Brand> GetByExternalIdAsync(string externalId);
         Task<Brand> UpdateAsync(Brand brand);
         Task<List<BrandDto>> GetAllBrands();
+        Task UpdateAsync(BrandDetailDto model);
+        Task<BrandDetailDto> Get(long id);
     }
 }

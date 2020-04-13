@@ -13,6 +13,7 @@ namespace WebApi.Controllers.Admin
     /// </summary>
     [ApiExplorerSettings(GroupName = "admin")]
     [ApiController]
+    [Route("[controller]")]
     public class CategoryController : ControllerBase
     {
         private readonly IProductCategoryService _productCategoryService;
