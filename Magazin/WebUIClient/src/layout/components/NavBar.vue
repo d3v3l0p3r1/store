@@ -4,7 +4,7 @@
       <v-spacer />
       <v-btn to="/login">Login</v-btn>
     </v-system-bar>
-    <v-app-bar app class="main-menu" light height="90px">      
+    <v-app-bar app class="main-menu" light height="90px">
       <a href="/" class="main-link">Indigo</a>
       <v-spacer />
       <v-toolbar-items class="hidden-sm-and-down">

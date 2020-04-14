@@ -1,5 +1,8 @@
 <template>
-  <v-card class="product-card">
+  <v-card
+    class="product-card"
+    :to="'/product/' + product.id"
+  >
     <v-img
       v-if="product.fileId != null"
       :aspect-ratio="1"

@@ -19,6 +19,12 @@ const routes = [
     meta: { title: 'Каталог', icon: '' }
   },
   {
+    path: '/product/:id',
+    name: 'ProductDetail',
+    component: () => import('@/pages/productDetail/index'),
+    meta: { title: 'Товар' }
+  },
+  {
     path: '/brands',
     name: 'brands',
     component: () => import('@/pages/brands/index'),

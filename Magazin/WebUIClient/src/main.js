@@ -6,11 +6,14 @@ import '@/styles/index.scss' // global css
 import vuetify from './plugins/vuetify'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
+import VueNumberInput from '@chenfengyuan/vue-number-input'
 
 Vue.use(VueAwesomeSwiper)
 Vue.config.productionTip = false
 
-store.subscribe((muration, state) => {  
+Vue.use(VueNumberInput)
+
+store.subscribe((muration, state) => {
   localStorage.setItem('store', JSON.stringify(state))
 })
 

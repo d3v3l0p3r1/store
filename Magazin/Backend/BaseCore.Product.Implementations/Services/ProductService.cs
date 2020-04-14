@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using BaseCore.DAL.Abstractions.Repositories;
 using BaseCore.DAL.Implementations.Entities;
-using BaseCore.DAL.Implementations.Models;
-using BaseCore.Documents.Implementations.Services.Abstractions;
 using BaseCore.File;
 using BaseCore.Products.Abstractions.Models;
+using BaseCore.Products.Abstractions.Models.Public;
 using BaseCore.Products.Abstractions.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -16,25 +16,25 @@ namespace BaseCore.Products.Implementations.Services
 {
     public class ProductService : IProductService
     {
-        private readonly IBalanceService _balanceService;
         private readonly IFileService _fileService;
         private readonly IRepository<ProductImage> _productImageRepository;
         private readonly IRepository<Product> _repository;
         private readonly IBrandService _brandService;
         private readonly IProductCategoryService _categoryService;
+        private readonly IMapper _mapper;
 
-        public ProductService(IRepository<Product> repository, 
-            IBalanceService balanceService, 
+        public ProductService(IRepository<Product> repository,
             IFileService fileService, 
             IRepository<ProductImage> productImageRepository, 
             IBrandService brandService, 
-            IProductCategoryService categoryService)
+            IProductCategoryService categoryService, 
+            IMapper mapper)
         {
-            _balanceService = balanceService;
             _fileService = fileService;
             _productImageRepository = productImageRepository;
             _brandService = brandService;
             _categoryService = categoryService;
+            _mapper = mapper;
             _repository = repository;
         }
 
@@ -92,11 +92,6 @@ namespace BaseCore.Products.Implementations.Services
             }
 
             await _repository.UpdateAsync(product);
-        }
-
-        public Task CreateAsync(Product product)
-        {
-            return _repository.CreateAsync(product);
         }
 
         public Task<Product> GetAsync(long id)
@@ -170,6 +165,16 @@ namespace BaseCore.Products.Implementations.Services
         public Task<Product> GetByExternalId(string id)
         {
             return _repository.GetAll().FirstOrDefaultAsync(x => x.ExternalId == id);
+        }
+
+        public async Task<ProductDetailDto> GetDetail(long id)
+        {
+            var entity = await _repository.GetAllAsNotracking()
+                .Include(x => x.Images)
+                .Include(x => x.Package)
+                .SingleOrDefaultAsync(x => x.Id == id);
+
+            return _mapper.Map<ProductDetailDto>(entity);
         }
     }
 }

@@ -41,7 +41,7 @@ namespace OneAssIntegration.Services.Implementations
         public ProductFetcher(IRepository repository,
             IOptions<OneAssOptions> options,
             ILogger<ProductFetcher> logger,
-            IFileService fileService, 
+            IFileService fileService,
             IBalanceService balanceService)
         {
             _repository = repository;
@@ -398,8 +398,8 @@ namespace OneAssIntegration.Services.Implementations
                     await _balanceService.SetBalance(product.Id, item.Amount);
 
 
-                    var price = item.Prices.First();
-                    product.Price = price.Value;
+                    var price = item.Prices.FirstOrDefault(x => x.Currency == "руб");
+                    product.Price = price?.Value ?? 0;
                     await _repository.UpdateAsync(product);
 
                     result.Success++;

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using BaseCore.DAL.Implementations.Entities;
 using BaseCore.DAL.Implementations.Models;
 using BaseCore.Products.Abstractions.Models;
+using BaseCore.Products.Abstractions.Models.Public;
 using Microsoft.AspNetCore.Http;
 
 namespace BaseCore.Products.Abstractions.Services
@@ -19,5 +20,6 @@ namespace BaseCore.Products.Abstractions.Services
         Task CreateAsync(ProductRequestModel requestModel);
         Task UpdateAsync(ProductRequestModel requestModel);
         Task<Product> GetByExternalId(string id);
+        Task<ProductDetailDto> GetDetail(long id);
     }
 }

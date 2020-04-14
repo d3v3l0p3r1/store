@@ -72,5 +72,19 @@ namespace WebApi.Controllers.Api
         }
 
 
+        /// <summary>
+        /// Информация по продукту
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<IActionResult> Get(long id)
+        {
+            var productDetail = await _productService.GetDetail(id);
+            return Ok(productDetail);
+        }
+
+
     }
 }

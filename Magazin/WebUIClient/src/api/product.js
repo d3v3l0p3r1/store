@@ -10,3 +10,11 @@ export function getAll(page, take, category) {
         method: 'get'
     })
 }
+
+export function getDetail(id) {
+    var url = '/api/product/get?id=' + id
+    return request({
+        url: url,
+        method: 'get'
+    })
+}
