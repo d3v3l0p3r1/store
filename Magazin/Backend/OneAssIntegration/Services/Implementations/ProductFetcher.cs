@@ -37,17 +37,20 @@ namespace OneAssIntegration.Services.Implementations
         private readonly ILogger<ProductFetcher> _logger;
         private readonly IFileService _fileService;
         private readonly IBalanceService _balanceService;
+        private readonly IProductCategoryService _productCategoryService;
 
         public ProductFetcher(IRepository repository,
             IOptions<OneAssOptions> options,
             ILogger<ProductFetcher> logger,
             IFileService fileService,
-            IBalanceService balanceService)
+            IBalanceService balanceService, 
+            IProductCategoryService productCategoryService)
         {
             _repository = repository;
             _logger = logger;
             _fileService = fileService;
             _balanceService = balanceService;
+            _productCategoryService = productCategoryService;
             _options = options.Value;
 
             _client = new SiteExchange2PortTypeClient(GetBindings(), new EndpointAddress(_options.Url));
@@ -203,19 +206,11 @@ namespace OneAssIntegration.Services.Implementations
                     productCategory.Title = categoryElement.Name;
                     productCategory.UpdateTime = DateTimeOffset.UtcNow;
 
-                    await _repository.UpdateAsync(productCategory);
+                    await _productCategoryService.UpdateAsync(productCategory);
                 }
                 else
                 {
-                    productCategory = new ProductCategory()
-                    {
-                        ExternalId = categoryElement.Id,
-                        CreateTime = DateTimeOffset.UtcNow,
-                        UpdateTime = DateTimeOffset.UtcNow,
-                        Title = categoryElement.Name
-                    };
-
-                    await _repository.CreateAsync(productCategory);
+                    await _productCategoryService.CreateAsync(categoryElement.Name, categoryElement.Id, null);
                 }
 
                 result.Success++;

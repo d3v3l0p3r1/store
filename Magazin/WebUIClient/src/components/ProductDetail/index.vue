@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row>
       <v-col md="6">
-        <swiper :options="swiperOption" class="product-image-carousel">
+        <swiper :options="swiperOptionBig" class="product-image-carousel">
           <swiper-slide v-for="image in images" :key="image">
             <v-img
               :aspect-ratio="1"
@@ -10,6 +10,9 @@
               class="product-image"
             />
           </swiper-slide>
+          <div slot="pagination" class="swiper-pagination" />
+          <div slot="button-prev" class="swiper-button-prev" />
+          <div slot="button-next" class="swiper-button-next" />
         </swiper>
       </v-col>
       <v-col md="6">
@@ -40,6 +43,7 @@
 import { getDetail } from '@/api/product'
 import { getFileUrl } from '@/api/file'
 import { mapMutations } from 'vuex'
+import 'swiper/css/swiper.css'
 
 export default {
   components: { },
@@ -48,12 +52,14 @@ export default {
             entity: null,
             count: 0,
             images: [],
-            swiperOption: {
+            swiperOptionBig: {
                 slidesPerView: 1,
-                spaceBetween: 1,
                 pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true
+                  el: '.swiper-pagination'
+                },
+                navigation: {
+                  nextEl: '.swiper-button-next',
+                  prevEl: '.swiper-button-prev'
                 }
             }
         }
@@ -94,13 +100,11 @@ export default {
 
 <style scoped>
 .product-image {
-  max-height: 400px;
-  max-width: 500px;
+  max-height: 600px;
 }
 
 .product-image-carousel {
-  max-height: 400px;
-  max-width: 500px;
+  max-height: 600px;
 }
 
 .order-button {

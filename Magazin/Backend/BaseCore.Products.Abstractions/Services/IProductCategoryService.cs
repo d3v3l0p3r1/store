@@ -27,6 +27,6 @@ namespace BaseCore.Products.Abstractions.Services
         IQueryable<ProductCategory> GetAllAsNotracking();
         IQueryable<ProductCategory> GetQuery();
         Task<ProductCategory> GetByExternalIdAsync(string externalId);
-        
+        Task UpdateAsync(ProductCategory productCategory);
     }
 }

@@ -88,7 +88,7 @@ namespace BaseCore.Products.Implementations.Services
             cat.Title = title;
             cat.UpdateTime = DateTimeOffset.UtcNow;
 
-            await _repository.UpdateAsync(cat);
+            await UpdateAsync(cat);
         }
 
         public IQueryable<ProductCategory> GetAllAsNotracking()
@@ -104,6 +104,23 @@ namespace BaseCore.Products.Implementations.Services
         public Task<ProductCategory> GetByExternalIdAsync(string externalId)
         {
             return _repository.GetAll().FirstOrDefaultAsync(x => x.ExternalId == externalId);
+        }
+
+        public async Task UpdateAsync(ProductCategory entity)
+        {
+            await _repository.UpdateAsync(entity);
+
+            if (entity.ParentId != null)
+            {
+                var parent = await _repository.GetAsync(entity.ParentId.Value);
+                entity.Mask = $"{parent.Mask}{entity.Id};";
+            }
+            else
+            {
+                entity.Mask = $";{entity.Id};";
+            }
+
+            await _repository.UpdateAsync(entity);
         }
     }
 }
