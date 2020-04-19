@@ -51,6 +51,10 @@ namespace WebApi.Controllers.Exchange
             return Ok();
         }
 
+        /// <summary>
+        /// Получить продукт
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(typeof(Product), 200)]
         public async Task<IActionResult> GetProduct(string id)
