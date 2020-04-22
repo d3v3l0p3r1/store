@@ -35,14 +35,7 @@
           <td>{{ item.product.price }}</td>
           <td>
             <div class="bascet-quntity-buttons">
-              <v-text-field v-model="item.count" dense solo flat class="inputCount" hide-details single-line type="number">
-                <v-btn slot="prepend-inner" icon @click="handleMinusClick(item)">
-                  <v-icon>mdi-minus</v-icon>
-                </v-btn>
-                <v-btn slot="append" icon @click="handlePlusClick(item)">
-                  <v-icon>mdi-plus</v-icon>
-                </v-btn>
-              </v-text-field>
+              <number-input v-model="item.count" center controls inline large />
             </div>
           </td>
           <td>{{ item.count * item.product.price }} </td>
@@ -91,16 +84,10 @@ export default {
         getFileUrl(id) {
             return getFileUrl(id)
         },
-        handleMinusClick(item) {
-          this.decrementBascetItem(item)
-        },
-        handlePlusClick(item) {
-          this.incrementBascetItem(item)
-        },
         handleDeleteClick(item) {
           this.removeFromBascet(item)
         },
-        ...mapMutations(['removeFromBascet', 'incrementBascetItem', 'decrementBascetItem'])
+        ...mapMutations(['removeFromBascet'])
     }
 }
 </script>

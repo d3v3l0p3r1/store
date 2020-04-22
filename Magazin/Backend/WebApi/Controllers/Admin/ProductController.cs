@@ -41,12 +41,12 @@ namespace WebApi.Controllers.Admin
         /// </summary>
         /// <param name="take"></param>
         /// <param name="page"></param>
-        /// <param name="catID"></param>
+        /// <param name="catId"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("[action]")]
         [ProducesResponseType(typeof(ListRespone<ProductDto>), 200)]
-        public async Task<IActionResult> GetAll(int take = 20, int page = 1, int? catID = null)
+        public async Task<IActionResult> GetAll(int take = 20, int page = 1, int? catId = null)
         {
             if (take == 0)
             {
@@ -64,9 +64,9 @@ namespace WebApi.Controllers.Admin
                 .Include(x => x.Kind)
                 .AsNoTracking();
 
-            if (catID != null)
+            if (catId != null)
             {
-                all = all.Where(x => x.Category.Mask.Contains($";{catID.Value};"));
+                all = all.Where(x => x.Category.Mask.Contains($";{catId.Value};"));
             }
 
             var products = await all.OrderByDescending(x => x.Id).Skip(skip).Take(take).Select(x => new ProductDto

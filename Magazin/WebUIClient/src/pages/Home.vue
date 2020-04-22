@@ -1,8 +1,8 @@
 <template>
   <div class="home h-100 w-100">
-    <Carousel />
+    <!--<Carousel />
     <LastProducts />
-    <BrandCarousel />
+    <BrandCarousel />-->
     <ProductList />
   </div>
 </template>
@@ -16,9 +16,9 @@ export default {
   name: 'Home',
   components: {
     ProductList,
-    Carousel,
-    LastProducts,
-    BrandCarousel
+    //Carousel,
+    //LastProducts,
+    //BrandCarousel
   }
 }
 </script>
