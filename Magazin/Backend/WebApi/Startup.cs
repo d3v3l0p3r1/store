@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using WebApi.Extensions;
 
 namespace WebApi
@@ -56,26 +57,23 @@ namespace WebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSerilogRequestLogging();
             app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().Build());
-
             app.UseStaticFiles(new StaticFileOptions()
             {
                 ServeUnknownFileTypes = true,
                 DefaultContentType = "image/png",
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
             });
-
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
-
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseIdentityServer();
             app.UseSwagg();
-
             app.UseEndpoints(config =>
             {
                 config.MapControllers();
@@ -88,7 +86,6 @@ namespace WebApi
 
             services.AddDbContext<DataContext>(options =>
             {
-
                 options.UseNpgsql(connectionString, builder =>
                 {
                     builder.MigrationsAssembly("WebApi");

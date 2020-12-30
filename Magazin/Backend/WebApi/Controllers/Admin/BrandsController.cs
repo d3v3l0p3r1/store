@@ -52,6 +52,7 @@ namespace WebApi.Controllers.Admin
             return Ok();
         }
 
+        [HttpGet]
         public async Task<IActionResult> Get(long id)
         {
             var result  = await _brandService.Get(id);

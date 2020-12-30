@@ -54,5 +54,17 @@ namespace WebApi.Controllers.Admin
 
             return Ok(result);
         }
+
+        /// <summary>
+        /// Get category
+        /// </summary>
+        /// <param name="id">Category Id</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> Get(long id)
+        {
+            var cat = await _productCategoryService.GetAllAsNotracking().FirstOrDefaultAsync(x => x.Id == id);
+            return Ok(cat);
+        }
     }
 }
