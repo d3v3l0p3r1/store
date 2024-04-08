@@ -1,13 +1,10 @@
-﻿using System;
+﻿using BaseCore.Security.Entities;
+using BaseCore.Security.Services.Abstract;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using BaseCore.Security.Entities;
-using BaseCore.Security.Services.Abstract;
-using BaseCore.Services;
-using BaseCore.Services.Abstract;
-using Microsoft.EntityFrameworkCore;
 
 namespace BaseCore.Security.Services.Concrete
 {
@@ -129,11 +126,6 @@ namespace BaseCore.Security.Services.Concrete
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
             await _userManager.DeleteAsync(user);
-        }
-
-        public IQueryable<User> GetQuery()
-        {
-            return _userManager.Users;
         }
 
         public async Task<List<string>> GetRoles()

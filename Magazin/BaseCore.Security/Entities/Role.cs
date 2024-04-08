@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.AspNetCore.Identity;
-
-namespace BaseCore.Security.Entities
+﻿namespace BaseCore.Security.Entities
 {
-    public class Role : IdentityRole<long>
+    public class Role
     {
+        public int RoleId { get; set; }
+
+        public string RoleName { get; set; }
     }
 }

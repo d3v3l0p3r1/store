@@ -1,28 +1,46 @@
-﻿
-using BaseCore.Entities;
-using Microsoft.AspNetCore.Identity;
-
-namespace BaseCore.Security.Entities
+﻿namespace BaseCore.Security.Entities
 {
-    public class User : IdentityUser<long>, IBaseEntity
+    public class User
     {
-        
+        /// <summary>
+        /// Id
+        /// </summary>
+        public long Id { get; set; }
+
+        /// <summary>
+        /// Hidden
+        /// </summary>
         public bool Hidden { get; set; }
 
         /// <summary>
-        /// ФИО пользователя
+        /// Full name
         /// </summary>
         public string FullName { get; set; }
 
         /// <summary>
-        /// Адрес
+        /// Address
         /// </summary>
         public string Address { get; set; }
 
         /// <summary>
-        /// Тип пользователя (полльзователь, компания)
+        /// User type
         /// </summary>
         public UserType Type { get; set; }
+
+        /// <summary>
+        /// Email
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
+        /// User name
+        /// </summary>
+        public string UserName { get; set; }
+
+        /// <summary>
+        /// Phone
+        /// </summary>
+        public string PhoneNumber { get; set; }
     }
 
     /// <summary>

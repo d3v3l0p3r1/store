@@ -1,14 +1,12 @@
 ﻿using BaseCore.Services.Abstract;
-using BaseCore.Services.Concrete;
 using DataCore.Entities;
 using DataCore.Services.Abstract;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace DataCore.Services.Concrete
 {
-    public class ContractorService : BaseService<Contractor>, IContractorService
+    public class ContractorService : IContractorService
     {
 
         private readonly IFileService _fileService;

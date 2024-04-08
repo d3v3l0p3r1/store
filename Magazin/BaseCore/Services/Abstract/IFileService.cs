@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BaseCore.Entities;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
-using BaseCore.Entities;
 
 namespace BaseCore.Services.Abstract
 {
-    public interface IFileService : IBaseService<FileData>
+    public interface IFileService
     {
         Task<FileData> SaveFile(string fileName, Stream stream);
         Task<string> GetFilePath(int id);
