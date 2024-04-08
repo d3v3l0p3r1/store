@@ -19,6 +19,12 @@ const routes = [
     meta: { title: 'Каталог', icon: '' }
   },
   {
+    path: '/product/:id',
+    name: 'ProductDetail',
+    component: () => import('@/pages/productDetail/index'),
+    meta: { title: 'Товар' }
+  },
+  {
     path: '/brands',
     name: 'brands',
     component: () => import('@/pages/brands/index'),
@@ -29,6 +35,22 @@ const routes = [
     name: 'news',
     component: () => import('@/pages/news/index'),
     meta: { title: 'Новости', icon: '' }
+  },
+  {
+    path: '/bascet',
+    name: 'bascet',
+    component: () => import('@/pages/bascet/index'),
+    meta: { title: 'Корзина' }
+  },
+  {
+    path: '/createOrder',
+    name: 'createOrder',
+    component: () => import('@/views/CreateOrderView/index')
+  },
+  {
+    path: '/orders',
+    name: 'orders',
+    component: () => import('@/views/Orders/index')
   }
 ]
 

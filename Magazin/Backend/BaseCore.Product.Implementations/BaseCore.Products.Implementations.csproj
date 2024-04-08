@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>BaseCore.Products.Implementations</AssemblyName>
+    <RootNamespace>BaseCore.Products.Implementations</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BaseCore.Documents.Abstractions\BaseCore.Documents.Abstractions.csproj" />
+    <ProjectReference Include="..\BaseCore.File\BaseCore.File.csproj" />
+    <ProjectReference Include="..\BaseCore.Products.Abstractions\BaseCore.Products.Abstractions.csproj" />
+    <ProjectReference Include="..\DataCore\BaseCore.DAL.Implementations.csproj" />
+  </ItemGroup>
+
+</Project>

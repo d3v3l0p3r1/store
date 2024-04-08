@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+<<<<<<< HEAD:Magazin/BaseCore/BaseCore.csproj
+    <TargetFramework>net8.0</TargetFramework>
+=======
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+>>>>>>> 703143d03ef44b8f5666e74dce4a64271aa0157c:Magazin/Backend/BaseCore/BaseCore.csproj
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.EntityFrameworkCore">
+      <HintPath>..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.entityframeworkcore\2.0.1\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
