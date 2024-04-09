@@ -8,7 +8,7 @@ namespace BaseCore.DAL.Implementations.Entities
     /// <summary>
     /// История синхронизаций с 1С
     /// </summary>
-    public class OneAssSync : BaseEntity
+    public class OneAssSync : BaseEntity<int>
     {
         /// <summary>
         /// Дата синхронизации

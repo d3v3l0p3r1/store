@@ -2,7 +2,7 @@
 
 namespace BaseCore.DAL.Implementations.Entities.Documents
 {
-    public abstract class BaseDocumentEntry: BaseEntity
+    public abstract class BaseDocumentEntry: BaseEntity<long>
     {
         public long DocumentId { get; set; }
 

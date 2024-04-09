@@ -1,12 +1,7 @@
-<<<<<<< HEAD:Magazin/BaseCore.Security/Entities/User.cs
-﻿namespace BaseCore.Security.Entities
-=======
-﻿
+
 using BaseCore.DAL.Abstractions;
-using Microsoft.AspNetCore.Identity;
 
 namespace BaseCore.Security.Entities
->>>>>>> 703143d03ef44b8f5666e74dce4a64271aa0157c:Magazin/Backend/BaseCore.Security/Entities/User.cs
 {
     public class User
     {

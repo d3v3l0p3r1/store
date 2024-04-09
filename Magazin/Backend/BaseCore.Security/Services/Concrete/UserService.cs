@@ -1,16 +1,9 @@
 ﻿using BaseCore.Security.Entities;
 using BaseCore.Security.Services.Abstract;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-<<<<<<< HEAD:Magazin/BaseCore.Security/Services/Concrete/UserService.cs
-=======
-using BaseCore.Security.Entities;
-using BaseCore.Security.Services.Abstract;
-using Microsoft.EntityFrameworkCore;
->>>>>>> 703143d03ef44b8f5666e74dce4a64271aa0157c:Magazin/Backend/BaseCore.Security/Services/Concrete/UserService.cs
 
 namespace BaseCore.Security.Services.Concrete
 {

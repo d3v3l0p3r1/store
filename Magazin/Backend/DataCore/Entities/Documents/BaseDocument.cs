@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using BaseCore.DAL.Abstractions;
-using BaseCore.Security.Entities;
 
 namespace BaseCore.DAL.Implementations.Entities.Documents
 {
-    public abstract class BaseDocument<TEntry> : BaseEntity where TEntry: BaseDocumentEntry
+    public abstract class BaseDocument<TEntry> : BaseEntity<long> where TEntry: BaseDocumentEntry
     {
         /// <summary>
         /// Дата создания
@@ -41,12 +40,5 @@ namespace BaseCore.DAL.Implementations.Entities.Documents
         /// Идентификатор автора
         /// </summary>
         public long AuthorId { get; set; }
-
-        /// <summary>
-        /// Автор
-        /// </summary>
-        public User Author { get; set; }
-
-
     }
 }

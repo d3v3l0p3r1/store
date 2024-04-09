@@ -7,17 +7,16 @@ using BaseCore.DAL.Abstractions.Repositories;
 using BaseCore.DAL.Implementations.Entities;
 using BaseCore.Products.Abstractions.Models;
 using BaseCore.Products.Abstractions.Services;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore;
 
 namespace BaseCore.Products.Implementations.Services
 {
     public class BrandService : IBrandService
     {
-        private readonly IRepository<Brand> _repository;
+        private readonly IRepository<Brand, int> _repository;
         private readonly IMapper _mapper;
 
-        public BrandService(IRepository<Brand> repository, IMapper mapper)
+        public BrandService(IRepository<Brand, int> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

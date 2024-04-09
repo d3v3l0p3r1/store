@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BaseCore.Documents.Implementations.Repositories.Implementations
 {
-    public class OrderRepository : Repository<Order>, IOrderRepository
+    public class OrderRepository : Repository<Order, long>, IOrderRepository
     {
         public OrderRepository(DataContext context) : base(context)
         {
@@ -18,7 +18,6 @@ namespace BaseCore.Documents.Implementations.Repositories.Implementations
             var dbSet = _dataContext.Set<Order>();
 
             var order = await dbSet.Where(x => x.Id == id)
-                .Include(x => x.User)
                 .Include(x => x.Products)
                 .ThenInclude(x => x.Product)
                 .FirstOrDefaultAsync();

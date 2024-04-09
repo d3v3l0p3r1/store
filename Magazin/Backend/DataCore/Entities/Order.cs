@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using BaseCore.DAL.Abstractions;
-using BaseCore.Security.Entities;
 
 namespace BaseCore.DAL.Implementations.Entities
 {
-    public class Order : BaseEntity
+    public class Order : BaseEntity<long>
     {
         public long? UserID { get; set; }
-        public virtual User User { get; set; }
 
         [DisplayName("Дата создания")]
         [DataType(DataType.DateTime)]
@@ -50,7 +48,7 @@ namespace BaseCore.DAL.Implementations.Entities
         public decimal TotalAmount { get; set; }
     }
 
-    public class OrderProduct : BaseEntity
+    public class OrderProduct : BaseEntity<long>
     {
         public long ProductID { get; set; }
         public virtual Product Product { get; set; }

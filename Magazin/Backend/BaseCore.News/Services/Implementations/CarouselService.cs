@@ -1,20 +1,20 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BaseCore.DAL.Abstractions.Repositories;
+﻿using BaseCore.DAL.Abstractions.Repositories;
 using BaseCore.DAL.Implementations.Entities;
 using BaseCore.File;
 using BaseCore.News.Services.Abstractions;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BaseCore.News.Services.Implementations
 {
     public class CarouselService : ICarouselService
     {
         private readonly IFileService _fileService;
-        private readonly IRepository<Carousel> _repository;
+        private readonly IRepository<Carousel, long> _repository;
 
-        public CarouselService(IRepository<Carousel> repository, IFileService fileService)
+        public CarouselService(IRepository<Carousel, long> repository, IFileService fileService)
         {
             _fileService = fileService;
             _repository = repository;

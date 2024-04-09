@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BaseCore.DAL.Abstractions;
+﻿using BaseCore.DAL.Abstractions;
 
 namespace BaseCore.DAL.Implementations.Entities
 {
     /// <summary>
     /// Упаковка
     /// </summary>
-    public class Package : BaseEntity
+    public class Package : BaseEntity<long>
     {
         public string ExternalId { get; set; }
 

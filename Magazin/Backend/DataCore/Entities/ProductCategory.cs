@@ -4,12 +4,12 @@ using BaseCore.DAL.Abstractions;
 
 namespace BaseCore.DAL.Implementations.Entities
 {
-    public class ProductCategory : BaseEntity
+    public class ProductCategory : BaseEntity<int>
     {
         public string Title { get; set; }
         public decimal SortOrder { get; set; }
 
-        public long? ParentId { get; set; }
+        public int? ParentId { get; set; }
         public ProductCategory Parent { get; set; }
 
         public List<ProductCategory> Childs { get; set; }

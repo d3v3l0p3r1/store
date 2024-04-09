@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BaseCore.DAL.Implementations.Entities;
+﻿using BaseCore.DAL.Implementations.Entities;
 using BaseCore.Products.Abstractions.Models;
 
 namespace BaseCore.Products.Implementations.Mapping

@@ -10,9 +10,9 @@ namespace BaseCore.Products.Implementations.Services
 {
     public class ProductCategoryService : IProductCategoryService
     {
-        private readonly IRepository<ProductCategory> _repository;
+        private readonly IRepository<ProductCategory, int> _repository;
 
-        public ProductCategoryService(IRepository<ProductCategory> repository)
+        public ProductCategoryService(IRepository<ProductCategory, int> repository)
         {
             _repository = repository;
         }

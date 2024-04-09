@@ -6,8 +6,8 @@ namespace BaseCore.News.Services.Implementations
 {
     public class NewsService : INewsService
     {
-        private readonly IRepository<DAL.Implementations.Entities.News> _repository;
-        public NewsService(IRepository<DAL.Implementations.Entities.News> repository)
+        private readonly IRepository<DAL.Implementations.Entities.News, long> _repository;
+        public NewsService(IRepository<DAL.Implementations.Entities.News, long> repository)
         {
             _repository = repository;
         }

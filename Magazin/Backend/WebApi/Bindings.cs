@@ -1,7 +1,5 @@
 ﻿using BaseCore.Catalogues.Services.Abstract;
 using BaseCore.Catalogues.Services.Concrete;
-using BaseCore.DAL.Abstractions.Repositories;
-using BaseCore.DAL.Implementations;
 using BaseCore.DAL.Implementations.Entities;
 using BaseCore.DAL.Implementations.Entities.Documents;
 using BaseCore.Documents.Abstractions.Services;
@@ -14,8 +12,6 @@ using BaseCore.News.Services.Abstractions;
 using BaseCore.News.Services.Implementations;
 using BaseCore.Products.Abstractions.Services;
 using BaseCore.Products.Implementations.Services;
-using BaseCore.Security.Services.Abstract;
-using BaseCore.Security.Services.Concrete;
 using Microsoft.Extensions.DependencyInjection;
 using OneAssIntegration.Services.Abstractions;
 using OneAssIntegration.Services.Implementations;
@@ -27,10 +23,6 @@ namespace WebApi
     {
         public static void Bind(IServiceCollection services)
         {
-            services.AddTransient<RoleManager>();
-            services.AddTransient<UserManager>();
-
-            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IProductCategoryService, ProductCategoryService>();
             services.AddScoped<IOrderService, OrderService>();

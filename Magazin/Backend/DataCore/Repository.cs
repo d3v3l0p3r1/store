@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BaseCore.DAL.Abstractions;
+﻿using BaseCore.DAL.Abstractions;
 using BaseCore.DAL.Abstractions.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BaseCore.DAL.Implementations
 {
-    public class Repository<T> : IRepository<T> where T : BaseEntity
+    public class Repository<TEntity, TKey> : IRepository<TEntity, TKey>
+        where TEntity : BaseEntity<TKey>
+        where TKey : struct
     {
         protected readonly DataContext _dataContext;
         public Repository(DataContext context)
@@ -15,105 +17,51 @@ namespace BaseCore.DAL.Implementations
             _dataContext = context;
         }
 
-        public virtual async Task<T> CreateAsync(T entity)
+        public virtual async Task<TEntity> CreateAsync(TEntity entity)
         {
-            var dbSet = _dataContext.Set<T>();
+            var dbSet = _dataContext.Set<TEntity>();
             await dbSet.AddAsync(entity);
             await _dataContext.SaveChangesAsync();
             return entity;
         }
 
-        public virtual async Task<T> UpdateAsync(T entity)
+        public virtual async Task<TEntity> UpdateAsync(TEntity entity)
         {
-            var dbSet = _dataContext.Set<T>();
+            var dbSet = _dataContext.Set<TEntity>();
             dbSet.Update(entity);
             await _dataContext.SaveChangesAsync();
             return entity;
         }
 
 
-        public virtual IQueryable<T> GetAllAsNotracking(bool hidden = false)
+        public virtual IQueryable<TEntity> GetAllAsNotracking(bool hidden = false)
         {
-            var dbSet = _dataContext.Set<T>().Where(x=> x.Hidden == hidden).AsNoTracking();
+            var dbSet = _dataContext.Set<TEntity>().Where(x => x.Hidden == hidden).AsNoTracking();
             return dbSet;
         }
 
-        public virtual IQueryable<T> GetAll(bool hidden = false)
+        public virtual IQueryable<TEntity> GetAll(bool hidden = false)
         {
-            return _dataContext.Set<T>().Where(x=>x.Hidden == hidden);
+            return _dataContext.Set<TEntity>().Where(x => x.Hidden == hidden);
         }
 
-        public virtual Task DeleteAsync(T entity)
-        {
-            entity.Hidden = true;
-            _dataContext.Set<T>().Update(entity);
-            return _dataContext.SaveChangesAsync();
-        }
-
-        public Task DeleteAsync(IEnumerable<T> entities)
-        {            
-            _dataContext.Set<T>().RemoveRange(entities);
-            return _dataContext.SaveChangesAsync();
-        }
-
-        public virtual Task<T> GetAsync(long id)
-        {
-            return _dataContext.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
-        }
-    }
-
-    public class Repository : IRepository
-    {
-        protected readonly DataContext _dataContext;
-        public Repository(DataContext context)
-        {
-            _dataContext = context;
-        }
-
-        public virtual async Task<T> CreateAsync<T>(T entity) where T : BaseEntity
-        {
-            var dbSet = _dataContext.Set<T>();
-            await dbSet.AddAsync(entity);
-            await _dataContext.SaveChangesAsync();
-            return entity;
-        }
-
-        public virtual async Task<T> UpdateAsync<T>(T entity) where T : BaseEntity
-        {
-            var dbSet = _dataContext.Set<T>();
-            dbSet.Update(entity);
-            await _dataContext.SaveChangesAsync();
-            return entity;
-        }
-
-
-        public virtual IQueryable<T> GetAllAsNotracking<T>(bool hidden = false) where T : BaseEntity
-        {
-            var dbSet = _dataContext.Set<T>().Where(x => x.Hidden == hidden).AsNoTracking();
-            return dbSet;
-        }
-
-        public virtual IQueryable<T> GetAll<T>(bool hidden = false) where T : BaseEntity
-        {
-            return _dataContext.Set<T>().Where(x => x.Hidden == hidden);
-        }
-
-        public virtual Task DeleteAsync<T>(T entity) where T : BaseEntity
+        public virtual Task DeleteAsync(TEntity entity)
         {
             entity.Hidden = true;
-            _dataContext.Set<T>().Update(entity);
+            _dataContext.Set<TEntity>().Update(entity);
             return _dataContext.SaveChangesAsync();
         }
 
-        public Task DeleteAsync<T>(IEnumerable<T> entities) where T : BaseEntity
+        public Task DeleteAsync(IEnumerable<TEntity> entities)
         {
-            _dataContext.Set<T>().RemoveRange(entities);
+            _dataContext.Set<TEntity>().RemoveRange(entities);
             return _dataContext.SaveChangesAsync();
         }
 
-        public virtual Task<T> GetAsync<T>(long id) where T : BaseEntity
+        public virtual Task<TEntity> GetAsync(TKey id)
         {
-            return _dataContext.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
+            //return _dataContext.Set<TEntity>().FirstOrDefaultAsync(x => (TKey)x.Id == (TKey)id); // TODO : fix it
+            throw new System.Exception();
         }
     }
 }

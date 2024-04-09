@@ -1,4 +1,6 @@
-﻿namespace BaseCore.Products.Abstractions.Models
+﻿using System;
+
+namespace BaseCore.Products.Abstractions.Models
 {
     /// <summary>
     /// Product list model
@@ -23,7 +25,7 @@
         /// <summary>
         /// File data
         /// </summary>
-        public long? FileId { get; set; }
+        public Guid? FileId { get; set; }
 
         /// <summary>
         /// Цена

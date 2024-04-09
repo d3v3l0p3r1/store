@@ -14,10 +14,10 @@ namespace BaseCore.Documents.Implementations.Services
         where TEntry : BaseDocumentEntry
     {
         private readonly IBalanceService _balanceService;
-        private readonly IRepository<TEntry> _entryRepository;
-        private readonly IRepository<T> _repository;
+        private readonly IRepository<TEntry,long> _entryRepository;
+        private readonly IRepository<T, long> _repository;
 
-        public BaseDocumentService(IRepository<T> repository, IBalanceService balanceService, IRepository<TEntry> entryRepository)
+        public BaseDocumentService(IRepository<T, long> repository, IBalanceService balanceService, IRepository<TEntry, long> entryRepository)
         {
             _repository = repository;
             _balanceService = balanceService;
@@ -27,7 +27,6 @@ namespace BaseCore.Documents.Implementations.Services
         public Task<T> GetAsync(long id)
         {
             return _repository.GetAll()
-               .Include(x => x.Author)
                .Include(x => x.Entries)
                .ThenInclude(x => x.Product)
                .FirstOrDefaultAsync(x => x.Id == id);
@@ -73,7 +72,7 @@ namespace BaseCore.Documents.Implementations.Services
                 throw new Exception("Должна быть хотя бы одна позиция");
             }
 
-            var allEntries = await _entryRepository.GetAllAsNotracking().Where(x => x.DocumentId == entity.Id).ToListAsync();
+            var allEntries = await _entryRepository.GetAllAsNotracking().Where(x => x.Id == entity.Id).ToListAsync();
             var entryIds = entity.Entries.Select(x => x.Id);
             var toDelete = allEntries.Where(x => !entryIds.Contains(x.Id));
             await _entryRepository.DeleteAsync(toDelete);

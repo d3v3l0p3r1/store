@@ -1,12 +1,12 @@
-﻿using System;
-using BaseCore.DAL.Abstractions;
+﻿using BaseCore.DAL.Abstractions;
+using System;
 
 namespace BaseCore.DAL.Implementations.Entities
 {
     /// <summary>
     /// Brand
     /// </summary>
-    public class Brand : BaseEntity
+    public class Brand : BaseEntity<int>
     {
         /// <summary>
         /// Название

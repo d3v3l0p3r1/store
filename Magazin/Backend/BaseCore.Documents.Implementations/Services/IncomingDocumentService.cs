@@ -12,8 +12,8 @@ namespace BaseCore.Documents.Implementations.Services
     public class IncomingDocumentService : BaseDocumentService<IncomingDocument, IncomingDocumentEntry>, IIncomingDocumentService
     {
         private readonly IBalanceService _balanceService;
-        private readonly IRepository<IncomingDocument> _repository;
-        public IncomingDocumentService(IRepository<IncomingDocument> repository, IBalanceService balanceService, IRepository<IncomingDocumentEntry> incomingDocumentRepository) : base(repository, balanceService, incomingDocumentRepository)
+        private readonly IRepository<IncomingDocument, long> _repository;
+        public IncomingDocumentService(IRepository<IncomingDocument, long> repository, IBalanceService balanceService, IRepository<IncomingDocumentEntry, long> incomingDocumentRepository) : base(repository, balanceService, incomingDocumentRepository)
         {
             _repository = repository;
             _balanceService = balanceService;
@@ -23,7 +23,6 @@ namespace BaseCore.Documents.Implementations.Services
         {
             return _repository.GetAll()
                .Where(x => x.Id == id)
-               .Include(x => x.Author)
                .Include(x => x.Shipper)
                .Include(x => x.Entries)
                .ThenInclude(x => x.Product)

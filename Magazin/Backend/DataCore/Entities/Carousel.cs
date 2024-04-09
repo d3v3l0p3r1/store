@@ -2,7 +2,7 @@
 
 namespace BaseCore.DAL.Implementations.Entities
 {
-    public class Carousel : BaseEntity
+    public class Carousel : BaseEntity<long>
     {
         public long FileId { get; set; }
         public FileData File { get; set; }

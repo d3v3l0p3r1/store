@@ -1,4 +1,15 @@
-﻿using System;
+﻿using BaseCore.DAL.Abstractions.Repositories;
+using BaseCore.DAL.Implementations.Entities;
+using BaseCore.File;
+using BaseCore.Products.Abstractions.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using OneAss.Services;
+using OneAssIntegration.Models;
+using OneAssIntegration.Options;
+using OneAssIntegration.Services.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,22 +19,8 @@ using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using BaseCore.DAL.Abstractions.Repositories;
-using BaseCore.DAL.Implementations.Entities;
-using BaseCore.File;
-using BaseCore.Products.Abstractions.Services;
-using Microsoft.AspNetCore.Server.IIS.Core;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using OneAss.Services;
-using OneAssIntegration.Models;
-using OneAssIntegration.Options;
-using OneAssIntegration.Services.Abstractions;
 
 namespace OneAssIntegration.Services.Implementations
 {
@@ -32,21 +29,27 @@ namespace OneAssIntegration.Services.Implementations
         private const string PackagePropertyId = "c0b36a6c-4812-11ea-b7f2-96e483274866";
 
         private readonly SiteExchange2PortTypeClient _client;
-        private readonly IRepository _repository;
+        private readonly IRepository<Brand, int> _brandRepository;
+        private readonly IRepository<ProductCategory, int> _productCategoryRepository;
+        private readonly IRepository<Package, long> _packageRepository;
+        private readonly IRepository<Product, int> _productRepository;
         private readonly OneAssOptions _options;
         private readonly ILogger<ProductFetcher> _logger;
         private readonly IFileService _fileService;
         private readonly IBalanceService _balanceService;
         private readonly IProductCategoryService _productCategoryService;
 
-        public ProductFetcher(IRepository repository,
+        public ProductFetcher(IRepository<Brand, int> brandRepository,
             IOptions<OneAssOptions> options,
             ILogger<ProductFetcher> logger,
             IFileService fileService,
-            IBalanceService balanceService, 
-            IProductCategoryService productCategoryService)
+            IBalanceService balanceService,
+            IProductCategoryService productCategoryService,
+            IRepository<ProductCategory, int> productCategoryRepository,
+            IRepository<Package, long> packageRepository,
+            IRepository<Product, int> productRepository)
         {
-            _repository = repository;
+            _brandRepository = brandRepository;
             _logger = logger;
             _fileService = fileService;
             _balanceService = balanceService;
@@ -56,7 +59,9 @@ namespace OneAssIntegration.Services.Implementations
             _client = new SiteExchange2PortTypeClient(GetBindings(), new EndpointAddress(_options.Url));
             _client.ClientCredentials.UserName.UserName = _options.UserName;
             _client.ClientCredentials.UserName.Password = _options.Password;
-
+            _productCategoryRepository = productCategoryRepository;
+            _packageRepository = packageRepository;
+            _productRepository = productRepository;
         }
 
         private Binding GetBindings()
@@ -117,7 +122,7 @@ namespace OneAssIntegration.Services.Implementations
             foreach (var brandElement in brands)
             {
                 var id = brandElement.Element(XName.Get("Ид", xNameSpace.NamespaceName)).Value;
-                var brand = await _repository.GetAll<Brand>().FirstOrDefaultAsync(x => x.ExternalId == id);
+                var brand = await _brandRepository.GetAll().FirstOrDefaultAsync(x => x.ExternalId == id);
                 if (brand == null)
                 {
                     brand = new Brand
@@ -128,7 +133,7 @@ namespace OneAssIntegration.Services.Implementations
                         Title = brandElement.Element(XName.Get("Наименование", xNameSpace.NamespaceName)).Value
                     };
 
-                    await _repository.CreateAsync(brand);
+                    await _brandRepository.CreateAsync(brand);
                 }
             }
         }
@@ -170,7 +175,7 @@ namespace OneAssIntegration.Services.Implementations
             foreach (var brandElement in childs)
             {
                 var id = brandElement.Id;
-                var brand = await _repository.GetAll<Brand>().FirstOrDefaultAsync(x => x.ExternalId == id);
+                var brand = await _brandRepository.GetAll().FirstOrDefaultAsync(x => x.ExternalId == id);
                 if (brand != null)
                 {
                     continue;
@@ -184,7 +189,7 @@ namespace OneAssIntegration.Services.Implementations
                     Title = brandElement.Name
                 };
 
-                await _repository.CreateAsync(brand);
+                await _brandRepository.CreateAsync(brand);
                 result.Success++;
             }
 
@@ -200,7 +205,7 @@ namespace OneAssIntegration.Services.Implementations
 
             foreach (var categoryElement in categories)
             {
-                var productCategory = await _repository.GetAll<ProductCategory>().FirstOrDefaultAsync(x => x.ExternalId == categoryElement.Id);
+                var productCategory = await _productCategoryRepository.GetAll().FirstOrDefaultAsync(x => x.ExternalId == categoryElement.Id);
                 if (productCategory != null)
                 {
                     productCategory.Title = categoryElement.Name;
@@ -229,7 +234,7 @@ namespace OneAssIntegration.Services.Implementations
                 result.Total += packageProps.Properties.Count;
                 foreach (var pp in packageProps.Properties)
                 {
-                    var package = await _repository.GetAll<Package>().FirstOrDefaultAsync(x => x.ExternalId == pp.Id);
+                    var package = await _packageRepository.GetAll().FirstOrDefaultAsync(x => x.ExternalId == pp.Id);
                     if (package == null)
                     {
                         package = new Package
@@ -238,12 +243,12 @@ namespace OneAssIntegration.Services.Implementations
                             Value = pp.Value
                         };
 
-                        await _repository.CreateAsync(package);
+                        await _packageRepository.CreateAsync(package);
                     }
                     else
                     {
                         package.Value = pp.Value;
-                        await _repository.UpdateAsync(package);
+                        await _packageRepository.UpdateAsync(package);
                     }
 
                     result.Success++;
@@ -261,7 +266,7 @@ namespace OneAssIntegration.Services.Implementations
             };
             foreach (var catalogueItem in items)
             {
-                var product = await _repository.GetAll<Product>().FirstOrDefaultAsync(x => x.ExternalId == catalogueItem.Id);
+                var product = await _productRepository.GetAll().FirstOrDefaultAsync(x => x.ExternalId == catalogueItem.Id);
                 if (product == null)
                 {
                     product = new Product
@@ -277,7 +282,7 @@ namespace OneAssIntegration.Services.Implementations
                 product.MeasureUnit = catalogueItem.MeasureUnit.Name;
                 product.VenderCode = catalogueItem.Article;
 
-                var category = await _repository.GetAll<ProductCategory>().FirstOrDefaultAsync(x => x.ExternalId == catalogueItem.CategoryId);
+                var category = await _productCategoryRepository.GetAll().FirstOrDefaultAsync(x => x.ExternalId == catalogueItem.CategoryId);
                 product.CategoryId = category.Id;
 
                 var group = catalogueItem.Groups.FirstOrDefault();
@@ -288,7 +293,7 @@ namespace OneAssIntegration.Services.Implementations
                     continue;
                 }
 
-                var brand = await _repository.GetAll<Brand>().FirstOrDefaultAsync(x => x.ExternalId == group);
+                var brand = await _brandRepository.GetAll().FirstOrDefaultAsync(x => x.ExternalId == group);
                 if (brand == null)
                 {
                     result.Failed++;
@@ -301,7 +306,7 @@ namespace OneAssIntegration.Services.Implementations
                 var packageProperty = catalogueItem.Props.FirstOrDefault(x => x.Key == PackagePropertyId);
                 if (packageProperty != null)
                 {
-                    var package = await _repository.GetAll<Package>().FirstOrDefaultAsync(x => x.ExternalId == packageProperty.Value);
+                    var package = await _packageRepository.GetAll().FirstOrDefaultAsync(x => x.ExternalId == packageProperty.Value);
                     if (package != null)
                     {
                         product.PackageId = package.Id;
@@ -310,11 +315,11 @@ namespace OneAssIntegration.Services.Implementations
 
                 if (product.Id == 0)
                 {
-                    await _repository.CreateAsync(product);
+                    await _productRepository.CreateAsync(product);
                 }
                 else
                 {
-                    await _repository.UpdateAsync(product);
+                    await _productRepository.UpdateAsync(product);
                 }
 
                 result.Success++;
@@ -329,7 +334,7 @@ namespace OneAssIntegration.Services.Implementations
             var page = 0;
             var take = 50;
             var result = new FileImportResult();
-            var query = _repository.GetAll<Product>().Where(x => x.FileId == null);
+            var query = _productRepository.GetAll().Where(x => x.FileId == null);
 
             await _client.OpenAsync();
             while (true)
@@ -349,9 +354,9 @@ namespace OneAssIntegration.Services.Implementations
                         using (var ms = new MemoryStream(resp.@return))
                         {
                             var fileData = await _fileService.SaveFile($"pic_{product.Id}.jpg", ms);
-                            product.FileId = fileData.Id;
+                            product.FileId = fileData.FileID;
 
-                            await _repository.UpdateAsync(product);
+                            await _productRepository.UpdateAsync(product);
                         }
 
                         result.Success++;
@@ -389,13 +394,13 @@ namespace OneAssIntegration.Services.Implementations
                 result.Total++;
                 try
                 {
-                    var product = _repository.GetAll<Product>().First(x => x.ExternalId == item.Id);
+                    var product = _productRepository.GetAll().First(x => x.ExternalId == item.Id);
                     await _balanceService.SetBalance(product.Id, item.Amount);
 
 
                     var price = item.Prices.FirstOrDefault(x => x.Currency == "руб");
                     product.Price = price?.Value ?? 0;
-                    await _repository.UpdateAsync(product);
+                    await _productRepository.UpdateAsync(product);
 
                     result.Success++;
                 }

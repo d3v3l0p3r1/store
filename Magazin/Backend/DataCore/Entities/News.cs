@@ -3,7 +3,7 @@ using BaseCore.DAL.Abstractions;
 
 namespace BaseCore.DAL.Implementations.Entities
 {
-    public class News : BaseEntity
+    public class News : BaseEntity<long>
     {
         public int? ImageID { get; set; }
         public virtual FileData Image { get; set; }

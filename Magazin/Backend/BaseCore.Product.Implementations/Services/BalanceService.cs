@@ -1,29 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BaseCore.DAL.Abstractions.Repositories;
+﻿using BaseCore.DAL.Abstractions.Repositories;
 using BaseCore.DAL.Implementations.Entities;
 using BaseCore.DAL.Implementations.Exceptions.Balance;
-using BaseCore.DAL.Implementations.Models;
 using BaseCore.Products.Abstractions.Models;
 using BaseCore.Products.Abstractions.Services;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BaseCore.Products.Implementations.Services
 {
     public class BalanceService : IBalanceService
     {
-        private readonly IRepository _repository;
+        private readonly IRepository<Balance, long> _repository;
+        private readonly IRepository<Product, int> _productRepository;
 
-        public BalanceService(IRepository repository)
+
+        public BalanceService(IRepository<Balance, long> repository, IRepository<Product, int> productRepository)
         {
             _repository = repository;
+            _productRepository = productRepository;
         }
 
         public async Task AddToBalance(long productId, int amount)
         {
-            var balance = await _repository.GetAll<DAL.Implementations.Entities.Balance>()
+            var balance = await _repository.GetAll()
                 .Include(x => x.BalanceEntries)
                 .Where(x => x.ProductId == productId && x.ZeroDate == null)
                 .FirstOrDefaultAsync();
@@ -32,7 +34,7 @@ namespace BaseCore.Products.Implementations.Services
 
             if (balance == null)
             {
-                balance = new DAL.Implementations.Entities.Balance
+                balance = new Balance
                 {
                     ProductId = productId,
                     BalanceEntries = new List<BalanceEntry> { balanceEntry }
@@ -50,7 +52,7 @@ namespace BaseCore.Products.Implementations.Services
 
         public async Task RemoveFromBalance(long productId, int amount)
         {
-            var balanceEntity = await _repository.GetAll<DAL.Implementations.Entities.Balance>()
+            var balanceEntity = await _repository.GetAll()
                 .Include(x => x.BalanceEntries)
                 .Where(x => x.ProductId == productId && x.ZeroDate == null)
                 .FirstOrDefaultAsync();
@@ -88,7 +90,7 @@ namespace BaseCore.Products.Implementations.Services
 
         private async Task SetZeroBalance(long productId)
         {
-            var balanceEntity = await _repository.GetAll<DAL.Implementations.Entities.Balance>()
+            var balanceEntity = await _repository.GetAll()
                 .Include(x => x.BalanceEntries)
                 .Where(x => x.ProductId == productId && x.ZeroDate == null)
                 .FirstOrDefaultAsync();
@@ -101,7 +103,7 @@ namespace BaseCore.Products.Implementations.Services
 
         public async Task<int> GetBalance(long productId)
         {
-            var query = _repository.GetAllAsNotracking<DAL.Implementations.Entities.Balance>()
+            var query = _repository.GetAllAsNotracking()
                 .Include(x => x.BalanceEntries)
                 .Where(x => x.ProductId == productId && x.ZeroDate == null);
 
@@ -112,7 +114,7 @@ namespace BaseCore.Products.Implementations.Services
 
         public IQueryable<BalanceDto> GetAllAsNoTracking()
         {
-            return _repository.GetAll<Balance>()
+            return _repository.GetAll()
                 .Include(x => x.BalanceEntries)
                 .AsNoTracking()
                 .Select(x => new BalanceDto
@@ -128,8 +130,8 @@ namespace BaseCore.Products.Implementations.Services
 
         private IQueryable<BalanceProduct> GetBalanceQuery()
         {
-            var productsQuery = _repository.GetAllAsNotracking<Product>();
-            var balanceQuery = _repository.GetAllAsNotracking<Balance>();
+            var productsQuery = _productRepository.GetAllAsNotracking();
+            var balanceQuery = _repository.GetAllAsNotracking();
             var t = from product in productsQuery
                     join balance in balanceQuery on product.Id equals balance.ProductId
                     where balance.ZeroDate == null && balance.BalanceEntries.Sum(z => z.Count) > 0

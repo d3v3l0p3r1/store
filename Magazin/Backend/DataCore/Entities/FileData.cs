@@ -1,8 +1,4 @@
 ﻿using System;
-<<<<<<< HEAD:Magazin/BaseCore/Entities/FileData.cs
-=======
-using BaseCore.DAL.Abstractions;
->>>>>>> 703143d03ef44b8f5666e74dce4a64271aa0157c:Magazin/Backend/DataCore/Entities/FileData.cs
 
 namespace BaseCore.DAL.Implementations.Entities
 {

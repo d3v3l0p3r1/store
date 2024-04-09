@@ -10,7 +10,9 @@ namespace BaseCore.Documents.Implementations.Services
     public class OutcomingDocumentService : BaseDocumentService<OutComingDocument, OutComingDocumentEntry>, IOutcomingDocumentService
     {
         private readonly IBalanceService _balanceService;
-        public OutcomingDocumentService(IRepository<OutComingDocument> repository, IBalanceService balanceService, IRepository<OutComingDocumentEntry> entryRepository) : base(repository, balanceService, entryRepository)
+        public OutcomingDocumentService(IRepository<OutComingDocument, long> repository,
+            IBalanceService balanceService,
+            IRepository<OutComingDocumentEntry, long> entryRepository) : base(repository, balanceService, entryRepository)
         {
             _balanceService = balanceService;
         }

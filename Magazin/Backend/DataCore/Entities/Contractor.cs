@@ -1,4 +1,5 @@
 ﻿using BaseCore.DAL.Abstractions;
+using System;
 
 namespace BaseCore.DAL.Implementations.Entities
 {
@@ -6,7 +7,7 @@ namespace BaseCore.DAL.Implementations.Entities
     /// <summary>
     /// Контрагент
     /// </summary>
-    public class Contractor : BaseEntity
+    public class Contractor : BaseEntity<int>
     {
         /// <summary>
         /// Имя контрагента
@@ -17,7 +18,7 @@ namespace BaseCore.DAL.Implementations.Entities
         /// <summary>
         /// Идентификатор изображения
         /// </summary>
-        public long ImageId { get; set; }
+        public Guid ImageId { get; set; }
 
         /// <summary>
         /// Аватар

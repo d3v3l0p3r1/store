@@ -6,7 +6,7 @@ using BaseCore.DAL.Abstractions;
 
 namespace BaseCore.DAL.Implementations.Entities
 {
-    public class Product : BaseEntity
+    public class Product : BaseEntity<int>
     {
         [Required]
         [StringLength(250, MinimumLength = 1)]
@@ -16,7 +16,7 @@ namespace BaseCore.DAL.Implementations.Entities
         [Display(Name = "Описание")]
         public string Description { get; set; }
 
-        public long? FileId { get; set; }
+        public Guid? FileId { get; set; }
         [Display(Name = "Файл")]
         public FileData File { get; set; }
 
@@ -66,12 +66,12 @@ namespace BaseCore.DAL.Implementations.Entities
         public Package Package { get; set; }
     }
 
-    public class ProductImage : BaseEntity
+    public class ProductImage : BaseEntity<int>
     {
         public long ProductId { get; set; }
         public Product Product { get; set; }
 
-        public long FileId { get; set; }
+        public Guid FileId { get; set; }
         public FileData File { get; set; }
     }
 }

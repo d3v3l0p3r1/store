@@ -17,15 +17,15 @@ namespace BaseCore.Products.Implementations.Services
     public class ProductService : IProductService
     {
         private readonly IFileService _fileService;
-        private readonly IRepository<ProductImage> _productImageRepository;
-        private readonly IRepository<Product> _repository;
+        private readonly IRepository<ProductImage, int> _productImageRepository;
+        private readonly IRepository<Product, int> _repository;
         private readonly IBrandService _brandService;
         private readonly IProductCategoryService _categoryService;
         private readonly IMapper _mapper;
 
-        public ProductService(IRepository<Product> repository,
+        public ProductService(IRepository<Product, int> repository,
             IFileService fileService, 
-            IRepository<ProductImage> productImageRepository, 
+            IRepository<ProductImage, int> productImageRepository, 
             IBrandService brandService, 
             IProductCategoryService categoryService, 
             IMapper mapper)
@@ -43,7 +43,7 @@ namespace BaseCore.Products.Implementations.Services
             using var ms = mainFile.OpenReadStream();
             var mainImage = await _fileService.SaveFile(mainFile.FileName, ms);
 
-            product.FileId = mainImage.Id;
+            product.FileId = mainImage.FileID;
 
             await _repository.CreateAsync(product);
 
@@ -54,7 +54,7 @@ namespace BaseCore.Products.Implementations.Services
 
                 var productImage = new ProductImage
                 {
-                    FileId = fd.Id,
+                    FileId = fd.FileID,
                     ProductId = product.Id
                 };
 
@@ -69,7 +69,7 @@ namespace BaseCore.Products.Implementations.Services
                 using var ms = mainImage.OpenReadStream();
                 var mainFd = await _fileService.SaveFile(mainImage.FileName, ms);
 
-                product.FileId = mainFd.Id;
+                product.FileId = mainFd.FileID;
             }
 
             var currentImageIds = product.Images.Select(x => x.Id);
@@ -84,7 +84,7 @@ namespace BaseCore.Products.Implementations.Services
 
                 var productImage = new ProductImage
                 {
-                    FileId = fd.Id,
+                    FileId = fd.FileID,
                     ProductId = product.Id
                 };
 

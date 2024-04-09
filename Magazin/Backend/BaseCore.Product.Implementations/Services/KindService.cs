@@ -8,8 +8,8 @@ namespace BaseCore.Products.Implementations.Services
 {
     public class KindService : IKindService
     {
-        private readonly IRepository<ProductKind> _repository;
-        public KindService(IRepository<ProductKind> repository)
+        private readonly IRepository<ProductKind, long> _repository;
+        public KindService(IRepository<ProductKind, long> repository)
         {
             _repository = repository;
         }
