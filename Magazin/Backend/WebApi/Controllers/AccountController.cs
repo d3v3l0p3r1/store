@@ -1,12 +1,13 @@
-﻿using System;
+﻿using IdentityServiceContract.Commands;
+using IdentityServiceContract.Dto;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using Platform.RabbitMq;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
-using BaseCore.Security.Entities;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using WebApi.Models;
 using WebApi.Models.Api.Account;
 
@@ -21,18 +22,11 @@ namespace WebApi.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly SignInManager<User> _signInManager;
-        private readonly UserManager<User> _userManager;
+        private readonly ICommandPublisher<LoginCommand, LoginDto> _loginCommandPublisher;
 
-        /// <summary>
-        /// Ctor
-        /// </summary>
-        /// <param name="signInManager"></param>
-        /// <param name="userManager"></param>
-        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager)
+        public AccountController(ICommandPublisher<LoginCommand, LoginDto> loginCommandPublisher)
         {
-            _signInManager = signInManager;
-            _userManager = userManager;
+            _loginCommandPublisher = loginCommandPublisher;
         }
 
         /// <summary>
@@ -45,31 +39,9 @@ namespace WebApi.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Token(LoginModel model)
         {
-            var user = await _signInManager.UserManager.FindByEmailAsync(model.Email);
+            var result =  await _loginCommandPublisher.Send(new LoginCommand { Login = model.Login, Password = model.Password });
 
-            if (user == null)
-            {
-                return BadRequest("Не удалось войти");
-            }
-
-            var result = await _signInManager.PasswordSignInAsync(user, model.Password, true, true);
-
-            if (!result.Succeeded)
-            {
-                return BadRequest("Неправильное имя пользователя или пароль");
-            }
-
-            var token = await GetToken(user);
-            var response = new
-            {
-                access_token = token,
-                name = user.FullName,
-                email = user.Email,
-                phone = user.PhoneNumber,
-                address = user.Address
-            };
-
-            return Ok(response);
+            return Ok(result);
         }
 
         /// <summary>

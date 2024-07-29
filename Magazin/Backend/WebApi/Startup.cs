@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using BaseCore.DAL.Implementations;
+using IdentityServiceContract;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -32,6 +33,8 @@ namespace WebApi
             Bindings.Bind(services);
 
             services.InitAuth(Configuration);
+
+            services.AddIdentity();
 
             services.AddControllers()
                 .AddNewtonsoftJson(config =>

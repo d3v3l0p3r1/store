@@ -6,9 +6,9 @@
     public class LoginModel
     {
         /// <summary>
-        /// Email
+        /// Login
         /// </summary>
-        public string Email { get; set; }
+        public string Login { get; set; }
 
         /// <summary>
         /// Password

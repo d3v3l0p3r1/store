@@ -12,9 +12,13 @@ using BaseCore.News.Services.Abstractions;
 using BaseCore.News.Services.Implementations;
 using BaseCore.Products.Abstractions.Services;
 using BaseCore.Products.Implementations.Services;
+using IdentityServiceContract.Commands;
+using IdentityServiceContract.Dto;
+using IdentityServiceContract.Publishers;
 using Microsoft.Extensions.DependencyInjection;
 using OneAssIntegration.Services.Abstractions;
 using OneAssIntegration.Services.Implementations;
+using Platform.RabbitMq;
 using WebApi.Concrete;
 
 namespace WebApi
@@ -37,23 +41,23 @@ namespace WebApi
 
             #region Repositories
 
-            services.AddScoped<IRepository, Repository>();
+            //services.AddScoped<IRepository, Repository>();
 
-            services.AddScoped<IRepository<Brand>, Repository<Brand>>();
-            services.AddScoped<IRepository<Product>, Repository<Product>>();
-            services.AddScoped<IRepository<ProductCategory>, Repository<ProductCategory>>();
-            services.AddScoped<IRepository<FileData>, Repository<FileData>>();
-            services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddScoped<IRepository<News>, Repository<News>>();
-            services.AddScoped<IRepository<ProductKind>, Repository<ProductKind>>();
-            services.AddScoped<IRepository<IncomingDocument>, Repository<IncomingDocument>>();
-            services.AddScoped<IRepository<ProductImage>, Repository<ProductImage>>();
-            services.AddScoped<IRepository<IncomingDocumentEntry>, Repository<IncomingDocumentEntry>>();
-            services.AddScoped<IRepository<OutComingDocument>, Repository<OutComingDocument>>();
-            services.AddScoped<IRepository<OutComingDocumentEntry>, Repository<OutComingDocumentEntry>>();
-            services.AddScoped<IRepository<Contractor>, Repository<Contractor>>();
-            services.AddScoped<IFileService, FileService>();
-            services.AddScoped<IRepository<Carousel>, Repository<Carousel>>();
+            //services.AddScoped<IRepository<Brand>, Repository<Brand>>();
+            //services.AddScoped<IRepository<Product>, Repository<Product>>();
+            //services.AddScoped<IRepository<ProductCategory>, Repository<ProductCategory>>();
+            //services.AddScoped<IRepository<FileData>, Repository<FileData>>();
+            //services.AddScoped<IOrderRepository, OrderRepository>();
+            //services.AddScoped<IRepository<News>, Repository<News>>();
+            //services.AddScoped<IRepository<ProductKind>, Repository<ProductKind>>();
+            //services.AddScoped<IRepository<IncomingDocument>, Repository<IncomingDocument>>();
+            //services.AddScoped<IRepository<ProductImage>, Repository<ProductImage>>();
+            //services.AddScoped<IRepository<IncomingDocumentEntry>, Repository<IncomingDocumentEntry>>();
+            //services.AddScoped<IRepository<OutComingDocument>, Repository<OutComingDocument>>();
+            //services.AddScoped<IRepository<OutComingDocumentEntry>, Repository<OutComingDocumentEntry>>();
+            //services.AddScoped<IRepository<Contractor>, Repository<Contractor>>();
+            //services.AddScoped<IFileService, FileService>();
+            //services.AddScoped<IRepository<Carousel>, Repository<Carousel>>();
             #endregion
 
             #region OneAss
